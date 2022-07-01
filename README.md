@@ -17,6 +17,7 @@ a secure funnel for selling items to your friends and network.
 diush is an open-source mobile platform that acts as a funnel to securely and easily finalize sales for items that would have otherwise undergone a tedious, disorganized process via text/DM. It is not a marketplace, simply a platform that utilizes a link-sharing system for each product/item one is selling - it takes advantage of existing communication methods to establish "first-contact".
 <br/>
 <br/>
+![mockups](https://user-images.githubusercontent.com/48065878/176969280-ef9a49c3-c663-418b-9088-564f7171e422.png)
 </p>
 
 ## methodology
