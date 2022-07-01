@@ -18,10 +18,13 @@ diush is an open-source mobile platform that acts as a funnel to securely and ea
 <br/>
 <br/>
 </p>
-<img src="https://i.ibb.co/7t02HjF/diagram.png" alt="Methodology Diagram">
-
 
 ## methodology
+
+the following is a diagram detailing the thought process and concept behind the platform.
+<br />
+<br />
+<img src="https://i.ibb.co/3dxt48z/diagram.png" alt="Methodology Diagram">
 
 
 
