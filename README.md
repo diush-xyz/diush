@@ -9,6 +9,7 @@
   <p align="center">
 a secure funnel for selling items to your friends and network.
     <br />
+  <br />
     <a href="https://joinsafe.me"><strong>learn more at diush.xyz »</strong></a>
     <br />
     <br />
@@ -29,7 +30,7 @@ a secure funnel for selling items to your friends and network.
 
 ## methodology
 
-the following is a diagram detailing the thought process and concept behind the platform.
+the following is a diagram detailing the thought process and concept behind the platform and its underlying system.
 <br />
 <br />
 <p align="center">
