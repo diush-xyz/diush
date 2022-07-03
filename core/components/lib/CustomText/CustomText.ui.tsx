@@ -8,6 +8,7 @@ interface ICustomText {
   secondary?: boolean;
   accent?: boolean;
   customColor?: string;
+  fontSize?: number;
 }
 
 /**
@@ -42,6 +43,7 @@ const CustomText = (props: ICustomText) => {
       <Text
         style={{
           color: populateColorStyle(),
+          fontSize: props.fontSize ?? 16,
         }}
       >
         {props.children}
