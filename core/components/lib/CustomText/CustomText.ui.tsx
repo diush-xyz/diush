@@ -11,6 +11,7 @@ interface ICustomText {
   fontSize?: number;
   style?: TextStyle;
   font?: string;
+  textAlign?: 'auto' | 'left' | 'right' | 'center' | 'justify' | undefined;
 }
 
 /**
@@ -48,6 +49,7 @@ const CustomText = (props: ICustomText) => {
           fontSize: props.fontSize ?? 16,
           ...props.style,
           fontFamily: props.font ?? 'Semibold',
+          textAlign: props.textAlign,
         }}
       >
         {props.children}

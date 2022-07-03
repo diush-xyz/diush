@@ -4,9 +4,25 @@ import CustomText from '../../components/lib/CustomText/CustomText.ui';
 
 const AuthScreen = () => {
   return (
-    <View>
-      <CustomText accent font='Bold'>
-        This is the auth screen
+    <View
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <CustomText
+        primary
+        font='Bold'
+        fontSize={24}
+        style={{ marginBottom: 12 }}
+      >
+        hey there!
+      </CustomText>
+      <CustomText secondary font='Semibold' fontSize={16} textAlign='center'>
+        a secure funnel for selling
+        {'\n'} items to your friends and network.
       </CustomText>
     </View>
   );
