@@ -28,7 +28,7 @@ const AuthScreen = () => {
                 fontSize={16}
                 textAlign="center"
             >
-                a secure funnel for selling
+                welcome to a secure funnel for selling
                 {"\n"} items to your friends and network.
             </CustomText>
         </View>
