@@ -1,4 +1,4 @@
-import { DarkTheme, IColorStyles } from '../style/Colors.style';
+import { DarkTheme, IColorStyles } from "../style/Colors.style";
 
 /**
  * Fetch the RSS Feed from an URL.
@@ -10,6 +10,6 @@ import { DarkTheme, IColorStyles } from '../style/Colors.style';
  * ```
  */
 export const useTheme = (): IColorStyles => {
-  //refactor this later (once multiple themes are implemented)
-  return DarkTheme;
+    //refactor this later (once multiple themes are implemented)
+    return DarkTheme;
 };
