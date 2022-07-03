@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, StyleProp, TextStyle } from 'react-native';
 import React from 'react';
 import { useTheme } from '../../../utils/useTheme.util';
 
@@ -9,6 +9,7 @@ interface ICustomText {
   accent?: boolean;
   customColor?: string;
   fontSize?: number;
+  style?: TextStyle;
 }
 
 /**
@@ -44,6 +45,7 @@ const CustomText = (props: ICustomText) => {
         style={{
           color: populateColorStyle(),
           fontSize: props.fontSize ?? 16,
+          ...props.style,
         }}
       >
         {props.children}

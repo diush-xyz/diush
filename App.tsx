@@ -1,14 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import { DarkTheme } from './core/style/colors.style';
+import { DarkTheme } from './core/style/Colors.style';
 import Test from './core/components/Test';
 import { ThemeProvider } from 'styled-components';
+import AuthScreen from './core/screens/auth/Auth.screen';
 
 export default function App() {
   return (
     <ThemeProvider theme={DarkTheme}>
       <View style={styles.container}>
-        <Test />
+        <AuthScreen />
         <StatusBar style='auto' />
       </View>
     </ThemeProvider>
