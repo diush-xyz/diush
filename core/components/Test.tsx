@@ -2,8 +2,12 @@ import { View, Text, Button } from 'react-native';
 import React from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../config/firebase';
+import { useTheme } from '../utils/useTheme.util';
+import CustomText from './lib/CustomText/CustomText.ui';
 
 const Test = () => {
+  const theme = useTheme();
+
   const signUp = () => {
     createUserWithEmailAndPassword(auth, 'justpleaseman@diush.xyz', '123456')
       .then((userCredential) => {
@@ -21,6 +25,8 @@ const Test = () => {
 
   return (
     <View>
+      <Text style={{ color: theme.primaryText }}>The best</Text>
+      <CustomText>h</CustomText>
       <Button title='Create acc' onPress={() => signUp()} />
     </View>
   );

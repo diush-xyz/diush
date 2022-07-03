@@ -20,13 +20,15 @@
     "react-dom": "17.0.2",
     "react-native": "0.68.2",
     "react-native-dotenv": "3.3.1",
-    "react-native-web": "0.17.7"
+    "react-native-web": "0.17.7",
+    "styled-components": "5.3.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@types/react": "~17.0.21",
     "@types/react-native": "~0.66.13",
     "@types/react-native-dotenv": "0.2.0",
+    "@types/styled-components": "5.1.25",
     "typescript": "~4.3.5"
   },
   "private": true
