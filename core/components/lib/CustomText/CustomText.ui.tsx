@@ -10,6 +10,14 @@ interface ICustomText {
   customColor?: string;
 }
 
+/**
+ * Diush's very own custom, all-in-one text component.
+ * @param props Basic information for the text component to function; reference the ICustomText interface
+ *
+ * @example ```ts
+ * <CustomText primary>this is a snippet of text</CustomText>
+ * ```
+ */
 const CustomText = (props: ICustomText) => {
   const theme = useTheme();
 
