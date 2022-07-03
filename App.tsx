@@ -19,8 +19,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: DarkTheme.background,
+    //TODO: Watch this:
     alignItems: 'center',
     color: DarkTheme.primaryText,
+    //TODO: Watch this:
     justifyContent: 'center',
   },
 });
