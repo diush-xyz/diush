@@ -46,8 +46,8 @@ export default function App() {
         // @ts-ignore
         <ThemeProvider theme={DarkTheme}>
             <View style={styles.container}>
-                {/* <AuthScreen /> */}
-                <Test />
+                <AuthScreen />
+                {/* <Test /> */}
                 <StatusBar style="auto" />
             </View>
         </ThemeProvider>

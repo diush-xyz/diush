@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import React from "react";
 import CustomText from "../../components/lib/CustomText/CustomText.ui";
-import LockIcon from "../../icons";
+import NoBackgroundLogo from "../../icons/auth/NoBackgroundLogo";
 
 const AuthScreen = () => {
     return (
@@ -13,12 +13,12 @@ const AuthScreen = () => {
                 alignItems: "center",
             }}
         >
-            <LockIcon fill="#ffffff" />
+            <NoBackgroundLogo fill="#ffffff" />
             <CustomText
                 primary
                 font="Bold"
                 fontSize={24}
-                style={{ marginBottom: 12 }}
+                style={{ marginTop: 24, marginBottom: 12 }}
             >
                 hey there!
             </CustomText>

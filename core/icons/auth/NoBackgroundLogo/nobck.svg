@@ -1,0 +1,26 @@
+<svg width="82" height="79" viewBox="0 0 82 79" fill="none" xmlns="http://www.w3.org/2000/svg">
+<ellipse rx="27.1149" ry="26.4371" transform="matrix(-1 0 0 1 27.1146 52.1963)" fill="url(#paint0_linear_2_42)"/>
+<ellipse rx="27.1149" ry="26.4371" transform="matrix(-1 0 0 1 27.1146 52.1963)" fill="url(#paint1_radial_2_42)"/>
+<ellipse rx="27.1149" ry="26.4371" transform="matrix(-1 0 0 1 54.2298 26.4371)" fill="url(#paint2_linear_2_42)"/>
+<ellipse rx="27.1149" ry="26.4371" transform="matrix(-1 0 0 1 54.2298 26.4371)" fill="url(#paint3_radial_2_42)"/>
+<defs>
+<linearGradient id="paint0_linear_2_42" x1="27.1149" y1="0" x2="27.1149" y2="52.8741" gradientUnits="userSpaceOnUse">
+<stop stop-color="#C897F9"/>
+<stop offset="0.505208" stop-color="#E46BB4"/>
+<stop offset="1" stop-color="#FF3F70"/>
+</linearGradient>
+<radialGradient id="paint1_radial_2_42" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(38.7922 15.6307) rotate(122.585) scale(31.605 31.9512)">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="white" stop-opacity="0"/>
+</radialGradient>
+<linearGradient id="paint2_linear_2_42" x1="27.1149" y1="0" x2="27.1149" y2="52.8741" gradientUnits="userSpaceOnUse">
+<stop stop-color="#C897F9"/>
+<stop offset="0.505208" stop-color="#E46BB4"/>
+<stop offset="1" stop-color="#FF3F70"/>
+</linearGradient>
+<radialGradient id="paint3_radial_2_42" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(38.7922 15.6307) rotate(122.585) scale(31.605 31.9512)">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="white" stop-opacity="0"/>
+</radialGradient>
+</defs>
+</svg>
