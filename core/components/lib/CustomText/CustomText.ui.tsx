@@ -10,6 +10,7 @@ interface ICustomText {
   customColor?: string;
   fontSize?: number;
   style?: TextStyle;
+  font?: string;
 }
 
 /**
@@ -46,6 +47,7 @@ const CustomText = (props: ICustomText) => {
           color: populateColorStyle(),
           fontSize: props.fontSize ?? 16,
           ...props.style,
+          fontFamily: props.font ?? 'Semibold',
         }}
       >
         {props.children}

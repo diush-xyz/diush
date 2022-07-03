@@ -5,7 +5,7 @@ import CustomText from '../../components/lib/CustomText/CustomText.ui';
 const AuthScreen = () => {
   return (
     <View>
-      <CustomText accent style={{ fontWeight: 'bold' }}>
+      <CustomText accent font='Bold'>
         This is the auth screen
       </CustomText>
     </View>
