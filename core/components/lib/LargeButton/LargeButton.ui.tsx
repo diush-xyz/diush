@@ -21,7 +21,7 @@ interface ICustomChildLargeButton {
     style?: StyleProp<ViewStyle>;
 }
 
-const CustomChildLargeButton = (props: ICustomChildLargeButton) => {
+export const CustomChildLargeButton = (props: ICustomChildLargeButton) => {
     return (
         <>
             {/*@ts-ignore*/}
