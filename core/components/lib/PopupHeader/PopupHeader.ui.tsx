@@ -3,6 +3,9 @@ import React from "react";
 import { HeaderWrapper } from "./styles";
 import CustomText from "../CustomText";
 
+/**
+ * Acts as a nav bar (header) of sorts for popups.
+ */
 const PopupHeader = () => {
     return (
         <HeaderWrapper>
