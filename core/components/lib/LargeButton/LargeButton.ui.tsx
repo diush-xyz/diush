@@ -21,6 +21,9 @@ interface ICustomChildLargeButton {
     style?: StyleProp<ViewStyle>;
 }
 
+/**
+ * Same as Large Button (only no provided child with props). Fully custom.
+ */
 export const CustomChildLargeButton = (props: ICustomChildLargeButton) => {
     return (
         <>
@@ -59,6 +62,11 @@ interface ILargeButton {
     footerButtonOnPress?: (ev: NativeSyntheticEvent<NativeTouchEvent>) => void;
     disabled?: boolean;
 }
+
+/**
+ * Large button component with props (child provided for mos common use case.
+ * @see CustomChildLargeButton for more options
+ */
 const LargeButton = (props: ILargeButton) => {
     return (
         <View style={{ display: "flex", width: "100%" }}>
