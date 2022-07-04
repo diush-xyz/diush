@@ -1,17 +1,17 @@
-import { View, Text, StyleProp, TextStyle } from 'react-native';
-import React from 'react';
-import { useTheme } from '../../../utils/useTheme.util';
+import { View, Text, StyleProp, TextStyle } from "react-native";
+import React from "react";
+import { useTheme } from "../../../utils/useTheme.util";
 
 interface ICustomText {
-  children: React.ReactNode;
-  primary?: boolean;
-  secondary?: boolean;
-  accent?: boolean;
-  customColor?: string;
-  fontSize?: number;
-  style?: TextStyle;
-  font?: string;
-  textAlign?: 'auto' | 'left' | 'right' | 'center' | 'justify' | undefined;
+    children: React.ReactNode;
+    primary?: boolean;
+    secondary?: boolean;
+    accent?: boolean;
+    customColor?: string;
+    fontSize?: number;
+    style?: TextStyle;
+    font?: string;
+    textAlign?: "auto" | "left" | "right" | "center" | "justify" | undefined;
 }
 
 /**
@@ -23,39 +23,41 @@ interface ICustomText {
  * ```
  */
 const CustomText = (props: ICustomText) => {
-  const theme = useTheme();
+    const theme = useTheme();
 
-  const populateColorStyle = (): string | undefined => {
-    //TODO: fix this logic later, very inefficient, just for testing
-    if (props.primary) {
-      return theme.primaryText;
-    } else if (props.secondary) {
-      return theme.secondary;
-    } else if (props.accent) {
-      return theme.accent;
-    } else if (props.customColor) {
-      return props.customColor;
-    }
+    const populateColorStyle = (): string | undefined => {
+        //TODO: fix this logic later, very inefficient, just for testing
+        if (props.primary) {
+            return theme.primaryText;
+        } else if (props.secondary) {
+            return theme.secondary;
+        } else if (props.accent) {
+            return theme.accent;
+        } else if (props.customColor) {
+            return props.customColor;
+        }
 
-    // if not argument is provided:
-    return theme.primaryText;
-  };
+        // if not argument is provided:
+        return theme.primaryText;
+    };
 
-  return (
-    <View>
-      <Text
-        style={{
-          color: populateColorStyle(),
-          fontSize: props.fontSize ?? 16,
-          ...props.style,
-          fontFamily: props.font ?? 'Semibold',
-          textAlign: props.textAlign,
-        }}
-      >
-        {props.children}
-      </Text>
-    </View>
-  );
+    return (
+        <View>
+            <Text
+                style={{
+                    color: populateColorStyle(),
+                    fontSize: props.fontSize ?? 16,
+                    ...props.style,
+                    fontFamily: props.font ?? "Semibold",
+                    textAlign: props.textAlign,
+                }}
+            >
+                {/*TODO: fix this later with TS rn children*/}
+                {/*@ts-ignore*/}
+                {props.children}
+            </Text>
+        </View>
+    );
 };
 
 export default CustomText;
