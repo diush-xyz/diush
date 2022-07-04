@@ -2,7 +2,7 @@ import { View, Text, Button } from "react-native";
 import React from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useTheme } from "../utils/useTheme.util";
-import CustomText from "./lib/CustomText/CustomText.ui";
+import CustomText from "./lib/CustomText";
 import { auth } from "../../config/firebase";
 
 const Test = () => {

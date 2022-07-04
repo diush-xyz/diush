@@ -14,3 +14,10 @@ export interface Listing {
     uid: string;
     postedAt: Date;
 }
+
+export enum AuthStatus {
+    SQUARE_ONE,
+    LOGIN,
+    SIGNUP,
+    AUTHENTICATED,
+}
