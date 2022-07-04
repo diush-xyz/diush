@@ -11,9 +11,12 @@ import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import SignupFlow from "./signup";
 import LoginFlow from "./login";
 import { BOTTOM_SHEET_SNAP_POINTS } from "../../utils/constants";
+import { useTheme } from "../../utils/useTheme.util";
 
 const AuthScreen = () => {
     const authStore = useAuthStore();
+
+    const theme = useTheme();
 
     const sheetRef = React.useRef<BottomSheet>(null);
 
@@ -61,6 +64,14 @@ const AuthScreen = () => {
             </View>
             {authStore.isSheetOpen ? (
                 <BottomSheet
+                    handleIndicatorStyle={{
+                        backgroundColor: theme.secondary,
+                    }}
+                    handleStyle={{
+                        backgroundColor: theme.popupBackground,
+                        borderTopLeftRadius: 12,
+                        borderTopRightRadius: 12,
+                    }}
                     ref={sheetRef}
                     snapPoints={BOTTOM_SHEET_SNAP_POINTS}
                     enablePanDownToClose={true}

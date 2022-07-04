@@ -5,9 +5,11 @@ import { AuthStatus } from "../../../@types/GlobalTypes";
 import CustomText from "../../../components/lib/CustomText";
 import { observer } from "mobx-react";
 import { BottomSheetView } from "@gorhom/bottom-sheet";
+import { useTheme } from "../../../utils/useTheme.util";
 
 const LoginFlow = () => {
     const authStore = useAuthStore();
+    const theme = useTheme();
 
     return (
         <BottomSheetView
@@ -15,6 +17,7 @@ const LoginFlow = () => {
                 flex: 1,
                 alignItems: "center",
                 justifyContent: "center",
+                backgroundColor: theme.popupBackground,
             }}
         >
             <Text>LoginFlow</Text>
