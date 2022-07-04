@@ -41,4 +41,23 @@ export const GLOBAL_STYLES = StyleSheet.create({
         backgroundColor: theme.background,
         borderRadius: 22,
     },
+    bottomSheet: {
+        backgroundColor: theme.popupBackground,
+        borderTopLeftRadius: 12,
+        borderTopRightRadius: 12,
+    },
+    handleStyle: {
+        backgroundColor: theme.popupBackground,
+        borderTopLeftRadius: 12,
+        borderTopRightRadius: 12,
+    },
+    handleIndicatorStyle: {
+        backgroundColor: theme.secondary,
+    },
+    bottomSheetViewStyle: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: theme.popupBackground,
+    },
 });

@@ -5,18 +5,13 @@ import { AuthStatus } from "../../../@types/GlobalTypes";
 import CustomText from "../../../components/lib/CustomText";
 import { observer } from "mobx-react";
 import { BottomSheetView } from "@gorhom/bottom-sheet";
+import { GLOBAL_STYLES } from "../../../@types/GlobalStyles";
 
 const SignupFlow = () => {
     const authStore = useAuthStore();
 
     return (
-        <BottomSheetView
-            style={{
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center",
-            }}
-        >
+        <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
             <Text>SignupFlow</Text>
             <TouchableOpacity
                 onPress={() => authStore.setAuthStatus(AuthStatus.SQUARE_ONE)}

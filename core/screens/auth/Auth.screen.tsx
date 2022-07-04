@@ -64,14 +64,8 @@ const AuthScreen = () => {
             </View>
             {authStore.isSheetOpen ? (
                 <BottomSheet
-                    handleIndicatorStyle={{
-                        backgroundColor: theme.secondary,
-                    }}
-                    handleStyle={{
-                        backgroundColor: theme.popupBackground,
-                        borderTopLeftRadius: 12,
-                        borderTopRightRadius: 12,
-                    }}
+                    handleIndicatorStyle={GLOBAL_STYLES.handleIndicatorStyle}
+                    handleStyle={GLOBAL_STYLES.handleStyle}
                     ref={sheetRef}
                     snapPoints={BOTTOM_SHEET_SNAP_POINTS}
                     enablePanDownToClose={true}
