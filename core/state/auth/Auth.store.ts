@@ -16,6 +16,12 @@ export default class AuthStore {
     //     this.user = newUser;
     // }
 
+    isSheetOpen: boolean = false;
+
+    setIsSheetOpen(newIsSheetOpen: boolean) {
+        this.isSheetOpen = newIsSheetOpen;
+    }
+
     authStatus: AuthStatus = AuthStatus.SQUARE_ONE;
 
     setAuthStatus(newAuthStatus: AuthStatus) {

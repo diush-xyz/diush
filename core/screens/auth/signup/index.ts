@@ -1,1 +1,1 @@
-export { default } from "./Signup.screen";
+export { default } from "./Signup.flow";
