@@ -44,7 +44,7 @@ const AuthScreen = () => {
                     textAlign="center"
                     style={{ marginBottom: 80 }}
                 >
-                    welcome to a secure funnel for selling
+                    welcome to an easy way to sell
                     {"\n"} items to your friends and network.
                 </CustomText>
                 <LargeButton
