@@ -1,15 +1,30 @@
-import { View, Text } from "react-native";
+import {
+    View,
+    Text,
+    GestureResponderEvent,
+    TouchableOpacity,
+} from "react-native";
 import React from "react";
 import { HeaderWrapper } from "./styles";
 import CustomText from "../CustomText";
+import LeftArrowIcon from "../../../icons/common/leftArrow";
+
+interface IPopupHeader {
+    backArrow?: boolean;
+    backArrowOnPress?: (event: GestureResponderEvent) => void;
+}
 
 /**
  * Acts as a nav bar (header) of sorts for popups.
  */
-const PopupHeader = () => {
+const PopupHeader = (props: IPopupHeader) => {
     return (
         <HeaderWrapper>
-            <Text>h</Text>
+            <TouchableOpacity
+                onPress={props.backArrow ? props.backArrowOnPress : () => null}
+            >
+                <LeftArrowIcon style={{ opacity: props.backArrow ? 1 : 0 }} />
+            </TouchableOpacity>
             <View style={{ display: "flex", flexDirection: "column" }}>
                 <CustomText
                     primary
