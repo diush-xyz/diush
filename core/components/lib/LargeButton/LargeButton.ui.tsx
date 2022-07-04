@@ -63,7 +63,7 @@ const LargeButton = (props: ILargeButton) => {
     return (
         <View style={{ display: "flex", width: "100%" }}>
             <CustomChildLargeButton
-                onPress={() => null}
+                onPress={props.onPress}
                 style={GLOBAL_STYLES.largeButton}
                 disabled={props.disabled}
             >
