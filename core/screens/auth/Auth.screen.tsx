@@ -10,21 +10,17 @@ import { AuthStatus } from "../../@types/GlobalTypes";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import SignupFlow from "./signup";
 import LoginFlow from "./login";
+import { BOTTOM_SHEET_SNAP_POINTS } from "../../utils/constants";
 
 const AuthScreen = () => {
     const authStore = useAuthStore();
 
     const sheetRef = React.useRef<BottomSheet>(null);
 
-    const snapPoints = ["80%"];
-
     const handleSnapPress = React.useCallback(index => {
         sheetRef.current?.snapToIndex(index);
         authStore.setIsSheetOpen(true);
     }, []);
-
-    const [popupContent, setPopupContent] =
-        React.useState<React.ReactNode>(null);
 
     return (
         <>
@@ -66,7 +62,7 @@ const AuthScreen = () => {
             {authStore.isSheetOpen ? (
                 <BottomSheet
                     ref={sheetRef}
-                    snapPoints={snapPoints}
+                    snapPoints={BOTTOM_SHEET_SNAP_POINTS}
                     enablePanDownToClose={true}
                     onClose={() => authStore.setIsSheetOpen(false)}
                 >
