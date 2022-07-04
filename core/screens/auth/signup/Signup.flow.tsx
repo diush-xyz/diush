@@ -6,12 +6,14 @@ import CustomText from "../../../components/lib/CustomText";
 import { observer } from "mobx-react";
 import { BottomSheetView } from "@gorhom/bottom-sheet";
 import { GLOBAL_STYLES } from "../../../@types/GlobalStyles";
+import PopupHeader from "../../../components/lib/PopupHeader";
 
 const SignupFlow = () => {
     const authStore = useAuthStore();
 
     return (
         <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
+            <PopupHeader />
             <Text>SignupFlow</Text>
             <TouchableOpacity
                 onPress={() => authStore.setAuthStatus(AuthStatus.SQUARE_ONE)}

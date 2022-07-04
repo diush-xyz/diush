@@ -12,6 +12,7 @@ import SignupFlow from "./signup";
 import LoginFlow from "./login";
 import { BOTTOM_SHEET_SNAP_POINTS } from "../../utils/constants";
 import { useTheme } from "../../utils/useTheme.util";
+import PopupHeader from "../../components/lib/PopupHeader";
 
 const AuthScreen = () => {
     const authStore = useAuthStore();
