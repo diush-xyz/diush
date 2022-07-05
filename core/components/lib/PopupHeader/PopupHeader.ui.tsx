@@ -9,7 +9,7 @@ import { HeaderWrapper } from "./styles";
 import CustomText from "../CustomText";
 import LeftArrowIcon from "../../../icons/common/leftArrow";
 
-interface IPopupHeader {
+export interface IPopupHeader {
     backArrow?: boolean;
     backArrowOnPress?: (event: GestureResponderEvent) => void;
 }
