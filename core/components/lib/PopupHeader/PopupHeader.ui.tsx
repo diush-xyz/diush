@@ -102,9 +102,12 @@ const PopupHeader = (props: IPopupHeader) => {
                         maxWidth: 41,
                         marginLeft: "auto",
                         marginRight: 0,
+                        borderRadius: 12,
                     }}
                 >
-                    <CustomText textAlign="right">1/8</CustomText>
+                    <CustomText secondary textAlign="right">
+                        1/6
+                    </CustomText>
                 </View>
             </View>
         </View>
