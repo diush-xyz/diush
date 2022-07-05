@@ -10,6 +10,8 @@ import PopupHeader from "../../../components/lib/PopupHeader";
 import CustomGradientCircle from "../../../components/auth/CustomGradientCircle";
 import FlowTemplate from "../../../components/lib/FlowTemplate/FlowTemplate.ui";
 import LargeButton from "../../../components/lib/LargeButton";
+import EmailIcon from "../../../icons/auth/Email";
+import SignupOptionButton from "../../../components/auth/SignupOptionbutton/SignupOptionButton";
 
 const SignupFlow = () => {
     const authStore = useAuthStore();
@@ -25,29 +27,17 @@ const SignupFlow = () => {
                         "what’s most comfortable for you? we \n promise this will be quick (<2min)."
                     }
                 >
-                    <TouchableOpacity
-                        style={{
-                            height: 44,
-                            width: 330,
-                            display: "flex",
-                            justifyContent: "center",
-                            alignSelf: "center",
-                            borderRadius: 22,
-                            padding: 2,
-                            // make the background have 5% opacity from white
-                            backgroundColor: "rgba(255,255,255,0.05)",
-                        }}
-                    >
-                        <View
-                            style={{
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                            }}
-                        >
-                            <CustomText primary>continue with email</CustomText>
-                        </View>
-                    </TouchableOpacity>
+                    <SignupOptionButton
+                        text="continue with email"
+                        icon="email"
+                        onPress={() => null}
+                        marginBottom={17}
+                    />
+                    <SignupOptionButton
+                        text="continue with phone"
+                        icon="phone"
+                        onPress={() => null}
+                    />
                 </FlowTemplate>
             </BottomSheetView>
         </>
