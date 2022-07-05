@@ -19,27 +19,84 @@ export interface IPopupHeader {
  */
 const PopupHeader = (props: IPopupHeader) => {
     return (
-        <HeaderWrapper>
-            <TouchableOpacity
-                onPress={props.backArrow ? props.backArrowOnPress : () => null}
+        // <HeaderWrapper>
+        //     <TouchableOpacity
+        //         onPress={props.backArrow ? props.backArrowOnPress : () => null}
+        //     >
+        //         <LeftArrowIcon style={{ opacity: props.backArrow ? 1 : 0 }} />
+        //     </TouchableOpacity>
+        //     <View style={{ display: "flex", flexDirection: "column" }}>
+        //         <CustomText
+        //             primary
+        //             textAlign="center"
+        //             font="Bold"
+        //             fontSize={16}
+        //         >
+        //             method
+        //         </CustomText>
+        //         <CustomText secondary textAlign="center" fontSize={14}>
+        //             signup
+        //         </CustomText>
+        //     </View>
+        //     <View style={{ padding: }}
+        // </HeaderWrapper>
+        <View
+            style={{
+                display: "flex",
+                flexDirection: "row",
+                width: "100%",
+                position: "absolute",
+                top: 0,
+                paddingLeft: 20,
+                paddingRight: 20,
+            }}
+        >
+            <View
+                style={{
+                    flex: 1,
+                    display: "flex",
+                    justifyContent: "center",
+                    marginRight: "auto",
+                }}
             >
-                <LeftArrowIcon style={{ opacity: props.backArrow ? 1 : 0 }} />
-            </TouchableOpacity>
-            <View style={{ display: "flex", flexDirection: "column" }}>
-                <CustomText
-                    primary
-                    textAlign="center"
-                    font="Bold"
-                    fontSize={16}
+                <TouchableOpacity
+                    onPress={
+                        props.backArrow ? props.backArrowOnPress : () => null
+                    }
                 >
-                    method
-                </CustomText>
-                <CustomText secondary textAlign="center" fontSize={14}>
-                    signup
-                </CustomText>
+                    <LeftArrowIcon
+                        style={{ opacity: props.backArrow ? 1 : 0 }}
+                    />
+                </TouchableOpacity>
             </View>
-            <Text>h</Text>
-        </HeaderWrapper>
+            <View
+                style={{ flex: 1, display: "flex", justifyContent: "center" }}
+            >
+                <View style={{ display: "flex", flexDirection: "column" }}>
+                    <CustomText
+                        primary
+                        textAlign="center"
+                        font="Bold"
+                        fontSize={16}
+                    >
+                        method
+                    </CustomText>
+                    <CustomText secondary textAlign="center" fontSize={14}>
+                        signup
+                    </CustomText>
+                </View>
+            </View>
+            <View
+                style={{
+                    flex: 1,
+                    display: "flex",
+                    justifyContent: "center",
+                    marginLeft: "auto",
+                }}
+            >
+                <CustomText textAlign="right">The best</CustomText>
+            </View>
+        </View>
     );
 };
 
