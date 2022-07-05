@@ -42,21 +42,19 @@ const CustomText = (props: ICustomText) => {
     };
 
     return (
-        <View>
-            <Text
-                style={{
-                    color: populateColorStyle(),
-                    fontSize: props.fontSize ?? 16,
-                    ...props.style,
-                    fontFamily: props.font ?? "Semibold",
-                    textAlign: props.textAlign,
-                }}
-            >
-                {/*TODO: fix this later with TS rn children*/}
-                {/*@ts-ignore*/}
-                {props.children}
-            </Text>
-        </View>
+        <Text
+            style={{
+                color: populateColorStyle(),
+                fontSize: props.fontSize ?? 16,
+                ...props.style,
+                fontFamily: props.font ?? "Semibold",
+                textAlign: props.textAlign,
+            }}
+        >
+            {/*TODO: fix this later with TS rn children*/}
+            {/*@ts-ignore*/}
+            {props.children}
+        </Text>
     );
 };
 
