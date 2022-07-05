@@ -90,11 +90,22 @@ const PopupHeader = (props: IPopupHeader) => {
                 style={{
                     flex: 1,
                     display: "flex",
-                    justifyContent: "center",
                     marginLeft: "auto",
                 }}
             >
-                <CustomText textAlign="right">The best</CustomText>
+                <View
+                    style={{
+                        backgroundColor: "rgba(255,255,255,0.05)",
+                        display: "flex",
+                        alignItems: "center",
+                        padding: 10,
+                        maxWidth: 41,
+                        marginLeft: "auto",
+                        marginRight: 0,
+                    }}
+                >
+                    <CustomText textAlign="right">1/8</CustomText>
+                </View>
             </View>
         </View>
     );
