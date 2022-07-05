@@ -19,38 +19,7 @@ export interface IPopupHeader {
  */
 const PopupHeader = (props: IPopupHeader) => {
     return (
-        // <HeaderWrapper>
-        //     <TouchableOpacity
-        //         onPress={props.backArrow ? props.backArrowOnPress : () => null}
-        //     >
-        //         <LeftArrowIcon style={{ opacity: props.backArrow ? 1 : 0 }} />
-        //     </TouchableOpacity>
-        //     <View style={{ display: "flex", flexDirection: "column" }}>
-        //         <CustomText
-        //             primary
-        //             textAlign="center"
-        //             font="Bold"
-        //             fontSize={16}
-        //         >
-        //             method
-        //         </CustomText>
-        //         <CustomText secondary textAlign="center" fontSize={14}>
-        //             signup
-        //         </CustomText>
-        //     </View>
-        //     <View style={{ padding: }}
-        // </HeaderWrapper>
-        <View
-            style={{
-                display: "flex",
-                flexDirection: "row",
-                width: "100%",
-                position: "absolute",
-                top: 0,
-                paddingLeft: 20,
-                paddingRight: 20,
-            }}
-        >
+        <HeaderWrapper>
             <View
                 style={{
                     flex: 1,
@@ -110,7 +79,7 @@ const PopupHeader = (props: IPopupHeader) => {
                     </CustomText>
                 </View>
             </View>
-        </View>
+        </HeaderWrapper>
     );
 };
 
