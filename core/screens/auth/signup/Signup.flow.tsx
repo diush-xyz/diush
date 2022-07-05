@@ -23,14 +23,9 @@ const SignupFlow = () => {
                     desc={
                         "what’s most comfortable for you? we \n promise this will be quick (<2min)."
                     }
-                />
-                <TouchableOpacity
-                    onPress={() =>
-                        authStore.setAuthStatus(AuthStatus.SQUARE_ONE)
-                    }
                 >
-                    <CustomText primary>Back</CustomText>
-                </TouchableOpacity>
+                    <Text>The best</Text>
+                </FlowTemplate>
             </BottomSheetView>
         </>
     );

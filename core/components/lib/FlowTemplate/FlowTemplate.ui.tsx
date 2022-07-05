@@ -8,6 +8,7 @@ interface IFlowTemplate {
     circleEmoji: string;
     title: string;
     desc: string;
+    children: React.ReactNode;
 }
 
 const FlowTemplate = (props: IFlowTemplate) => {
@@ -27,10 +28,11 @@ const FlowTemplate = (props: IFlowTemplate) => {
                 font="Semibold"
                 fontSize={16}
                 textAlign="center"
-                style={{ marginBottom: 80 }}
+                style={{ marginBottom: 40 }}
             >
                 {props.desc}
             </CustomText>
+            {props.children}
         </FlowTemplateWrapper>
     );
 };
