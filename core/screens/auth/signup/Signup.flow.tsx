@@ -21,7 +21,7 @@ const SignupFlow = () => {
             <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
                 <PopupHeader
                     backArrow
-                    title="method"
+                    title="metho"
                     subtitle="signup"
                     progressIndicator
                     currentStep={2}
