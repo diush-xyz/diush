@@ -15,14 +15,6 @@ const EmailSignup = () => {
     const theme = useTheme();
     return (
         <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
-            {/* <View
-                style={{
-                    marginBottom: 60,
-                    flex: 1,
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}
-            > */}
             <PopupHeader
                 backArrow
                 backArrowOnPress={() => signupStore.setCurrentStep(0)}
@@ -47,15 +39,16 @@ const EmailSignup = () => {
                         fontSize: 14,
                         fontWeight: "bold",
                         borderRadius: 12,
+                        color: theme.primaryText,
                         //TODO: remove this in extraction
                         marginBottom: 32,
                     }}
+                    selectionColor={theme.accent}
                     placeholderTextColor={theme.secondary}
                     placeholder="your email"
                 />
                 <LargeButton title="continue" onPress={() => null} />
             </FlowTemplate>
-            {/* </View> */}
         </BottomSheetView>
     );
 };
