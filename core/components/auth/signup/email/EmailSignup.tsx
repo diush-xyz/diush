@@ -35,7 +35,16 @@ const EmailSignup = () => {
                     onChangeText={text => null}
                     marginBottom={32}
                 />
-                <LargeButton title="continue" onPress={() => null} />
+                <LargeButton
+                    title="continue"
+                    onPress={() => null}
+                    footer
+                    footerButtonTitle="cancel"
+                    footerButtonOnPress={() => {
+                        signupStore.setCurrentStep(0);
+                        //TODO: Clear all fields respective to the signup process (once implemented) here
+                    }}
+                />
             </FlowTemplate>
         </BottomSheetView>
     );
