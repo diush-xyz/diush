@@ -5,4 +5,7 @@ export const FlowTemplateWrapper = styled.View`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
 `;
