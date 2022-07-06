@@ -9,6 +9,7 @@ import LargeButton from "../../../lib/LargeButton";
 import { observer } from "mobx-react";
 import { useSignupStore } from "../../../../state/auth/Signup.store";
 import { useTheme } from "../../../../utils/useTheme.util";
+import CustomTextInput from "../../../lib/CustomTextInput";
 
 const EmailSignup = () => {
     const signupStore = useSignupStore();
@@ -29,23 +30,10 @@ const EmailSignup = () => {
                 title="email"
                 desc={"please enter your email address below."}
             >
-                <TextInput
-                    style={{
-                        backgroundColor: "rgba(255,255,255,0.05)",
-                        height: 45,
-                        paddingHorizontal: 10,
-                        paddingVertical: 14,
-                        width: "100%",
-                        fontSize: 14,
-                        fontWeight: "bold",
-                        borderRadius: 12,
-                        color: theme.primaryText,
-                        //TODO: remove this in extraction
-                        marginBottom: 32,
-                    }}
-                    selectionColor={theme.accent}
-                    placeholderTextColor={theme.secondary}
-                    placeholder="your email"
+                <CustomTextInput
+                    placeholder="my email"
+                    onChangeText={text => null}
+                    marginBottom={32}
                 />
                 <LargeButton title="continue" onPress={() => null} />
             </FlowTemplate>
