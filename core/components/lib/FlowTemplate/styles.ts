@@ -8,4 +8,5 @@ export const FlowTemplateWrapper = styled.View`
     width: 100%;
     padding-left: 30px;
     padding-right: 30px;
+    margin-bottom: 90px;
 `;
