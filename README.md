@@ -53,4 +53,4 @@ this project is utilizing what I'm designating as the _"TERF"_ stack.
 [//]: # "use anything and everything you'd like; from Twitter to WhatsApp, the intention is that users leverage their friends and existing networks."
 [//]: # "### 3. manage offers"
 
-> more to come.
+> more to come soon.
