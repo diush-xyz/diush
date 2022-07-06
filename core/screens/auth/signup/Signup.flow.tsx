@@ -1,27 +1,35 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import { useAuthStore } from "../../../state/auth/Auth.store";
-import { AuthStatus } from "../../../@types/GlobalTypes";
+import { AuthStatus, SignupMethods } from "../../../@types/GlobalTypes";
 import CustomText from "../../../components/lib/CustomText";
 import { observer } from "mobx-react";
 import { BottomSheetView } from "@gorhom/bottom-sheet";
 import { GLOBAL_STYLES } from "../../../@types/GlobalStyles";
 import PopupHeader from "../../../components/lib/PopupHeader";
+import CustomGradientCircle from "../../../components/auth/CustomGradientCircle";
+import FlowTemplate from "../../../components/lib/FlowTemplate/FlowTemplate.ui";
+import LargeButton from "../../../components/lib/LargeButton";
+import EmailIcon from "../../../icons/auth/Email";
+import SignupOptionButton from "../../../components/auth/SignupOptionbutton/SignupOptionButton";
+import { useSignupStore } from "../../../state/auth/Signup.store";
+import SignupWelcome from "../../../components/auth/signup/SignupWelcome";
+import EmailSignup from "../../../components/auth/signup/email/EmailSignup";
 
 const SignupFlow = () => {
     const authStore = useAuthStore();
+    const signupStore = useSignupStore();
 
-    return (
-        <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
-            <PopupHeader />
-            <Text>SignupFlow</Text>
-            <TouchableOpacity
-                onPress={() => authStore.setAuthStatus(AuthStatus.SQUARE_ONE)}
-            >
-                <CustomText primary>Back</CustomText>
-            </TouchableOpacity>
-        </BottomSheetView>
-    );
+    const populateEmailContent = () => {
+        switch (signupStore.currentStep) {
+            case 0:
+                return <SignupWelcome />;
+            case 1:
+                return <EmailSignup />;
+        }
+    };
+
+    return <>{populateEmailContent()}</>;
 };
 
 export default observer(SignupFlow);

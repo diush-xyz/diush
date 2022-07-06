@@ -33,6 +33,7 @@ a secure funnel for selling items to your friends and network.
 the following is a diagram detailing the thought process and concept behind the platform and its underlying system.
 <br />
 <br />
+
 <p align="center">
 <img src="https://i.ibb.co/3dxt48z/diagram.png" alt="Methodology Diagram">
 </p>
@@ -45,11 +46,6 @@ this project is utilizing what I'm designating as the *"TERF"* stack.
 - **Expo:** Provides a shared native runtime to avoid writing native code, dealing with iOS or Android-specific settings, or even opening up Xcode. Managed Expo projects have "their own workflow including Expo CLI (a command line interface) to make developing and deploying easy". Learn more [here](https://docs.expo.dev/workflow/already-used-react-native/).
 - **React Native:** Base for Expo - allows the usage of React + TypeScript for easy cross-platform mobile development.
 - **Firebase:** Cloud Firestore (Database) + Authentication are handled through here
-
-
-
-
-
 
 
 
