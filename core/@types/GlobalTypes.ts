@@ -21,3 +21,8 @@ export enum AuthStatus {
     SIGNUP,
     AUTHENTICATED,
 }
+
+export enum SignupMethods {
+    EMAIL,
+    PHONE,
+}

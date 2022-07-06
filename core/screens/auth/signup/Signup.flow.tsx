@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import { useAuthStore } from "../../../state/auth/Auth.store";
-import { AuthStatus } from "../../../@types/GlobalTypes";
+import { AuthStatus, SignupMethods } from "../../../@types/GlobalTypes";
 import CustomText from "../../../components/lib/CustomText";
 import { observer } from "mobx-react";
 import { BottomSheetView } from "@gorhom/bottom-sheet";
@@ -12,43 +12,24 @@ import FlowTemplate from "../../../components/lib/FlowTemplate/FlowTemplate.ui";
 import LargeButton from "../../../components/lib/LargeButton";
 import EmailIcon from "../../../icons/auth/Email";
 import SignupOptionButton from "../../../components/auth/SignupOptionbutton/SignupOptionButton";
+import { useSignupStore } from "../../../state/auth/Signup.store";
+import SignupWelcome from "../../../components/auth/signup/SignupWelcome";
+import EmailSignup from "../../../components/auth/signup/email/EmailSignup";
 
 const SignupFlow = () => {
     const authStore = useAuthStore();
+    const signupStore = useSignupStore();
 
-    return (
-        <>
-            <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
-                <PopupHeader
-                    backArrow
-                    title="metho"
-                    subtitle="signup"
-                    progressIndicator
-                    currentStep={2}
-                    totalSteps={8}
-                />
-                <FlowTemplate
-                    circleEmoji="🪴"
-                    title="create an acc"
-                    desc={
-                        "what’s most comfortable for you? we \n promise this will be quick (<2min)."
-                    }
-                >
-                    <SignupOptionButton
-                        text="continue with email"
-                        icon="email"
-                        onPress={() => null}
-                        marginBottom={17}
-                    />
-                    <SignupOptionButton
-                        text="continue with phone"
-                        icon="phone"
-                        onPress={() => null}
-                    />
-                </FlowTemplate>
-            </BottomSheetView>
-        </>
-    );
+    const populateEmailContent = () => {
+        switch (signupStore.currentStep) {
+            case 0:
+                return <SignupWelcome />;
+            case 1:
+                return <EmailSignup />;
+        }
+    };
+
+    return <>{populateEmailContent()}</>;
 };
 
 export default observer(SignupFlow);
