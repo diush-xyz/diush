@@ -12,6 +12,11 @@ import LeftArrowIcon from "../../../icons/common/leftArrow";
 export interface IPopupHeader {
     backArrow?: boolean;
     backArrowOnPress?: (event: GestureResponderEvent) => void;
+    title: string;
+    subtitle?: string;
+    progressIndicator?: boolean;
+    currentStep?: number;
+    totalSteps?: number;
 }
 
 /**
@@ -41,18 +46,27 @@ const PopupHeader = (props: IPopupHeader) => {
             <View
                 style={{ flex: 1, display: "flex", justifyContent: "center" }}
             >
-                <View style={{ display: "flex", flexDirection: "column" }}>
+                <View
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}
+                >
                     <CustomText
                         primary
                         textAlign="center"
                         font="Bold"
                         fontSize={16}
                     >
-                        method
+                        {props.title}
                     </CustomText>
-                    <CustomText secondary textAlign="center" fontSize={14}>
-                        signup
-                    </CustomText>
+                    {props.subtitle && (
+                        <CustomText secondary textAlign="center" fontSize={14}>
+                            {props.subtitle}
+                        </CustomText>
+                    )}
                 </View>
             </View>
             <View
@@ -62,22 +76,23 @@ const PopupHeader = (props: IPopupHeader) => {
                     marginLeft: "auto",
                 }}
             >
-                <View
-                    style={{
-                        backgroundColor: "rgba(255,255,255,0.05)",
-                        display: "flex",
-                        alignItems: "center",
-                        padding: 10,
-                        maxWidth: 41,
-                        marginLeft: "auto",
-                        marginRight: 0,
-                        borderRadius: 12,
-                    }}
-                >
-                    <CustomText secondary textAlign="right">
-                        1/6
-                    </CustomText>
-                </View>
+                {props.progressIndicator && (
+                    <View
+                        style={{
+                            backgroundColor: "rgba(255,255,255,0.05)",
+                            display: "flex",
+                            alignItems: "center",
+                            padding: 10,
+                            marginLeft: "auto",
+                            marginRight: 0,
+                            borderRadius: 12,
+                        }}
+                    >
+                        <CustomText secondary textAlign="right">
+                            {`${props.currentStep}/${props.totalSteps}`}
+                        </CustomText>
+                    </View>
+                )}
             </View>
         </HeaderWrapper>
     );

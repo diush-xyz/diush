@@ -19,7 +19,14 @@ const SignupFlow = () => {
     return (
         <>
             <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
-                <PopupHeader backArrow />
+                <PopupHeader
+                    backArrow
+                    title="method"
+                    subtitle="signup"
+                    progressIndicator
+                    currentStep={2}
+                    totalSteps={8}
+                />
                 <FlowTemplate
                     circleEmoji="🪴"
                     title="create an acc"
