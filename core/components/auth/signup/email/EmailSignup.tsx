@@ -14,6 +14,7 @@ import CustomTextInput from "../../../lib/CustomTextInput";
 const EmailSignup = () => {
     const signupStore = useSignupStore();
     const theme = useTheme();
+
     return (
         <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
             <PopupHeader
@@ -35,6 +36,7 @@ const EmailSignup = () => {
                     onChangeText={text => null}
                     marginBottom={32}
                 />
+                {/*//TODO: Add disabled validation with text field*/}
                 <LargeButton
                     title="continue"
                     onPress={() => null}
