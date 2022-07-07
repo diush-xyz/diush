@@ -24,6 +24,7 @@ const CustomTextInput = (props: ICustomTextInput) => {
                 fontWeight: "bold",
                 borderRadius: 12,
                 color: theme.primaryText,
+                maxWidth: 328,
                 //TODO: remove this in extraction
                 marginBottom: props.marginBottom || 0,
             }}
