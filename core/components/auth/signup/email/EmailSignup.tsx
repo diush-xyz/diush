@@ -22,8 +22,9 @@ const EmailSignup = () => {
         setIsReady(
             signupStore.email.includes("@") && signupStore.email.length > 0
         );
+        console.log("the email: " + signupStore.email);
         console.log(isReady);
-    }, [signupStore.email]);
+    });
 
     return (
         <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
@@ -47,6 +48,8 @@ const EmailSignup = () => {
                     placeholder="my email"
                     onChangeText={text => signupStore.setEmail(text)}
                     marginBottom={32}
+                    defaultValue={signupStore.email}
+                    keyboardType="email-address"
                 />
                 {/*//TODO: Add disabled validation with text field*/}
                 <LargeButton

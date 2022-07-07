@@ -1,4 +1,4 @@
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, KeyboardTypeOptions } from "react-native";
 import React from "react";
 import { observer } from "mobx-react";
 import { useTheme } from "../../../utils/useTheme.util";
@@ -8,6 +8,7 @@ interface ICustomTextInput {
     onChangeText: (text: string) => void;
     defaultValue?: string;
     marginBottom?: number;
+    keyboardType?: KeyboardTypeOptions;
 }
 
 const CustomTextInput = (props: ICustomTextInput) => {
@@ -32,6 +33,8 @@ const CustomTextInput = (props: ICustomTextInput) => {
             placeholderTextColor={theme.secondary}
             placeholder="your email"
             onChangeText={props.onChangeText}
+            keyboardType={props.keyboardType}
+            defaultValue={props.defaultValue}
         />
     );
 };

@@ -21,18 +21,22 @@ interface ICustomChildLargeButton {
     style?: StyleProp<ViewStyle>;
 }
 
+const BORDER_COLORS = ["#C897F9", "#FF3F70"];
+
 /**
  * Same as Large Button (only no provided child with props). Fully custom.
  */
 export const CustomChildLargeButton = (props: ICustomChildLargeButton) => {
+    const theme = useTheme();
     return (
         <>
             {/*@ts-ignore*/}
             <LinearGradient
-                colors={["#C897F9", "#FF3F70"]}
+                colors={props.disabled ? ["transparent"] : BORDER_COLORS}
                 start={{ x: 0.0, y: 1.0 }}
                 end={{ x: 1.0, y: 1.0 }}
                 style={{
+                    opacity: props.disabled ? 0.5 : 1,
                     height: 44,
                     width: "100%",
                     justifyContent: "center",
@@ -69,11 +73,21 @@ interface ILargeButton {
  * @see CustomChildLargeButton for more options
  */
 const LargeButton = (props: ILargeButton) => {
+    const theme = useTheme();
     return (
         <View style={{ display: "flex", width: "100%" }}>
             <CustomChildLargeButton
                 onPress={props.onPress}
-                style={GLOBAL_STYLES.largeButton}
+                style={{
+                    flex: 1.0,
+                    paddingVertical: 11,
+                    alignSelf: "center",
+                    justifyContent: "center",
+                    width: "100%",
+                    backgroundColor: theme.background,
+                    borderRadius: 22,
+                    opacity: props.disabled ? 0.5 : 1,
+                }}
                 disabled={props.disabled}
             >
                 <CustomText
@@ -81,6 +95,7 @@ const LargeButton = (props: ILargeButton) => {
                     font="Bold"
                     style={{
                         alignSelf: "center",
+                        opacity: props.disabled ? 0.5 : 1,
                     }}
                 >
                     {props.title}
