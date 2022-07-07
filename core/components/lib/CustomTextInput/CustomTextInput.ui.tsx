@@ -6,6 +6,7 @@ import CustomText from "../CustomText";
 import EmailIcon from "../../../icons/auth/Email";
 import WarningIcon from "../../../icons/common/warning";
 import SuccessIcon from "../../../icons/common/success";
+import { MAX_WIDTH } from "../../../utils/constants";
 
 interface ICustomTextInput {
     placeholder: string;
@@ -38,7 +39,7 @@ const CustomTextInput = (props: ICustomTextInput) => {
                     backgroundColor: "rgba(255,255,255,0.05)",
                     height: 45,
                     width: "100%",
-                    maxWidth: 328,
+                    maxWidth: MAX_WIDTH,
                     marginBottom: props.isErr ? 7 : props.marginBottom || 0,
                     borderRadius: 12,
                     paddingHorizontal: 20,

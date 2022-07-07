@@ -11,6 +11,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { GLOBAL_STYLES } from "../../../@types/GlobalStyles";
 import CustomText from "../CustomText";
 import { useTheme } from "../../../utils/useTheme.util";
+import { MAX_WIDTH } from "../../../utils/constants";
 
 //TODO: Must add proper gradient background to button (not working, blank for now)
 
@@ -43,7 +44,7 @@ export const CustomChildLargeButton = (props: ICustomChildLargeButton) => {
                     alignSelf: "center",
                     borderRadius: 22,
                     padding: 2,
-                    maxWidth: 328,
+                    maxWidth: MAX_WIDTH,
                 }}
             >
                 <TouchableOpacity

@@ -6,6 +6,9 @@ import PopupHeader from "../../../lib/PopupHeader";
 import { observer } from "mobx-react";
 import { useSignupStore } from "../../../../state/auth/Signup.store";
 import CustomText from "../../../lib/CustomText";
+import LargeButton from "../../../lib/LargeButton";
+import { View } from "react-native";
+import { MAX_WIDTH } from "../../../../utils/constants";
 
 const VerifyEmailSignup = () => {
     const signupStore = useSignupStore();
@@ -23,13 +26,28 @@ const VerifyEmailSignup = () => {
                 currentStep={2}
                 totalSteps={6}
             />
-            <FlowTemplate
-                circleEmoji="✉️"
-                title="verify"
-                desc={"please enter your email address below."}
+            <View
+                style={{
+                    alignItems: "flex-start",
+                    width: "100%",
+                    maxWidth: MAX_WIDTH,
+                }}
             >
-                <CustomText primary>This is the verification</CustomText>
-            </FlowTemplate>
+                <CustomText primary font="Bold">
+                    Enter OTP
+                </CustomText>
+                <CustomText secondary style={{ marginTop: 6 }}>
+                    we sent a 4-digit code to your email address.
+                </CustomText>
+            </View>
+            <LargeButton
+                title="continue"
+                onPress={() => null}
+                footer
+                // disabled={!allClear && !firstTime}
+                footerButtonTitle="cancel"
+                footerButtonOnPress={() => signupStore.cancel()}
+            />
         </BottomSheetView>
     );
 };
