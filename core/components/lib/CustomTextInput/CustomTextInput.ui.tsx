@@ -5,6 +5,7 @@ import { useTheme } from "../../../utils/useTheme.util";
 import CustomText from "../CustomText";
 import EmailIcon from "../../../icons/auth/Email";
 import WarningIcon from "../../../icons/common/warning";
+import SuccessIcon from "../../../icons/common/success";
 
 interface ICustomTextInput {
     placeholder: string;
@@ -14,6 +15,7 @@ interface ICustomTextInput {
     keyboardType?: KeyboardTypeOptions;
     isErr?: boolean;
     errMsg?: string;
+    isValid?: boolean;
 }
 
 const CustomTextInput = (props: ICustomTextInput) => {
@@ -59,6 +61,7 @@ const CustomTextInput = (props: ICustomTextInput) => {
                     keyboardType={props.keyboardType}
                     defaultValue={props.defaultValue}
                 />
+                {props.isValid && <SuccessIcon />}
                 {props.isErr && <WarningIcon />}
             </View>
             {props.isErr && (

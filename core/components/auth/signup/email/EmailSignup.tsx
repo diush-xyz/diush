@@ -58,6 +58,7 @@ const EmailSignup = () => {
                     marginBottom={32}
                     defaultValue={signupStore.email}
                     keyboardType="email-address"
+                    isValid={allClear}
                     isErr={!allClear && !firstTime}
                     errMsg={errMsg}
                 />
