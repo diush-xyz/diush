@@ -39,6 +39,13 @@ export default class SignupStore {
     setCurrentStep(newCurrentStep: number) {
         this.currentStep = newCurrentStep;
     }
+
+    cancel() {
+        this.currentStep = 0;
+        this.email = "";
+        this.password = "";
+        this.username = "";
+    }
 }
 
 const StoreContext = React.createContext<SignupStore>(new SignupStore());

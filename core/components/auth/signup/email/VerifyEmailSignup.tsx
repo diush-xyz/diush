@@ -5,6 +5,7 @@ import FlowTemplate from "../../../lib/FlowTemplate";
 import PopupHeader from "../../../lib/PopupHeader";
 import { observer } from "mobx-react";
 import { useSignupStore } from "../../../../state/auth/Signup.store";
+import CustomText from "../../../lib/CustomText";
 
 const VerifyEmailSignup = () => {
     const signupStore = useSignupStore();
@@ -27,23 +28,7 @@ const VerifyEmailSignup = () => {
                 title="verify"
                 desc={"please enter your email address below."}
             >
-                {/* <CustomTextInput
-                    placeholder="my email"
-                    onChangeText={text => signupStore.setEmail(text)}
-                    marginBottom={32}
-                />
-//TODO: Add disabled validation with text field
-                <LargeButton
-                    title="continue"
-                    onPress={() => null}
-                    footer
-                    disabled={isReady}
-                    footerButtonTitle="cancel"
-                    footerButtonOnPress={() => {
-                        signupStore.setCurrentStep(0);
-                        //TODO: Clear all fields respective to the signup process (once implemented) here
-                    }}
-                /> */}
+                <CustomText primary>This is the verification</CustomText>
             </FlowTemplate>
         </BottomSheetView>
     );

@@ -73,10 +73,7 @@ const EmailSignup = () => {
                     footer
                     disabled={!allClear && !firstTime}
                     footerButtonTitle="cancel"
-                    footerButtonOnPress={() => {
-                        signupStore.setCurrentStep(0);
-                        //TODO: Clear all fields respective to the signup process (once implemented) here
-                    }}
+                    footerButtonOnPress={() => signupStore.cancel()}
                 />
             </FlowTemplate>
         </BottomSheetView>
