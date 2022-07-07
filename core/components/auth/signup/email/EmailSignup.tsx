@@ -14,23 +14,24 @@ import { validateEmail } from "../../../../utils/validateEmail.util";
 
 const EmailSignup = () => {
     const signupStore = useSignupStore();
-    const [isReady, setIsReady] = React.useState<boolean>(false);
-    // const [errMsg, setErrMsg] = React.useState<string>
-
-    // const handleErrors = () => {
-    //     switch (signupStore.email) {
-
-    //     }
-    // }
+    const [firstTime, setFirstTime] = React.useState<boolean>(true);
+    const [allClear, setAllClear] = React.useState(false);
+    const [errMsg, setErrMsg] = React.useState<string>("");
 
     React.useEffect(() => {
         //TODO: Come back later (two-letter domain extensions do not work, neither does .ed.cr,)
         // setIsReady(validateEmail(signupStore.email));
-        setIsReady(
-            signupStore.email.includes("@") && signupStore.email.length > 0
-        );
+
+        // check if signupStore.email is empty or does not contain an @ sign. if any of these conditions are true, set the allClear var to false and set the errMsg var to the appropriate error message.
+        if (signupStore.email === "" || !signupStore.email.includes("@")) {
+            setAllClear(false);
+            setErrMsg("oop! you need a valid email address to continue.");
+        } else {
+            setAllClear(true);
+        }
+
         console.log("the email: " + signupStore.email);
-        console.log(isReady);
+        console.log(allClear);
     });
 
     return (
@@ -57,17 +58,20 @@ const EmailSignup = () => {
                     marginBottom={32}
                     defaultValue={signupStore.email}
                     keyboardType="email-address"
-                    errMsg="This is an err msg"
-                    isErr
+                    isErr={!allClear && !firstTime}
+                    errMsg={errMsg}
                 />
                 {/*//TODO: Add disabled validation with text field*/}
                 <LargeButton
                     title="continue"
                     onPress={() => {
-                        signupStore.setCurrentStep(2);
+                        setFirstTime(false);
+                        if (allClear) {
+                            signupStore.setCurrentStep(2);
+                        }
                     }}
                     footer
-                    disabled={!isReady}
+                    disabled={!allClear && !firstTime}
                     footerButtonTitle="cancel"
                     footerButtonOnPress={() => {
                         signupStore.setCurrentStep(0);

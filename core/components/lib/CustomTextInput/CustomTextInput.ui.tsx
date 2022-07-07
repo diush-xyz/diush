@@ -73,7 +73,7 @@ const CustomTextInput = (props: ICustomTextInput) => {
                     }}
                 >
                     <CustomText primary fontSize={12} font="Bold">
-                        This is an error
+                        {props.errMsg ?? "something went wrong!"}
                     </CustomText>
                 </View>
             )}
