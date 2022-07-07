@@ -13,7 +13,6 @@ import CustomTextInput from "../../../lib/CustomTextInput";
 
 const EmailSignup = () => {
     const signupStore = useSignupStore();
-    const theme = useTheme();
 
     return (
         <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
@@ -33,7 +32,7 @@ const EmailSignup = () => {
             >
                 <CustomTextInput
                     placeholder="my email"
-                    onChangeText={text => null}
+                    onChangeText={text => signupStore.setEmail(text)}
                     marginBottom={32}
                 />
                 {/*//TODO: Add disabled validation with text field*/}

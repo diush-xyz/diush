@@ -1,18 +1,17 @@
-export interface User {
+export interface IUser {
     id: string;
     displayName: string;
     email: string;
-    createdAt: string;
     photoURL: string;
-    lastSignIn: string;
     username: string;
+    products?: IProduct[];
 }
 
-export interface Listing {
-    text: string;
-    /* Creator user id */
+export interface IProduct {
+    id: string;
     uid: string;
-    postedAt: Date;
+    title: string;
+    //TODO: Add more
 }
 
 export enum AuthStatus {
