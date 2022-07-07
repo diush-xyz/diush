@@ -39,6 +39,7 @@ export const CustomChildLargeButton = (props: ICustomChildLargeButton) => {
                     alignSelf: "center",
                     borderRadius: 22,
                     padding: 2,
+                    maxWidth: 328,
                 }}
             >
                 <TouchableOpacity
