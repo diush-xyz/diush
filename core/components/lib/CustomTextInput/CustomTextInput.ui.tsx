@@ -3,6 +3,8 @@ import React from "react";
 import { observer } from "mobx-react";
 import { useTheme } from "../../../utils/useTheme.util";
 import CustomText from "../CustomText";
+import EmailIcon from "../../../icons/auth/Email";
+import WarningIcon from "../../../icons/common/warning";
 
 interface ICustomTextInput {
     placeholder: string;
@@ -17,30 +19,48 @@ interface ICustomTextInput {
 const CustomTextInput = (props: ICustomTextInput) => {
     const theme = useTheme();
     return (
-        <View style={{ display: "flex", width: "100%" }}>
-            <TextInput
+        <View
+            style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+            }}
+        >
+            <View
                 style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexDirection: "row",
                     backgroundColor: "rgba(255,255,255,0.05)",
                     height: 45,
-                    paddingHorizontal: 10,
-                    paddingVertical: 14,
                     width: "100%",
-                    fontSize: 14,
-                    fontWeight: "bold",
-                    borderRadius: 12,
-                    color: theme.primaryText,
                     maxWidth: 328,
                     marginBottom: props.isErr ? 7 : props.marginBottom || 0,
-                    marginHorizontal: 20,
-                    //TODO: remove this in extraction
+                    borderRadius: 12,
+                    paddingHorizontal: 20,
                 }}
-                selectionColor={theme.accent}
-                placeholderTextColor={theme.secondary}
-                placeholder="your email"
-                onChangeText={props.onChangeText}
-                keyboardType={props.keyboardType}
-                defaultValue={props.defaultValue}
-            />
+            >
+                <TextInput
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        flex: 1,
+                        fontSize: 14,
+                        fontWeight: "bold",
+                        color: theme.primaryText,
+                        //TODO: remove this in extraction
+                    }}
+                    selectionColor={theme.accent}
+                    placeholderTextColor={theme.secondary}
+                    placeholder="your email"
+                    onChangeText={props.onChangeText}
+                    keyboardType={props.keyboardType}
+                    defaultValue={props.defaultValue}
+                />
+                {props.isErr && <WarningIcon />}
+            </View>
             {props.isErr && (
                 <View
                     style={{
