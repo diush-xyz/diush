@@ -15,6 +15,13 @@ import { validateEmail } from "../../../../utils/validateEmail.util";
 const EmailSignup = () => {
     const signupStore = useSignupStore();
     const [isReady, setIsReady] = React.useState<boolean>(false);
+    // const [errMsg, setErrMsg] = React.useState<string>
+
+    // const handleErrors = () => {
+    //     switch (signupStore.email) {
+
+    //     }
+    // }
 
     React.useEffect(() => {
         //TODO: Come back later (two-letter domain extensions do not work, neither does .ed.cr,)
@@ -50,6 +57,8 @@ const EmailSignup = () => {
                     marginBottom={32}
                     defaultValue={signupStore.email}
                     keyboardType="email-address"
+                    errMsg="This is an err msg"
+                    isErr
                 />
                 {/*//TODO: Add disabled validation with text field*/}
                 <LargeButton
