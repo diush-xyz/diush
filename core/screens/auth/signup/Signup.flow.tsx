@@ -15,6 +15,7 @@ import SignupOptionButton from "../../../components/auth/SignupOptionbutton/Sign
 import { useSignupStore } from "../../../state/auth/Signup.store";
 import SignupWelcome from "../../../components/auth/signup/SignupWelcome";
 import EmailSignup from "../../../components/auth/signup/email/EmailSignup";
+import VerifyEmailSignup from "../../../components/auth/signup/email/VerifyEmailSignup";
 
 const SignupFlow = () => {
     const authStore = useAuthStore();
@@ -26,6 +27,8 @@ const SignupFlow = () => {
                 return <SignupWelcome />;
             case 1:
                 return <EmailSignup />;
+            case 2:
+                return <VerifyEmailSignup />;
         }
     };
 
