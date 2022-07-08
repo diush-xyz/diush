@@ -70,6 +70,7 @@ const EmailSignup = () => {
                     isValid={allClear}
                     isErr={!allClear && !firstTime}
                     errMsg={errMsg}
+                    returnKeyType="done"
                 />
                 {/*//TODO: Add disabled validation with text field*/}
                 <LargeButton
