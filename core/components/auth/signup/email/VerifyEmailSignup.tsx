@@ -7,7 +7,7 @@ import { observer } from "mobx-react";
 import { useSignupStore } from "../../../../state/auth/Signup.store";
 import CustomText from "../../../lib/CustomText";
 import LargeButton from "../../../lib/LargeButton";
-import { View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { MAX_WIDTH } from "../../../../utils/constants";
 import OTPInputField from "../../OTPInputField/OTPInputField";
 
@@ -29,7 +29,8 @@ const VerifyEmailSignup = () => {
             />
             <View
                 style={{
-                    marginBottom: 200,
+                    position: "absolute",
+                    top: 100,
                     width: "100%",
                     maxWidth: MAX_WIDTH,
                     alignItems: "center",
@@ -50,14 +51,33 @@ const VerifyEmailSignup = () => {
                     </CustomText>
                 </View>
                 <OTPInputField />
-                <LargeButton
-                    title="continue"
-                    onPress={() => null}
-                    footer
-                    // disabled={!allClear && !firstTime}
-                    footerButtonTitle="cancel"
-                    footerButtonOnPress={() => signupStore.cancel()}
-                />
+                <View
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        width: "100%",
+                        backgroundColor: "rgba(255, 255, 255, 0.05)",
+                        padding: 8,
+                        borderRadius: 8,
+                        marginTop: 45,
+                    }}
+                >
+                    <CustomText primary>{signupStore.email}</CustomText>
+                    <CustomText secondary>Resend code: 45 sec</CustomText>
+                </View>
+                <TouchableOpacity onPress={() => signupStore.cancel()}>
+                    <CustomText
+                        font="Heavy"
+                        accent
+                        style={{
+                            alignSelf: "center",
+                            marginTop: 25,
+                        }}
+                    >
+                        cancel
+                    </CustomText>
+                </TouchableOpacity>
             </View>
         </BottomSheetView>
     );
