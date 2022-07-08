@@ -6,6 +6,7 @@ import { GLOBAL_STYLES } from "../../../../@types/GlobalStyles";
 import PopupHeader from "../../../lib/PopupHeader";
 import { useSignupStore } from "../../../../state/auth/Signup.store";
 import { observer } from "mobx-react";
+import FlowTemplate from "../../../lib/FlowTemplate";
 
 const PasswordSignup = () => {
     const signupStore = useSignupStore();
@@ -22,6 +23,14 @@ const PasswordSignup = () => {
                 currentStep={3}
                 totalSteps={6}
             />
+            <FlowTemplate
+                circleEmoji="🔐"
+                title="password"
+                desc="make sure it's difficult for others to guess."
+                // marginBottom={keyboardShow ? "200px" : null}
+            >
+                <CustomText primary>Password</CustomText>
+            </FlowTemplate>
         </BottomSheetView>
     );
 };
