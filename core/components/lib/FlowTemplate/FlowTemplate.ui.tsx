@@ -9,11 +9,12 @@ interface IFlowTemplate {
     title: string;
     desc: string;
     children: React.ReactNode;
+    marginBottom?: string;
 }
 
 const FlowTemplate = (props: IFlowTemplate) => {
     return (
-        <FlowTemplateWrapper>
+        <FlowTemplateWrapper marginBottom={props.marginBottom}>
             <CustomGradientCircle emoji={props.circleEmoji} />
             <CustomText
                 primary

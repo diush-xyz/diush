@@ -1,4 +1,4 @@
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, Keyboard } from "react-native";
 import React from "react";
 import { BottomSheetView } from "@gorhom/bottom-sheet";
 import { GLOBAL_STYLES } from "../../../../@types/GlobalStyles";
@@ -11,12 +11,18 @@ import { useSignupStore } from "../../../../state/auth/Signup.store";
 import { useTheme } from "../../../../utils/useTheme.util";
 import CustomTextInput from "../../../lib/CustomTextInput";
 import { validateEmail } from "../../../../utils/validateEmail.util";
+import CustomText from "../../../lib/CustomText";
+import KeyboardListener from "react-native-keyboard-listener";
+
+//TODO: Animation for keyboardShow FlowTemplate margin-bottom
 
 const EmailSignup = () => {
     const signupStore = useSignupStore();
     const [firstTime, setFirstTime] = React.useState<boolean>(true);
     const [allClear, setAllClear] = React.useState(false);
     const [errMsg, setErrMsg] = React.useState<string>("");
+
+    const [keyboardShow, setKeyboardShow] = React.useState<boolean>();
 
     React.useEffect(() => {
         //TODO: Come back later (two-letter domain extensions do not work, neither does .ed.cr,)
@@ -36,6 +42,10 @@ const EmailSignup = () => {
 
     return (
         <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
+            <KeyboardListener
+                onWillShow={() => setKeyboardShow(true)}
+                onWillHide={() => setKeyboardShow(false)}
+            />
             <PopupHeader
                 backArrow
                 backArrowOnPress={() =>
@@ -51,6 +61,7 @@ const EmailSignup = () => {
                 circleEmoji="✉️"
                 title="email"
                 desc={"please enter your email address below."}
+                marginBottom={keyboardShow ? "200px" : null}
             >
                 <CustomTextInput
                     placeholder="my email"
@@ -61,8 +72,8 @@ const EmailSignup = () => {
                     isValid={allClear}
                     isErr={!allClear && !firstTime}
                     errMsg={errMsg}
+                    returnKeyType="done"
                 />
-                {/*//TODO: Add disabled validation with text field*/}
                 <LargeButton
                     title="continue"
                     onPress={() => {

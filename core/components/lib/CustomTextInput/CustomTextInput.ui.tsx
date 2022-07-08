@@ -1,4 +1,10 @@
-import { View, Text, TextInput, KeyboardTypeOptions } from "react-native";
+import {
+    View,
+    Text,
+    TextInput,
+    KeyboardTypeOptions,
+    ReturnKeyTypeOptions,
+} from "react-native";
 import React from "react";
 import { observer } from "mobx-react";
 import { useTheme } from "../../../utils/useTheme.util";
@@ -17,10 +23,12 @@ interface ICustomTextInput {
     isErr?: boolean;
     errMsg?: string;
     isValid?: boolean;
+    returnKeyType?: ReturnKeyTypeOptions;
 }
 
 const CustomTextInput = (props: ICustomTextInput) => {
     const theme = useTheme();
+
     return (
         <View
             style={{
@@ -61,6 +69,7 @@ const CustomTextInput = (props: ICustomTextInput) => {
                     onChangeText={props.onChangeText}
                     keyboardType={props.keyboardType}
                     defaultValue={props.defaultValue}
+                    returnKeyType={props.returnKeyType}
                 />
                 {props.isValid && <SuccessIcon />}
                 {props.isErr && <WarningIcon />}

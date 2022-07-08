@@ -1,10 +1,14 @@
 import styled from "styled-components/native";
 
-export const FlowTemplateWrapper = styled.View`
+interface FlowTemplateWrapperProps {
+    marginBottom?: string;
+}
+
+export const FlowTemplateWrapper = styled.View<FlowTemplateWrapperProps>`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin-bottom: 90px;
+    margin-bottom: ${props => props.marginBottom || "30px"};
 `;
