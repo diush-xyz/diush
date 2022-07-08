@@ -4,6 +4,9 @@ import { StyleSheet } from "react-native";
 import OTPInputView from "@twotalltotems/react-native-otp-input";
 import { useTheme } from "../../../utils/useTheme.util";
 import { ThemeConsumer } from "styled-components";
+import { observer } from "mobx-react";
+import { useSignupStore } from "../../../state/auth/Signup.store";
+import { generateOtpCode } from "../../../utils/generateOtpCode.util";
 
 interface IOTPInputField {
     code: string;
@@ -13,6 +16,15 @@ interface IOTPInputField {
 const theme = useTheme();
 
 const OTPInputField = () => {
+    const signupStore = useSignupStore();
+
+    React.useEffect(() => {
+        //generate the initial OTP code:
+        signupStore.setOtpCode(generateOtpCode());
+        signupStore.setCodeMatches(false);
+        console.log("the code: " + signupStore.otpCode);
+    }, []);
+
     return (
         <>
             {/*@ts-ignore*/}
@@ -22,10 +34,27 @@ const OTPInputField = () => {
                 // code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
                 // onCodeChanged = {code => { this.setState({code})}}
                 autoFocusOnLoad
-                codeInputFieldStyle={styles.underlineStyleBase}
+                codeInputFieldStyle={{
+                    width: 39,
+                    height: 45,
+                    borderWidth: 0,
+                    borderBottomWidth: 2,
+                    fontSize: 20,
+                    fontFamily: "Heavy",
+                    borderColor: signupStore.codeMatches
+                        ? theme.success
+                        : theme.secondary,
+                    color: theme.primaryText,
+                }}
                 codeInputHighlightStyle={styles.underlineStyleHighLighted}
                 onCodeFilled={code => {
-                    console.log(`Code is ${code}, you are good to go!`);
+                    if (code === signupStore.otpCode) {
+                        console.log("it matches!");
+                        signupStore.setCodeMatches(true);
+                    } else {
+                        console.log("nope!");
+                        signupStore.setCodeMatches(false);
+                    }
                 }}
                 selectionColor={theme.accent}
             />
@@ -43,20 +72,11 @@ const styles = StyleSheet.create({
         borderColor: theme.accent,
     },
 
-    underlineStyleBase: {
-        width: 39,
-        height: 45,
-        borderWidth: 0,
-        borderBottomWidth: 2,
-        fontSize: 20,
-        fontFamily: "Heavy",
-        borderColor: theme.secondary,
-        color: theme.primaryText,
-    },
+    underlineStyleBase: {},
 
     underlineStyleHighLighted: {
         borderColor: theme.accent,
     },
 });
 
-export default OTPInputField;
+export default observer(OTPInputField);

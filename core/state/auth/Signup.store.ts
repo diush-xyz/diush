@@ -40,6 +40,18 @@ export default class SignupStore {
         this.currentStep = newCurrentStep;
     }
 
+    otpCode: string = "";
+
+    setOtpCode(newOtpCode: string) {
+        this.otpCode = newOtpCode;
+    }
+
+    codeMatches: boolean = false;
+
+    setCodeMatches(newCodeMatches: boolean) {
+        this.codeMatches = newCodeMatches;
+    }
+
     cancel() {
         this.currentStep = 0;
         this.email = "";
