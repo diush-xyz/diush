@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 
 import OTPInputView from "@twotalltotems/react-native-otp-input";
 import { useTheme } from "../../../utils/useTheme.util";
+import { ThemeConsumer } from "styled-components";
 
 interface IOTPInputField {
     code: string;
@@ -16,7 +17,7 @@ const OTPInputField = () => {
         <>
             {/*@ts-ignore*/}
             <OTPInputView
-                style={{ width: 180, height: 200 }}
+                style={{ width: 180, height: 80 }}
                 pinCount={4}
                 // code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
                 // onCodeChanged = {code => { this.setState({code})}}
@@ -26,6 +27,7 @@ const OTPInputField = () => {
                 onCodeFilled={code => {
                     console.log(`Code is ${code}, you are good to go!`);
                 }}
+                selectionColor={theme.accent}
             />
         </>
     );
@@ -34,7 +36,7 @@ const OTPInputField = () => {
 const styles = StyleSheet.create({
     borderStyleBase: {
         width: 39,
-        height: 45,
+        height: 50,
     },
 
     borderStyleHighLighted: {
