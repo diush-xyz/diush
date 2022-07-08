@@ -14,6 +14,8 @@ import { validateEmail } from "../../../../utils/validateEmail.util";
 import CustomText from "../../../lib/CustomText";
 import KeyboardListener from "react-native-keyboard-listener";
 
+//TODO: Animation for keyboardShow FlowTemplate margin-bottom
+
 const EmailSignup = () => {
     const signupStore = useSignupStore();
     const [firstTime, setFirstTime] = React.useState<boolean>(true);
