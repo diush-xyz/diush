@@ -10,6 +10,7 @@ import LargeButton from "../../../lib/LargeButton";
 import { TouchableOpacity, View } from "react-native";
 import { MAX_WIDTH } from "../../../../utils/constants";
 import OTPInputField from "../../OTPInputField/OTPInputField";
+import { censorEmail } from "../../../../utils/censor.util";
 
 const VerifyEmailSignup = () => {
     const signupStore = useSignupStore();
@@ -47,7 +48,8 @@ const VerifyEmailSignup = () => {
                         Enter OTP
                     </CustomText>
                     <CustomText secondary style={{ marginTop: 6 }}>
-                        we sent a 4-digit code to your email address.
+                        we sent a 4-digit code to your email address so we know
+                        it's yours.
                     </CustomText>
                 </View>
                 <OTPInputField />
@@ -63,7 +65,9 @@ const VerifyEmailSignup = () => {
                         marginTop: 45,
                     }}
                 >
-                    <CustomText primary>{signupStore.email}</CustomText>
+                    <CustomText primary>
+                        {censorEmail(signupStore.email)}
+                    </CustomText>
                     <CustomText secondary>Resend code: 45 sec</CustomText>
                 </View>
                 <TouchableOpacity onPress={() => signupStore.cancel()}>
