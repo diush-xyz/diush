@@ -29,27 +29,36 @@ const VerifyEmailSignup = () => {
             />
             <View
                 style={{
-                    alignItems: "flex-start",
+                    marginBottom: 200,
                     width: "100%",
                     maxWidth: MAX_WIDTH,
+                    alignItems: "center",
+                    justifyContent: "center",
                 }}
             >
-                <CustomText primary font="Bold">
-                    Enter OTP
-                </CustomText>
-                <CustomText secondary style={{ marginTop: 6 }}>
-                    we sent a 4-digit code to your email address.
-                </CustomText>
+                <View
+                    style={{
+                        alignItems: "flex-start",
+                        width: "100%",
+                    }}
+                >
+                    <CustomText primary font="Bold">
+                        Enter OTP
+                    </CustomText>
+                    <CustomText secondary style={{ marginTop: 6 }}>
+                        we sent a 4-digit code to your email address.
+                    </CustomText>
+                </View>
+                <OTPInputField />
+                <LargeButton
+                    title="continue"
+                    onPress={() => null}
+                    footer
+                    // disabled={!allClear && !firstTime}
+                    footerButtonTitle="cancel"
+                    footerButtonOnPress={() => signupStore.cancel()}
+                />
             </View>
-            <OTPInputField />
-            <LargeButton
-                title="continue"
-                onPress={() => null}
-                footer
-                // disabled={!allClear && !firstTime}
-                footerButtonTitle="cancel"
-                footerButtonOnPress={() => signupStore.cancel()}
-            />
         </BottomSheetView>
     );
 };
