@@ -16,6 +16,7 @@ import { useSignupStore } from "../../../state/auth/Signup.store";
 import SignupWelcome from "../../../components/auth/signup/SignupWelcome";
 import EmailSignup from "../../../components/auth/signup/email/EmailSignup";
 import VerifyEmailSignup from "../../../components/auth/signup/email/VerifyEmailSignup";
+import PasswordSignup from "../../../components/auth/signup/email/PasswordSignup";
 
 const SignupFlow = () => {
     const authStore = useAuthStore();
@@ -29,6 +30,8 @@ const SignupFlow = () => {
                 return <EmailSignup />;
             case 2:
                 return <VerifyEmailSignup />;
+            case 3:
+                return <PasswordSignup />;
         }
     };
 

@@ -23,6 +23,7 @@ const OTPInputField = () => {
         signupStore.setOtpCode(generateOtpCode());
         signupStore.setCodeMatches(false);
         console.log("the code: " + signupStore.otpCode);
+        signupStore.setIsVerifyError(false);
     }, []);
 
     return (
@@ -51,6 +52,11 @@ const OTPInputField = () => {
                     if (code === signupStore.otpCode) {
                         console.log("it matches!");
                         signupStore.setCodeMatches(true);
+                        setTimeout(() => {
+                            signupStore.setCurrentStep(
+                                signupStore.currentStep + 1
+                            );
+                        }, 500);
                     } else {
                         console.log("nope!");
                         signupStore.setCodeMatches(false);
