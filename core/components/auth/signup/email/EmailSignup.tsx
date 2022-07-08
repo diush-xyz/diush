@@ -72,7 +72,6 @@ const EmailSignup = () => {
                     errMsg={errMsg}
                     returnKeyType="done"
                 />
-                {/*//TODO: Add disabled validation with text field*/}
                 <LargeButton
                     title="continue"
                     onPress={() => {
