@@ -54,6 +54,7 @@ const OTPInputField = () => {
                     } else {
                         console.log("nope!");
                         signupStore.setCodeMatches(false);
+                        signupStore.setIsVerifyError(true);
                     }
                 }}
                 selectionColor={theme.accent}

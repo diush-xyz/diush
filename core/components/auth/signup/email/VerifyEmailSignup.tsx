@@ -11,9 +11,11 @@ import { TouchableOpacity, View } from "react-native";
 import { MAX_WIDTH } from "../../../../utils/constants";
 import OTPInputField from "../../OTPInputField/OTPInputField";
 import { censorEmail } from "../../../../utils/censor.util";
+import { useTheme } from "../../../../utils/useTheme.util";
 
 const VerifyEmailSignup = () => {
     const signupStore = useSignupStore();
+    const theme = useTheme();
 
     return (
         <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
@@ -31,17 +33,34 @@ const VerifyEmailSignup = () => {
             <View
                 style={{
                     position: "absolute",
-                    top: 100,
+                    top: signupStore.isVerifyError ? 50 : 100,
                     width: "100%",
-                    maxWidth: MAX_WIDTH,
                     alignItems: "center",
                     justifyContent: "center",
                 }}
             >
+                {signupStore.isVerifyError && (
+                    <View
+                        style={{
+                            display: "flex",
+                            backgroundColor: theme.accent,
+                            paddingHorizontal: 10,
+                            paddingVertical: 12,
+                            width: "100%",
+                            marginBottom: 50,
+                        }}
+                    >
+                        <CustomText primary fontSize={12} font="Bold">
+                            wrong code! try again. prompt a resend below if you
+                            need it.
+                        </CustomText>
+                    </View>
+                )}
                 <View
                     style={{
                         alignItems: "flex-start",
                         width: "100%",
+                        maxWidth: MAX_WIDTH,
                     }}
                 >
                     <CustomText primary font="Bold">
@@ -63,6 +82,7 @@ const VerifyEmailSignup = () => {
                         padding: 8,
                         borderRadius: 8,
                         marginTop: 45,
+                        maxWidth: MAX_WIDTH,
                     }}
                 >
                     <CustomText primary>

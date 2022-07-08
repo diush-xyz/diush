@@ -52,6 +52,12 @@ export default class SignupStore {
         this.codeMatches = newCodeMatches;
     }
 
+    isVerifyError: boolean = false;
+
+    setIsVerifyError(newIsVerifyError: boolean) {
+        this.isVerifyError = newIsVerifyError;
+    }
+
     cancel() {
         this.currentStep = 0;
         this.email = "";
