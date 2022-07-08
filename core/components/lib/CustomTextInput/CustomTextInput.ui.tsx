@@ -21,6 +21,7 @@ interface ICustomTextInput {
 
 const CustomTextInput = (props: ICustomTextInput) => {
     const theme = useTheme();
+
     return (
         <View
             style={{
