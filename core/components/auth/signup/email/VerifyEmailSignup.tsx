@@ -9,6 +9,7 @@ import CustomText from "../../../lib/CustomText";
 import LargeButton from "../../../lib/LargeButton";
 import { View } from "react-native";
 import { MAX_WIDTH } from "../../../../utils/constants";
+import OTPInputField from "../../OTPInputField/OTPInputField";
 
 const VerifyEmailSignup = () => {
     const signupStore = useSignupStore();
@@ -40,6 +41,7 @@ const VerifyEmailSignup = () => {
                     we sent a 4-digit code to your email address.
                 </CustomText>
             </View>
+            <OTPInputField />
             <LargeButton
                 title="continue"
                 onPress={() => null}

@@ -2,13 +2,21 @@ import React from "react";
 import { StyleSheet } from "react-native";
 
 import OTPInputView from "@twotalltotems/react-native-otp-input";
+import { useTheme } from "../../../utils/useTheme.util";
+
+interface IOTPInputField {
+    code: string;
+    onCodeFilled: (code: string) => void;
+}
+
+const theme = useTheme();
 
 const OTPInputField = () => {
     return (
         <>
             {/*@ts-ignore*/}
             <OTPInputView
-                style={{ width: "80%", height: 200 }}
+                style={{ width: 180, height: 200 }}
                 pinCount={4}
                 // code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
                 // onCodeChanged = {code => { this.setState({code})}}
@@ -25,23 +33,27 @@ const OTPInputField = () => {
 
 const styles = StyleSheet.create({
     borderStyleBase: {
-        width: 30,
+        width: 39,
         height: 45,
     },
 
     borderStyleHighLighted: {
-        borderColor: "#03DAC6",
+        borderColor: theme.accent,
     },
 
     underlineStyleBase: {
-        width: 30,
+        width: 39,
         height: 45,
         borderWidth: 0,
-        borderBottomWidth: 1,
+        borderBottomWidth: 2,
+        fontSize: 20,
+        fontFamily: "Heavy",
+        borderColor: theme.secondary,
+        color: theme.primaryText,
     },
 
     underlineStyleHighLighted: {
-        borderColor: "#03DAC6",
+        borderColor: theme.accent,
     },
 });
 
