@@ -10,16 +10,37 @@ import { observer } from "mobx-react";
 import { useSignupStore } from "../../../../state/auth/Signup.store";
 import { useTheme } from "../../../../utils/useTheme.util";
 import CustomTextInput from "../../../lib/CustomTextInput";
+import { validateEmail } from "../../../../utils/validateEmail.util";
 
 const EmailSignup = () => {
     const signupStore = useSignupStore();
-    const theme = useTheme();
+    const [firstTime, setFirstTime] = React.useState<boolean>(true);
+    const [allClear, setAllClear] = React.useState(false);
+    const [errMsg, setErrMsg] = React.useState<string>("");
+
+    React.useEffect(() => {
+        //TODO: Come back later (two-letter domain extensions do not work, neither does .ed.cr,)
+        // setIsReady(validateEmail(signupStore.email));
+
+        // check if signupStore.email is empty or does not contain an @ sign. if any of these conditions are true, set the allClear var to false and set the errMsg var to the appropriate error message.
+        if (signupStore.email === "" || !signupStore.email.includes("@")) {
+            setAllClear(false);
+            setErrMsg("oop! you need a valid email address to continue.");
+        } else {
+            setAllClear(true);
+        }
+
+        console.log("the email: " + signupStore.email);
+        console.log(allClear);
+    });
 
     return (
         <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
             <PopupHeader
                 backArrow
-                backArrowOnPress={() => signupStore.setCurrentStep(0)}
+                backArrowOnPress={() =>
+                    signupStore.setCurrentStep(signupStore.currentStep - 1)
+                }
                 title="email"
                 subtitle="signup"
                 progressIndicator
@@ -33,19 +54,27 @@ const EmailSignup = () => {
             >
                 <CustomTextInput
                     placeholder="my email"
-                    onChangeText={text => null}
+                    onChangeText={text => signupStore.setEmail(text)}
                     marginBottom={32}
+                    defaultValue={signupStore.email}
+                    keyboardType="email-address"
+                    isValid={allClear}
+                    isErr={!allClear && !firstTime}
+                    errMsg={errMsg}
                 />
                 {/*//TODO: Add disabled validation with text field*/}
                 <LargeButton
                     title="continue"
-                    onPress={() => null}
-                    footer
-                    footerButtonTitle="cancel"
-                    footerButtonOnPress={() => {
-                        signupStore.setCurrentStep(0);
-                        //TODO: Clear all fields respective to the signup process (once implemented) here
+                    onPress={() => {
+                        setFirstTime(false);
+                        if (allClear) {
+                            signupStore.setCurrentStep(2);
+                        }
                     }}
+                    footer
+                    disabled={!allClear && !firstTime}
+                    footerButtonTitle="cancel"
+                    footerButtonOnPress={() => signupStore.cancel()}
                 />
             </FlowTemplate>
         </BottomSheetView>

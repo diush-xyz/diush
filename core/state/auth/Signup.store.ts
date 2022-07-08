@@ -1,13 +1,31 @@
 import { makeAutoObservable } from "mobx";
 import React from "react";
-import { AuthStatus, SignupMethods } from "../../@types/GlobalTypes";
+import { AuthStatus, IUser, SignupMethods } from "../../@types/GlobalTypes";
 
 /**
- * A store to handle anything auth-related.
+ * A store to handle anything signup-related.
  */
 export default class SignupStore {
     constructor() {
         makeAutoObservable(this);
+    }
+
+    email: string = "";
+
+    setEmail(newEmail: string) {
+        this.email = newEmail;
+    }
+
+    password: string = "";
+
+    setPassword(newPassword: string) {
+        this.password = newPassword;
+    }
+
+    username: string = "";
+
+    setUsername(newUsername: string) {
+        this.username = newUsername;
     }
 
     method: SignupMethods;
@@ -20,6 +38,13 @@ export default class SignupStore {
 
     setCurrentStep(newCurrentStep: number) {
         this.currentStep = newCurrentStep;
+    }
+
+    cancel() {
+        this.currentStep = 0;
+        this.email = "";
+        this.password = "";
+        this.username = "";
     }
 }
 
