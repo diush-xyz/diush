@@ -50,15 +50,15 @@ const OTPInputField = () => {
                 codeInputHighlightStyle={styles.underlineStyleHighLighted}
                 onCodeFilled={code => {
                     if (code === signupStore.otpCode) {
-                        console.log("it matches!");
                         signupStore.setCodeMatches(true);
+                        signupStore.setIsVerifyError(false);
+                        //delay the next step for an improved UX and a proper transition:
                         setTimeout(() => {
                             signupStore.setCurrentStep(
                                 signupStore.currentStep + 1
                             );
                         }, 500);
                     } else {
-                        console.log("nope!");
                         signupStore.setCodeMatches(false);
                         signupStore.setIsVerifyError(true);
                     }
