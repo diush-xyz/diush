@@ -9,9 +9,11 @@ import CustomText from "../../../lib/CustomText";
 import * as Notifications from "expo-notifications";
 import * as Permissions from "expo-permissions";
 import * as Location from "expo-location";
+import { useUtilStore } from "../../../../state/Util.store";
 
 const PermissionsSignup = () => {
     const signupStore = useSignupStore();
+    const utilStore = useUtilStore();
 
     // async function allowsNotificationsAsync() {
     //     const settings = await Notifications.getPermissionsAsync();
@@ -66,8 +68,9 @@ const PermissionsSignup = () => {
             return;
         } else {
             let location = await Location.getCurrentPositionAsync({});
-            console.log(location);
+            utilStore.setLocation(location);
             console.log("GOT IT!!!!");
+            console.log(utilStore.location);
         }
     };
 

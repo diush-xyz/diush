@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import React from "react";
+import * as Location from "expo-location";
 
 /**
  * A store to handle anything auth-related.
@@ -7,6 +8,12 @@ import React from "react";
 export default class UtilStore {
     constructor() {
         makeAutoObservable(this);
+    }
+
+    location: Location.LocationObject;
+
+    setLocation(location: Location.LocationObject) {
+        this.location = location;
     }
 
     isKeyboardOpen: boolean = false;
