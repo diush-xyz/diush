@@ -28,9 +28,9 @@ const SignupFlow = () => {
                 return <SignupWelcome />;
             case 1:
                 return <EmailSignup />;
+            // case 2:
+            //     return <VerifyEmailSignup />;
             case 2:
-                return <VerifyEmailSignup />;
-            case 3:
                 return <PasswordSignup />;
         }
     };
