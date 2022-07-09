@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Platform, Button } from "react-native";
 import React from "react";
 import { BottomSheetView } from "@gorhom/bottom-sheet";
 import { GLOBAL_STYLES } from "../../../../@types/GlobalStyles";
@@ -10,58 +10,25 @@ import * as Notifications from "expo-notifications";
 import * as Permissions from "expo-permissions";
 import * as Location from "expo-location";
 import { useUtilStore } from "../../../../state/Util.store";
+import * as Device from "expo-device";
+
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+    }),
+});
 
 const PermissionsSignup = () => {
     const signupStore = useSignupStore();
     const utilStore = useUtilStore();
+    const [expoPushToken, setExpoPushToken] = React.useState("");
+    const [notification, setNotification] = React.useState(false);
+    const notificationListener = React.useRef();
+    const responseListener = React.useRef();
 
-    // async function allowsNotificationsAsync() {
-    //     const settings = await Notifications.getPermissionsAsync();
-    //     return Notifications.IosAuthorizationStatus
-    // }
-
-    // async function requestPermissionsAsync() {
-    //     return await Notifications.requestPermissionsAsync({
-    //         ios: {
-    //             allowAlert: true,
-    //             allowBadge: true,
-    //             allowSound: true,
-    //             allowAnnouncements: true,
-    //         },
-    //     });
-    // }
-
-    async function registerForPushnotifications() {
-        const { status } = await Permissions.getAsync(
-            Permissions.NOTIFICATIONS
-        );
-
-        if (status != "granted") {
-            const { status } = await Permissions.askAsync(
-                Permissions.NOTIFICATIONS
-            );
-        }
-        if (status != "granted") {
-            console.log("Failed to get the poush token");
-            return;
-        }
-
-        const token = (await Notifications.getExpoPushTokenAsync()).data;
-
-        return token;
-    }
-
-    const handleNotifications = async () => {
-        const { status } = await Notifications.getPermissionsAsync();
-
-        if (status !== "granted") {
-            return "Notifications not granted";
-        } else {
-            return "granted!";
-        }
-    };
-
-    const getLocation = async () => {
+    const handleLocationActions = async () => {
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== "granted") {
             console.log("Permission to access location was denied");
@@ -74,9 +41,48 @@ const PermissionsSignup = () => {
         }
     };
 
+    const hanldeNotificationActions = async () => {
+        let { status } = await Notifications.requestPermissionsAsync();
+        if (status !== "granted") {
+            console.log("Permission to access notifications was denied");
+            await Notifications.requestPermissionsAsync();
+            return;
+        } else {
+            await schedulePushNotification();
+            console.log("Sent!!");
+        }
+    };
+
     React.useEffect(() => {
         // requestPermissionsAsync();
-        getLocation();
+        handleLocationActions();
+        hanldeNotificationActions();
+
+        // registerForPushNotificationsAsync().then(token =>
+        //     setExpoPushToken(token)
+        // );
+
+        // //@ts-ignore
+        // notificationListener.current =
+        //     Notifications.addNotificationReceivedListener(notification => {
+        //         //@ts-ignore
+        //         setNotification(notification);
+        //     });
+
+        // //@ts-ignore
+        // responseListener.current =
+        //     Notifications.addNotificationResponseReceivedListener(response => {
+        //         console.log(response);
+        //     });
+
+        // return () => {
+        //     Notifications.removeNotificationSubscription(
+        //         notificationListener.current
+        //     );
+        //     Notifications.removeNotificationSubscription(
+        //         responseListener.current
+        //     );
+        // };
     }, []);
 
     return (
@@ -86,21 +92,66 @@ const PermissionsSignup = () => {
                 backArrowOnPress={() =>
                     signupStore.setCurrentStep(signupStore.currentStep - 1)
                 }
-                title="password"
+                title="permissions"
                 subtitle="signup"
                 progressIndicator
-                currentStep={3}
-                totalSteps={6}
+                currentStep={4}
+                totalSteps={5}
             />
             <FlowTemplate
-                circleEmoji="🔐"
-                title="password"
-                desc="make sure it's difficult for others to guess."
+                circleEmoji="✉️"
+                title="it's your choice..."
+                desc={
+                    "although strongly discourgaed, you can opt-out of notifications and location settings."
+                }
             >
                 <CustomText primary>Permissions</CustomText>
             </FlowTemplate>
         </BottomSheetView>
     );
 };
+
+async function schedulePushNotification() {
+    await Notifications.scheduleNotificationAsync({
+        content: {
+            title: "💰 New offer: $120 for 'Jordan Socks'",
+            body: "A new offer has been placed for one of your items. View it now!",
+            data: { data: "goes here" },
+        },
+        trigger: { seconds: 2 },
+    });
+}
+
+async function registerForPushNotificationsAsync() {
+    let token;
+    if (Device.isDevice) {
+        const { status: existingStatus } =
+            await Notifications.getPermissionsAsync();
+        let finalStatus = existingStatus;
+        if (existingStatus !== "granted") {
+            const { status } = await Notifications.requestPermissionsAsync();
+            finalStatus = status;
+        }
+        if (finalStatus !== "granted") {
+            alert("Failed to get push token for push notification!");
+            return;
+        }
+        token = (await Notifications.getExpoPushTokenAsync()).data;
+        console.log(token);
+    } else {
+        alert("Must use physical device for Push Notifications");
+    }
+
+    if (Platform.OS === "android") {
+        Notifications.setNotificationChannelAsync("default", {
+            name: "default",
+            importance: Notifications.AndroidImportance.MAX,
+            vibrationPattern: [0, 250, 250, 250],
+            lightColor: "#FF231F7C",
+        });
+    }
+
+    return token;
+}
 
 export default PermissionsSignup;
