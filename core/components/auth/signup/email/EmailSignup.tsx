@@ -13,16 +13,16 @@ import CustomTextInput from "../../../lib/CustomTextInput";
 import { validateEmail } from "../../../../utils/validateEmail.util";
 import CustomText from "../../../lib/CustomText";
 import KeyboardListener from "react-native-keyboard-listener";
+import { useUtilStore } from "../../../../state/Util.store";
 
 //TODO: Animation for keyboardShow FlowTemplate margin-bottom
 
 const EmailSignup = () => {
     const signupStore = useSignupStore();
+    const utilStore = useUtilStore();
     const [firstTime, setFirstTime] = React.useState<boolean>(true);
     const [allClear, setAllClear] = React.useState(false);
     const [errMsg, setErrMsg] = React.useState<string>("");
-
-    const [keyboardShow, setKeyboardShow] = React.useState<boolean>();
 
     React.useEffect(() => {
         //TODO: Come back later (two-letter domain extensions do not work, neither does .ed.cr,)
@@ -42,10 +42,6 @@ const EmailSignup = () => {
 
     return (
         <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
-            <KeyboardListener
-                onWillShow={() => setKeyboardShow(true)}
-                onWillHide={() => setKeyboardShow(false)}
-            />
             <PopupHeader
                 backArrow
                 backArrowOnPress={() =>
@@ -61,7 +57,7 @@ const EmailSignup = () => {
                 circleEmoji="✉️"
                 title="email"
                 desc={"please enter your email address below."}
-                marginBottom={keyboardShow ? "200px" : null}
+                marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
             >
                 <CustomTextInput
                     placeholder="my email"
@@ -79,7 +75,9 @@ const EmailSignup = () => {
                     onPress={() => {
                         setFirstTime(false);
                         if (allClear) {
-                            signupStore.setCurrentStep(2);
+                            signupStore.setCurrentStep(
+                                signupStore.currentStep + 1
+                            );
                         }
                     }}
                     footer

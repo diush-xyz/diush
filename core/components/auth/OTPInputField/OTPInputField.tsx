@@ -21,7 +21,6 @@ const OTPInputField = () => {
     React.useEffect(() => {
         //generate the initial OTP code:
         signupStore.setOtpCode(generateOtpCode());
-        signupStore.setCodeMatches(false);
         console.log("the code: " + signupStore.otpCode);
         signupStore.setIsVerifyError(false);
     }, []);
@@ -58,9 +57,17 @@ const OTPInputField = () => {
                                 signupStore.currentStep + 1
                             );
                         }, 500);
+                        //TODO: Add later
+                        // Haptics.notificationAsync(
+                        //     Haptics.NotificationFeedbackType.Success
+                        // );
                     } else {
                         signupStore.setCodeMatches(false);
                         signupStore.setIsVerifyError(true);
+                        //TODO: Add later
+                        // Haptics.notificationAsync(
+                        //     Haptics.NotificationFeedbackType.Error
+                        // );
                     }
                 }}
                 selectionColor={theme.accent}
