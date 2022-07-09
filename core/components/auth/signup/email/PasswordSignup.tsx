@@ -9,9 +9,11 @@ import { observer } from "mobx-react";
 import FlowTemplate from "../../../lib/FlowTemplate";
 import CustomTextInput from "../../../lib/CustomTextInput";
 import LargeButton from "../../../lib/LargeButton";
+import { useUtilStore } from "../../../../state/Util.store";
 
 const PasswordSignup = () => {
     const signupStore = useSignupStore();
+    const utilStore = useUtilStore();
     const [allClear, setAllClear] = React.useState<boolean>(false);
     const [firstTime, setFirstTime] = React.useState<boolean>(true);
     const [errMsg, setErrMsg] = React.useState<string>("");
@@ -43,7 +45,7 @@ const PasswordSignup = () => {
                 circleEmoji="🔐"
                 title="password"
                 desc="make sure it's difficult for others to guess."
-                // marginBottom={keyboardShow ? "200px" : null}
+                marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
             >
                 <CustomTextInput
                     placeholder="password"

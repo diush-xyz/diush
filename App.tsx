@@ -1,3 +1,4 @@
+import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { DarkTheme } from "./core/style/Colors.style";
@@ -6,10 +7,12 @@ import { ThemeProvider } from "styled-components";
 import AuthScreen from "./core/screens/auth/Auth.screen";
 import * as Font from "expo-font";
 import SplashScreen from "expo-splash-screen";
-import React from "react";
+import KeyboardListener from "react-native-keyboard-listener";
+import { useUtilStore } from "./core/state/Util.store";
 
 export default function App() {
     const [isAppReady, setIsAppReady] = React.useState<boolean>(false);
+    const utilStore = useUtilStore();
 
     //TODO: Add this back later (and prepare() function - view Font and SplashScreen docs from Expo)
     // if (!fontsLoaded) {
@@ -46,6 +49,10 @@ export default function App() {
         // @ts-ignore
         <ThemeProvider theme={DarkTheme}>
             <View style={styles.container}>
+                <KeyboardListener
+                    onWillShow={() => utilStore.setIsKeyboardOpen(true)}
+                    onWillHide={() => utilStore.setIsKeyboardOpen(false)}
+                />
                 <AuthScreen />
                 {/* <Test /> */}
                 <StatusBar style="auto" />
