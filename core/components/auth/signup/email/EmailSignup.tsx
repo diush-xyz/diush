@@ -79,7 +79,9 @@ const EmailSignup = () => {
                     onPress={() => {
                         setFirstTime(false);
                         if (allClear) {
-                            signupStore.setCurrentStep(2);
+                            signupStore.setCurrentStep(
+                                signupStore.currentStep + 1
+                            );
                         }
                     }}
                     footer

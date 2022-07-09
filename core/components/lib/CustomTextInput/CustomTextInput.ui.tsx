@@ -65,7 +65,7 @@ const CustomTextInput = (props: ICustomTextInput) => {
                     }}
                     selectionColor={theme.accent}
                     placeholderTextColor={theme.secondary}
-                    placeholder="your email"
+                    placeholder={props.placeholder}
                     onChangeText={props.onChangeText}
                     keyboardType={props.keyboardType}
                     defaultValue={props.defaultValue}

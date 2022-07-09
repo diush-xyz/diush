@@ -12,6 +12,20 @@ import LargeButton from "../../../lib/LargeButton";
 
 const PasswordSignup = () => {
     const signupStore = useSignupStore();
+    const [allClear, setAllClear] = React.useState<boolean>(false);
+    const [firstTime, setFirstTime] = React.useState<boolean>(true);
+    const [errMsg, setErrMsg] = React.useState<string>("");
+
+    React.useEffect(() => {
+        if (signupStore.password.length < 10) {
+            setAllClear(false);
+            setErrMsg(
+                "Hold up! your password must be at least 10 characters long."
+            );
+        } else {
+            setAllClear(true);
+        }
+    });
     return (
         <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
             <PopupHeader
@@ -32,23 +46,24 @@ const PasswordSignup = () => {
                 // marginBottom={keyboardShow ? "200px" : null}
             >
                 <CustomTextInput
-                    placeholder="my email"
+                    placeholder="password"
                     onChangeText={text => signupStore.setPassword(text)}
                     marginBottom={32}
                     defaultValue={signupStore.password}
-                    keyboardType="email-address"
-                    // isValid={allClear}
-                    // isErr={!allClear && !firstTime}
-                    // errMsg={errMsg}
+                    isValid={allClear}
+                    isErr={!allClear && !firstTime}
+                    errMsg={errMsg}
                     returnKeyType="done"
                 />
                 <LargeButton
                     title="continue"
                     onPress={() => {
-                        // setFirstTime(false);
-                        // if (allClear) {
-                        //     signupStore.setCurrentStep(2);
-                        // }
+                        setFirstTime(false);
+                        if (allClear) {
+                            signupStore.setCurrentStep(
+                                signupStore.currentStep + 1
+                            );
+                        }
                         null;
                     }}
                     footer
