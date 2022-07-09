@@ -6,9 +6,76 @@ import FlowTemplate from "../../../lib/FlowTemplate";
 import PopupHeader from "../../../lib/PopupHeader";
 import { useSignupStore } from "../../../../state/auth/Signup.store";
 import CustomText from "../../../lib/CustomText";
+import * as Notifications from "expo-notifications";
+import * as Permissions from "expo-permissions";
+import * as Location from "expo-location";
 
 const PermissionsSignup = () => {
     const signupStore = useSignupStore();
+
+    // async function allowsNotificationsAsync() {
+    //     const settings = await Notifications.getPermissionsAsync();
+    //     return Notifications.IosAuthorizationStatus
+    // }
+
+    // async function requestPermissionsAsync() {
+    //     return await Notifications.requestPermissionsAsync({
+    //         ios: {
+    //             allowAlert: true,
+    //             allowBadge: true,
+    //             allowSound: true,
+    //             allowAnnouncements: true,
+    //         },
+    //     });
+    // }
+
+    async function registerForPushnotifications() {
+        const { status } = await Permissions.getAsync(
+            Permissions.NOTIFICATIONS
+        );
+
+        if (status != "granted") {
+            const { status } = await Permissions.askAsync(
+                Permissions.NOTIFICATIONS
+            );
+        }
+        if (status != "granted") {
+            console.log("Failed to get the poush token");
+            return;
+        }
+
+        const token = (await Notifications.getExpoPushTokenAsync()).data;
+
+        return token;
+    }
+
+    const handleNotifications = async () => {
+        const { status } = await Notifications.getPermissionsAsync();
+
+        if (status !== "granted") {
+            return "Notifications not granted";
+        } else {
+            return "granted!";
+        }
+    };
+
+    const getLocation = async () => {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== "granted") {
+            console.log("Permission to access location was denied");
+            return;
+        } else {
+            let location = await Location.getCurrentPositionAsync({});
+            console.log(location);
+            console.log("GOT IT!!!!");
+        }
+    };
+
+    React.useEffect(() => {
+        // requestPermissionsAsync();
+        getLocation();
+    }, []);
+
     return (
         <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
             <PopupHeader
