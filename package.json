@@ -19,6 +19,7 @@
         "@types/styled-components": "5.1.25",
         "dayjs": "1.11.1",
         "expo": "~44.0.0",
+        "expo-checkbox": "2.1.0",
         "expo-device": "4.2.0",
         "expo-haptics": "11.2.0",
         "expo-linear-gradient": "11.3.0",

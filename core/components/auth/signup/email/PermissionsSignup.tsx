@@ -11,6 +11,9 @@ import * as Permissions from "expo-permissions";
 import * as Location from "expo-location";
 import { useUtilStore } from "../../../../state/Util.store";
 import * as Device from "expo-device";
+import { useTheme } from "../../../../utils/useTheme.util";
+import { MAX_WIDTH } from "../../../../utils/constants";
+import PermissionsTicker from "../../PermissionsTicker/PermissionsTicker";
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -27,6 +30,11 @@ const PermissionsSignup = () => {
     const [notification, setNotification] = React.useState(false);
     const notificationListener = React.useRef();
     const responseListener = React.useRef();
+    const theme = useTheme();
+    const [isNotificationsChecked, setIsNotificationsChecked] =
+        React.useState<boolean>(true);
+    const [isLocationChecked, setIsLocationChecked] =
+        React.useState<boolean>(true);
 
     const handleLocationActions = async () => {
         let { status } = await Location.requestForegroundPermissionsAsync();
@@ -105,7 +113,36 @@ const PermissionsSignup = () => {
                     "although strongly discourgaed, you can opt-out of notifications and location settings."
                 }
             >
-                <CustomText primary>Permissions</CustomText>
+                <PermissionsTicker
+                    data={[
+                        {
+                            text: "notifications",
+                            isChecked: isNotificationsChecked,
+                            onTap: () =>
+                                setIsNotificationsChecked(
+                                    !isNotificationsChecked
+                                ),
+                            desc: "notifications keep you up-to-date with new offers for your items, chats, and other interactions with users.",
+                        },
+                        {
+                            text: "location",
+                            isChecked: isLocationChecked,
+                            onTap: () =>
+                                setIsLocationChecked(!isLocationChecked),
+                            desc: "sharing your location allows other users to see where each item is located in the world. this informs their decision about whether or not to make an offer if they don’t know you personally.",
+                        },
+                    ]}
+                />
+                {/* <View style={{ marginTop: 20 }}>
+                    <Button
+                        title="next"
+                        onPress={() => {
+                            signupStore.setCurrentStep(
+                                signupStore.currentStep + 1
+                            );
+                        }}
+                    />
+                </View> */}
             </FlowTemplate>
         </BottomSheetView>
     );
