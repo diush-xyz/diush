@@ -107,7 +107,7 @@ const PermissionsSignup = () => {
                 totalSteps={5}
             />
             <FlowTemplate
-                circleEmoji="✉️"
+                circleEmoji="🔑"
                 title="it's your choice..."
                 desc={
                     "although strongly discourgaed, you can opt-out of notifications and location settings."
