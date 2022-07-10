@@ -56,6 +56,7 @@ const PasswordSignup = () => {
                     isErr={!allClear && !firstTime}
                     errMsg={errMsg}
                     returnKeyType="done"
+                    isPassword
                 />
                 <LargeButton
                     title="continue"

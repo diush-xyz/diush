@@ -24,6 +24,7 @@ interface ICustomTextInput {
     errMsg?: string;
     isValid?: boolean;
     returnKeyType?: ReturnKeyTypeOptions;
+    isPassword?: boolean;
 }
 
 const CustomTextInput = (props: ICustomTextInput) => {
@@ -70,6 +71,7 @@ const CustomTextInput = (props: ICustomTextInput) => {
                     keyboardType={props.keyboardType}
                     defaultValue={props.defaultValue}
                     returnKeyType={props.returnKeyType}
+                    secureTextEntry={props.isPassword}
                 />
                 {props.isValid && <SuccessIcon />}
                 {props.isErr && <WarningIcon />}

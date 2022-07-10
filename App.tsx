@@ -9,10 +9,15 @@ import * as Font from "expo-font";
 import SplashScreen from "expo-splash-screen";
 import KeyboardListener from "react-native-keyboard-listener";
 import { useUtilStore } from "./core/state/Util.store";
+import { useAuthStore } from "./core/state/auth/Auth.store";
+import { AuthStatus } from "./core/@types/GlobalTypes";
+import HomeScreen from "./core/screens/home/Home.screen";
+import { observer } from "mobx-react";
 
-export default function App() {
+const App = () => {
     const [isAppReady, setIsAppReady] = React.useState<boolean>(false);
     const utilStore = useUtilStore();
+    const authStore = useAuthStore();
 
     //TODO: Add this back later (and prepare() function - view Font and SplashScreen docs from Expo)
     // if (!fontsLoaded) {
@@ -53,13 +58,19 @@ export default function App() {
                     onWillShow={() => utilStore.setIsKeyboardOpen(true)}
                     onWillHide={() => utilStore.setIsKeyboardOpen(false)}
                 />
-                <AuthScreen />
+                {authStore.authStatus == AuthStatus.AUTHENTICATED ? (
+                    <HomeScreen />
+                ) : (
+                    <AuthScreen />
+                )}
                 {/* <Test /> */}
                 <StatusBar style="auto" />
             </View>
         </ThemeProvider>
     );
-}
+};
+
+export default observer(App);
 
 const styles = StyleSheet.create({
     container: {

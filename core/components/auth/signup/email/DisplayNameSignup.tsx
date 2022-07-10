@@ -61,7 +61,6 @@ const DisplayNameSignup = () => {
                     onChangeText={text => signupStore.setDisplayName(text)}
                     marginBottom={32}
                     defaultValue={signupStore.displayName}
-                    keyboardType="email-address"
                     isValid={allClear}
                     isErr={!allClear && !firstTime}
                     errMsg={errMsg}
