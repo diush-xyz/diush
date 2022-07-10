@@ -29,6 +29,13 @@ interface ICustomTextInput {
 
 const CustomTextInput = (props: ICustomTextInput) => {
     const theme = useTheme();
+    const [secure, setSecure] = React.useState<boolean>(false);
+
+    React.useEffect(() => {
+        if (props.isPassword) {
+            setSecure(true);
+        }
+    }, []);
 
     return (
         <View
@@ -71,7 +78,7 @@ const CustomTextInput = (props: ICustomTextInput) => {
                     keyboardType={props.keyboardType}
                     defaultValue={props.defaultValue}
                     returnKeyType={props.returnKeyType}
-                    secureTextEntry={props.isPassword}
+                    secureTextEntry={secure}
                 />
                 {props.isValid && <SuccessIcon />}
                 {props.isErr && <WarningIcon />}
