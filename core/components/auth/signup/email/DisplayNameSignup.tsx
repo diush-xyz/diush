@@ -42,10 +42,10 @@ const DisplayNameSignup = () => {
                 backArrowOnPress={() =>
                     signupStore.setCurrentStep(signupStore.currentStep - 1)
                 }
-                title="permissions"
+                title="name"
                 subtitle="signup"
                 progressIndicator
-                currentStep={4}
+                currentStep={5}
                 totalSteps={5}
             />
             <FlowTemplate
