@@ -6,22 +6,30 @@ import FlowTemplate from "../../../lib/FlowTemplate";
 import PopupHeader from "../../../lib/PopupHeader";
 import { useSignupStore } from "../../../../state/auth/Signup.store";
 import { observer } from "mobx-react";
+import CustomText from "../../../lib/CustomText";
 
 const FinalWelcomeSignup = () => {
     const signupStore = useSignupStore();
     return (
         <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
-            <PopupHeader
-                backArrow
-                backArrowOnPress={() =>
-                    signupStore.setCurrentStep(signupStore.currentStep - 1)
-                }
-                title="email"
-                subtitle="signup"
-                progressIndicator
-                currentStep={2}
-                totalSteps={5}
-            />
+            <CustomText
+                primary
+                font="Bold"
+                fontSize={24}
+                style={{ marginTop: 24, marginBottom: 12 }}
+            >
+                welcome to diush, {signupStore.displayName}!
+            </CustomText>
+            <CustomText
+                secondary
+                font="Semibold"
+                fontSize={16}
+                textAlign="center"
+                style={{ marginBottom: 40 }}
+            >
+                we are thrilled to have you as the newest member of the diush
+                community.
+            </CustomText>
         </BottomSheetView>
     );
 };
