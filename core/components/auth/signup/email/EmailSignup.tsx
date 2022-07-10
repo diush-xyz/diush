@@ -28,7 +28,6 @@ const EmailSignup = () => {
         //TODO: Come back later (two-letter domain extensions do not work, neither does .ed.cr,)
         // setIsReady(validateEmail(signupStore.email));
 
-        // check if signupStore.email is empty or does not contain an @ sign. if any of these conditions are true, set the allClear var to false and set the errMsg var to the appropriate error message.
         if (signupStore.email === "" || !signupStore.email.includes("@")) {
             setAllClear(false);
             setErrMsg("oop! you need a valid email address to continue.");

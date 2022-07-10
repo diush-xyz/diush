@@ -19,10 +19,6 @@ const DisplayNameSignup = () => {
     const [firstTime, setFirstTime] = React.useState<boolean>(true);
 
     React.useEffect(() => {
-        //TODO: Come back later (two-letter domain extensions do not work, neither does .ed.cr,)
-        // setIsReady(validateEmail(signupStore.email));
-
-        // check if signupStore.email is empty or does not contain an @ sign. if any of these conditions are true, set the allClear var to false and set the errMsg var to the appropriate error message.
         if (
             signupStore.displayName === "" ||
             signupStore.displayName.length < 4
