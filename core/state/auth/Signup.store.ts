@@ -10,6 +10,12 @@ export default class SignupStore {
         makeAutoObservable(this);
     }
 
+    displayName: string = "";
+
+    setDisplayName(newDisplayName: string) {
+        this.displayName = newDisplayName;
+    }
+
     email: string = "";
 
     setEmail(newEmail: string) {

@@ -14,6 +14,8 @@ import * as Device from "expo-device";
 import { useTheme } from "../../../../utils/useTheme.util";
 import { MAX_WIDTH } from "../../../../utils/constants";
 import PermissionsTicker from "../../PermissionsTicker/PermissionsTicker";
+import LargeButton from "../../../lib/LargeButton";
+import { observer } from "mobx-react";
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -49,7 +51,7 @@ const PermissionsSignup = () => {
         }
     };
 
-    const hanldeNotificationActions = async () => {
+    const handleNotificationActions = async () => {
         let { status } = await Notifications.requestPermissionsAsync();
         if (status !== "granted") {
             console.log("Permission to access notifications was denied");
@@ -64,7 +66,7 @@ const PermissionsSignup = () => {
     React.useEffect(() => {
         // requestPermissionsAsync();
         handleLocationActions();
-        hanldeNotificationActions();
+        handleNotificationActions();
 
         // registerForPushNotificationsAsync().then(token =>
         //     setExpoPushToken(token)
@@ -92,6 +94,17 @@ const PermissionsSignup = () => {
         //     );
         // };
     }, []);
+
+    const askPermissions = () => {
+        if (isNotificationsChecked) {
+            handleNotificationActions();
+        }
+        if (isLocationChecked) {
+            handleLocationActions();
+        }
+
+        signupStore.setCurrentStep(signupStore.currentStep + 1);
+    };
 
     return (
         <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
@@ -132,6 +145,13 @@ const PermissionsSignup = () => {
                             desc: "sharing your location allows other users to see where each item is located in the world. this informs their decision about whether or not to make an offer if they don’t know you personally.",
                         },
                     ]}
+                />
+                <LargeButton
+                    title="continue"
+                    onPress={() => askPermissions()}
+                    footer
+                    footerButtonTitle="cancel"
+                    footerButtonOnPress={() => signupStore.cancel()}
                 />
                 {/* <View style={{ marginTop: 20 }}>
                     <Button
@@ -191,4 +211,4 @@ async function registerForPushNotificationsAsync() {
     return token;
 }
 
-export default PermissionsSignup;
+export default observer(PermissionsSignup);
