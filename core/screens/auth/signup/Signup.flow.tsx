@@ -19,6 +19,7 @@ import VerifyEmailSignup from "../../../components/auth/signup/email/VerifyEmail
 import PasswordSignup from "../../../components/auth/signup/email/PasswordSignup";
 import PermissionsSignup from "../../../components/auth/signup/email/PermissionsSignup";
 import DisplayNameSignup from "../../../components/auth/signup/email/DisplayNameSignup";
+import FinalWelcomeSignup from "../../../components/auth/signup/email/FinalWelcomeSignup";
 
 const SignupFlow = () => {
     const authStore = useAuthStore();
@@ -39,7 +40,7 @@ const SignupFlow = () => {
             case 4:
                 return <DisplayNameSignup />;
             case 5:
-                return <EmailSignup />;
+                return <FinalWelcomeSignup />;
         }
     };
 
