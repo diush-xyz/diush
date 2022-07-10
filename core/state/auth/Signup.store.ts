@@ -69,6 +69,11 @@ export default class SignupStore {
         this.email = "";
         this.password = "";
         this.username = "";
+        this.displayName = "";
+        this.method = null;
+        this.otpCode = "";
+        this.codeMatches = false;
+        this.isVerifyError = false;
     }
 }
 

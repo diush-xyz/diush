@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import React from "react";
-import { AuthStatus } from "../../@types/GlobalTypes";
+import { AuthStatus, IUser } from "../../@types/GlobalTypes";
 
 /**
  * A store to handle anything auth-related.
@@ -10,11 +10,11 @@ export default class AuthStore {
         makeAutoObservable(this);
     }
 
-    // user: IUser;
+    user: IUser;
 
-    // setUser(newUser: IUser) {
-    //     this.user = newUser;
-    // }
+    setUser(newUser: IUser) {
+        this.user = newUser;
+    }
 
     isSheetOpen: boolean = false;
 
