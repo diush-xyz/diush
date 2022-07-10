@@ -7,11 +7,13 @@ import PopupHeader from "../../../lib/PopupHeader";
 import { useSignupStore } from "../../../../state/auth/Signup.store";
 import { observer } from "mobx-react";
 import CustomText from "../../../lib/CustomText";
+import WelcomeIcon from "../../../../icons/auth/Welcome";
 
 const FinalWelcomeSignup = () => {
     const signupStore = useSignupStore();
     return (
         <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
+            <WelcomeIcon />
             <CustomText
                 primary
                 font="Bold"
