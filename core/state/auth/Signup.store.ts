@@ -10,6 +10,12 @@ export default class SignupStore {
         makeAutoObservable(this);
     }
 
+    displayName: string = "";
+
+    setDisplayName(newDisplayName: string) {
+        this.displayName = newDisplayName;
+    }
+
     email: string = "";
 
     setEmail(newEmail: string) {
@@ -63,6 +69,11 @@ export default class SignupStore {
         this.email = "";
         this.password = "";
         this.username = "";
+        this.displayName = "";
+        this.method = null;
+        this.otpCode = "";
+        this.codeMatches = false;
+        this.isVerifyError = false;
     }
 }
 

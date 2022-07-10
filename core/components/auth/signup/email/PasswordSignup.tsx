@@ -39,7 +39,7 @@ const PasswordSignup = () => {
                 subtitle="signup"
                 progressIndicator
                 currentStep={3}
-                totalSteps={6}
+                totalSteps={5}
             />
             <FlowTemplate
                 circleEmoji="🔐"
@@ -56,6 +56,7 @@ const PasswordSignup = () => {
                     isErr={!allClear && !firstTime}
                     errMsg={errMsg}
                     returnKeyType="done"
+                    isPassword
                 />
                 <LargeButton
                     title="continue"

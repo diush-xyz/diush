@@ -9,10 +9,21 @@ import * as Font from "expo-font";
 import SplashScreen from "expo-splash-screen";
 import KeyboardListener from "react-native-keyboard-listener";
 import { useUtilStore } from "./core/state/Util.store";
+import { useAuthStore } from "./core/state/auth/Auth.store";
+import { AuthStatus, IUser } from "./core/@types/GlobalTypes";
+import HomeScreen from "./core/screens/home/Home.screen";
+import { observer } from "mobx-react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./config/firebase";
+import { useSignupStore } from "./core/state/auth/Signup.store";
+import { fetchUserFromDb } from "./core/utils/user.utils";
 
-export default function App() {
+const App = () => {
     const [isAppReady, setIsAppReady] = React.useState<boolean>(false);
     const utilStore = useUtilStore();
+    const authStore = useAuthStore();
+    const signupStore = useSignupStore();
+    const [fetchedUser, setFetchedUser] = React.useState<IUser>();
 
     //TODO: Add this back later (and prepare() function - view Font and SplashScreen docs from Expo)
     // if (!fontsLoaded) {
@@ -43,6 +54,32 @@ export default function App() {
         }
 
         prepare();
+
+        //HANDLE AUTH:
+        const unsubscribe = onAuthStateChanged(auth, user => {
+            if (user) {
+                authStore.setAuthStatus(AuthStatus.AUTHENTICATED);
+                signupStore.cancel();
+
+                fetchUserFromDb({
+                    id: user.uid,
+                    setUser: (user: IUser) => {
+                        setFetchedUser(user);
+                    },
+                });
+                authStore.setUser({
+                    id: user.uid,
+                    displayName: fetchedUser.displayName,
+                    email: fetchedUser.email,
+                    photoURL: fetchedUser.photoURL,
+                    //TODO: Add products and other fields later
+                });
+            } else {
+                authStore.setAuthStatus(AuthStatus.SQUARE_ONE);
+            }
+        });
+
+        return () => unsubscribe();
     }, []);
 
     return (
@@ -53,13 +90,19 @@ export default function App() {
                     onWillShow={() => utilStore.setIsKeyboardOpen(true)}
                     onWillHide={() => utilStore.setIsKeyboardOpen(false)}
                 />
-                <AuthScreen />
+                {authStore.authStatus == AuthStatus.AUTHENTICATED ? (
+                    <HomeScreen />
+                ) : (
+                    <AuthScreen />
+                )}
                 {/* <Test /> */}
                 <StatusBar style="auto" />
             </View>
         </ThemeProvider>
     );
-}
+};
+
+export default observer(App);
 
 const styles = StyleSheet.create({
     container: {
