@@ -69,9 +69,9 @@ const App = () => {
                 });
                 authStore.setUser({
                     id: user.uid,
-                    displayName: fetchedUser.displayName,
-                    email: fetchedUser.email,
-                    photoURL: fetchedUser.photoURL,
+                    displayName: fetchedUser?.displayName,
+                    email: fetchedUser?.email,
+                    photoURL: fetchedUser?.photoURL,
                     //TODO: Add products and other fields later
                 });
             } else {
