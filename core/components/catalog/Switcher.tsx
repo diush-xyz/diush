@@ -1,9 +1,11 @@
-import { View, Text } from "react-native";
+import { View, Text, Animated } from "react-native";
 import React from "react";
 import { useTheme } from "../../utils/useTheme.util";
 import CustomText from "../lib/CustomText";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Switcher = () => {
+    const [isSoldActive, setIsSoldActive] = React.useState<boolean>(false);
     const theme = useTheme();
     return (
         <View
@@ -18,38 +20,57 @@ const Switcher = () => {
                 marginBottom: 22,
             }}
         >
-            <View
-                style={{
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: "50%",
-                    paddingBottom: 12,
-                    paddingHorizontal: 8,
-                }}
-            >
-                <CustomText primary textAlign="center">
-                    active
-                </CustomText>
-                <View
+            <View style={{ width: "50%" }}>
+                <TouchableOpacity
                     style={{
-                        height: 3,
-                        backgroundColor: theme.accent,
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "center",
                         width: "100%",
-                        borderRadius: 3,
-                        position: "absolute",
-                        bottom: 0,
+                        paddingBottom: 12,
                     }}
-                />
+                    onPress={() => setIsSoldActive(!isSoldActive)}
+                >
+                    <CustomText primary>active</CustomText>
+                    {!isSoldActive && (
+                        <View
+                            style={{
+                                height: 3,
+                                backgroundColor: theme.accent,
+                                width: "100%",
+                                borderRadius: 3,
+                                position: "absolute",
+                                bottom: 0,
+                            }}
+                        />
+                    )}
+                </TouchableOpacity>
             </View>
-            <View
-                style={{
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: "50%",
-                    paddingBottom: 12,
-                }}
-            >
-                <CustomText primary>active</CustomText>
+            <View style={{ width: "50%" }}>
+                <TouchableOpacity
+                    style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        width: "100%",
+                        paddingBottom: 12,
+                    }}
+                    onPress={() => setIsSoldActive(!isSoldActive)}
+                >
+                    <CustomText primary>sold</CustomText>
+                    {isSoldActive && (
+                        <View
+                            style={{
+                                height: 3,
+                                backgroundColor: theme.accent,
+                                width: "100%",
+                                borderRadius: 3,
+                                position: "absolute",
+                                bottom: 0,
+                            }}
+                        />
+                    )}
+                </TouchableOpacity>
             </View>
         </View>
     );
