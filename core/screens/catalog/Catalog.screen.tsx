@@ -3,8 +3,11 @@ import React from "react";
 import CustomText from "../../components/lib/CustomText";
 import PopupHeader from "../../components/lib/PopupHeader";
 import ScreenHeader from "../../components/lib/ScreenHeader";
+import { useUtilStore } from "../../state/Util.store";
+import { LoggedInScreen } from "../../@types/GlobalTypes";
 
 const CatalogScreen = () => {
+    const utilStore = useUtilStore();
     return (
         <View
             style={{
@@ -13,7 +16,13 @@ const CatalogScreen = () => {
                 flex: 1,
             }}
         >
-            <ScreenHeader backArrow title="my catalog" />
+            <ScreenHeader
+                backArrow
+                backArrowOnPress={() =>
+                    utilStore.setCurrentLoggedInScreen(LoggedInScreen.HOME)
+                }
+                title="my catalog"
+            />
             <CustomText primary>This is my catalog.</CustomText>
         </View>
     );
