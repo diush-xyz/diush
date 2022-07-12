@@ -61,9 +61,39 @@ const CatalogScreen = () => {
                         borderRadius: 8,
                         //DO NOT REMOVE: this property is required for the borderRaduis to be visible. For reference, see: https://reactnative.dev/docs/view-style-props#borderradius
                         overflow: "hidden",
+                        paddingTop: 10,
+                        paddingHorizontal: 6,
                     }}
                 >
-                    <CustomText primary>This is the best</CustomText>
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            width: "100%",
+                            justifyContent: "space-between",
+                        }}
+                    >
+                        <View>
+                            <CustomText primary fontSize={10} font="Heavy">
+                                asking price
+                            </CustomText>
+                            <CustomText accent font="Black" fontSize={18}>
+                                $90
+                            </CustomText>
+                        </View>
+                        <View>
+                            <CustomText primary fontSize={10} font="Heavy">
+                                highest offer
+                            </CustomText>
+                            <CustomText
+                                accent
+                                font="Black"
+                                fontSize={18}
+                                textAlign="right"
+                            >
+                                $2
+                            </CustomText>
+                        </View>
+                    </View>
                     <CustomText primary>This is the best</CustomText>
                 </ImageBackground>
             </View>
