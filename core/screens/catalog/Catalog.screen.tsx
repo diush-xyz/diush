@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, ImageBackground } from "react-native";
 import React from "react";
 import CustomText from "../../components/lib/CustomText";
 import PopupHeader from "../../components/lib/PopupHeader";
@@ -36,6 +36,37 @@ const CatalogScreen = () => {
                 onChangeText={() => null}
                 isSearch
             />
+            {/* <ImageBackground
+                source={{ uri: "https://reactjs.org/logo-og.png" }}
+                style={{
+                    height: 232,
+                    width: 164,
+                    borderRadius: 8,
+                    //DO NOT REMOVE: this property is required for the borderRaduis to be visible. For reference, see: https://reactnative.dev/docs/view-style-props#borderradius
+                    overflow: "hidden",
+                }}
+            >
+                <CustomText primary>Jordan Jersey</CustomText>
+            </ImageBackground> */}
+            <View>
+                {/*@ts-ignore*/}
+                <ImageBackground
+                    source={{ uri: "https://reactjs.org/logo-og.png" }}
+                    borderRadius={8}
+                    style={{
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        height: 232,
+                        width: 164,
+                        borderRadius: 8,
+                        //DO NOT REMOVE: this property is required for the borderRaduis to be visible. For reference, see: https://reactnative.dev/docs/view-style-props#borderradius
+                        overflow: "hidden",
+                    }}
+                >
+                    <CustomText primary>This is the best</CustomText>
+                    <CustomText primary>This is the best</CustomText>
+                </ImageBackground>
+            </View>
         </View>
     );
 };
