@@ -50,7 +50,13 @@ const CatalogScreen = () => {
             >
                 <CustomText primary>Jordan Jersey</CustomText>
             </ImageBackground> */}
-            <ProductCard />
+            <ProductCard
+                uri="https://reactjs.org/logo-og.png"
+                title="Jordan Jersey"
+                desc="Perfect conditions. Only worn once."
+                askingPrice={90}
+                highestOffer={105}
+            />
         </View>
     );
 };

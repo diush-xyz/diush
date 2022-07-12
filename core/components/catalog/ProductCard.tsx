@@ -4,12 +4,20 @@ import { truncate } from "../../utils/truncate.util";
 import CustomText from "../lib/CustomText";
 import { LinearGradient } from "expo-linear-gradient";
 
-const ProductCard = () => {
+interface IProductCard {
+    uri: string;
+    askingPrice: number;
+    highestOffer: number;
+    title: string;
+    desc: string;
+}
+
+const ProductCard = (props: IProductCard) => {
     return (
         <>
             {/*@ts-ignore*/}
             <ImageBackground
-                source={{ uri: "https://reactjs.org/logo-og.png" }}
+                source={{ uri: props.uri }}
                 borderRadius={8}
                 style={{
                     flexDirection: "column",
@@ -47,7 +55,7 @@ const ProductCard = () => {
                             asking price
                         </CustomText>
                         <CustomText accent font="Black" fontSize={18}>
-                            $90
+                            ${props.askingPrice}
                         </CustomText>
                     </View>
                     <View>
@@ -60,7 +68,7 @@ const ProductCard = () => {
                             fontSize={18}
                             textAlign="right"
                         >
-                            $2
+                            ${props.highestOffer}
                         </CustomText>
                     </View>
                 </View>
@@ -71,10 +79,10 @@ const ProductCard = () => {
                     }}
                 >
                     <CustomText primary fontSize={18} font="Black">
-                        Jordan Jersey
+                        {truncate(props.title, 18)}
                     </CustomText>
                     <CustomText primary font="Bold">
-                        {truncate("Jordan Jersey is a great product", 23)}
+                        {truncate(props.desc, 22)}
                     </CustomText>
                 </View>
             </ImageBackground>
