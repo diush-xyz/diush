@@ -9,6 +9,7 @@ import { useTheme } from "../../utils/useTheme.util";
 import CustomTextInput from "../../components/lib/CustomTextInput";
 import SearchIcon from "../../icons/catalog";
 import Switcher from "../../components/catalog/Switcher";
+import { truncate } from "../../utils/truncate.util";
 
 const CatalogScreen = () => {
     const utilStore = useUtilStore();
@@ -94,7 +95,19 @@ const CatalogScreen = () => {
                             </CustomText>
                         </View>
                     </View>
-                    <CustomText primary>This is the best</CustomText>
+                    <View
+                        style={{
+                            width: "100%",
+                            marginBottom: 19,
+                        }}
+                    >
+                        <CustomText primary fontSize={18} font="Black">
+                            Jordan Jersey
+                        </CustomText>
+                        <CustomText primary font="Bold">
+                            {truncate("Jordan Jersey is a great product", 23)}
+                        </CustomText>
+                    </View>
                 </ImageBackground>
             </View>
         </View>
