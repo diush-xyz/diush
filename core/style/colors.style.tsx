@@ -5,6 +5,7 @@ export interface IColorStyles {
     accent: string;
     popupBackground: string;
     success: string;
+    line: string;
 }
 
 export const DarkTheme: IColorStyles = {
@@ -14,4 +15,5 @@ export const DarkTheme: IColorStyles = {
     accent: "#FF3F70",
     popupBackground: "#13052F",
     success: "#06D6A0",
+    line: "#191419",
 };

@@ -5,15 +5,19 @@ import PopupHeader from "../../components/lib/PopupHeader";
 import ScreenHeader from "../../components/lib/ScreenHeader";
 import { useUtilStore } from "../../state/Util.store";
 import { LoggedInScreen } from "../../@types/GlobalTypes";
+import { useTheme } from "../../utils/useTheme.util";
 
 const CatalogScreen = () => {
     const utilStore = useUtilStore();
+    const theme = useTheme();
+
     return (
         <View
             style={{
                 alignItems: "center",
-                justifyContent: "center",
                 flex: 1,
+                marginTop: 55,
+                width: "100%",
             }}
         >
             <ScreenHeader
@@ -23,6 +27,51 @@ const CatalogScreen = () => {
                 }
                 title="my catalog"
             />
+            <View
+                style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    width: "100%",
+                    borderBottomColor: theme.secondary,
+                    borderBottomWidth: 1,
+                    marginTop: 15,
+                }}
+            >
+                <View
+                    style={{
+                        alignItems: "center",
+                        justifyContent: "center",
+                        width: "50%",
+                        paddingBottom: 12,
+                        paddingHorizontal: 8,
+                    }}
+                >
+                    <CustomText primary textAlign="center">
+                        active
+                    </CustomText>
+                    <View
+                        style={{
+                            height: 3,
+                            backgroundColor: theme.accent,
+                            width: "100%",
+                            borderRadius: 3,
+                            position: "absolute",
+                            bottom: 0,
+                        }}
+                    />
+                </View>
+                <View
+                    style={{
+                        alignItems: "center",
+                        justifyContent: "center",
+                        width: "50%",
+                        paddingBottom: 12,
+                    }}
+                >
+                    <CustomText primary>active</CustomText>
+                </View>
+            </View>
             <CustomText primary>This is my catalog.</CustomText>
         </View>
     );
