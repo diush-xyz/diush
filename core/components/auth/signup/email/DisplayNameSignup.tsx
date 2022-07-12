@@ -25,7 +25,9 @@ const DisplayNameSignup = () => {
         ) {
             setAllClear(false);
             setErrMsg(
-                "hang on! we need a way to refer to you in order to move on."
+                signupStore.displayName.length < 4
+                    ? "you need at least 4 cahracters in your display name to proceed."
+                    : "hang on! we need a way to refer to you in order to move on."
             );
         } else {
             setAllClear(true);

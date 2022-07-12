@@ -19,6 +19,8 @@ const FinalWelcomeSignup = () => {
     const signupStore = useSignupStore();
     const authStore = useAuthStore();
 
+    const displayName = signupStore.displayName;
+
     const signUp = () => {
         createUserWithEmailAndPassword(
             auth,
@@ -33,9 +35,11 @@ const FinalWelcomeSignup = () => {
 
                 createUserInDb({
                     id: user.uid,
-                    displayName: signupStore.displayName,
+                    displayName: displayName,
                     email: user.email,
                     photoURL: null,
+                }).then(() => {
+                    console.log(displayName);
                 });
 
                 authStore.setAuthStatus(AuthStatus.AUTHENTICATED);

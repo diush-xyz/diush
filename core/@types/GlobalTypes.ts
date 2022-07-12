@@ -20,7 +20,12 @@ export enum AuthStatus {
     AUTHENTICATED,
 }
 
-export enum SignupMethods {
+export enum SignupMethod {
     EMAIL,
     PHONE,
+}
+
+export enum LoggedInScreen {
+    HOME,
+    CATALOG,
 }

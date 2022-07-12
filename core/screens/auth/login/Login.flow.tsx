@@ -7,22 +7,23 @@ import { observer } from "mobx-react";
 import { BottomSheetView } from "@gorhom/bottom-sheet";
 import { useTheme } from "../../../utils/useTheme.util";
 import { GLOBAL_STYLES } from "../../../@types/GlobalStyles";
+import { useLoginStore } from "../../../state/auth/Login.store";
+import EmailLogin from "../../../components/auth/login/EmailLogin";
+import PasswordLogin from "../../../components/auth/login/PasswordLogin";
 
 const LoginFlow = () => {
     const authStore = useAuthStore();
-    const theme = useTheme();
+    const loginStore = useLoginStore();
 
-    return (
-        <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
-            <Text>LoginFlow</Text>
-            <TouchableOpacity
-                onPress={() => authStore.setAuthStatus(AuthStatus.SQUARE_ONE)}
-            >
-                <CustomText accent>Back</CustomText>
-            </TouchableOpacity>
-            {/* </View> */}
-        </BottomSheetView>
-    );
+    const populateEmailContent = () => {
+        switch (loginStore.currentStep) {
+            case 0:
+                return <EmailLogin />;
+            case 1:
+                return <PasswordLogin />;
+        }
+    };
+    return <>{populateEmailContent()}</>;
 };
 
 export default observer(LoginFlow);

@@ -1,6 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import React from "react";
 import * as Location from "expo-location";
+import { LoggedInScreen } from "../@types/GlobalTypes";
 
 /**
  * A store to handle anything auth-related.
@@ -8,6 +9,12 @@ import * as Location from "expo-location";
 export default class UtilStore {
     constructor() {
         makeAutoObservable(this);
+    }
+
+    currentLoggedInScreen: LoggedInScreen = LoggedInScreen.HOME;
+
+    setCurrentLoggedInScreen(screen: LoggedInScreen) {
+        this.currentLoggedInScreen = screen;
     }
 
     location: Location.LocationObject;
