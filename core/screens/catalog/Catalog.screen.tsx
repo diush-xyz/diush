@@ -6,6 +6,8 @@ import ScreenHeader from "../../components/lib/ScreenHeader";
 import { useUtilStore } from "../../state/Util.store";
 import { LoggedInScreen } from "../../@types/GlobalTypes";
 import { useTheme } from "../../utils/useTheme.util";
+import CustomTextInput from "../../components/lib/CustomTextInput";
+import SearchIcon from "../../icons/catalog";
 
 const CatalogScreen = () => {
     const utilStore = useUtilStore();
@@ -36,6 +38,7 @@ const CatalogScreen = () => {
                     borderBottomColor: theme.secondary,
                     borderBottomWidth: 1,
                     marginTop: 15,
+                    marginBottom: 22,
                 }}
             >
                 <View
@@ -72,7 +75,11 @@ const CatalogScreen = () => {
                     <CustomText primary>active</CustomText>
                 </View>
             </View>
-            <CustomText primary>This is my catalog.</CustomText>
+            <CustomTextInput
+                placeholder="search my products"
+                onChangeText={() => null}
+                isSearch
+            />
         </View>
     );
 };
