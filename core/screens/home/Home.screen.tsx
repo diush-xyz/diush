@@ -6,14 +6,16 @@ import CustomText from "../../components/lib/CustomText";
 import LargeButton from "../../components/lib/LargeButton";
 import { auth } from "../../../config/firebase";
 import { fetchUserFromDb } from "../../utils/user.utils";
-import { IUser } from "../../@types/GlobalTypes";
+import { IUser, LoggedInScreen } from "../../@types/GlobalTypes";
 import SignupStore, { useSignupStore } from "../../state/auth/Signup.store";
 import { useLoginStore } from "../../state/auth/Login.store";
+import { useUtilStore } from "../../state/Util.store";
 
 const HomeScreen = () => {
     const signupStore = useSignupStore();
     const loginStore = useLoginStore();
     const authStore = useAuthStore();
+    const utilStore = useUtilStore();
 
     const [fetchedUser, setFetchedUser] = React.useState<IUser | null>(null);
 
@@ -33,6 +35,12 @@ const HomeScreen = () => {
             <CustomText primary textAlign="center">
                 Welcome, {fetchedUser?.displayName}.
             </CustomText>
+            <LargeButton
+                title="My catalog"
+                onPress={() =>
+                    utilStore.setCurrentLoggedInScreen(LoggedInScreen.CATALOG)
+                }
+            />
             <LargeButton
                 title="Log out"
                 onPress={() => {

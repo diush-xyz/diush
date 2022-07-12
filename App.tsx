@@ -17,6 +17,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/firebase";
 import { useSignupStore } from "./core/state/auth/Signup.store";
 import { fetchUserFromDb } from "./core/utils/user.utils";
+import ScreenHandler from "./core/screens/ScreenHandler";
 
 const App = () => {
     const [isAppReady, setIsAppReady] = React.useState<boolean>(false);
@@ -91,7 +92,7 @@ const App = () => {
                     onWillHide={() => utilStore.setIsKeyboardOpen(false)}
                 />
                 {authStore.authStatus == AuthStatus.AUTHENTICATED ? (
-                    <HomeScreen />
+                    <ScreenHandler />
                 ) : (
                     <AuthScreen />
                 )}
