@@ -1,15 +1,20 @@
 import { View, Text } from "react-native";
 import React from "react";
 import { observer } from "mobx-react";
-import { useAuthStore } from "../../state/auth/Auth.store";
+import AuthStore, { useAuthStore } from "../../state/auth/Auth.store";
 import CustomText from "../../components/lib/CustomText";
 import LargeButton from "../../components/lib/LargeButton";
 import { auth } from "../../../config/firebase";
 import { fetchUserFromDb } from "../../utils/user.utils";
 import { IUser } from "../../@types/GlobalTypes";
+import SignupStore, { useSignupStore } from "../../state/auth/Signup.store";
+import { useLoginStore } from "../../state/auth/Login.store";
 
 const HomeScreen = () => {
+    const signupStore = useSignupStore();
+    const loginStore = useLoginStore();
     const authStore = useAuthStore();
+
     const [fetchedUser, setFetchedUser] = React.useState<IUser | null>(null);
 
     React.useEffect(() => {
@@ -28,7 +33,15 @@ const HomeScreen = () => {
             <CustomText primary textAlign="center">
                 Welcome, {fetchedUser?.displayName}.
             </CustomText>
-            <LargeButton title="Log out" onPress={() => auth.signOut()} />
+            <LargeButton
+                title="Log out"
+                onPress={() => {
+                    auth.signOut();
+                    authStore.setIsSheetOpen(false);
+                    loginStore.cancel();
+                    signupStore.cancel();
+                }}
+            />
         </View>
     );
 };

@@ -9,6 +9,7 @@ import { useTheme } from "../../../utils/useTheme.util";
 import { GLOBAL_STYLES } from "../../../@types/GlobalStyles";
 import { useLoginStore } from "../../../state/auth/Login.store";
 import EmailLogin from "../../../components/auth/login/EmailLogin";
+import PasswordLogin from "../../../components/auth/login/PasswordLogin";
 
 const LoginFlow = () => {
     const authStore = useAuthStore();
@@ -18,6 +19,8 @@ const LoginFlow = () => {
         switch (loginStore.currentStep) {
             case 0:
                 return <EmailLogin />;
+            case 1:
+                return <PasswordLogin />;
         }
     };
     return <>{populateEmailContent()}</>;
