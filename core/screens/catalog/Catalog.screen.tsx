@@ -79,7 +79,7 @@ const CatalogScreen = () => {
                     flexDirection: "row",
                     flex: 1,
                     flexWrap: "wrap",
-                    marginTop: 22,
+                    marginTop: 12,
                 }}
             >
                 {MOCK_DATA.map((elem, idx) => (
@@ -88,7 +88,8 @@ const CatalogScreen = () => {
                         key={idx}
                         {...elem}
                         marginLeft={idx % 2 === 0 ? 0 : 5}
-                        marginRight={idx % 2 === 0 ? 10 : 0}
+                        marginRight={idx % 2 === 0 ? 5 : 0}
+                        marginTop={idx !== 0 || 1 ? 10 : 0}
                     />
                 ))}
             </View>
