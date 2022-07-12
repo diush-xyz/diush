@@ -31,7 +31,12 @@ const Switcher = () => {
                     }}
                     onPress={() => setIsSoldActive(!isSoldActive)}
                 >
-                    <CustomText primary>active</CustomText>
+                    <CustomText
+                        primary={!isSoldActive}
+                        secondary={isSoldActive}
+                    >
+                        active
+                    </CustomText>
                     {!isSoldActive && (
                         <View
                             style={{
@@ -57,7 +62,12 @@ const Switcher = () => {
                     }}
                     onPress={() => setIsSoldActive(!isSoldActive)}
                 >
-                    <CustomText primary>sold</CustomText>
+                    <CustomText
+                        primary={isSoldActive}
+                        secondary={!isSoldActive}
+                    >
+                        sold
+                    </CustomText>
                     {isSoldActive && (
                         <View
                             style={{
