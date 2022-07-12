@@ -13,17 +13,20 @@ const HomeScreen = () => {
     const [fetchedUser, setFetchedUser] = React.useState<IUser | null>(null);
 
     React.useEffect(() => {
-        fetchUserFromDb({
-            id: auth.currentUser?.uid,
-            setUser: (user: IUser) => {
-                setFetchedUser(user);
-            },
-        });
+        // run this if there is a user:
+        if (auth.currentUser) {
+            fetchUserFromDb({
+                id: auth.currentUser?.uid,
+                setUser: (user: IUser) => {
+                    setFetchedUser(user);
+                },
+            });
+        }
     });
     return (
         <View style={{ width: "100%" }}>
             <CustomText primary textAlign="center">
-                Welcome, {fetchedUser?.displayName}
+                Welcome, {fetchedUser?.displayName}.
             </CustomText>
             <LargeButton title="Log out" onPress={() => auth.signOut()} />
         </View>
