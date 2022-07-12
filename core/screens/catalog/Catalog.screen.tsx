@@ -38,18 +38,6 @@ const CatalogScreen = () => {
                 onChangeText={() => null}
                 isSearch
             />
-            {/* <ImageBackground
-                source={{ uri: "https://reactjs.org/logo-og.png" }}
-                style={{
-                    height: 232,
-                    width: 164,
-                    borderRadius: 8,
-                    //DO NOT REMOVE: this property is required for the borderRaduis to be visible. For reference, see: https://reactnative.dev/docs/view-style-props#borderradius
-                    overflow: "hidden",
-                }}
-            >
-                <CustomText primary>Jordan Jersey</CustomText>
-            </ImageBackground> */}
             {/*TODO: Add logic for properly making the marginLeft or marginRight of the Product Card based on if the index is 0, even, or odd/*/}
             <View style={{ display: "flex", flexDirection: "row" }}>
                 <ProductCard
