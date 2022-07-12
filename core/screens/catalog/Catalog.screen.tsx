@@ -50,13 +50,25 @@ const CatalogScreen = () => {
             >
                 <CustomText primary>Jordan Jersey</CustomText>
             </ImageBackground> */}
-            <ProductCard
-                uri="https://reactjs.org/logo-og.png"
-                title="Jordan Jersey"
-                desc="Perfect conditions. Only worn once."
-                askingPrice={90}
-                highestOffer={105}
-            />
+            {/*TODO: Add logic for properly making the marginLeft or marginRight of the Product Card based on if the index is 0, even, or odd/*/}
+            <View style={{ display: "flex", flexDirection: "row" }}>
+                <ProductCard
+                    uri="https://reactjs.org/logo-og.png"
+                    title="Jordan Jersey"
+                    desc="Perfect conditions. Only worn once."
+                    askingPrice={90}
+                    highestOffer={105}
+                    marginRight={5}
+                />
+                <ProductCard
+                    uri="https://reactjs.org/logo-og.png"
+                    title="Jordan Jersey"
+                    desc="Perfect conditions. Only worn once."
+                    askingPrice={90}
+                    highestOffer={105}
+                    marginLeft={5}
+                />
+            </View>
         </View>
     );
 };

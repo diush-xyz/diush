@@ -10,6 +10,8 @@ interface IProductCard {
     highestOffer: number;
     title: string;
     desc: string;
+    marginLeft?: number;
+    marginRight?: number;
 }
 
 const ProductCard = (props: IProductCard) => {
@@ -29,6 +31,8 @@ const ProductCard = (props: IProductCard) => {
                     overflow: "hidden",
                     paddingTop: 10,
                     paddingHorizontal: 6,
+                    marginLeft: props.marginLeft || 0,
+                    marginRight: props.marginRight || 0,
                 }}
             >
                 {/* make a LinearGradient that overlays the entire background with the following properties: linear-gradient(180deg, #000000 -29.74%, rgba(26, 26, 26, 0.5) 50.32%, #000000 134.48%);*/}
