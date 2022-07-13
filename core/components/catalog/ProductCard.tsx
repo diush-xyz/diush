@@ -5,6 +5,7 @@ import CustomText from "../lib/CustomText";
 import { LinearGradient } from "expo-linear-gradient";
 
 export interface IProductCard {
+    id: string;
     uri: string;
     askingPrice: number;
     highestOffer: number;
