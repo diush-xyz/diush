@@ -24,7 +24,7 @@ import KeyboardListener from "react-native-keyboard-listener";
 import { useUtilStore } from "../../../../state/Util.store";
 import ScrollWrapper from "../../ScrollWrapper/ScrollWrapper";
 
-//TODO: Animation for keyboardShow FlowTemplate margin-bottom
+//TODO: Proper check in the backend for existing user email
 
 const EmailSignup = () => {
     const signupStore = useSignupStore();

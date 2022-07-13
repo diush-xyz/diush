@@ -12,6 +12,7 @@ import PopupHeader from "../../lib/PopupHeader";
 import { FirebaseError } from "firebase/app";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../../config/firebase";
+import ScrollWrapper from "../ScrollWrapper/ScrollWrapper";
 
 const PasswordSignup = () => {
     const loginStore = useLoginStore();
@@ -57,32 +58,34 @@ const PasswordSignup = () => {
                 currentStep={3}
                 totalSteps={5}
             />
-            <FlowTemplate
-                circleEmoji="🔐"
-                title="password"
-                desc="make sure it's difficult for others to guess."
-                marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
-            >
-                <CustomTextInput
-                    placeholder="password"
-                    onChangeText={text => loginStore.setPassword(text)}
-                    marginBottom={32}
-                    defaultValue={loginStore.password}
-                    isValid={allClear}
-                    isErr={!allClear && !firstTime}
-                    errMsg={errMsg}
-                    returnKeyType="done"
-                    isPassword
-                />
-                <LargeButton
-                    title="continue"
-                    onPress={() => login()}
-                    footer
-                    // disabled={!allClear && !firstTime}
-                    footerButtonTitle="cancel"
-                    footerButtonOnPress={() => loginStore.cancel()}
-                />
-            </FlowTemplate>
+            <ScrollWrapper>
+                <FlowTemplate
+                    circleEmoji="🔐"
+                    title="password"
+                    desc="make sure it's difficult for others to guess."
+                    marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
+                >
+                    <CustomTextInput
+                        placeholder="password"
+                        onChangeText={text => loginStore.setPassword(text)}
+                        marginBottom={32}
+                        defaultValue={loginStore.password}
+                        isValid={allClear}
+                        isErr={!allClear && !firstTime}
+                        errMsg={errMsg}
+                        returnKeyType="done"
+                        isPassword
+                    />
+                    <LargeButton
+                        title="continue"
+                        onPress={() => login()}
+                        footer
+                        // disabled={!allClear && !firstTime}
+                        footerButtonTitle="cancel"
+                        footerButtonOnPress={() => loginStore.cancel()}
+                    />
+                </FlowTemplate>
+            </ScrollWrapper>
         </BottomSheetView>
     );
 };
