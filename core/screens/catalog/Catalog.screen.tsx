@@ -97,14 +97,14 @@ const CatalogScreen = () => {
                     overflow: "scroll",
                 }}
             >
-                {MOCK_DATA.map((elem, idx) => (
+                {MOCK_DATA.map((elem, index) => (
                     // make the marginLeft or marginRight of the Product Card based on if the index is 0, even, or odd
                     <ProductCard
-                        key={idx}
+                        key={index}
                         {...elem}
-                        marginLeft={idx % 2 === 0 ? 0 : 5}
-                        marginRight={idx % 2 === 0 ? 5 : 0}
-                        marginTop={idx !== 0 || 1 ? 10 : 0}
+                        marginLeft={index % 2 === 0 ? 0 : 5}
+                        marginRight={index % 2 === 0 ? 5 : 0}
+                        marginTop={index !== 0 || 1 ? 10 : 0}
                     />
                 ))}
             </View>
