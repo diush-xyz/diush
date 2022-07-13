@@ -13,6 +13,8 @@ import EmailIcon from "../../../icons/auth/Email";
 import WarningIcon from "../../../icons/common/warning";
 import SuccessIcon from "../../../icons/common/success";
 import { MAX_WIDTH } from "../../../utils/constants";
+import SearchIcon from "../../../icons/catalog";
+import { SvgProps } from "react-native-svg";
 
 interface ICustomTextInput {
     placeholder: string;
@@ -25,6 +27,7 @@ interface ICustomTextInput {
     isValid?: boolean;
     returnKeyType?: ReturnKeyTypeOptions;
     isPassword?: boolean;
+    isSearch?: boolean;
 }
 
 const CustomTextInput = (props: ICustomTextInput) => {
@@ -61,6 +64,7 @@ const CustomTextInput = (props: ICustomTextInput) => {
                     paddingHorizontal: 20,
                 }}
             >
+                {props.isSearch && <SearchIcon style={{ marginRight: 8 }} />}
                 <TextInput
                     style={{
                         display: "flex",
