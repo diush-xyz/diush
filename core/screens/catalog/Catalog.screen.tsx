@@ -112,7 +112,14 @@ const CatalogScreen = () => {
                         marginBottom: 15,
                     }}
                     keyExtractor={item => item.id.toString()}
-                    renderItem={({ item }) => <ProductCard {...item} />}
+                    renderItem={({ item, index }) => (
+                        <ProductCard
+                            {...item}
+                            marginLeft={index % 2 === 0 ? 0 : 5}
+                            marginRight={index % 2 === 0 ? 5 : 0}
+                            marginTop={index !== 0 || 1 ? 10 : 0}
+                        />
+                    )}
                     showsVerticalScrollIndicator={false}
                 />
 
