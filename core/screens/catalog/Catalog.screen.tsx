@@ -35,6 +35,20 @@ const CatalogScreen = () => {
         },
         {
             uri: "https://reactjs.org/logo-og.png",
+            title: "Jordan m",
+            desc: "Perfect conditions. Only worn once.",
+            askingPrice: 90,
+            highestOffer: 105,
+        },
+        {
+            uri: "https://reactjs.org/logo-og.png",
+            title: "Jordan Jersey",
+            desc: "Perfect conditions. Only worn once.",
+            askingPrice: 90,
+            highestOffer: 105,
+        },
+        {
+            uri: "https://reactjs.org/logo-og.png",
             title: "Jordan Jersey",
             desc: "Perfect conditions. Only worn once.",
             askingPrice: 90,
@@ -80,6 +94,7 @@ const CatalogScreen = () => {
                     flex: 1,
                     flexWrap: "wrap",
                     marginTop: 12,
+                    overflow: "scroll",
                 }}
             >
                 {MOCK_DATA.map((elem, idx) => (
