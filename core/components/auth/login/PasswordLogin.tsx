@@ -61,10 +61,10 @@ const PasswordSignup = () => {
                     loginStore.setCurrentStep(loginStore.currentStep - 1)
                 }
                 title="password"
-                subtitle="signup"
+                subtitle="login"
                 progressIndicator
-                currentStep={3}
-                totalSteps={5}
+                currentStep={2}
+                totalSteps={2}
             />
             <ScrollWrapper>
                 <FlowTemplate
