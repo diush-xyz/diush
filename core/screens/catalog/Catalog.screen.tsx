@@ -92,16 +92,10 @@ const CatalogScreen = () => {
                 onChangeText={() => null}
                 isSearch
             />
-            {/*TODO: Add logic for properly making the marginLeft or marginRight of the Product Card based on if the index is 0, even, or odd/*/}
             <View
                 style={{
-                    // display: "flex",
-                    // justifyContent: "center",
-                    // flexDirection: "row",
                     flex: 1,
-                    // flexWrap: "wrap",
                     marginTop: 12,
-                    // overflow: "scroll",
                 }}
             >
                 <FlatList
@@ -122,23 +116,6 @@ const CatalogScreen = () => {
                     )}
                     showsVerticalScrollIndicator={false}
                 />
-
-                {/* {MOCK_DATA.map((elem, index) => (
-                    // make the marginLeft or marginRight of the Product Card based on if the index is 0, even, or odd
-                    <ProductCard
-                        key={index}
-                        {...elem}
-                        // marginLeft={index % 2 === 0 ? 0 : 5}
-                        // marginRight={index % 2 === 0 ? 5 : 0}
-                        // marginTop={index !== 0 || 1 ? 10 : 0}
-                    />
-                ))} */}
-                {/* <FlatList
-                    data={MOCK_DATA}
-                    renderItem={({ item }) => <ProductCard {...item} />}
-                    showsVerticalScrollIndicator={false}
-                    // keyExtractor={(item, index) => index.toString()}
-                /> */}
             </View>
         </View>
     );
