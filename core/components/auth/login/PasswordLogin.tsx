@@ -26,21 +26,29 @@ const PasswordSignup = () => {
         signInWithEmailAndPassword(auth, loginStore.email, loginStore.password)
             .then(userCredentials => {
                 setAllClear(true);
-                setErrMsg("");
                 const user = userCredentials.user;
                 console.log("Logged in with:", user.email);
             })
             .catch((error: FirebaseError) => {
                 setAllClear(false);
                 console.log("from login: " + error);
-                if (error.code === "auth/user-not-found") {
-                    setErrMsg(
-                        "Check again! It appears your email does not match our password records or is invalid."
-                    );
-                }
 
+                if (
+                    error.code === "auth/wrong-password" ||
+                    error.code === "auth/user-not-found"
+                ) {
+                    setErrMsg(
+                        "check again! It appears your password does not match our records or is invalid."
+                    );
+                    return;
+                }
                 if (loginStore.password == "") {
-                    setErrMsg("Oop! You forgot to type your password.");
+                    setErrMsg("oop! You forgot to type in your password.");
+                    return;
+                } else {
+                    setErrMsg(
+                        "an unexpected error occured. please try again later!"
+                    );
                 }
             });
     };
