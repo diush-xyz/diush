@@ -10,6 +10,7 @@ import FlowTemplate from "../../lib/FlowTemplate";
 import LargeButton from "../../lib/LargeButton";
 import PopupHeader from "../../lib/PopupHeader";
 import { useLoginStore } from "../../../state/auth/Login.store";
+import ScrollWrapper from "../ScrollWrapper/ScrollWrapper";
 
 //TODO: Animation for keyboardShow FlowTemplate margin-bottom
 
@@ -44,39 +45,41 @@ const EmailLogin = () => {
                 currentStep={1}
                 totalSteps={2}
             />
-            <FlowTemplate
-                circleEmoji="👋"
-                title="welcome back!"
-                desc={"we're trhilled you're here. you've been missed."}
-                marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
-            >
-                <CustomTextInput
-                    placeholder="my email"
-                    onChangeText={text => loginStore.setEmail(text)}
-                    marginBottom={32}
-                    defaultValue={loginStore.email}
-                    keyboardType="email-address"
-                    isValid={allClear}
-                    isErr={!allClear && !firstTime}
-                    errMsg={errMsg}
-                    returnKeyType="done"
-                />
-                <LargeButton
-                    title="continue"
-                    onPress={() => {
-                        setFirstTime(false);
-                        if (allClear) {
-                            loginStore.setCurrentStep(
-                                loginStore.currentStep + 1
-                            );
-                        }
-                    }}
-                    footer
-                    disabled={!allClear && !firstTime}
-                    footerButtonTitle="cancel"
-                    footerButtonOnPress={() => loginStore.cancel()}
-                />
-            </FlowTemplate>
+            <ScrollWrapper>
+                <FlowTemplate
+                    circleEmoji="👋"
+                    title="welcome back!"
+                    desc={"we're trhilled you're here. you've been missed."}
+                    marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
+                >
+                    <CustomTextInput
+                        placeholder="my email"
+                        onChangeText={text => loginStore.setEmail(text)}
+                        marginBottom={32}
+                        defaultValue={loginStore.email}
+                        keyboardType="email-address"
+                        isValid={allClear}
+                        isErr={!allClear && !firstTime}
+                        errMsg={errMsg}
+                        returnKeyType="done"
+                    />
+                    <LargeButton
+                        title="continue"
+                        onPress={() => {
+                            setFirstTime(false);
+                            if (allClear) {
+                                loginStore.setCurrentStep(
+                                    loginStore.currentStep + 1
+                                );
+                            }
+                        }}
+                        footer
+                        disabled={!allClear && !firstTime}
+                        footerButtonTitle="cancel"
+                        footerButtonOnPress={() => loginStore.cancel()}
+                    />
+                </FlowTemplate>
+            </ScrollWrapper>
         </BottomSheetView>
     );
 };

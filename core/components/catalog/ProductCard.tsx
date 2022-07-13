@@ -4,7 +4,7 @@ import { truncate } from "../../utils/truncate.util";
 import CustomText from "../lib/CustomText";
 import { LinearGradient } from "expo-linear-gradient";
 
-interface IProductCard {
+export interface IProductCard {
     uri: string;
     askingPrice: number;
     highestOffer: number;
@@ -12,6 +12,8 @@ interface IProductCard {
     desc: string;
     marginLeft?: number;
     marginRight?: number;
+    marginTop?: number;
+    marginBottom?: number;
 }
 
 const ProductCard = (props: IProductCard) => {
@@ -33,6 +35,8 @@ const ProductCard = (props: IProductCard) => {
                     paddingHorizontal: 6,
                     marginLeft: props.marginLeft || 0,
                     marginRight: props.marginRight || 0,
+                    marginTop: props.marginTop || 0,
+                    marginBottom: props.marginBottom || 0,
                 }}
             >
                 {/* make a LinearGradient that overlays the entire background with the following properties: linear-gradient(180deg, #000000 -29.74%, rgba(26, 26, 26, 0.5) 50.32%, #000000 134.48%);*/}

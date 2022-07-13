@@ -10,6 +10,7 @@ import FlowTemplate from "../../../lib/FlowTemplate";
 import CustomTextInput from "../../../lib/CustomTextInput";
 import LargeButton from "../../../lib/LargeButton";
 import { useUtilStore } from "../../../../state/Util.store";
+import ScrollWrapper from "../../ScrollWrapper/ScrollWrapper";
 
 const PasswordSignup = () => {
     const signupStore = useSignupStore();
@@ -41,40 +42,42 @@ const PasswordSignup = () => {
                 currentStep={3}
                 totalSteps={5}
             />
-            <FlowTemplate
-                circleEmoji="🔐"
-                title="password"
-                desc="make sure it's difficult for others to guess."
-                marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
-            >
-                <CustomTextInput
-                    placeholder="password"
-                    onChangeText={text => signupStore.setPassword(text)}
-                    marginBottom={32}
-                    defaultValue={signupStore.password}
-                    isValid={allClear}
-                    isErr={!allClear && !firstTime}
-                    errMsg={errMsg}
-                    returnKeyType="done"
-                    isPassword
-                />
-                <LargeButton
-                    title="continue"
-                    onPress={() => {
-                        setFirstTime(false);
-                        if (allClear) {
-                            signupStore.setCurrentStep(
-                                signupStore.currentStep + 1
-                            );
-                        }
-                        null;
-                    }}
-                    footer
-                    // disabled={!allClear && !firstTime}
-                    footerButtonTitle="cancel"
-                    footerButtonOnPress={() => signupStore.cancel()}
-                />
-            </FlowTemplate>
+            <ScrollWrapper>
+                <FlowTemplate
+                    circleEmoji="🔐"
+                    title="password"
+                    desc="make sure it's difficult for others to guess."
+                    marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
+                >
+                    <CustomTextInput
+                        placeholder="password"
+                        onChangeText={text => signupStore.setPassword(text)}
+                        marginBottom={32}
+                        defaultValue={signupStore.password}
+                        isValid={allClear}
+                        isErr={!allClear && !firstTime}
+                        errMsg={errMsg}
+                        returnKeyType="done"
+                        isPassword
+                    />
+                    <LargeButton
+                        title="continue"
+                        onPress={() => {
+                            setFirstTime(false);
+                            if (allClear) {
+                                signupStore.setCurrentStep(
+                                    signupStore.currentStep + 1
+                                );
+                            }
+                            null;
+                        }}
+                        footer
+                        // disabled={!allClear && !firstTime}
+                        footerButtonTitle="cancel"
+                        footerButtonOnPress={() => signupStore.cancel()}
+                    />
+                </FlowTemplate>
+            </ScrollWrapper>
         </BottomSheetView>
     );
 };

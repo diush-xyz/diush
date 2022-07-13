@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import CustomText from "../../components/lib/CustomText/CustomText.ui";
 import NoBackgroundLogo from "../../icons/auth/NoBackgroundLogo";
@@ -7,12 +7,11 @@ import { observer } from "mobx-react";
 import { GLOBAL_STYLES } from "../../@types/GlobalStyles";
 import LargeButton from "../../components/lib/LargeButton";
 import { AuthStatus } from "../../@types/GlobalTypes";
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import BottomSheet from "@gorhom/bottom-sheet";
 import SignupFlow from "./signup";
 import LoginFlow from "./login";
 import { BOTTOM_SHEET_SNAP_POINTS } from "../../utils/constants";
 import { useTheme } from "../../utils/useTheme.util";
-import PopupHeader from "../../components/lib/PopupHeader";
 
 const AuthScreen = () => {
     const authStore = useAuthStore();

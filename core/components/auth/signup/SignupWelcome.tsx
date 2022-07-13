@@ -6,7 +6,7 @@ import PopupHeader from "../../lib/PopupHeader";
 import SignupOptionButton from "../SignupOptionbutton/SignupOptionButton";
 import { observer } from "mobx-react";
 import { useSignupStore } from "../../../state/auth/Signup.store";
-import { SignupMethods } from "../../../@types/GlobalTypes";
+import { SignupMethod } from "../../../@types/GlobalTypes";
 
 const SignupWelcome = () => {
     const signupStore = useSignupStore();
@@ -30,7 +30,7 @@ const SignupWelcome = () => {
                     text="continue with email"
                     icon="email"
                     onPress={() => {
-                        signupStore.setMethod(SignupMethods.EMAIL);
+                        signupStore.setMethod(SignupMethod.EMAIL);
                         signupStore.setCurrentStep(1);
                     }}
                     marginBottom={17}
@@ -39,7 +39,7 @@ const SignupWelcome = () => {
                     text="continue with phone"
                     icon="phone"
                     onPress={() => {
-                        signupStore.setMethod(SignupMethods.PHONE);
+                        signupStore.setMethod(SignupMethod.PHONE);
                         signupStore.setCurrentStep(1);
                     }}
                 />

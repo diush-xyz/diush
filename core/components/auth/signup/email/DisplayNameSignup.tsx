@@ -10,6 +10,7 @@ import CustomTextInput from "../../../lib/CustomTextInput";
 import LargeButton from "../../../lib/LargeButton";
 import { observer } from "mobx-react";
 import { useUtilStore } from "../../../../state/Util.store";
+import ScrollWrapper from "../../ScrollWrapper/ScrollWrapper";
 
 const DisplayNameSignup = () => {
     const signupStore = useSignupStore();
@@ -50,40 +51,42 @@ const DisplayNameSignup = () => {
                 currentStep={5}
                 totalSteps={5}
             />
-            <FlowTemplate
-                circleEmoji="🍩"
-                title="how should we call you?"
-                desc={
-                    "please provide your full real name. it’s important to interact with other users."
-                }
-                marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
-            >
-                <CustomTextInput
-                    placeholder="your name"
-                    onChangeText={text => signupStore.setDisplayName(text)}
-                    marginBottom={32}
-                    defaultValue={signupStore.displayName}
-                    isValid={allClear}
-                    isErr={!allClear && !firstTime}
-                    errMsg={errMsg}
-                    returnKeyType="done"
-                />
-                <LargeButton
-                    title="continue"
-                    onPress={() => {
-                        setFirstTime(false);
-                        if (allClear) {
-                            signupStore.setCurrentStep(
-                                signupStore.currentStep + 1
-                            );
-                        }
-                    }}
-                    footer
-                    disabled={!allClear && !firstTime}
-                    footerButtonTitle="cancel"
-                    footerButtonOnPress={() => signupStore.cancel()}
-                />
-            </FlowTemplate>
+            <ScrollWrapper>
+                <FlowTemplate
+                    circleEmoji="🍩"
+                    title="how should we call you?"
+                    desc={
+                        "please provide your full real name.\n it’s important to interact with other users."
+                    }
+                    marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
+                >
+                    <CustomTextInput
+                        placeholder="your name"
+                        onChangeText={text => signupStore.setDisplayName(text)}
+                        marginBottom={32}
+                        defaultValue={signupStore.displayName}
+                        isValid={allClear}
+                        isErr={!allClear && !firstTime}
+                        errMsg={errMsg}
+                        returnKeyType="done"
+                    />
+                    <LargeButton
+                        title="continue"
+                        onPress={() => {
+                            setFirstTime(false);
+                            if (allClear) {
+                                signupStore.setCurrentStep(
+                                    signupStore.currentStep + 1
+                                );
+                            }
+                        }}
+                        footer
+                        disabled={!allClear && !firstTime}
+                        footerButtonTitle="cancel"
+                        footerButtonOnPress={() => signupStore.cancel()}
+                    />
+                </FlowTemplate>
+            </ScrollWrapper>
         </BottomSheetView>
     );
 };
