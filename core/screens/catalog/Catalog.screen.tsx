@@ -57,7 +57,7 @@ const CatalogScreen = () => {
             uri: "https://reactjs.org/logo-og.png",
             title: "Jordan Jersey",
             desc: "Perfect conditions. Only worn once.",
-            askingPrice: 90,
+            askingPrice: 80,
             highestOffer: 105,
         },
         {
