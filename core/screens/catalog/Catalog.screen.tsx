@@ -16,6 +16,9 @@ import ProductCard, {
 import { v4 as uuid } from "uuid";
 import WandIcon from "../../icons/catalog/Wand";
 import CreateProductButton from "../../components/catalog/CreateProductButton";
+import LargeButton from "../../components/lib/LargeButton";
+import { createProductInDb } from "../../utils/products.util";
+import { auth } from "../../../config/firebase";
 
 const CatalogScreen = () => {
     const utilStore = useUtilStore();
@@ -89,6 +92,22 @@ const CatalogScreen = () => {
                 title="my catalog"
             />
             <Switcher />
+            <LargeButton
+                title="Create a product"
+                onPress={() => {
+                    createProductInDb({
+                        id: "thisisanid",
+                        linkedUID: auth.currentUser?.uid,
+                        title: "This is my new product",
+                        blurb: "Woooo, this is the blurb babyyy",
+                        askingPrice: 100,
+                    })
+                        .then(() => console.log("Created product in DB!"))
+                        .catch(err =>
+                            console.error("something went wrong: " + err)
+                        );
+                }}
+            />
             <CustomTextInput
                 placeholder="search my products"
                 onChangeText={() => null}

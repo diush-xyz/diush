@@ -9,10 +9,10 @@ const CreateProductButton = () => {
 
     const Wrapper = styled.View`
         position: absolute;
-        bottom: 41;
-        right: 20;
-        width: 56;
-        height: 56;
+        bottom: 41px;
+        right: 20px;
+        width: 56px;
+        height: 56px;
         background-color: ${theme.accent};
         align-items: center;
         justify-content: center;
