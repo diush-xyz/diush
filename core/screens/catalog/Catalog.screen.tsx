@@ -17,63 +17,86 @@ import { v4 as uuid } from "uuid";
 import WandIcon from "../../icons/catalog/Wand";
 import CreateProductButton from "../../components/catalog/CreateProductButton";
 import LargeButton from "../../components/lib/LargeButton";
-import { createProductInDb } from "../../utils/products.util";
-import { auth } from "../../../config/firebase";
+import {
+    createProductInDb,
+    readMyProductsFromDb,
+} from "../../utils/products.util";
+import { auth, db } from "../../../config/firebase";
+import { query, collection, onSnapshot, where } from "firebase/firestore";
 
 const CatalogScreen = () => {
     const utilStore = useUtilStore();
     const theme = useTheme();
+    const [myProducts, setMyProducts] = React.useState([]);
 
-    const MOCK_DATA: IProductCard[] = [
-        {
-            id: "0de763b0-939a-415c-b879-987e2f120034",
-            uri: "https://reactjs.org/logo-og.png",
-            title: "Jordan Jersey",
-            desc: "Perfect conditions. Only worn once.",
-            askingPrice: 90,
-            highestOffer: 105,
-        },
-        {
-            id: "hfhj0de763b0-939a-415c-b879-987e2f120034",
-            uri: "https://reactjs.org/logo-og.png",
-            title: "Jordan Jersey",
-            desc: "Perfect conditions. Only worn once.",
-            askingPrice: 90,
-            highestOffer: 105,
-        },
-        {
-            id: "0de763b0-939a-415c-b879fff",
-            uri: "https://reactjs.org/logo-og.png",
-            title: "Jordan m",
-            desc: "Perfect conditions. Only worn once.",
-            askingPrice: 90,
-            highestOffer: 105,
-        },
-        {
-            id: "0de763b0-939a-diushhhh-b879fff",
-            uri: "https://reactjs.org/logo-og.png",
-            title: "Jordan Jersey",
-            desc: "Perfect conditions. Only worn once.",
-            askingPrice: 90,
-            highestOffer: 105,
-        },
-        {
-            id: "0de763b0-939a-415c-yuyuyuyuyuyuy",
-            uri: "https://reactjs.org/logo-og.png",
-            title: "Jordan Jersey",
-            desc: "Perfect conditions. Only worn once.",
-            askingPrice: 80,
-            highestOffer: 105,
-        },
-        {
-            id: "0de763b0-939a-hjfhjfhjhdjfhj-b879fff",
-            uri: "https://reactjs.org/logo-og.png",
-            title: "Jordan Jersey",
-            desc: "Perfect conditions. Only worn once.",
-            askingPrice: 90,
-            highestOffer: 105,
-        },
-    ];
+    // const MOCK_DATA: IProductCard[] = [
+    //     {
+    //         id: "0de763b0-939a-415c-b879-987e2f120034",
+    //         uri: "https://reactjs.org/logo-og.png",
+    //         title: "Jordan Jersey",
+    //         desc: "Perfect conditions. Only worn once.",
+    //         askingPrice: 90,
+    //         highestOffer: 105,
+    //     },
+    //     {
+    //         id: "hfhj0de763b0-939a-415c-b879-987e2f120034",
+    //         uri: "https://reactjs.org/logo-og.png",
+    //         title: "Jordan Jersey",
+    //         desc: "Perfect conditions. Only worn once.",
+    //         askingPrice: 90,
+    //         highestOffer: 105,
+    //     },
+    //     {
+    //         id: "0de763b0-939a-415c-b879fff",
+    //         uri: "https://reactjs.org/logo-og.png",
+    //         title: "Jordan m",
+    //         desc: "Perfect conditions. Only worn once.",
+    //         askingPrice: 90,
+    //         highestOffer: 105,
+    //     },
+    //     {
+    //         id: "0de763b0-939a-diushhhh-b879fff",
+    //         uri: "https://reactjs.org/logo-og.png",
+    //         title: "Jordan Jersey",
+    //         desc: "Perfect conditions. Only worn once.",
+    //         askingPrice: 90,
+    //         highestOffer: 105,
+    //     },
+    //     {
+    //         id: "0de763b0-939a-415c-yuyuyuyuyuyuy",
+    //         uri: "https://reactjs.org/logo-og.png",
+    //         title: "Jordan Jersey",
+    //         desc: "Perfect conditions. Only worn once.",
+    //         askingPrice: 80,
+    //         highestOffer: 105,
+    //     },
+    //     {
+    //         id: "0de763b0-939a-hjfhjfhjhdjfhj-b879fff",
+    //         uri: "https://reactjs.org/logo-og.png",
+    //         title: "Jordan Jersey",
+    //         desc: "Perfect conditions. Only worn once.",
+    //         askingPrice: 90,
+    //         highestOffer: 105,
+    //     },
+    // ];
+
+    React.useEffect(() => {
+        const q = query(
+            collection(db, "products"),
+            where("linkedUID", "==", auth.currentUser?.uid)
+        );
+        onSnapshot(q, querySnapshot => {
+            // querySnapshot.forEach(doc => {
+            //     setListings(doc.data());
+            // });
+
+            setMyProducts(querySnapshot.docs.map(doc => doc.data()));
+
+            console.log("the products: " + myProducts.toString());
+
+            // setListings(querySnapshot.docs.map((doc) => doc.data()))
+        });
+    }, []);
 
     return (
         <View
@@ -96,11 +119,11 @@ const CatalogScreen = () => {
                 title="Create a product"
                 onPress={() => {
                     createProductInDb({
-                        id: "thisisanid",
-                        linkedUID: auth.currentUser?.uid,
-                        title: "This is my new product",
-                        blurb: "Woooo, this is the blurb babyyy",
-                        askingPrice: 100,
+                        id: "fourth",
+                        linkedUID: "nottheproperlinkedUID",
+                        title: "I should not show up. If I do, you suck.",
+                        blurb: "hjfhjhj",
+                        askingPrice: 25,
                     })
                         .then(() => console.log("Created product in DB!"))
                         .catch(err =>
@@ -119,23 +142,30 @@ const CatalogScreen = () => {
                     marginTop: 22,
                 }}
             >
-                <FlatList
-                    data={MOCK_DATA}
-                    numColumns={2}
-                    columnWrapperStyle={{
-                        justifyContent: "space-between",
-                        marginBottom: 15,
-                    }}
-                    keyExtractor={item => item.id.toString()}
-                    renderItem={({ item, index }) => (
-                        <ProductCard
-                            {...item}
-                            marginLeft={index % 2 === 0 ? 0 : 5}
-                            marginRight={index % 2 === 0 ? 5 : 0}
-                        />
-                    )}
-                    showsVerticalScrollIndicator={false}
-                />
+                {myProducts?.map((elem, idx) => {
+                    return <CustomText key={idx}>{elem.title}</CustomText>;
+                })}
+                {/* {myProducts.length > 0 ? (
+                    <FlatList
+                        data={myProducts}
+                        numColumns={2}
+                        columnWrapperStyle={{
+                            justifyContent: "space-between",
+                            marginBottom: 15,
+                        }}
+                        // keyExtractor={item => {
+
+                        // }}
+                        renderItem={({ item, index }) => (
+                            <ProductCard
+                                {...item}
+                                marginLeft={index % 2 === 0 ? 0 : 5}
+                                marginRight={index % 2 === 0 ? 5 : 0}
+                            />
+                        )}
+                        showsVerticalScrollIndicator={false}
+                    />
+                ) : null} */}
             </View>
             {/*make a button in the bottom right corner of the screen that has the shape of a circle and a plus sign*/}
             <CreateProductButton />

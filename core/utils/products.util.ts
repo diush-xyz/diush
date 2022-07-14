@@ -27,17 +27,21 @@ export const createProductInDb = async (product: IProduct) => {
         .catch(error => console.log("db error: " + error));
 };
 
-// //read
-// interface IFetchUserFromDb {
-//     id: string;
-//     setUser: (user) => void;
-// }
+//read
+interface IReadMyProductsFromDb {
+    linkedUID: string;
+    setProducts: (user) => void;
+}
 
-// export const readProductFromDb = (props: IFetchUserFromDb) => {
-//     const q = query(collection(db, "users"), where("id", "==", props.id));
-//     onSnapshot(q, querySnapshot => {
-//         querySnapshot.forEach(doc => {
-//             props.setUser(doc.data());
-//         });
-//     });
-// };
+export const readMyProductsFromDb = (props: IReadMyProductsFromDb) => {
+    const q = query(
+        collection(db, "products"),
+        where("linkedUID", "==", props.linkedUID)
+    );
+    onSnapshot(q, querySnapshot => {
+        // querySnapshot.forEach(doc => {
+        //     props.setProduct(doc.data());
+        // });
+        props.setProducts(querySnapshot.docs.map(doc => doc.data()));
+    });
+};

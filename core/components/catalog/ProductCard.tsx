@@ -3,14 +3,10 @@ import React from "react";
 import { truncate } from "../../utils/truncate.util";
 import CustomText from "../lib/CustomText";
 import { LinearGradient } from "expo-linear-gradient";
+import { IProduct } from "../../@types/GlobalTypes";
 
 export interface IProductCard {
-    id: string;
-    uri: string;
-    askingPrice: number;
-    highestOffer: number;
-    title: string;
-    desc: string;
+    productData: IProduct;
     marginLeft?: number;
     marginRight?: number;
     marginTop?: number;
@@ -22,7 +18,9 @@ const ProductCard = (props: IProductCard) => {
         <>
             {/*@ts-ignore*/}
             <ImageBackground
-                source={{ uri: props.uri }}
+                // source={{ uri: props.productData.uri }}
+                //TODO: ADD URI to backend
+                source={{ uri: "https://reactjs.org/logo-og.png" }}
                 borderRadius={8}
                 style={{
                     flexDirection: "column",
@@ -64,7 +62,7 @@ const ProductCard = (props: IProductCard) => {
                             asking price
                         </CustomText>
                         <CustomText accent font="Black" fontSize={18}>
-                            ${props.askingPrice}
+                            ${props.productData?.askingPrice}
                         </CustomText>
                     </View>
                     <View>
@@ -77,7 +75,9 @@ const ProductCard = (props: IProductCard) => {
                             fontSize={18}
                             textAlign="right"
                         >
-                            ${props.highestOffer}
+                            {/* ${props.productData.highestOffer} */}
+                            {/*TODO: Calculate highest offer from the backend */}
+                            100
                         </CustomText>
                     </View>
                 </View>
@@ -88,10 +88,10 @@ const ProductCard = (props: IProductCard) => {
                     }}
                 >
                     <CustomText primary fontSize={18} font="Black">
-                        {truncate(props.title, 18)}
+                        {truncate(props.productData?.title, 18)}
                     </CustomText>
                     <CustomText primary font="Bold">
-                        {truncate(props.desc, 22)}
+                        {truncate(props.productData?.blurb, 22)}
                     </CustomText>
                 </View>
             </ImageBackground>
