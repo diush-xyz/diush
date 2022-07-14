@@ -7,13 +7,15 @@ import { useUtilStore } from "../../state/Util.store";
 import { LoggedInScreen } from "../../@types/GlobalTypes";
 import { useTheme } from "../../utils/useTheme.util";
 import CustomTextInput from "../../components/lib/CustomTextInput";
-import SearchIcon from "../../icons/catalog";
+import SearchIcon from "../../icons/catalog/Search";
 import Switcher from "../../components/catalog/Switcher";
 import { truncate } from "../../utils/truncate.util";
 import ProductCard, {
     IProductCard,
 } from "../../components/catalog/ProductCard";
 import { v4 as uuid } from "uuid";
+import WandIcon from "../../icons/catalog/Wand";
+import CreateProductButton from "../../components/catalog/CreateProductButton";
 
 const CatalogScreen = () => {
     const utilStore = useUtilStore();
@@ -116,6 +118,8 @@ const CatalogScreen = () => {
                     showsVerticalScrollIndicator={false}
                 />
             </View>
+            {/*make a button in the bottom right corner of the screen that has the shape of a circle and a plus sign*/}
+            <CreateProductButton />
         </View>
     );
 };

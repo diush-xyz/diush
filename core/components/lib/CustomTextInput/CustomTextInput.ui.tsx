@@ -13,7 +13,7 @@ import EmailIcon from "../../../icons/auth/Email";
 import WarningIcon from "../../../icons/common/warning";
 import SuccessIcon from "../../../icons/common/success";
 import { MAX_WIDTH } from "../../../utils/constants";
-import SearchIcon from "../../../icons/catalog";
+import SearchIcon from "../../../icons/catalog/Search";
 import { SvgProps } from "react-native-svg";
 
 interface ICustomTextInput {
