@@ -95,7 +95,7 @@ const CatalogScreen = () => {
             <View
                 style={{
                     flex: 1,
-                    marginTop: 12,
+                    marginTop: 22,
                 }}
             >
                 <FlatList
@@ -111,7 +111,6 @@ const CatalogScreen = () => {
                             {...item}
                             marginLeft={index % 2 === 0 ? 0 : 5}
                             marginRight={index % 2 === 0 ? 5 : 0}
-                            marginTop={index !== 0 || 1 ? 10 : 0}
                         />
                     )}
                     showsVerticalScrollIndicator={false}
