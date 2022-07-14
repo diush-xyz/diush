@@ -1,7 +1,7 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import { DarkTheme } from "./core/style/Colors.style";
+import { DarkTheme } from "./core/style/colors.style";
 import Test from "./core/components/Test";
 import { ThemeProvider } from "styled-components";
 import AuthScreen from "./core/screens/auth/Auth.screen";
