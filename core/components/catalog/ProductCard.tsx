@@ -20,7 +20,7 @@ const ProductCard = (props: IProductCard) => {
             <ImageBackground
                 // source={{ uri: props.productData.uri }}
                 //TODO: ADD URI to backend
-                source={{ uri: "https://reactjs.org/logo-og.png" }}
+                source={{ uri: props.productData?.imageURL }}
                 borderRadius={8}
                 style={{
                     flexDirection: "column",

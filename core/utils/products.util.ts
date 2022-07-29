@@ -18,6 +18,7 @@ export const createProductInDb = async (product: IProduct) => {
         title: product.title,
         blurb: product.blurb,
         askingPrice: product.askingPrice,
+        imageURL: product.imageURL,
         // offers: product.offers,
         createdAt: new Date(),
         // categories: product.categories,

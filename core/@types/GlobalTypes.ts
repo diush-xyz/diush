@@ -13,6 +13,7 @@ export interface IProduct {
     title: string;
     blurb: string;
     askingPrice: number;
+    imageURL: string;
     offers?: IOffer[];
     createdAt?: Date;
     categories?: ICategory[];
