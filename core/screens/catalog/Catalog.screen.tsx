@@ -188,6 +188,7 @@ const CatalogScreen = () => {
                     }}
                 /> */}
             </View>
+            <CreateProductButton />
         </View>
     );
 };
