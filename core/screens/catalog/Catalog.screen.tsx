@@ -28,6 +28,7 @@ const CatalogScreen = () => {
     const utilStore = useUtilStore();
     const theme = useTheme();
     const [myProducts, setMyProducts] = React.useState([]);
+    const [loading, setLoading] = React.useState(true);
 
     // const MOCK_DATA: IProductCard[] = [
     //     {
@@ -90,13 +91,29 @@ const CatalogScreen = () => {
             //     setListings(doc.data());
             // });
 
-            setMyProducts(querySnapshot.docs.map(doc => doc.data()));
+            const fetched = [];
 
-            console.log("the products: " + myProducts.toString());
+            querySnapshot.forEach(documentSnapshot => {
+                fetched.push({
+                    ...documentSnapshot.data(),
+                    key: documentSnapshot.id,
+                });
+            });
+
+            setMyProducts(fetched);
+            setLoading(false);
+            // setMyProducts(querySnapshot.docs.map(doc => doc.data()));
+
+            // console.log(auth.currentUser?.uid);
+            // console.log("the products: " + myProducts);
 
             // setListings(querySnapshot.docs.map((doc) => doc.data()))
         });
     }, []);
+
+    if (loading) {
+        return <CustomText accent>Loading...</CustomText>;
+    }
 
     return (
         <View
@@ -142,35 +159,113 @@ const CatalogScreen = () => {
                     marginTop: 22,
                 }}
             >
-                {myProducts?.map((elem, idx) => {
-                    return <CustomText key={idx}>{elem.title}</CustomText>;
-                })}
-                {/* {myProducts.length > 0 ? (
-                    <FlatList
-                        data={myProducts}
-                        numColumns={2}
-                        columnWrapperStyle={{
-                            justifyContent: "space-between",
-                            marginBottom: 15,
-                        }}
-                        // keyExtractor={item => {
-
-                        // }}
-                        renderItem={({ item, index }) => (
-                            <ProductCard
-                                {...item}
-                                marginLeft={index % 2 === 0 ? 0 : 5}
-                                marginRight={index % 2 === 0 ? 5 : 0}
-                            />
-                        )}
-                        showsVerticalScrollIndicator={false}
-                    />
-                ) : null} */}
+                <FlatList
+                    data={myProducts}
+                    numColumns={2}
+                    columnWrapperStyle={{
+                        justifyContent: "space-between",
+                        marginBottom: 15,
+                    }}
+                    renderItem={({ item, index }) => (
+                        <ProductCard
+                            productData={item}
+                            marginLeft={index % 2 === 0 ? 0 : 5}
+                            marginRight={index % 2 === 0 ? 5 : 0}
+                        />
+                    )}
+                />
+                {/* <FlatList
+                    data={myProducts}
+                    numColumns={2}
+                    columnWrapperStyle={{
+                        justifyContent: "space-between",
+                        marginBottom: 15,
+                    }}
+                    renderItem={({ item }) => {
+                        return <CustomText>{item.title}</CustomText>;
+                    }}
+                /> */}
             </View>
-            {/*make a button in the bottom right corner of the screen that has the shape of a circle and a plus sign*/}
-            <CreateProductButton />
         </View>
     );
 };
 
 export default CatalogScreen;
+
+// Language: typescript
+// import { useUtilStore } from "../../state/Util.store";
+// import { LoggedInScreen } from "../../@types/GlobalTypes";
+// import { useTheme } from "../../utils/useTheme.util";
+// import CustomTextInput from "../../components/lib/CustomTextInput";
+// import SearchIcon from "../../icons/catalog/Search";
+// import Switcher from "../../components/catalog/Switcher";
+// import { truncate } from "../../utils/truncate.util";
+// import ProductCard, {
+//     IProductCard,
+// } from "../../components/catalog/ProductCard";
+// import { v4 as uuid } from "uuid";
+// import WandIcon from "../../icons/catalog/Wand";
+// import CreateProductButton from "../../components/catalog/CreateProductButton";
+// import LargeButton from "../../components/lib/LargeButton";
+// import {
+//     createProductInDb,
+//     readMyProductsFromDb,
+// } from "../../utils/products.util";
+// import { auth, db } from "../../../config/firebase";
+// import { query, collection, onSnapshot, where } from "firebase/firestore";
+
+// const CatalogScreen = () => {
+//     const utilStore = useUtilStore();
+//     const theme = useTheme();
+//     const [myProducts, setMyProducts] = React.useState([]);
+
+//     // const MOCK_DATA: IProductCard[] = [
+//     //     {
+//     //         id: "0de763b0-939a-415c-b879-987e2f120034",
+//     //         uri: "https://reactjs.org/logo-og.png",
+//     //         title: "Jordan Jersey",
+//     //         desc: "Perfect conditions. Only worn once.",
+//     //         askingPrice: 90,
+//     //         highestOffer: 105,
+//     //     },
+//     //     {
+//     //         id: "hfhj0de763b0-939a-415c-b879-987e2f120034",
+//     //         uri: "https://reactjs.org/logo-og.png",
+//     //         title: "Jordan Jersey",
+//     //         desc: "Perfect conditions. Only worn once.",
+//     //         askingPrice: 90,
+//     //         highestOffer: 105,
+//     //     },
+//     //     {
+//     //         id: "0de763b0-939a-415c-b879fff",
+//     //         uri: "https://reactjs.org/logo-og.png",
+//                 }}
+//                 {/* {myProducts.length > 0 ? (
+//                     <FlatList
+//                         data={myProducts}
+//                         numColumns={2}
+//                         columnWrapperStyle={{
+//                             justifyContent: "space-between",
+//                             marginBottom: 15,
+//                         }}
+//                         // keyExtractor={item => {
+
+//                         // }}
+//                         renderItem={({ item, index }) => (
+//                             <ProductCard
+//                                 {...item}
+//                                 marginLeft={index % 2 === 0 ? 0 : 5}
+//                                 marginRight={index % 2 === 0 ? 5 : 0}
+//                             />
+//                         )}
+//                         showsVerticalScrollIndicator={false}
+//                     />
+//                 ) : null} */}
+//             </View>
+//             {/*make a button in the bottom right corner of the screen that has the shape of a circle and a plus sign*/}
+//             <CreateProductButton />
+//         </View>
+//     );
+// };
+
+// export default CatalogScreen;
