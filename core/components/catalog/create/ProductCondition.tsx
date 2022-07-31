@@ -16,6 +16,8 @@ import { useCatalogStore } from "../../../state/auth/Catalog.store";
 import ScrollWrapper from "../../auth/ScrollWrapper/ScrollWrapper";
 import { MAX_WIDTH } from "../../../utils/constants";
 import CustomText from "../../lib/CustomText";
+import LeftArrowIcon from "../../../icons/common/leftArrow";
+import DropdownIcon from "../../../icons/catalog/Dropdown";
 
 const ProductCondition = () => {
     const catalogStore = useCatalogStore();
@@ -50,6 +52,7 @@ const ProductCondition = () => {
                         style={{
                             display: "flex",
                             alignItems: "center",
+                            justifyContent: "space-between",
                             flexDirection: "row",
                             backgroundColor: "rgba(255,255,255,0.05)",
                             height: 45,
@@ -64,6 +67,7 @@ const ProductCondition = () => {
                         }}
                     >
                         <CustomText secondary>status</CustomText>
+                        <DropdownIcon />
                     </View>
                     <LargeButton
                         title="continue"
