@@ -73,7 +73,6 @@ const SignupWelcome = () => {
                         }
                         marginBottom={32}
                         defaultValue={createProductStore.productName}
-                        keyboardType="email-address"
                         isValid={allClear}
                         isErr={!allClear && !firstTime}
                         errMsg={errMsg}
