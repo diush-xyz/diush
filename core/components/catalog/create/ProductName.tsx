@@ -14,6 +14,7 @@ import CustomTextInput from "../../lib/CustomTextInput";
 import LargeButton from "../../lib/LargeButton";
 import { useUtilStore } from "../../../state/Util.store";
 import { useCatalogStore } from "../../../state/auth/Catalog.store";
+import ScrollWrapper from "../../auth/ScrollWrapper/ScrollWrapper";
 
 const SignupWelcome = () => {
     const catalogStore = useCatalogStore();
@@ -39,15 +40,8 @@ const SignupWelcome = () => {
     });
 
     return (
-        <View
-            style={{
-                alignItems: "center",
-                flex: 1,
-                marginTop: 55,
-                width: "100%",
-            }}
-        >
-            <ScreenHeader
+        <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
+            <PopupHeader
                 title="create listing"
                 backArrow
                 backArrowOnPress={() =>
@@ -58,13 +52,14 @@ const SignupWelcome = () => {
                 currentStep={1}
                 totalSteps={8}
             />
-            <View style={{ display: "flex", marginTop: 130, width: "100%" }}>
+            <ScrollWrapper>
                 <FlowTemplate
                     circleEmoji="📦"
                     title="magic begins here."
                     desc={
                         "give your new product a name. make it\n descriptive, yet simple."
                     }
+                    marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
                 >
                     <CustomTextInput
                         placeholder="PlayStation 5"
@@ -94,8 +89,8 @@ const SignupWelcome = () => {
                         }
                     />
                 </FlowTemplate>
-            </View>
-        </View>
+            </ScrollWrapper>
+        </BottomSheetView>
     );
 };
 
