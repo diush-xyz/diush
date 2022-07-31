@@ -10,6 +10,7 @@ import ScreenHeader from "../../lib/ScreenHeader";
 import FlowTemplate from "../../lib/FlowTemplate";
 import CustomTextInput from "../../lib/CustomTextInput";
 import DeleteIcon from "../../../icons/catalog/Delete";
+import InfoIcon from "../../../icons/common/info";
 
 const AskingPrice = () => {
     const createProductStore = useCreateProductStore();
@@ -75,6 +76,18 @@ const AskingPrice = () => {
                         )}
                         style={{ width: "100%", maxWidth: 247 }}
                     />
+                    <View
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            marginVertical: 32,
+                        }}
+                    >
+                        <InfoIcon />
+                        <CustomText secondary style={{ marginLeft: 5 }}>
+                            learn more about offers
+                        </CustomText>
+                    </View>
                     <LargeButton
                         title="continue"
                         onPress={() => {
