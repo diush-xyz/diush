@@ -60,8 +60,8 @@ const ProductBlurb = () => {
                 }
                 subtitle="my catalog"
                 progressIndicator
-                currentStep={1}
-                totalSteps={8}
+                currentStep={3}
+                totalSteps={7}
             />
             <ScrollWrapper isTextArea>
                 <FlowTemplate

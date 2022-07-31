@@ -13,6 +13,7 @@ import ProductName from "../../../components/catalog/create/ProductName";
 import CustomText from "../../../components/lib/CustomText";
 import AskingPrice from "../../../components/catalog/create/AskingPrice";
 import ProductBlurb from "../../../components/catalog/create/ProductBlurb";
+import ProductCondition from "../../../components/catalog/create/ProductCondition";
 
 const CreateProductFlow = () => {
     const createProductStore = useCreateProductStore();
@@ -25,6 +26,8 @@ const CreateProductFlow = () => {
                 return <AskingPrice />;
             case 2:
                 return <ProductBlurb />;
+            case 3:
+                return <ProductCondition />;
         }
     };
 

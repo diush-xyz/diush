@@ -35,7 +35,7 @@ const AskingPrice = () => {
                 subtitle="my catalog"
                 progressIndicator
                 currentStep={2}
-                totalSteps={8}
+                totalSteps={7}
             />
             <View style={{ width: "100%", marginTop: 40 }}>
                 <FlowTemplate
