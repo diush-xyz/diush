@@ -14,6 +14,8 @@ import LargeButton from "../../lib/LargeButton";
 import { useUtilStore } from "../../../state/Util.store";
 import { useCatalogStore } from "../../../state/auth/Catalog.store";
 import ScrollWrapper from "../../auth/ScrollWrapper/ScrollWrapper";
+import { MAX_WIDTH } from "../../../utils/constants";
+import CustomText from "../../lib/CustomText";
 
 const ProductCondition = () => {
     const catalogStore = useCatalogStore();
@@ -44,6 +46,25 @@ const ProductCondition = () => {
                     }
                     marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
                 >
+                    <View
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            flexDirection: "row",
+                            backgroundColor: "rgba(255,255,255,0.05)",
+                            height: 45,
+                            width: "100%",
+                            maxWidth: MAX_WIDTH,
+                            // marginBottom: props.isErr
+                            //     ? 7
+                            //     : props.marginBottom || 0,
+                            borderRadius: 12,
+                            paddingHorizontal: 20,
+                            marginBottom: 32,
+                        }}
+                    >
+                        <CustomText secondary>status</CustomText>
+                    </View>
                     <LargeButton
                         title="continue"
                         onPress={() => {
