@@ -7,7 +7,7 @@ import { observer } from "mobx-react";
 import { useSignupStore } from "../../../state/auth/Signup.store";
 import { CatalogStatus, SignupMethod } from "../../../@types/GlobalTypes";
 import SignupOptionButton from "../../auth/SignupOptionbutton/SignupOptionButton";
-import { View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { useCreateProductStore } from "../../../state/auth/CreateProduct.store";
 import CustomTextInput from "../../lib/CustomTextInput";
 import LargeButton from "../../lib/LargeButton";
@@ -18,11 +18,13 @@ import { MAX_WIDTH } from "../../../utils/constants";
 import CustomText from "../../lib/CustomText";
 import LeftArrowIcon from "../../../icons/common/leftArrow";
 import DropdownIcon from "../../../icons/catalog/Dropdown";
+import ConditionModal from "../ConditionModal/ConditionModal";
 
 const ProductCondition = () => {
     const catalogStore = useCatalogStore();
     const createProductStore = useCreateProductStore();
     const utilStore = useUtilStore();
+    const [selector, setSelector] = React.useState<boolean>(false);
 
     return (
         <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
@@ -48,27 +50,37 @@ const ProductCondition = () => {
                     }
                     marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
                 >
-                    <View
+                    <TouchableOpacity
+                        onPress={() => setSelector(!selector)}
                         style={{
                             display: "flex",
                             alignItems: "center",
-                            justifyContent: "space-between",
-                            flexDirection: "row",
-                            backgroundColor: "rgba(255,255,255,0.05)",
-                            height: 45,
+                            justifyContent: "center",
                             width: "100%",
-                            maxWidth: MAX_WIDTH,
-                            // marginBottom: props.isErr
-                            //     ? 7
-                            //     : props.marginBottom || 0,
-                            borderRadius: 12,
-                            paddingHorizontal: 20,
-                            marginBottom: 32,
                         }}
                     >
-                        <CustomText secondary>status</CustomText>
-                        <DropdownIcon />
-                    </View>
+                        <View
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                flexDirection: "row",
+                                backgroundColor: "rgba(255,255,255,0.05)",
+                                height: 45,
+                                width: "100%",
+                                maxWidth: MAX_WIDTH,
+                                // marginBottom: props.isErr
+                                //     ? 7
+                                //     : props.marginBottom || 0,
+                                borderRadius: 12,
+                                paddingHorizontal: 20,
+                                marginBottom: 32,
+                            }}
+                        >
+                            <CustomText secondary>status</CustomText>
+                            <DropdownIcon />
+                        </View>
+                    </TouchableOpacity>
                     <LargeButton
                         title="continue"
                         onPress={() => {
@@ -84,6 +96,10 @@ const ProductCondition = () => {
                         footerButtonOnPress={() =>
                             catalogStore.setStatus(CatalogStatus.ACTIVE_DASH)
                         }
+                    />
+                    <ConditionModal
+                        modalVisible={selector}
+                        setModalVisible={setSelector}
                     />
                 </FlowTemplate>
             </ScrollWrapper>
