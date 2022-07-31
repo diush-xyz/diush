@@ -6,25 +6,20 @@ import { observer } from "mobx-react";
 import { GLOBAL_STYLES } from "../../../@types/GlobalStyles";
 import ProductCard from "../ProductCard";
 import CustomText from "../../lib/CustomText";
-import ScreenHeader from "../../lib/ScreenHeader";
 import FlowTemplate from "../../lib/FlowTemplate";
 import CustomTextInput from "../../lib/CustomTextInput";
 import DeleteIcon from "../../../icons/catalog/Delete";
 import InfoIcon from "../../../icons/common/info";
+import { BottomSheetView } from "@gorhom/bottom-sheet";
+import ScrollWrapper from "../../auth/ScrollWrapper/ScrollWrapper";
+import PopupHeader from "../../lib/PopupHeader";
 
 const AskingPrice = () => {
     const createProductStore = useCreateProductStore();
     const NUM_PAD_DATA = [1, 2, 3, 4, 5, 6, 7, 8, 9, ".", 0, "del"];
     return (
-        <View
-            style={{
-                alignItems: "center",
-                flex: 1,
-                marginTop: 55,
-                width: "100%",
-            }}
-        >
-            <ScreenHeader
+        <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
+            <PopupHeader
                 title="create listing"
                 backArrow
                 backArrowOnPress={() =>
@@ -37,13 +32,14 @@ const AskingPrice = () => {
                 currentStep={2}
                 totalSteps={8}
             />
-            <View style={{ display: "flex", marginTop: 32, width: "100%" }}>
+            <View style={{ width: "100%", marginTop: 40 }}>
                 <FlowTemplate
                     circleEmoji="💰"
                     title="how much are you seeking?"
                     desc={
                         "this is the starting point for people\n when they come across your listing."
                     }
+                    descAndChildMargin={15}
                 >
                     <CustomText
                         font="Heavy"
@@ -60,7 +56,7 @@ const AskingPrice = () => {
                             marginBottom: 15,
                         }}
                         renderItem={({ item, index }) => (
-                            <View style={{ height: 25, width: 25 }}>
+                            <View style={{ height: 32, width: 32 }}>
                                 {item === "del" ? (
                                     <DeleteIcon onPress={() => null} />
                                 ) : (
@@ -80,7 +76,7 @@ const AskingPrice = () => {
                         style={{
                             display: "flex",
                             flexDirection: "row",
-                            marginVertical: 32,
+                            marginVertical: 24,
                         }}
                     >
                         <InfoIcon />
@@ -108,7 +104,7 @@ const AskingPrice = () => {
                     />
                 </FlowTemplate>
             </View>
-        </View>
+        </BottomSheetView>
     );
 };
 

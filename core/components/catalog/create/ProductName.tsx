@@ -9,7 +9,6 @@ import { CatalogStatus, SignupMethod } from "../../../@types/GlobalTypes";
 import SignupOptionButton from "../../auth/SignupOptionbutton/SignupOptionButton";
 import { View } from "react-native";
 import { useCreateProductStore } from "../../../state/auth/CreateProduct.store";
-import ScreenHeader from "../../lib/ScreenHeader";
 import CustomTextInput from "../../lib/CustomTextInput";
 import LargeButton from "../../lib/LargeButton";
 import { useUtilStore } from "../../../state/Util.store";
