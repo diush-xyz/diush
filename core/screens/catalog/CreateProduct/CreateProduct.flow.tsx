@@ -10,6 +10,8 @@ import DisplayNameSignup from "../../../components/auth/signup/email/DisplayName
 import FinalWelcomeSignup from "../../../components/auth/signup/email/FinalWelcomeSignup";
 import { useCreateProductStore } from "../../../state/auth/CreateProduct.store";
 import ProductName from "../../../components/catalog/create/ProductName";
+import CustomText from "../../../components/lib/CustomText";
+import AskingPrice from "../../../components/catalog/create/AskingPrice";
 
 const CreateProductFlow = () => {
     const createProductStore = useCreateProductStore();
@@ -18,6 +20,8 @@ const CreateProductFlow = () => {
         switch (createProductStore.currentStep) {
             case 0:
                 return <ProductName />;
+            case 1:
+                return <AskingPrice />;
         }
     };
 

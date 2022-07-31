@@ -15,8 +15,15 @@ export default class CreateProductStore {
         this.currentStep = newStep;
     }
 
+    productName: string = "";
+
+    setProductName(newName: string) {
+        this.productName = newName;
+    }
+
     cancel() {
         this.currentStep = 0;
+        this.productName = "";
     }
 }
 
