@@ -58,3 +58,11 @@ export enum ProductCondition {
     NEW_WITH_DEFECTS,
     USED,
 }
+
+export enum CatalogStatus {
+    ACTIVE_DASH,
+    SOLD_DASH,
+    CREATE,
+    EDIT,
+    DELETE,
+}
