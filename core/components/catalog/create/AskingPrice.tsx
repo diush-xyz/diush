@@ -32,13 +32,13 @@ const AskingPrice = () => {
                 }
                 subtitle="my catalog"
                 progressIndicator
-                currentStep={1}
+                currentStep={2}
                 totalSteps={8}
             />
             <View style={{ display: "flex", marginTop: 32, width: "100%" }}>
                 <FlowTemplate
-                    circleEmoji="📦"
-                    title="how much are you seeking"
+                    circleEmoji="💰"
+                    title="how much are you seeking?"
                     desc={
                         "this is the starting point for people\n when they come across your listing."
                     }
