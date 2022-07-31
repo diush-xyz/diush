@@ -4,6 +4,7 @@ import { useUtilStore } from "../../../state/Util.store";
 
 interface IScrollWrapper {
     children: React.ReactNode;
+    isTextArea?: boolean;
 }
 
 const ScrollWrapper = (props: IScrollWrapper) => {
@@ -19,7 +20,7 @@ const ScrollWrapper = (props: IScrollWrapper) => {
         >
             <ScrollView
                 style={{
-                    height: 400,
+                    height: props.isTextArea ? 450 : 400,
                 }}
                 showsVerticalScrollIndicator={false}
                 //hide the keyboard when the user taps outside

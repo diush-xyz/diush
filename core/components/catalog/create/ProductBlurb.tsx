@@ -58,7 +58,7 @@ const ProductBlurb = () => {
                 currentStep={1}
                 totalSteps={8}
             />
-            <ScrollWrapper>
+            <ScrollWrapper isTextArea>
                 <FlowTemplate
                     circleEmoji="📦"
                     title="let's create a blurb."
@@ -83,14 +83,18 @@ const ProductBlurb = () => {
                         onPress={() => {
                             setFirstTime(false);
                             if (allClear) {
-                                createProductStore.setCurrentStep(1);
+                                createProductStore.setCurrentStep(
+                                    createProductStore.currentStep + 1
+                                );
                             }
                         }}
                         footer
                         disabled={!allClear && !firstTime}
                         footerButtonTitle="cancel"
                         footerButtonOnPress={() =>
-                            catalogStore.setStatus(CatalogStatus.ACTIVE_DASH)
+                            createProductStore.setCurrentStep(
+                                createProductStore.currentStep - 1
+                            )
                         }
                     />
                 </FlowTemplate>
