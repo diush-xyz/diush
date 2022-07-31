@@ -22,6 +22,8 @@ const ScrollWrapper = (props: IScrollWrapper) => {
                     height: 400,
                 }}
                 showsVerticalScrollIndicator={false}
+                //hide the keyboard when the user taps outside
+                keyboardShouldPersistTaps="handled"
             >
                 {/*@ts-ignore*/}
                 {props.children}

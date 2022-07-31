@@ -18,7 +18,9 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 const AskingPrice = () => {
     const createProductStore = useCreateProductStore();
     const NUM_PAD_DATA = [1, 2, 3, 4, 5, 6, 7, 8, 9, ".", 0, "del"];
-    const [price, setPrice] = React.useState<string>("0");
+    const [price, setPrice] = React.useState<string>(
+        createProductStore.askingPrice.toString()
+    );
 
     return (
         <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>

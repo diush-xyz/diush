@@ -7,7 +7,12 @@ import { observer } from "mobx-react";
 import { useSignupStore } from "../../../state/auth/Signup.store";
 import { CatalogStatus, SignupMethod } from "../../../@types/GlobalTypes";
 import SignupOptionButton from "../../auth/SignupOptionbutton/SignupOptionButton";
-import { View } from "react-native";
+import {
+    Keyboard,
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    View,
+} from "react-native";
 import { useCreateProductStore } from "../../../state/auth/CreateProduct.store";
 import CustomTextInput from "../../lib/CustomTextInput";
 import LargeButton from "../../lib/LargeButton";
@@ -27,14 +32,14 @@ const ProductBlurb = () => {
         //TODO: Come back later (two-letter domain extensions do not work, neither does .ed.cr,)
         // setIsReady(validateEmail(signupStore.email));
 
-        if (createProductStore.productName === "") {
+        if (createProductStore.blurb === "") {
             setAllClear(false);
-            setErrMsg("oop! you need a valid email address to continue.");
+            setErrMsg("you must describe your product before continuing.");
         } else {
             setAllClear(true);
         }
 
-        console.log("the name: " + createProductStore.productName);
+        console.log("the blurb: " + createProductStore.blurb);
         console.log(allClear);
     });
 
@@ -63,16 +68,15 @@ const ProductBlurb = () => {
                     marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
                 >
                     <CustomTextInput
-                        placeholder="PlayStation 5"
-                        onChangeText={text =>
-                            createProductStore.setProductName(text)
-                        }
+                        placeholder="write anything..."
+                        onChangeText={text => createProductStore.setBlurb(text)}
                         marginBottom={32}
-                        defaultValue={createProductStore.productName}
+                        defaultValue={createProductStore.blurb}
                         isValid={allClear}
                         isErr={!allClear && !firstTime}
                         errMsg={errMsg}
                         returnKeyType="done"
+                        isLarge
                     />
                     <LargeButton
                         title="continue"

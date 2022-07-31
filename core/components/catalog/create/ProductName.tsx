@@ -29,7 +29,7 @@ const ProductName = () => {
 
         if (createProductStore.productName === "") {
             setAllClear(false);
-            setErrMsg("oop! you need a valid email address to continue.");
+            setErrMsg("oop! your product needs a name.");
         } else {
             setAllClear(true);
         }

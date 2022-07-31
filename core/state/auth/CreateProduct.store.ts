@@ -27,6 +27,12 @@ export default class CreateProductStore {
         this.askingPrice = newPrice;
     }
 
+    blurb: string = "";
+
+    setBlurb(newBlurb: string) {
+        this.blurb = newBlurb;
+    }
+
     cancel() {
         this.currentStep = 0;
         this.productName = "";

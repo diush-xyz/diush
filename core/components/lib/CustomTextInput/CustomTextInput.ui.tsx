@@ -28,6 +28,7 @@ interface ICustomTextInput {
     returnKeyType?: ReturnKeyTypeOptions;
     isPassword?: boolean;
     isSearch?: boolean;
+    isLarge?: boolean;
 }
 
 const CustomTextInput = (props: ICustomTextInput) => {
@@ -52,16 +53,17 @@ const CustomTextInput = (props: ICustomTextInput) => {
             <View
                 style={{
                     display: "flex",
-                    alignItems: "center",
+                    alignItems: props.isLarge ? "flex-start" : "center",
                     justifyContent: "center",
                     flexDirection: "row",
                     backgroundColor: "rgba(255,255,255,0.05)",
-                    height: 45,
+                    height: props.isLarge ? 136 : 45,
                     width: "100%",
                     maxWidth: MAX_WIDTH,
                     marginBottom: props.isErr ? 7 : props.marginBottom || 0,
                     borderRadius: 12,
                     paddingHorizontal: 20,
+                    paddingTop: props.isLarge && 14,
                 }}
             >
                 {props.isSearch && <SearchIcon style={{ marginRight: 8 }} />}
@@ -75,6 +77,8 @@ const CustomTextInput = (props: ICustomTextInput) => {
                         color: theme.primaryText,
                         //TODO: remove this in extraction
                     }}
+                    multiline={props.isLarge}
+                    numberOfLines={props.isLarge && 10}
                     selectionColor={theme.accent}
                     placeholderTextColor={theme.secondary}
                     placeholder={props.placeholder}
