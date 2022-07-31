@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import React from "react";
+import { ProductCondition } from "../../@types/GlobalTypes";
 
 /**
  * A store to handle anything related to creating a product.
@@ -31,6 +32,12 @@ export default class CreateProductStore {
 
     setBlurb(newBlurb: string) {
         this.blurb = newBlurb;
+    }
+
+    condition: ProductCondition = null;
+
+    setCondition(newCondition: ProductCondition) {
+        this.condition = newCondition;
     }
 
     cancel() {
