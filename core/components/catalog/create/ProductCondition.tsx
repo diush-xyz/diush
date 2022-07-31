@@ -19,24 +19,6 @@ const ProductCondition = () => {
     const catalogStore = useCatalogStore();
     const createProductStore = useCreateProductStore();
     const utilStore = useUtilStore();
-    const [firstTime, setFirstTime] = React.useState<boolean>(true);
-    const [allClear, setAllClear] = React.useState(false);
-    const [errMsg, setErrMsg] = React.useState<string>("");
-
-    React.useEffect(() => {
-        //TODO: Come back later (two-letter domain extensions do not work, neither does .ed.cr,)
-        // setIsReady(validateEmail(signupStore.email));
-
-        if (createProductStore.productName === "") {
-            setAllClear(false);
-            setErrMsg("oop! your product needs a name.");
-        } else {
-            setAllClear(true);
-        }
-
-        console.log("the name: " + createProductStore.productName);
-        console.log(allClear);
-    });
 
     return (
         <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
@@ -58,32 +40,21 @@ const ProductCondition = () => {
                     circleEmoji="🎧"
                     title="item condition."
                     desc={
-                        "give your new product a name. make it\n descriptive, yet simple."
+                        "whether it’s brand-new or\n used, we don’t discriminate."
                     }
                     marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
                 >
-                    <CustomTextInput
-                        placeholder="PlayStation 5"
-                        onChangeText={text =>
-                            createProductStore.setProductName(text)
-                        }
-                        marginBottom={32}
-                        defaultValue={createProductStore.productName}
-                        isValid={allClear}
-                        isErr={!allClear && !firstTime}
-                        errMsg={errMsg}
-                        returnKeyType="done"
-                    />
                     <LargeButton
                         title="continue"
                         onPress={() => {
-                            setFirstTime(false);
-                            if (allClear) {
-                                createProductStore.setCurrentStep(1);
-                            }
+                            // setFirstTime(false);
+                            // if (allClear) {
+                            //     createProductStore.setCurrentStep(1);
+                            // }
+                            null;
                         }}
                         footer
-                        disabled={!allClear && !firstTime}
+                        // disabled={!allClear && !firstTime}
                         footerButtonTitle="cancel"
                         footerButtonOnPress={() =>
                             catalogStore.setStatus(CatalogStatus.ACTIVE_DASH)
