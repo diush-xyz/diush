@@ -9,6 +9,7 @@ import CustomText from "../../lib/CustomText";
 import ScreenHeader from "../../lib/ScreenHeader";
 import FlowTemplate from "../../lib/FlowTemplate";
 import CustomTextInput from "../../lib/CustomTextInput";
+import DeleteIcon from "../../../icons/catalog/Delete";
 
 const AskingPrice = () => {
     const createProductStore = useCreateProductStore();
@@ -59,13 +60,17 @@ const AskingPrice = () => {
                         }}
                         renderItem={({ item, index }) => (
                             <View style={{ height: 25, width: 25 }}>
-                                <CustomText
-                                    secondary
-                                    fontSize={22}
-                                    textAlign="center"
-                                >
-                                    {item}
-                                </CustomText>
+                                {item === "del" ? (
+                                    <DeleteIcon onPress={() => null} />
+                                ) : (
+                                    <CustomText
+                                        secondary
+                                        fontSize={22}
+                                        textAlign="center"
+                                    >
+                                        {item}
+                                    </CustomText>
+                                )}
                             </View>
                         )}
                         style={{ width: "100%", maxWidth: 247 }}
