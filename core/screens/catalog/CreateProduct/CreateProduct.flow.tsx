@@ -12,6 +12,7 @@ import { useCreateProductStore } from "../../../state/auth/CreateProduct.store";
 import ProductName from "../../../components/catalog/create/ProductName";
 import CustomText from "../../../components/lib/CustomText";
 import AskingPrice from "../../../components/catalog/create/AskingPrice";
+import ProductBlurb from "../../../components/catalog/create/ProductBlurb";
 
 const CreateProductFlow = () => {
     const createProductStore = useCreateProductStore();
@@ -22,6 +23,8 @@ const CreateProductFlow = () => {
                 return <ProductName />;
             case 1:
                 return <AskingPrice />;
+            case 2:
+                return <ProductBlurb />;
         }
     };
 

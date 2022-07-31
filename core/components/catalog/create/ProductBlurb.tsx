@@ -15,7 +15,7 @@ import { useUtilStore } from "../../../state/Util.store";
 import { useCatalogStore } from "../../../state/auth/Catalog.store";
 import ScrollWrapper from "../../auth/ScrollWrapper/ScrollWrapper";
 
-const ProductName = () => {
+const ProductBlurb = () => {
     const catalogStore = useCatalogStore();
     const createProductStore = useCreateProductStore();
     const utilStore = useUtilStore();
@@ -44,7 +44,9 @@ const ProductName = () => {
                 title="create listing"
                 backArrow
                 backArrowOnPress={() =>
-                    catalogStore.setStatus(CatalogStatus.ACTIVE_DASH)
+                    createProductStore.setCurrentStep(
+                        createProductStore.currentStep - 1
+                    )
                 }
                 subtitle="my catalog"
                 progressIndicator
@@ -54,9 +56,9 @@ const ProductName = () => {
             <ScrollWrapper>
                 <FlowTemplate
                     circleEmoji="📦"
-                    title="magic begins here."
+                    title="let's create a blurb."
                     desc={
-                        "give your new product a name. make it\n descriptive, yet simple."
+                        "think of this as a Tweet describing what you’re selling."
                     }
                     marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
                 >
@@ -93,4 +95,4 @@ const ProductName = () => {
     );
 };
 
-export default observer(ProductName);
+export default observer(ProductBlurb);

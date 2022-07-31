@@ -21,9 +21,16 @@ export default class CreateProductStore {
         this.productName = newName;
     }
 
+    askingPrice: number = 0;
+
+    setAskingPrice(newPrice: number) {
+        this.askingPrice = newPrice;
+    }
+
     cancel() {
         this.currentStep = 0;
         this.productName = "";
+        this.askingPrice = 0;
     }
 }
 
