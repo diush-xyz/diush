@@ -32,9 +32,14 @@ const ProductBlurb = () => {
         //TODO: Come back later (two-letter domain extensions do not work, neither does .ed.cr,)
         // setIsReady(validateEmail(signupStore.email));
 
-        if (createProductStore.blurb === "") {
+        if (
+            createProductStore.blurb === "" ||
+            createProductStore.blurb === null
+        ) {
             setAllClear(false);
-            setErrMsg("you must describe your product before continuing.");
+            setErrMsg(
+                "wait! you must describe your product before continuing."
+            );
         } else {
             setAllClear(true);
         }
