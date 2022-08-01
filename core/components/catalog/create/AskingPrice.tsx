@@ -14,8 +14,11 @@ import { BottomSheetView } from "@gorhom/bottom-sheet";
 import ScrollWrapper from "../../auth/ScrollWrapper/ScrollWrapper";
 import PopupHeader from "../../lib/PopupHeader";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { useCatalogStore } from "../../../state/auth/Catalog.store";
+import { CatalogStatus } from "../../../@types/GlobalTypes";
 
 const AskingPrice = () => {
+    const catalogStore = useCatalogStore();
     const createProductStore = useCreateProductStore();
     const NUM_PAD_DATA = [1, 2, 3, 4, 5, 6, 7, 8, 9, ".", 0, "del"];
     const [price, setPrice] = React.useState<string>(
@@ -135,11 +138,10 @@ const AskingPrice = () => {
                         disabled={Number(price) <= 0}
                         // disabled={!allClear && !firstTime}
                         footerButtonTitle="cancel"
-                        footerButtonOnPress={() =>
-                            createProductStore.setCurrentStep(
-                                createProductStore.currentStep - 1
-                            )
-                        }
+                        footerButtonOnPress={() => {
+                            createProductStore.cancel();
+                            catalogStore.setStatus(CatalogStatus.ACTIVE_DASH);
+                        }}
                     />
                 </FlowTemplate>
             </View>

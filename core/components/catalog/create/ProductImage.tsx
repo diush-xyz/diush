@@ -233,9 +233,10 @@ const ProductImage = () => {
                         // disabled={!allClear && !firstTime}
                         disabled={createProductStore.productImageURL == ""}
                         footerButtonTitle="cancel"
-                        footerButtonOnPress={() =>
-                            catalogStore.setStatus(CatalogStatus.ACTIVE_DASH)
-                        }
+                        footerButtonOnPress={() => {
+                            createProductStore.cancel();
+                            catalogStore.setStatus(CatalogStatus.ACTIVE_DASH);
+                        }}
                     />
                 </FlowTemplate>
             </View>

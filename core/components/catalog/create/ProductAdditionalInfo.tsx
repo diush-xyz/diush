@@ -29,22 +29,7 @@ const ProductAdditionalInfo = () => {
     const [errMsg, setErrMsg] = React.useState<string>("");
 
     React.useEffect(() => {
-        //TODO: Come back later (two-letter domain extensions do not work, neither does .ed.cr,)
-        // setIsReady(validateEmail(signupStore.email));
-
-        if (
-            createProductStore.blurb === "" ||
-            createProductStore.blurb === null
-        ) {
-            setAllClear(false);
-            setErrMsg(
-                "wait! you must describe your product before continuing."
-            );
-        } else {
-            setAllClear(true);
-        }
-
-        console.log("the blurb: " + createProductStore.blurb);
+        console.log("the additionalInfo: " + createProductStore.additionalInfo);
         console.log(allClear);
     });
 
@@ -60,12 +45,12 @@ const ProductAdditionalInfo = () => {
                 }
                 subtitle="my catalog"
                 progressIndicator
-                currentStep={3}
+                currentStep={6}
                 totalSteps={7}
             />
             <ScrollWrapper isTextArea>
                 <FlowTemplate
-                    circleEmoji="📦"
+                    circleEmoji="🌵"
                     title="anything else?"
                     desc={
                         "is there anything people need\n to know about your item?"
@@ -74,9 +59,11 @@ const ProductAdditionalInfo = () => {
                 >
                     <CustomTextInput
                         placeholder="write anything..."
-                        onChangeText={text => createProductStore.setBlurb(text)}
+                        onChangeText={text =>
+                            createProductStore.setAdditionalInfo(text)
+                        }
                         marginBottom={32}
-                        defaultValue={createProductStore.blurb}
+                        defaultValue={createProductStore.additionalInfo}
                         isValid={allClear}
                         isErr={!allClear && !firstTime}
                         errMsg={errMsg}
@@ -84,23 +71,24 @@ const ProductAdditionalInfo = () => {
                         isLarge
                     />
                     <LargeButton
-                        title="continue"
-                        onPress={() => {
-                            setFirstTime(false);
-                            if (allClear) {
-                                createProductStore.setCurrentStep(
-                                    createProductStore.currentStep + 1
-                                );
-                            }
-                        }}
+                        title={
+                            createProductStore.additionalInfo == null ||
+                            createProductStore.additionalInfo == ""
+                                ? "nope, I'm good"
+                                : "continue"
+                        }
+                        onPress={() =>
+                            createProductStore.setCurrentStep(
+                                createProductStore.currentStep + 1
+                            )
+                        }
                         footer
                         disabled={!allClear && !firstTime}
                         footerButtonTitle="cancel"
-                        footerButtonOnPress={() =>
-                            createProductStore.setCurrentStep(
-                                createProductStore.currentStep - 1
-                            )
-                        }
+                        footerButtonOnPress={() => {
+                            createProductStore.cancel();
+                            catalogStore.setStatus(CatalogStatus.ACTIVE_DASH);
+                        }}
                     />
                 </FlowTemplate>
             </ScrollWrapper>

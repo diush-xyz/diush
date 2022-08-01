@@ -52,10 +52,20 @@ export default class CreateProductStore {
         this.productImageURL = newURL;
     }
 
+    additionalInfo: string = null;
+
+    setAdditionalInfo(newInfo: string) {
+        this.additionalInfo = newInfo;
+    }
+
     cancel() {
         this.currentStep = 0;
         this.productName = "";
         this.askingPrice = 0;
+        this.blurb = "";
+        this.condition = null;
+        this.productImageURL = "";
+        this.additionalInfo = null;
     }
 }
 

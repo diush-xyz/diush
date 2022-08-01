@@ -96,11 +96,10 @@ const ProductBlurb = () => {
                         footer
                         disabled={!allClear && !firstTime}
                         footerButtonTitle="cancel"
-                        footerButtonOnPress={() =>
-                            createProductStore.setCurrentStep(
-                                createProductStore.currentStep - 1
-                            )
-                        }
+                        footerButtonOnPress={() => {
+                            createProductStore.cancel();
+                            catalogStore.setStatus(CatalogStatus.ACTIVE_DASH);
+                        }}
                     />
                 </FlowTemplate>
             </ScrollWrapper>

@@ -83,9 +83,10 @@ const ProductName = () => {
                         footer
                         disabled={!allClear && !firstTime}
                         footerButtonTitle="cancel"
-                        footerButtonOnPress={() =>
-                            catalogStore.setStatus(CatalogStatus.ACTIVE_DASH)
-                        }
+                        footerButtonOnPress={() => {
+                            createProductStore.cancel();
+                            catalogStore.setStatus(CatalogStatus.ACTIVE_DASH);
+                        }}
                     />
                 </FlowTemplate>
             </ScrollWrapper>
