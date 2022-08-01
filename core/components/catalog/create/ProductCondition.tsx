@@ -77,7 +77,13 @@ const ProductCondition = () => {
                                 marginBottom: 32,
                             }}
                         >
-                            <CustomText secondary>status</CustomText>
+                            {createProductStore.condition == null ? (
+                                <CustomText secondary>status</CustomText>
+                            ) : (
+                                <CustomText>
+                                    {createProductStore.condition}
+                                </CustomText>
+                            )}
                             <DropdownIcon />
                         </View>
                     </TouchableOpacity>

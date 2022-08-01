@@ -1,3 +1,4 @@
+import { observer } from "mobx-react";
 import React, { useState } from "react";
 import {
     Alert,
@@ -9,7 +10,9 @@ import {
     TouchableWithoutFeedback,
     TouchableOpacity,
 } from "react-native";
+import { ProductCondition } from "../../../@types/GlobalTypes";
 import InfoIcon from "../../../icons/common/info";
+import { useCreateProductStore } from "../../../state/auth/CreateProduct.store";
 import { useTheme } from "../../../utils/useTheme.util";
 import CustomText from "../../lib/CustomText";
 import ModalElement from "./ModalElement";
@@ -22,6 +25,7 @@ interface IConditionModal {
 const theme = useTheme();
 
 const ConditionModal = (props: IConditionModal) => {
+    const createProductStore = useCreateProductStore();
     return (
         <View style={styles.centeredView}>
             <Modal
@@ -39,24 +43,49 @@ const ConditionModal = (props: IConditionModal) => {
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
                             <ModalElement
-                                text="new with box"
-                                onPress={() => console.log("Clicked!")}
+                                text={ProductCondition.NEW_WITH_BOX}
+                                onPress={() => {
+                                    createProductStore.setCondition(
+                                        ProductCondition.NEW_WITH_BOX
+                                    );
+                                    props.setModalVisible(!props.modalVisible);
+                                }}
                             />
                             <ModalElement
-                                text="new without box"
-                                onPress={() => console.log("Clicked!")}
+                                text={ProductCondition.NEW_WITHOUT_BOX}
+                                onPress={() => {
+                                    createProductStore.setCondition(
+                                        ProductCondition.NEW_WITHOUT_BOX
+                                    );
+                                    props.setModalVisible(!props.modalVisible);
+                                }}
                             />
                             <ModalElement
-                                text="new with defects"
-                                onPress={() => console.log("Clicked!")}
+                                text={ProductCondition.NEW_WITH_DEFECTS}
+                                onPress={() => {
+                                    createProductStore.setCondition(
+                                        ProductCondition.NEW_WITH_DEFECTS
+                                    );
+                                    props.setModalVisible(!props.modalVisible);
+                                }}
                             />
                             <ModalElement
-                                text="used (good condition)"
-                                onPress={() => console.log("Clicked!")}
+                                text={ProductCondition.USED_GOOD_CONDITION}
+                                onPress={() => {
+                                    createProductStore.setCondition(
+                                        ProductCondition.USED_GOOD_CONDITION
+                                    );
+                                    props.setModalVisible(!props.modalVisible);
+                                }}
                             />
                             <ModalElement
-                                text="used (decent condition)"
-                                onPress={() => console.log("Clicked!")}
+                                text={ProductCondition.USED_DECENT_CONDITION}
+                                onPress={() => {
+                                    createProductStore.setCondition(
+                                        ProductCondition.USED_DECENT_CONDITION
+                                    );
+                                    props.setModalVisible(!props.modalVisible);
+                                }}
                                 noBorderBottom
                             />
                         </View>
@@ -115,4 +144,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ConditionModal;
+export default observer(ConditionModal);

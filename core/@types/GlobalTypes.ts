@@ -53,10 +53,11 @@ export enum LoggedInScreen {
 }
 
 export enum ProductCondition {
-    NEW_WITH_BOX,
-    NEW_WITHOUT_BOX,
-    NEW_WITH_DEFECTS,
-    USED,
+    NEW_WITH_BOX = "new with box",
+    NEW_WITHOUT_BOX = "new without box",
+    NEW_WITH_DEFECTS = "new with defects",
+    USED_GOOD_CONDITION = "used (good condition)",
+    USED_DECENT_CONDITION = "used (decent condition)",
 }
 
 export enum CatalogStatus {
