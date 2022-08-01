@@ -15,6 +15,7 @@ import AskingPrice from "../../../components/catalog/create/AskingPrice";
 import ProductBlurb from "../../../components/catalog/create/ProductBlurb";
 import ProductCondition from "../../../components/catalog/create/ProductCondition";
 import ProductImage from "../../../components/catalog/create/ProductImage";
+import ProductAdditionalInfo from "../../../components/catalog/create/ProductAdditionalInfo";
 
 const CreateProductFlow = () => {
     const createProductStore = useCreateProductStore();
@@ -32,11 +33,7 @@ const CreateProductFlow = () => {
             case 4:
                 return <ProductImage />;
             case 5:
-                return (
-                    <CustomText accent>
-                        {createProductStore.productImageURL}
-                    </CustomText>
-                );
+                return <ProductAdditionalInfo />;
         }
     };
 
