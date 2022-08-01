@@ -136,7 +136,7 @@ const ProductImage = () => {
                 }
                 subtitle="my catalog"
                 progressIndicator
-                currentStep={4}
+                currentStep={5}
                 totalSteps={7}
             />
             <View style={{ width: "100%", marginTop: 40 }}>
@@ -144,7 +144,7 @@ const ProductImage = () => {
                     circleEmoji="📸"
                     title="say cheese..."
                     desc={
-                        "showcase your item with\n images. make sure they’re clear."
+                        "showcase your item with\n a cover image. make sure it's clear."
                     }
                     marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
                 >
@@ -154,9 +154,21 @@ const ProductImage = () => {
                             source={{ uri: createProductStore.productImageURL }}
                         />
                     ) : null} */}
-                    <TouchableOpacity onPress={() => pickImage()}>
+                    <TouchableOpacity
+                        onPress={() => pickImage()}
+                        style={{
+                            marginBottom:
+                                createProductStore.productImageURL == ""
+                                    ? 40
+                                    : null,
+                        }}
+                    >
                         <View
                             style={{
+                                justifyContent:
+                                    createProductStore.productImageURL == ""
+                                        ? "center"
+                                        : null,
                                 width: 300,
                                 height: 200,
                                 borderStyle: "dashed",
@@ -190,7 +202,7 @@ const ProductImage = () => {
                                         secondary
                                         style={{ marginTop: 9 }}
                                     >
-                                        upload an image
+                                        tap to upload...
                                     </CustomText>
                                 </View>
                             )}
@@ -219,7 +231,7 @@ const ProductImage = () => {
                         }}
                         footer
                         // disabled={!allClear && !firstTime}
-                        disabled={createProductStore.condition == null}
+                        disabled={createProductStore.productImageURL == ""}
                         footerButtonTitle="cancel"
                         footerButtonOnPress={() =>
                             catalogStore.setStatus(CatalogStatus.ACTIVE_DASH)
