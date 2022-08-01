@@ -16,6 +16,12 @@ export default class CreateProductStore {
         this.currentStep = newStep;
     }
 
+    productId: string = "";
+
+    setProductId(newId: string) {
+        this.productId = newId;
+    }
+
     productName: string = "";
 
     setProductName(newName: string) {
@@ -38,6 +44,12 @@ export default class CreateProductStore {
 
     setCondition(newCondition: ProductCondition) {
         this.condition = newCondition;
+    }
+
+    productImageURL: string = "";
+
+    setProductImageURL(newURL: string) {
+        this.productImageURL = newURL;
     }
 
     cancel() {

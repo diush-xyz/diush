@@ -7,7 +7,7 @@ import { observer } from "mobx-react";
 import { useSignupStore } from "../../../state/auth/Signup.store";
 import { CatalogStatus, SignupMethod } from "../../../@types/GlobalTypes";
 import SignupOptionButton from "../../auth/SignupOptionbutton/SignupOptionButton";
-import { Platform, TouchableOpacity, View } from "react-native";
+import { Image, Platform, TouchableOpacity, View } from "react-native";
 import { useCreateProductStore } from "../../../state/auth/CreateProduct.store";
 import CustomTextInput from "../../lib/CustomTextInput";
 import LargeButton from "../../lib/LargeButton";
@@ -15,15 +15,46 @@ import { useUtilStore } from "../../../state/Util.store";
 import { useCatalogStore } from "../../../state/auth/Catalog.store";
 import ScrollWrapper from "../../auth/ScrollWrapper/ScrollWrapper";
 import * as ImagePicker from "expo-image-picker";
+import {
+    getDownloadURL,
+    getStorage,
+    ref,
+    uploadBytes,
+    uploadBytesResumable,
+} from "firebase/storage";
+import { storage } from "../../../../config/firebase";
+import CustomText from "../../lib/CustomText";
+import "react-native-get-random-values";
+import { v4 as uuid } from "uuid";
 
 const ProductImage = () => {
     const catalogStore = useCatalogStore();
     const createProductStore = useCreateProductStore();
     const utilStore = useUtilStore();
-    const [image, setImage] = React.useState(null);
+
+    // const pickImage = async () => {
+    //     // No permissions request is necessary for launching the image library
+    //     let result = await ImagePicker.launchImageLibraryAsync({
+    //         mediaTypes: ImagePicker.MediaTypeOptions.All,
+    //         allowsEditing: true,
+    //         aspect: [4, 3],
+    //         quality: 1,
+    //     });
+
+    //     console.log(result);
+
+    //     if (!result.cancelled) {
+    //         createProductStore.setProductId("hh");
+    //         const storageRef = ref(
+    //             storage,
+    //             `/images/${createProductStore.productId}`
+    //         );
+    //         //@ts-ignore
+    //         await uploadBytes(storageRef, result.uri);
+    //     }
+    // };
 
     const pickImage = async () => {
-        // No permissions request is necessary for launching the image library
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
@@ -31,11 +62,23 @@ const ProductImage = () => {
             quality: 1,
         });
 
-        console.log(result);
-
         if (!result.cancelled) {
+            const storage = getStorage();
+            const storageRef = ref(
+                storage,
+                `productImages/${createProductStore.productId}/cover`
+            );
+
             //@ts-ignore
-            setImage(result.uri);
+            const img = await fetch(result.uri);
+            const bytes = await img.blob();
+
+            await uploadBytes(storageRef, bytes).then(() => {
+                console.log("Uploaded a blob or file!");
+                getDownloadURL(storageRef).then(url => {
+                    createProductStore.setProductImageURL(url);
+                });
+            }); //upload images
         }
     };
 
@@ -51,6 +94,8 @@ const ProductImage = () => {
                 }
             }
         })();
+
+        createProductStore.setProductId(uuid());
     }, []);
 
     return (
@@ -78,6 +123,15 @@ const ProductImage = () => {
                     marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
                 >
                     <LargeButton title="Upload" onPress={() => pickImage()} />
+                    {createProductStore.productImageURL !== "" ? (
+                        <Image
+                            style={{ height: 100, width: 100 }}
+                            source={{ uri: createProductStore.productImageURL }}
+                        />
+                    ) : null}
+                    <CustomText>
+                        {createProductStore.productImageURL}
+                    </CustomText>
                     <LargeButton
                         title="continue"
                         onPress={() => {
