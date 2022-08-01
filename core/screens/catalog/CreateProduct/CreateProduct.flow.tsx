@@ -31,6 +31,12 @@ const CreateProductFlow = () => {
                 return <ProductCondition />;
             case 4:
                 return <ProductImage />;
+            case 5:
+                return (
+                    <CustomText accent>
+                        {createProductStore.productImageURL}
+                    </CustomText>
+                );
         }
     };
 
