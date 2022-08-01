@@ -90,14 +90,15 @@ const ProductCondition = () => {
                     <LargeButton
                         title="continue"
                         onPress={() => {
-                            // setFirstTime(false);
-                            // if (allClear) {
-                            //     createProductStore.setCurrentStep(1);
-                            // }
-                            null;
+                            if (createProductStore.condition !== null) {
+                                createProductStore.setCurrentStep(
+                                    createProductStore.currentStep + 1
+                                );
+                            }
                         }}
                         footer
                         // disabled={!allClear && !firstTime}
+                        disabled={createProductStore.condition == null}
                         footerButtonTitle="cancel"
                         footerButtonOnPress={() =>
                             catalogStore.setStatus(CatalogStatus.ACTIVE_DASH)
