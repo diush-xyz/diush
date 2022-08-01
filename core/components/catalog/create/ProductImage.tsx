@@ -16,6 +16,7 @@ import { useCatalogStore } from "../../../state/auth/Catalog.store";
 import ScrollWrapper from "../../auth/ScrollWrapper/ScrollWrapper";
 import * as ImagePicker from "expo-image-picker";
 import {
+    deleteObject,
     getDownloadURL,
     getStorage,
     ref,
@@ -72,6 +73,22 @@ const ProductImage = () => {
                 `productImages/${createProductStore.productId}/cover`
             );
 
+            //delete the file in the db before uploading a new one
+            if (
+                createProductStore.productImageURL !== "" ||
+                createProductStore.productImageURL !== undefined ||
+                createProductStore.productImageURL !== null
+            ) {
+                // Delete the file
+                deleteObject(storageRef)
+                    .then(() => {
+                        console.log("File deleted!");
+                    })
+                    .catch(error => {
+                        console.log("Somehing went wrong.");
+                    });
+            }
+
             //@ts-ignore
             const img = await fetch(result.uri);
             const bytes = await img.blob();
@@ -98,7 +115,13 @@ const ProductImage = () => {
             }
         })();
 
-        createProductStore.setProductId(uuid());
+        if (
+            createProductStore.productImageURL == "" ||
+            createProductStore.productImageURL == undefined ||
+            createProductStore.productImageURL == null
+        ) {
+            createProductStore.setProductId(uuid());
+        }
     }, []);
 
     return (
@@ -139,7 +162,6 @@ const ProductImage = () => {
                                 borderStyle: "dashed",
                                 borderWidth: 1,
                                 borderRadius: 12,
-                                margin: 20,
                                 borderColor: theme.secondary,
                             }}
                         >
@@ -174,6 +196,15 @@ const ProductImage = () => {
                             )}
                         </View>
                     </TouchableOpacity>
+
+                    {createProductStore.productImageURL !== "" && (
+                        <CustomText
+                            secondary
+                            style={{ marginTop: 12, marginBottom: 40 }}
+                        >
+                            tap to replace
+                        </CustomText>
+                    )}
                     {/* <CustomText>
                         {createProductStore.productImageURL}
                     </CustomText> */}
