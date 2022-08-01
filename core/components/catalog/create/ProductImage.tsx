@@ -116,7 +116,7 @@ const ProductImage = () => {
                 currentStep={4}
                 totalSteps={7}
             />
-            <ScrollWrapper>
+            <View style={{ width: "100%", marginTop: 40 }}>
                 <FlowTemplate
                     circleEmoji="📸"
                     title="say cheese..."
@@ -125,54 +125,58 @@ const ProductImage = () => {
                     }
                     marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
                 >
-                    <LargeButton title="Upload" onPress={() => pickImage()} />
-                    {createProductStore.productImageURL !== "" ? (
+                    {/* {createProductStore.productImageURL !== "" ? (
                         <Image
                             style={{ height: 100, width: 100 }}
                             source={{ uri: createProductStore.productImageURL }}
                         />
-                    ) : null}
-                    <View
-                        style={{
-                            width: 300,
-                            height: 200,
-                            borderStyle: "dashed",
-                            borderWidth: 1,
-                            borderRadius: 12,
-                            margin: 20,
-                            borderColor: theme.secondary,
-                        }}
-                    >
-                        {createProductStore.productImageURL !== "" ? (
-                            <Image
-                                style={{
-                                    flex: 1,
-                                    resizeMode: "cover",
-                                    justifyContent: "center",
-                                    borderRadius: 12,
-                                }}
-                                source={{
-                                    uri: createProductStore.productImageURL,
-                                }}
-                            />
-                        ) : (
-                            <View
-                                style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                }}
-                            >
-                                <UploadIcon />
-                                <CustomText secondary style={{ marginTop: 9 }}>
-                                    upload an image
-                                </CustomText>
-                            </View>
-                        )}
-                    </View>
-                    <CustomText>
+                    ) : null} */}
+                    <TouchableOpacity onPress={() => pickImage()}>
+                        <View
+                            style={{
+                                width: 300,
+                                height: 200,
+                                borderStyle: "dashed",
+                                borderWidth: 1,
+                                borderRadius: 12,
+                                margin: 20,
+                                borderColor: theme.secondary,
+                            }}
+                        >
+                            {createProductStore.productImageURL !== "" ? (
+                                <Image
+                                    style={{
+                                        flex: 1,
+                                        resizeMode: "cover",
+                                        justifyContent: "center",
+                                        borderRadius: 12,
+                                    }}
+                                    source={{
+                                        uri: createProductStore.productImageURL,
+                                    }}
+                                />
+                            ) : (
+                                <View
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                    }}
+                                >
+                                    <UploadIcon />
+                                    <CustomText
+                                        secondary
+                                        style={{ marginTop: 9 }}
+                                    >
+                                        upload an image
+                                    </CustomText>
+                                </View>
+                            )}
+                        </View>
+                    </TouchableOpacity>
+                    {/* <CustomText>
                         {createProductStore.productImageURL}
-                    </CustomText>
+                    </CustomText> */}
                     <LargeButton
                         title="continue"
                         onPress={() => {
@@ -191,7 +195,7 @@ const ProductImage = () => {
                         }
                     />
                 </FlowTemplate>
-            </ScrollWrapper>
+            </View>
         </BottomSheetView>
     );
 };
