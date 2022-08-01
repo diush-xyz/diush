@@ -16,6 +16,7 @@ import ProductBlurb from "../../../components/catalog/create/ProductBlurb";
 import ProductCondition from "../../../components/catalog/create/ProductCondition";
 import ProductImage from "../../../components/catalog/create/ProductImage";
 import ProductAdditionalInfo from "../../../components/catalog/create/ProductAdditionalInfo";
+import ProductReview from "../../../components/catalog/create/ProductReview";
 
 const CreateProductFlow = () => {
     const createProductStore = useCreateProductStore();
@@ -34,6 +35,8 @@ const CreateProductFlow = () => {
                 return <ProductImage />;
             case 5:
                 return <ProductAdditionalInfo />;
+            case 6:
+                return <ProductReview />;
         }
     };
 
