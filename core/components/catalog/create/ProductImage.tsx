@@ -26,8 +26,11 @@ import { storage } from "../../../../config/firebase";
 import CustomText from "../../lib/CustomText";
 import "react-native-get-random-values";
 import { v4 as uuid } from "uuid";
+import { useTheme } from "../../../utils/useTheme.util";
+import UploadIcon from "../../../icons/catalog/Upload";
 
 const ProductImage = () => {
+    const theme = useTheme();
     const catalogStore = useCatalogStore();
     const createProductStore = useCreateProductStore();
     const utilStore = useUtilStore();
@@ -129,6 +132,44 @@ const ProductImage = () => {
                             source={{ uri: createProductStore.productImageURL }}
                         />
                     ) : null}
+                    <View
+                        style={{
+                            width: 300,
+                            height: 200,
+                            borderStyle: "dashed",
+                            borderWidth: 1,
+                            borderRadius: 12,
+                            margin: 20,
+                            borderColor: theme.secondary,
+                        }}
+                    >
+                        {createProductStore.productImageURL !== "" ? (
+                            <Image
+                                style={{
+                                    flex: 1,
+                                    resizeMode: "cover",
+                                    justifyContent: "center",
+                                    borderRadius: 12,
+                                }}
+                                source={{
+                                    uri: createProductStore.productImageURL,
+                                }}
+                            />
+                        ) : (
+                            <View
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
+                            >
+                                <UploadIcon />
+                                <CustomText secondary style={{ marginTop: 9 }}>
+                                    upload an image
+                                </CustomText>
+                            </View>
+                        )}
+                    </View>
                     <CustomText>
                         {createProductStore.productImageURL}
                     </CustomText>
