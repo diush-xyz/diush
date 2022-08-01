@@ -41,7 +41,7 @@ const ProductReview = () => {
             />
             <View style={{ width: "100%", marginTop: 40 }}>
                 <FlowTemplate
-                    circleEmoji="💰"
+                    circleEmoji="🛑"
                     title="we just have to check..."
                     desc={
                         "would you like to add this item to\n your catalog? this will allow you to\n share its link with your friends."
