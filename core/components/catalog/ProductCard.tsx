@@ -1,9 +1,10 @@
-import { View, Text, ImageBackground } from "react-native";
+import { View, Text, ImageBackground, TouchableOpacity } from "react-native";
 import React from "react";
 import { truncate } from "../../utils/truncate.util";
 import CustomText from "../lib/CustomText";
 import { LinearGradient } from "expo-linear-gradient";
-import { IProduct } from "../../@types/GlobalTypes";
+import { CatalogStatus, IProduct } from "../../@types/GlobalTypes";
+import { useCatalogStore } from "../../state/auth/Catalog.store";
 
 export interface IProductCard {
     productData: IProduct;
@@ -14,8 +15,11 @@ export interface IProductCard {
 }
 
 const ProductCard = (props: IProductCard) => {
+    const catalogStore = useCatalogStore();
     return (
-        <>
+        <TouchableOpacity
+            onPress={() => catalogStore.setStatus(CatalogStatus.VIEW)}
+        >
             {/*@ts-ignore*/}
             <ImageBackground
                 // source={{ uri: props.productData.uri }}
@@ -95,7 +99,7 @@ const ProductCard = (props: IProductCard) => {
                     </CustomText>
                 </View>
             </ImageBackground>
-        </>
+        </TouchableOpacity>
     );
 };
 

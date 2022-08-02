@@ -64,6 +64,7 @@ export enum CatalogStatus {
     ACTIVE_DASH,
     SOLD_DASH,
     CREATE,
+    VIEW,
     EDIT,
     DELETE,
 }

@@ -20,16 +20,6 @@ const CatalogScreen = () => {
         catalogStore.setStatus(CatalogStatus.CREATE);
     }, []);
 
-    const populateFlowContent = () => {
-        switch (catalogStore.status) {
-            case CatalogStatus.ACTIVE_DASH:
-                return <CatalogHome />;
-            case CatalogStatus.CREATE:
-                //TODO: Change to be a popup (create flow)
-                return <CreateProductFlow />;
-        }
-    };
-
     return (
         <>
             <CatalogHome />
@@ -45,6 +35,20 @@ const CatalogScreen = () => {
                     }
                 >
                     <CreateProductFlow />
+                </BottomSheet>
+            )}
+            {catalogStore.status === CatalogStatus.VIEW && (
+                <BottomSheet
+                    handleIndicatorStyle={GLOBAL_STYLES.handleIndicatorStyle}
+                    handleStyle={GLOBAL_STYLES.handleStyle}
+                    ref={sheetRef}
+                    snapPoints={BOTTOM_SHEET_SNAP_POINTS}
+                    enablePanDownToClose={true}
+                    onClose={() =>
+                        catalogStore.setStatus(CatalogStatus.ACTIVE_DASH)
+                    }
+                >
+                    <CustomText accent>View</CustomText>
                 </BottomSheet>
             )}
         </>
