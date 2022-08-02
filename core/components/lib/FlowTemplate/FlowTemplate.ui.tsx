@@ -10,6 +10,7 @@ interface IFlowTemplate {
     desc: string;
     children: React.ReactNode;
     marginBottom?: string;
+    descAndChildMargin?: number;
 }
 
 const FlowTemplate = (props: IFlowTemplate) => {
@@ -29,7 +30,7 @@ const FlowTemplate = (props: IFlowTemplate) => {
                 font="Semibold"
                 fontSize={16}
                 textAlign="center"
-                style={{ marginBottom: 40 }}
+                style={{ marginBottom: props.descAndChildMargin ?? 40 }}
             >
                 {props.desc}
             </CustomText>

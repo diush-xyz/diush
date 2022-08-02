@@ -1,7 +1,7 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import { DarkTheme } from "./core/style/Colors.style";
+import { Keyboard, StyleSheet, Text, View } from "react-native";
+import { DarkTheme } from "./core/style/colors.style";
 import Test from "./core/components/Test";
 import { ThemeProvider } from "styled-components";
 import AuthScreen from "./core/screens/auth/Auth.screen";
@@ -18,6 +18,10 @@ import { auth } from "./config/firebase";
 import { useSignupStore } from "./core/state/auth/Signup.store";
 import { fetchUserFromDb } from "./core/utils/user.utils";
 import ScreenHandler from "./core/screens/ScreenHandler";
+import {
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+} from "react-native-gesture-handler";
 
 const App = () => {
     const [isAppReady, setIsAppReady] = React.useState<boolean>(false);

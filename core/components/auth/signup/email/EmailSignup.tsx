@@ -33,8 +33,6 @@ const EmailSignup = () => {
     const [allClear, setAllClear] = React.useState(false);
     const [errMsg, setErrMsg] = React.useState<string>("");
 
-    const windowHeight = Dimensions.get("window").height;
-
     React.useEffect(() => {
         //TODO: Come back later (two-letter domain extensions do not work, neither does .ed.cr,)
         // setIsReady(validateEmail(signupStore.email));

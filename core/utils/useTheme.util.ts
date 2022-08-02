@@ -1,4 +1,4 @@
-import { DarkTheme, IColorStyles } from "../style/Colors.style";
+import { DarkTheme, IColorStyles } from "../style/colors.style";
 
 /**
  * Fetch the RSS Feed from an URL.

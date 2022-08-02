@@ -1,115 +1,54 @@
-import { View, Text, ImageBackground } from "react-native";
+import { View, Text } from "react-native";
 import React from "react";
+import CatalogHome from "../../components/catalog/Home";
+import { useCatalogStore } from "../../state/auth/Catalog.store";
+import { CatalogStatus } from "../../@types/GlobalTypes";
 import CustomText from "../../components/lib/CustomText";
-import PopupHeader from "../../components/lib/PopupHeader";
-import ScreenHeader from "../../components/lib/ScreenHeader";
-import { useUtilStore } from "../../state/Util.store";
-import { LoggedInScreen } from "../../@types/GlobalTypes";
-import { useTheme } from "../../utils/useTheme.util";
-import CustomTextInput from "../../components/lib/CustomTextInput";
-import SearchIcon from "../../icons/catalog";
-import Switcher from "../../components/catalog/Switcher";
-import { truncate } from "../../utils/truncate.util";
-import ProductCard, {
-    IProductCard,
-} from "../../components/catalog/ProductCard";
+import { observer } from "mobx-react";
+import CreateProductFlow from "./CreateProduct/CreateProduct.flow";
+import BottomSheet from "@gorhom/bottom-sheet";
+import { GLOBAL_STYLES } from "../../@types/GlobalStyles";
+import { BOTTOM_SHEET_SNAP_POINTS } from "../../utils/constants";
 
 const CatalogScreen = () => {
-    const utilStore = useUtilStore();
-    const theme = useTheme();
+    const catalogStore = useCatalogStore();
 
-    const MOCK_DATA: IProductCard[] = [
-        {
-            uri: "https://reactjs.org/logo-og.png",
-            title: "Jordan Jersey",
-            desc: "Perfect conditions. Only worn once.",
-            askingPrice: 90,
-            highestOffer: 105,
-        },
-        {
-            uri: "https://reactjs.org/logo-og.png",
-            title: "Jordan Jersey",
-            desc: "Perfect conditions. Only worn once.",
-            askingPrice: 90,
-            highestOffer: 105,
-        },
-        {
-            uri: "https://reactjs.org/logo-og.png",
-            title: "Jordan m",
-            desc: "Perfect conditions. Only worn once.",
-            askingPrice: 90,
-            highestOffer: 105,
-        },
-        {
-            uri: "https://reactjs.org/logo-og.png",
-            title: "Jordan Jersey",
-            desc: "Perfect conditions. Only worn once.",
-            askingPrice: 90,
-            highestOffer: 105,
-        },
-        {
-            uri: "https://reactjs.org/logo-og.png",
-            title: "Jordan Jersey",
-            desc: "Perfect conditions. Only worn once.",
-            askingPrice: 90,
-            highestOffer: 105,
-        },
-        {
-            uri: "https://reactjs.org/logo-og.png",
-            title: "Jordan Jersey",
-            desc: "Perfect conditions. Only worn once.",
-            askingPrice: 90,
-            highestOffer: 105,
-        },
-    ];
+    const sheetRef = React.useRef<BottomSheet>(null);
+
+    const handleSnapPress = React.useCallback(index => {
+        sheetRef.current?.snapToIndex(index);
+        catalogStore.setStatus(CatalogStatus.CREATE);
+    }, []);
+
+    const populateFlowContent = () => {
+        switch (catalogStore.status) {
+            case CatalogStatus.ACTIVE_DASH:
+                return <CatalogHome />;
+            case CatalogStatus.CREATE:
+                //TODO: Change to be a popup (create flow)
+                return <CreateProductFlow />;
+        }
+    };
 
     return (
-        <View
-            style={{
-                alignItems: "center",
-                flex: 1,
-                marginTop: 55,
-                width: "100%",
-            }}
-        >
-            <ScreenHeader
-                backArrow
-                backArrowOnPress={() =>
-                    utilStore.setCurrentLoggedInScreen(LoggedInScreen.HOME)
-                }
-                title="my catalog"
-            />
-            <Switcher />
-            <CustomTextInput
-                placeholder="search my products"
-                onChangeText={() => null}
-                isSearch
-            />
-            {/*TODO: Add logic for properly making the marginLeft or marginRight of the Product Card based on if the index is 0, even, or odd/*/}
-            <View
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    flexDirection: "row",
-                    flex: 1,
-                    flexWrap: "wrap",
-                    marginTop: 12,
-                    overflow: "scroll",
-                }}
-            >
-                {MOCK_DATA.map((elem, index) => (
-                    // make the marginLeft or marginRight of the Product Card based on if the index is 0, even, or odd
-                    <ProductCard
-                        key={index}
-                        {...elem}
-                        marginLeft={index % 2 === 0 ? 0 : 5}
-                        marginRight={index % 2 === 0 ? 5 : 0}
-                        marginTop={index !== 0 || 1 ? 10 : 0}
-                    />
-                ))}
-            </View>
-        </View>
+        <>
+            <CatalogHome />
+            {catalogStore.status === CatalogStatus.CREATE && (
+                <BottomSheet
+                    handleIndicatorStyle={GLOBAL_STYLES.handleIndicatorStyle}
+                    handleStyle={GLOBAL_STYLES.handleStyle}
+                    ref={sheetRef}
+                    snapPoints={BOTTOM_SHEET_SNAP_POINTS}
+                    enablePanDownToClose={true}
+                    onClose={() =>
+                        catalogStore.setStatus(CatalogStatus.ACTIVE_DASH)
+                    }
+                >
+                    <CreateProductFlow />
+                </BottomSheet>
+            )}
+        </>
     );
 };
 
-export default CatalogScreen;
+export default observer(CatalogScreen);

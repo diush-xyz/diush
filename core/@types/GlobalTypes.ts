@@ -3,14 +3,36 @@ export interface IUser {
     displayName: string;
     email: string;
     photoURL: string;
+    location?: string;
     products?: IProduct[];
 }
 
 export interface IProduct {
     id: string;
-    uid: string;
+    linkedUID: string;
     title: string;
+    blurb: string;
+    askingPrice: number;
+    imageURL: string;
+    offers?: IOffer[];
+    createdAt?: Date;
+    categories?: ICategory[];
+    condition?: ProductCondition;
     //TODO: Add more
+}
+
+export interface IOffer {
+    id: string;
+    placedByUID: string;
+    linkedProductID: string;
+    amount: number;
+    isCounterOffer?: boolean;
+}
+
+export interface ICategory {
+    id: string;
+    linkedProductID: string;
+    text: string;
 }
 
 export enum AuthStatus {
@@ -28,4 +50,20 @@ export enum SignupMethod {
 export enum LoggedInScreen {
     HOME,
     CATALOG,
+}
+
+export enum ProductCondition {
+    NEW_WITH_BOX = "new with box",
+    NEW_WITHOUT_BOX = "new without box",
+    NEW_WITH_DEFECTS = "new with defects",
+    USED_GOOD_CONDITION = "used (good condition)",
+    USED_DECENT_CONDITION = "used (decent condition)",
+}
+
+export enum CatalogStatus {
+    ACTIVE_DASH,
+    SOLD_DASH,
+    CREATE,
+    EDIT,
+    DELETE,
 }
