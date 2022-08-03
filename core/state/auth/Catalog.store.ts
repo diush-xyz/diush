@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import React from "react";
-import { CatalogStatus } from "../../@types/GlobalTypes";
+import { CatalogStatus, IProduct } from "../../@types/GlobalTypes";
 
 /**
  * A store to handle anything catalog-related.
@@ -14,6 +14,12 @@ export default class CatalogStore {
 
     setStatus(newStatus: CatalogStatus) {
         this.status = newStatus;
+    }
+
+    activeProduct: IProduct = null;
+
+    setActiveProduct(newProduct: IProduct) {
+        this.activeProduct = newProduct;
     }
 }
 

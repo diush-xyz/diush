@@ -52,4 +52,8 @@ export const GLOBAL_STYLES = StyleSheet.create({
         justifyContent: "center",
         backgroundColor: theme.popupBackground,
     },
+    viewProductSheetViewStyle: {
+        flex: 1,
+        backgroundColor: theme.popupBackground,
+    },
 });

@@ -18,7 +18,10 @@ const ProductCard = (props: IProductCard) => {
     const catalogStore = useCatalogStore();
     return (
         <TouchableOpacity
-            onPress={() => catalogStore.setStatus(CatalogStatus.VIEW)}
+            onPress={() => {
+                catalogStore.setStatus(CatalogStatus.VIEW);
+                catalogStore.setActiveProduct(props.productData);
+            }}
         >
             {/*@ts-ignore*/}
             <ImageBackground

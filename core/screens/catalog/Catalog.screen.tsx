@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import React from "react";
 import CatalogHome from "../../components/catalog/Home";
 import { useCatalogStore } from "../../state/auth/Catalog.store";
@@ -9,6 +9,7 @@ import CreateProductFlow from "./CreateProduct/CreateProduct.flow";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { GLOBAL_STYLES } from "../../@types/GlobalStyles";
 import { BOTTOM_SHEET_SNAP_POINTS } from "../../utils/constants";
+import ViewProduct from "../../components/catalog/viewProduct/ViewProduct";
 
 const CatalogScreen = () => {
     const catalogStore = useCatalogStore();
@@ -48,7 +49,7 @@ const CatalogScreen = () => {
                         catalogStore.setStatus(CatalogStatus.ACTIVE_DASH)
                     }
                 >
-                    <CustomText accent>View</CustomText>
+                    <ViewProduct />
                 </BottomSheet>
             )}
         </>
