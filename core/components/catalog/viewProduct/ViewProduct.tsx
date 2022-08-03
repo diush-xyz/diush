@@ -17,6 +17,8 @@ import ScrollWrapper from "../../auth/ScrollWrapper/ScrollWrapper";
 import CustomText from "../../lib/CustomText";
 import { Image } from "react-native";
 import ImageOverlay from "./ImageOverlay";
+import CarouselIcon from "../../../icons/catalog/Carousel";
+import ShareIcon from "../../../icons/catalog/Share";
 
 const ViewProduct = () => {
     const catalogStore = useCatalogStore();
@@ -54,7 +56,41 @@ const ViewProduct = () => {
                 }}
             />
             <ImageOverlay style={{ position: "absolute", top: 0 }} />
-            <CustomText accent>{catalogStore.activeProduct.title}</CustomText>
+            <View style={{ marginTop: -185, paddingHorizontal: 22 }}>
+                <View
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                    }}
+                >
+                    <View style={{ display: "flex", flexDirection: "row" }}>
+                        <CarouselIcon />
+                        <CustomText
+                            accent
+                            font="Heavy"
+                            fontSize={16}
+                            style={{ marginLeft: 6 }}
+                        >
+                            view carousel
+                        </CustomText>
+                    </View>
+                    <View style={{ display: "flex", flexDirection: "row" }}>
+                        <ShareIcon />
+                        <CustomText
+                            accent
+                            font="Heavy"
+                            fontSize={16}
+                            style={{ marginLeft: 6 }}
+                        >
+                            share
+                        </CustomText>
+                    </View>
+                </View>
+                <CustomText font="Heavy" fontSize={22}>
+                    {catalogStore.activeProduct.title}
+                </CustomText>
+            </View>
         </BottomSheetView>
     );
 };
