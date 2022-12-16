@@ -26,6 +26,7 @@ import ShareIcon from "../../../icons/catalog/Share";
 import { useAuthStore } from "../../../state/auth/Auth.store";
 import { fetchUserFromDb } from "../../../utils/user.utils";
 import { auth } from "../../../../config/firebase";
+import ChevronRight from "../../../icons/catalog/ChevronRight";
 
 const ViewProduct = () => {
     const catalogStore = useCatalogStore();
@@ -101,6 +102,7 @@ const ViewProduct = () => {
                         display: "flex",
                         flexDirection: "row",
                         marginTop: 10,
+                        alignItems: "center",
                     }}
                 >
                     <Image
@@ -125,6 +127,7 @@ const ViewProduct = () => {
                         </CustomText>{" "}
                         me
                     </CustomText>
+                    <ChevronRight style={{ marginLeft: 7 }} />
                 </View>
             </View>
         </BottomSheetView>
