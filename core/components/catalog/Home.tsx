@@ -26,6 +26,7 @@ import { query, collection, onSnapshot, where } from "firebase/firestore";
 import { useCatalogStore } from "../../state/auth/Catalog.store";
 import { observer } from "mobx-react";
 import EmptyCatalogIcon from "../../icons/catalog/Empty";
+import EmptyCatalogView from "./EmptyCatalogView";
 
 const CatalogHome = () => {
     const catalogStore = useCatalogStore();
@@ -148,32 +149,7 @@ const CatalogHome = () => {
                 }}
             >
                 {myProducts.length == 0 ? (
-                    <View
-                        style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            marginTop: 50,
-                        }}
-                    >
-                        <EmptyCatalogIcon />
-                        <CustomText
-                            fontSize={16}
-                            font="Bold"
-                            textAlign="center"
-                        >
-                            you have no active {`\n`} products at the moment.
-                        </CustomText>
-                        <CustomText
-                            secondary
-                            fontSize={14}
-                            font="bold"
-                            style={{ marginTop: 12 }}
-                        >
-                            create a new product and it will appear here.
-                        </CustomText>
-                    </View>
+                    <EmptyCatalogView />
                 ) : (
                     <FlatList
                         data={myProducts}
