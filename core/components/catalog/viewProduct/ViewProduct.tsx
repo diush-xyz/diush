@@ -96,10 +96,36 @@ const ViewProduct = () => {
                 <CustomText font="Heavy" fontSize={22}>
                     {catalogStore.activeProduct.title}
                 </CustomText>
-                <Image
-                    source={{ uri: fetchedUser?.photoURL }}
-                    style={{ height: 20, width: 20 }}
-                />
+                <View
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        marginTop: 10,
+                    }}
+                >
+                    <Image
+                        borderRadius={10}
+                        source={{
+                            uri:
+                                fetchedUser?.photoURL ??
+                                "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80",
+                        }}
+                        style={{
+                            height: 20,
+                            width: 20,
+                        }}
+                    />
+                    <CustomText
+                        fontSize={16}
+                        style={{ marginLeft: 6 }}
+                        font="Bold"
+                    >
+                        <CustomText font="Bold" style={{ opacity: 0.5 }}>
+                            listed by
+                        </CustomText>{" "}
+                        me
+                    </CustomText>
+                </View>
             </View>
         </BottomSheetView>
     );
