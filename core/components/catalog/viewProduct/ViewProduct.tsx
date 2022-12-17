@@ -29,6 +29,7 @@ import { auth } from "../../../../config/firebase";
 import ChevronRight from "../../../icons/catalog/ChevronRight";
 import TicketIcon from "../../../icons/catalog/Ticket";
 import { useTheme } from "../../../utils/useTheme.util";
+import OfferButton from "./OfferButton/OfferButton";
 
 const ViewProduct = () => {
     const catalogStore = useCatalogStore();
@@ -154,6 +155,9 @@ const ViewProduct = () => {
                         }}
                     />
                     {/*TODO: Add shadow!!*/}
+                </View>
+                <View style={{ marginTop: 10 }}>
+                    <OfferButton title="view offers" onPress={() => null} />
                 </View>
             </View>
         </BottomSheetView>
