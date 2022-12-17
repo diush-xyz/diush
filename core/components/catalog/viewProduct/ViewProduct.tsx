@@ -174,9 +174,9 @@ const ViewProduct = () => {
                         <OfferButton title="view offers" onPress={() => null} />
                     </View>
                     <SnapshotBox
-                        askingPrice={585}
-                        highestOffer={600}
-                        posted="14h"
+                        askingPrice={catalogStore.activeProduct.askingPrice}
+                        highestOffer={90} //TODO: Backend integration
+                        posted="14h" //TODO: Backend integration
                     />
                     <HorizontalLine />
                     <CustomText
@@ -195,12 +195,23 @@ const ViewProduct = () => {
                         font="Heavy"
                         style={{ marginBottom: 14 }}
                     >
-                        blurb
+                        condition
                     </CustomText>
                     <CustomText secondary fontSize={17}>
                         {deriveProductConditionFromDb(
                             parseInt(catalogStore.activeProduct.condition)
                         )}
+                    </CustomText>
+                    <HorizontalLine />
+                    <CustomText
+                        fontSize={18}
+                        font="Heavy"
+                        style={{ marginBottom: 14 }}
+                    >
+                        seller location
+                    </CustomText>
+                    <CustomText secondary fontSize={17}>
+                        This is my location.
                     </CustomText>
                 </View>
             </ProductViewScrollWrapper>
