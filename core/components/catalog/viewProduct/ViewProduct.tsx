@@ -30,6 +30,7 @@ import ChevronRight from "../../../icons/catalog/ChevronRight";
 import TicketIcon from "../../../icons/catalog/Ticket";
 import { useTheme } from "../../../utils/useTheme.util";
 import OfferButton from "./OfferButton/OfferButton";
+import RoundedMoreIcon from "../../../icons/catalog/RoundedMore";
 
 const ViewProduct = () => {
     const catalogStore = useCatalogStore();
@@ -98,9 +99,20 @@ const ViewProduct = () => {
                         </CustomText>
                     </View>
                 </View>
-                <CustomText font="Heavy" fontSize={22}>
-                    {catalogStore.activeProduct.title}
-                </CustomText>
+                <View
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        width: "100%",
+                    }}
+                >
+                    <CustomText font="Heavy" fontSize={22}>
+                        {catalogStore.activeProduct.title}
+                    </CustomText>
+                    <RoundedMoreIcon />
+                </View>
                 <View
                     style={{
                         display: "flex",
