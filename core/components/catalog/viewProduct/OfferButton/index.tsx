@@ -11,6 +11,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useTheme } from "../../../../utils/useTheme.util";
 import { MAX_WIDTH } from "../../../../utils/constants";
 import CustomText from "../../../lib/CustomText";
+import styled from "styled-components/native";
 
 //TODO: Must add proper gradient background to button (not working, blank for now)
 
@@ -21,7 +22,9 @@ interface ICustomChildLargeButton {
     style?: StyleProp<ViewStyle>;
 }
 
-const BORDER_COLORS = ["#C897F9", "#FF3F70"];
+const TOpacity = styled(TouchableOpacity)`
+    box-shadow: 0px 0px 5px #ff3f70;
+`;
 
 /**
  * Same as Large Button (only no provided child with props). Fully custom.
@@ -30,7 +33,7 @@ export const CustomChildLargeButton = (props: ICustomChildLargeButton) => {
     const theme = useTheme();
     return (
         <>
-            <TouchableOpacity
+            <TOpacity
                 onPress={props.onPress}
                 disabled={props.disabled}
                 style={{
@@ -47,7 +50,7 @@ export const CustomChildLargeButton = (props: ICustomChildLargeButton) => {
             >
                 {/*@ts-ignore*/}
                 {props.children}
-            </TouchableOpacity>
+            </TOpacity>
         </>
     );
 };

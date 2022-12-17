@@ -29,8 +29,9 @@ import { auth } from "../../../../config/firebase";
 import ChevronRight from "../../../icons/catalog/ChevronRight";
 import TicketIcon from "../../../icons/catalog/Ticket";
 import { useTheme } from "../../../utils/useTheme.util";
-import OfferButton from "./OfferButton/OfferButton";
+import OfferButton from "./OfferButton";
 import RoundedMoreIcon from "../../../icons/catalog/RoundedMore";
+import ActiveIndicator from "./ActiveIndicator";
 
 const ViewProduct = () => {
     const catalogStore = useCatalogStore();
@@ -157,18 +158,10 @@ const ViewProduct = () => {
                     <CustomText accent font="Bold" style={{ marginLeft: 2 }}>
                         5 orders total
                     </CustomText>
-                    <View
-                        style={{
-                            width: 14,
-                            height: 14,
-                            marginLeft: 6,
-                            backgroundColor: theme.success,
-                            borderRadius: 7,
-                        }}
-                    />
+                    <ActiveIndicator />
                     {/*TODO: Add shadow!!*/}
                 </View>
-                <View style={{ marginTop: 10 }}>
+                <View style={{ marginTop: 20 }}>
                     <OfferButton title="view offers" onPress={() => null} />
                 </View>
             </View>
