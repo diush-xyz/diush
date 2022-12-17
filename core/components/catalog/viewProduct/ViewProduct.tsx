@@ -27,6 +27,8 @@ import { useAuthStore } from "../../../state/auth/Auth.store";
 import { fetchUserFromDb } from "../../../utils/user.utils";
 import { auth } from "../../../../config/firebase";
 import ChevronRight from "../../../icons/catalog/ChevronRight";
+import TicketIcon from "../../../icons/catalog/Ticket";
+import { useTheme } from "../../../utils/useTheme.util";
 
 const ViewProduct = () => {
     const catalogStore = useCatalogStore();
@@ -37,6 +39,7 @@ const ViewProduct = () => {
     const [errMsg, setErrMsg] = React.useState<string>("");
     const authStore = useAuthStore();
     const [fetchedUser, setFetchedUser] = React.useState<IUser>();
+    const theme = useTheme();
 
     React.useEffect(() => {
         //TODO: Come back later (two-letter domain extensions do not work, neither does .ed.cr,)
@@ -128,6 +131,29 @@ const ViewProduct = () => {
                         me
                     </CustomText>
                     <ChevronRight style={{ marginLeft: 7 }} />
+                </View>
+                <View
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        marginTop: 10,
+                        alignItems: "center",
+                    }}
+                >
+                    <TicketIcon />
+                    <CustomText accent font="Bold" style={{ marginLeft: 2 }}>
+                        5 orders total
+                    </CustomText>
+                    <View
+                        style={{
+                            width: 14,
+                            height: 14,
+                            marginLeft: 6,
+                            backgroundColor: theme.success,
+                            borderRadius: 7,
+                        }}
+                    />
+                    {/*TODO: Add shadow!!*/}
                 </View>
             </View>
         </BottomSheetView>
