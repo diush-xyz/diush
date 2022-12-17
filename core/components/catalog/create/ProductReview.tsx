@@ -4,7 +4,7 @@ import LargeButton from "../../lib/LargeButton";
 import { useCreateProductStore } from "../../../state/auth/CreateProduct.store";
 import { observer } from "mobx-react";
 import { GLOBAL_STYLES } from "../../../@types/GlobalStyles";
-import ProductCard from "../ProductCard";
+import ProductCard from "../Dashboard/ProductCard";
 import CustomText from "../../lib/CustomText";
 import FlowTemplate from "../../lib/FlowTemplate";
 import CustomTextInput from "../../lib/CustomTextInput";
@@ -17,9 +17,9 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { useCatalogStore } from "../../../state/auth/Catalog.store";
 import { CatalogStatus } from "../../../@types/GlobalTypes";
 import { useTheme } from "../../../utils/useTheme.util";
-import { LinearTextGradient } from "react-native-text-gradient";
 import { createProductInDb } from "../../../utils/products.util";
 import { auth } from "../../../../config/firebase";
+import { productConditionToDb } from "../../../utils/productCondition.util";
 
 const ProductReview = () => {
     const theme = useTheme();
@@ -123,6 +123,9 @@ const ProductReview = () => {
                                 blurb: createProductStore.blurb,
                                 askingPrice: createProductStore.askingPrice,
                                 imageURL: createProductStore.productImageURL,
+                                condition: productConditionToDb(
+                                    createProductStore.condition
+                                ),
                             })
                                 .then(() => {
                                     console.log("Created product in DB!");

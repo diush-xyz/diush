@@ -4,7 +4,7 @@ import LargeButton from "../../lib/LargeButton";
 import { useCreateProductStore } from "../../../state/auth/CreateProduct.store";
 import { observer } from "mobx-react";
 import { GLOBAL_STYLES } from "../../../@types/GlobalStyles";
-import ProductCard from "../ProductCard";
+import ProductCard from "../Dashboard/ProductCard";
 import CustomText from "../../lib/CustomText";
 import FlowTemplate from "../../lib/FlowTemplate";
 import CustomTextInput from "../../lib/CustomTextInput";

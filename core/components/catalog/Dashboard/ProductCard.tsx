@@ -1,10 +1,10 @@
 import { View, Text, ImageBackground, TouchableOpacity } from "react-native";
 import React from "react";
-import { truncate } from "../../utils/truncate.util";
-import CustomText from "../lib/CustomText";
+import { truncate } from "../../../utils/truncate.util";
+import CustomText from "../../lib/CustomText";
 import { LinearGradient } from "expo-linear-gradient";
-import { CatalogStatus, IProduct } from "../../@types/GlobalTypes";
-import { useCatalogStore } from "../../state/auth/Catalog.store";
+import { CatalogStatus, IProduct } from "../../../@types/GlobalTypes";
+import { useCatalogStore } from "../../../state/auth/Catalog.store";
 
 export interface IProductCard {
     productData: IProduct;

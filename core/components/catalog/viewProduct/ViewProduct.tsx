@@ -34,6 +34,8 @@ import RoundedMoreIcon from "../../../icons/catalog/RoundedMore";
 import ActiveIndicator from "./ActiveIndicator";
 import SnapshotBox from "./SnapshotBox";
 import ProductViewScrollWrapper from "./ProductViewScrollWrapper";
+import HorizontalLine from "./HorizontalLine";
+import { deriveProductConditionFromDb } from "../../../utils/productCondition.util";
 
 const ViewProduct = () => {
     const catalogStore = useCatalogStore();
@@ -176,14 +178,7 @@ const ViewProduct = () => {
                         highestOffer={600}
                         posted="14h"
                     />
-                    <View
-                        style={{
-                            width: "100%",
-                            height: 1,
-                            backgroundColor: "#ffffff0D",
-                            marginVertical: 30,
-                        }}
-                    />
+                    <HorizontalLine />
                     <CustomText
                         fontSize={18}
                         font="Heavy"
@@ -191,8 +186,21 @@ const ViewProduct = () => {
                     >
                         blurb
                     </CustomText>
-                    <CustomText secondary>
+                    <CustomText secondary fontSize={17}>
                         {catalogStore.activeProduct.blurb}
+                    </CustomText>
+                    <HorizontalLine />
+                    <CustomText
+                        fontSize={18}
+                        font="Heavy"
+                        style={{ marginBottom: 14 }}
+                    >
+                        blurb
+                    </CustomText>
+                    <CustomText secondary fontSize={17}>
+                        {deriveProductConditionFromDb(
+                            parseInt(catalogStore.activeProduct.condition)
+                        )}
                     </CustomText>
                 </View>
             </ProductViewScrollWrapper>

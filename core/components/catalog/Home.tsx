@@ -8,14 +8,12 @@ import { CatalogStatus, LoggedInScreen } from "../../@types/GlobalTypes";
 import { useTheme } from "../../utils/useTheme.util";
 import CustomTextInput from "../../components/lib/CustomTextInput";
 import SearchIcon from "../../icons/catalog/Search";
-import Switcher from "../../components/catalog/Switcher";
+import Switcher from "./Dashboard/Switcher";
 import { truncate } from "../../utils/truncate.util";
-import ProductCard, {
-    IProductCard,
-} from "../../components/catalog/ProductCard";
+import ProductCard, { IProductCard } from "./Dashboard/ProductCard";
 import { v4 as uuid } from "uuid";
 import WandIcon from "../../icons/catalog/Wand";
-import CreateProductButton from "../../components/catalog/CreateProductButton";
+import CreateProductButton from "./Dashboard/CreateProductButton";
 import LargeButton from "../../components/lib/LargeButton";
 import {
     createProductInDb,

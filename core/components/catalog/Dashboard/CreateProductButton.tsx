@@ -1,10 +1,10 @@
 import { View, Text } from "react-native";
 import React from "react";
-import { useTheme } from "../../utils/useTheme.util";
+import { useTheme } from "../../../utils/useTheme.util";
 import styled from "styled-components/native";
-import WandIcon from "../../icons/catalog/Wand";
-import { useCatalogStore } from "../../state/auth/Catalog.store";
-import { CatalogStatus } from "../../@types/GlobalTypes";
+import WandIcon from "../../../icons/catalog/Wand";
+import { useCatalogStore } from "../../../state/auth/Catalog.store";
+import { CatalogStatus } from "../../../@types/GlobalTypes";
 import { observer } from "mobx-react";
 
 const CreateProductButton = () => {
