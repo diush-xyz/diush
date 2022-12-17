@@ -32,6 +32,7 @@ import { useTheme } from "../../../utils/useTheme.util";
 import OfferButton from "./OfferButton";
 import RoundedMoreIcon from "../../../icons/catalog/RoundedMore";
 import ActiveIndicator from "./ActiveIndicator";
+import SnapshotBox from "./SnapshotBox";
 
 const ViewProduct = () => {
     const catalogStore = useCatalogStore();
@@ -164,6 +165,11 @@ const ViewProduct = () => {
                 <View style={{ marginTop: 20 }}>
                     <OfferButton title="view offers" onPress={() => null} />
                 </View>
+                <SnapshotBox
+                    askingPrice={585}
+                    highestOffer={600}
+                    posted="14h"
+                />
             </View>
         </BottomSheetView>
     );
