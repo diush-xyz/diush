@@ -90,7 +90,7 @@ const ViewProduct = () => {
                                 fontSize={16}
                                 style={{ marginLeft: 6 }}
                             >
-                                view carousel
+                                view image
                             </CustomText>
                         </View>
                         <View style={{ display: "flex", flexDirection: "row" }}>
@@ -199,7 +199,7 @@ const ViewProduct = () => {
                     </CustomText>
                     <CustomText secondary fontSize={17}>
                         {deriveProductConditionFromDb(
-                            parseInt(catalogStore.activeProduct.condition)
+                            catalogStore.activeProduct.condition
                         )}
                     </CustomText>
                     <HorizontalLine />

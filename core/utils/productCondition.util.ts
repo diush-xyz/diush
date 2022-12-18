@@ -17,7 +17,9 @@ export const productConditionToDb = (
     }
 };
 
-export const deriveProductConditionFromDb = (num: number): ProductCondition => {
+export const deriveProductConditionFromDb = (
+    num: number | ProductCondition
+): ProductCondition => {
     switch (num) {
         case 0:
             return ProductCondition.NEW_WITHOUT_BOX;

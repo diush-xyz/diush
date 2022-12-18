@@ -17,7 +17,8 @@ export interface IProduct {
     offers?: IOffer[];
     createdAt?: Date;
     categories?: ICategory[];
-    condition?: ProductCondition;
+    condition: number;
+    additionalInfo?: string;
     //TODO: Add more
 }
 
