@@ -8,8 +8,12 @@ import { observer } from "mobx-react";
 import CreateProductFlow from "./CreateProduct/CreateProduct.flow";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { GLOBAL_STYLES } from "../../@types/GlobalStyles";
-import { BOTTOM_SHEET_SNAP_POINTS } from "../../utils/constants";
+import {
+    BOTTOM_SHEET_SNAP_POINTS,
+    PRODUCT_BOTTOM_SHEET_SNAP_POINTS,
+} from "../../utils/constants";
 import ViewProduct from "../../components/catalog/viewProduct/ViewProduct";
+import ImageOverlay from "../../components/catalog/viewProduct/ImageOverlay";
 
 const CatalogScreen = () => {
     const catalogStore = useCatalogStore();
@@ -29,7 +33,7 @@ const CatalogScreen = () => {
                     handleIndicatorStyle={GLOBAL_STYLES.handleIndicatorStyle}
                     handleStyle={GLOBAL_STYLES.handleStyle}
                     ref={sheetRef}
-                    snapPoints={BOTTOM_SHEET_SNAP_POINTS}
+                    snapPoints={PRODUCT_BOTTOM_SHEET_SNAP_POINTS}
                     enablePanDownToClose={true}
                     onClose={() =>
                         catalogStore.setStatus(CatalogStatus.ACTIVE_DASH)
@@ -43,11 +47,12 @@ const CatalogScreen = () => {
                     handleIndicatorStyle={GLOBAL_STYLES.handleIndicatorStyle}
                     handleStyle={GLOBAL_STYLES.handleStyle}
                     ref={sheetRef}
-                    snapPoints={BOTTOM_SHEET_SNAP_POINTS}
+                    snapPoints={PRODUCT_BOTTOM_SHEET_SNAP_POINTS}
                     enablePanDownToClose={true}
                     onClose={() =>
                         catalogStore.setStatus(CatalogStatus.ACTIVE_DASH)
                     }
+                    style={{ borderRadius: 35, overflow: "hidden" }}
                 >
                     <ViewProduct />
                 </BottomSheet>

@@ -25,6 +25,7 @@ import { useCatalogStore } from "../../state/auth/Catalog.store";
 import { observer } from "mobx-react";
 import EmptyCatalogIcon from "../../icons/catalog/Empty";
 import EmptyCatalogView from "./EmptyCatalogView";
+import ImageOverlay from "./viewProduct/ImageOverlay";
 
 const CatalogHome = () => {
     const catalogStore = useCatalogStore();
