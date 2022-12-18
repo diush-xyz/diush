@@ -1,4 +1,4 @@
-Currently on-pause. Active work will resume in December '22 :)
+WE'RE BACK!!
 
 <p align="center">
   <a href="#">
