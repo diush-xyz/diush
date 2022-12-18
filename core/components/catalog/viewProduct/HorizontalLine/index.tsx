@@ -8,7 +8,7 @@ const HorizontalLine = () => {
                 width: "100%",
                 height: 1,
                 backgroundColor: "#ffffff0D",
-                marginVertical: 30,
+                marginVertical: 25,
             }}
         />
     );

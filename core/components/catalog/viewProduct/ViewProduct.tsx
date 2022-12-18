@@ -36,6 +36,7 @@ import SnapshotBox from "./SnapshotBox";
 import ProductViewScrollWrapper from "./ProductViewScrollWrapper";
 import HorizontalLine from "./HorizontalLine";
 import { deriveProductConditionFromDb } from "../../../utils/productCondition.util";
+import WrittenInfoSection from "./WrittenInfoSection";
 
 const ViewProduct = () => {
     const catalogStore = useCatalogStore();
@@ -178,41 +179,7 @@ const ViewProduct = () => {
                         highestOffer={90} //TODO: Backend integration
                         posted="14h" //TODO: Backend integration
                     />
-                    <HorizontalLine />
-                    <CustomText
-                        fontSize={18}
-                        font="Heavy"
-                        style={{ marginBottom: 14 }}
-                    >
-                        blurb
-                    </CustomText>
-                    <CustomText secondary fontSize={17}>
-                        {catalogStore.activeProduct.blurb}
-                    </CustomText>
-                    <HorizontalLine />
-                    <CustomText
-                        fontSize={18}
-                        font="Heavy"
-                        style={{ marginBottom: 14 }}
-                    >
-                        condition
-                    </CustomText>
-                    <CustomText secondary fontSize={17}>
-                        {deriveProductConditionFromDb(
-                            catalogStore.activeProduct.condition
-                        )}
-                    </CustomText>
-                    <HorizontalLine />
-                    <CustomText
-                        fontSize={18}
-                        font="Heavy"
-                        style={{ marginBottom: 14 }}
-                    >
-                        seller location
-                    </CustomText>
-                    <CustomText secondary fontSize={17}>
-                        This is my location.
-                    </CustomText>
+                    <WrittenInfoSection />
                 </View>
             </ProductViewScrollWrapper>
         </BottomSheetView>
