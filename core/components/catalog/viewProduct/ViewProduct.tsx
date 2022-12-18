@@ -11,7 +11,7 @@ import {
     SignupMethod,
 } from "../../../@types/GlobalTypes";
 import SignupOptionButton from "../../auth/SignupOptionbutton/SignupOptionButton";
-import { View } from "react-native";
+import { Button, Share, TouchableOpacity, View } from "react-native";
 import { useCreateProductStore } from "../../../state/auth/CreateProduct.store";
 import CustomTextInput from "../../lib/CustomTextInput";
 import LargeButton from "../../lib/LargeButton";
@@ -37,6 +37,7 @@ import ProductViewScrollWrapper from "./ProductViewScrollWrapper";
 import HorizontalLine from "./HorizontalLine";
 import { deriveProductConditionFromDb } from "../../../utils/productCondition.util";
 import WrittenInfoSection from "./WrittenInfoSection";
+import { triggerProductSharePopup } from "../../../utils/share.util";
 
 const ViewProduct = () => {
     const catalogStore = useCatalogStore();
@@ -94,7 +95,12 @@ const ViewProduct = () => {
                                 view image
                             </CustomText>
                         </View>
-                        <View style={{ display: "flex", flexDirection: "row" }}>
+                        <TouchableOpacity
+                            style={{ display: "flex", flexDirection: "row" }}
+                            onPress={() =>
+                                triggerProductSharePopup("/hjfhj/hjdfhj")
+                            }
+                        >
                             <ShareIcon />
                             <CustomText
                                 accent
@@ -104,7 +110,7 @@ const ViewProduct = () => {
                             >
                                 share
                             </CustomText>
-                        </View>
+                        </TouchableOpacity>
                     </View>
                     <View
                         style={{
@@ -180,6 +186,7 @@ const ViewProduct = () => {
                         posted="14h" //TODO: Backend integration
                     />
                     <WrittenInfoSection />
+                    <View style={{ marginBottom: 60 }} />
                 </View>
             </ProductViewScrollWrapper>
         </BottomSheetView>
