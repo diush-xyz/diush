@@ -1,4 +1,4 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import CatalogHome from "../../components/catalog/Home";
 import { useCatalogStore } from "../../state/auth/Catalog.store";
@@ -14,8 +14,10 @@ import {
 } from "../../utils/constants";
 import ViewProduct from "../../components/catalog/viewProduct/ViewProduct";
 import ImageOverlay from "../../components/catalog/viewProduct/ImageOverlay";
+import { useSellerViewProductStore } from "../../state/auth/SellerViewProductStore";
 
 const CatalogScreen = () => {
+    const sellerViewProductStore = useSellerViewProductStore();
     const catalogStore = useCatalogStore();
 
     const sheetRef = React.useRef<BottomSheet>(null);

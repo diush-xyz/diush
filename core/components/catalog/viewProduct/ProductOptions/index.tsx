@@ -40,21 +40,12 @@ const ProductOptions = () => {
                     right: 0,
                     bottom: 32,
                     backgroundColor: theme.popupBackground,
+                    zIndex: 1000,
                 },
                 { transform: [{ scale: scaleValue }] },
             ]}
         >
-            <TouchableOpacity
-                style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}
-                activeOpacity={1}
-                onPress={() => {
-                    sellerViewProductStore.setImageModal();
-                }}
-            >
+            <TouchableOpacity onPress={() => console.log("Please WORK!!!!")}>
                 <View style={{ display: "flex", flexDirection: "row" }}>
                     <CustomText>Copy</CustomText>
                     <InfoIcon />

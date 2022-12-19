@@ -67,30 +67,46 @@ const ViewProduct = () => {
 
     return (
         <BottomSheetView style={GLOBAL_STYLES.viewProductSheetViewStyle}>
-            <ProductViewScrollWrapper>
-                <Image
-                    style={{
-                        height: 471,
-                        width: "100%",
-                        resizeMode: "cover",
-                    }}
-                    source={{
-                        uri: catalogStore.activeProduct.imageURL,
-                    }}
-                />
-                <ImageOverlay style={{ position: "absolute", top: 0 }} />
-                <View style={{ marginTop: -185, paddingHorizontal: 22 }}>
-                    {sellerViewProductStore.imageModal ? <ImageModal /> : null}
-                    <Header />
-                    <SnapshotBox
-                        askingPrice={catalogStore.activeProduct.askingPrice}
-                        highestOffer={90} //TODO: Backend integration
-                        posted="14h" //TODO: Backend integration
+            <TouchableOpacity
+                style={{
+                    flex: 1,
+                }}
+                activeOpacity={1}
+                onPress={() => {
+                    if (sellerViewProductStore.productOptionsPopup) {
+                        sellerViewProductStore.setProductOptionsPopup();
+                    } else {
+                        null;
+                    }
+                }}
+            >
+                <ProductViewScrollWrapper>
+                    <Image
+                        style={{
+                            height: 471,
+                            width: "100%",
+                            resizeMode: "cover",
+                        }}
+                        source={{
+                            uri: catalogStore.activeProduct.imageURL,
+                        }}
                     />
-                    <WrittenInfoSection />
-                    <View style={{ marginBottom: 60 }} />
-                </View>
-            </ProductViewScrollWrapper>
+                    <ImageOverlay style={{ position: "absolute", top: 0 }} />
+                    <View style={{ marginTop: -185, paddingHorizontal: 22 }}>
+                        {sellerViewProductStore.imageModal ? (
+                            <ImageModal />
+                        ) : null}
+                        <Header />
+                        <SnapshotBox
+                            askingPrice={catalogStore.activeProduct.askingPrice}
+                            highestOffer={90} //TODO: Backend integration
+                            posted="14h" //TODO: Backend integration
+                        />
+                        <WrittenInfoSection />
+                        <View style={{ marginBottom: 60 }} />
+                    </View>
+                </ProductViewScrollWrapper>
+            </TouchableOpacity>
         </BottomSheetView>
     );
 };
