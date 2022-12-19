@@ -131,7 +131,10 @@ const DeleteConfirmation = () => {
                     </CustomText>
                     <LargeButton
                         title="i understand, do it"
-                        onPress={() => deleteProduct()}
+                        onPress={() => {
+                            deleteProduct();
+                            sellerViewProductStore.setDeleteConfirmation();
+                        }}
                         footer
                         footerButtonTitle="nope, cancel"
                         footerButtonOnPress={() =>

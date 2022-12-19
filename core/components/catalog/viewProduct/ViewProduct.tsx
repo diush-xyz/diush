@@ -68,20 +68,20 @@ const ViewProduct = () => {
 
     return (
         <BottomSheetView style={GLOBAL_STYLES.viewProductSheetViewStyle}>
-            <TouchableOpacity
-                style={{
-                    flex: 1,
-                }}
-                activeOpacity={1}
-                onPress={() => {
-                    if (sellerViewProductStore.productOptionsPopup) {
-                        sellerViewProductStore.setProductOptionsPopup();
-                    } else {
-                        null;
-                    }
-                }}
-            >
-                <ProductViewScrollWrapper>
+            <ProductViewScrollWrapper>
+                <TouchableOpacity
+                    style={{
+                        flex: 1,
+                    }}
+                    activeOpacity={1}
+                    onPress={() => {
+                        if (sellerViewProductStore.productOptionsPopup) {
+                            sellerViewProductStore.setProductOptionsPopup();
+                        } else {
+                            null;
+                        }
+                    }}
+                >
                     <Image
                         style={{
                             height: 471,
@@ -107,8 +107,8 @@ const ViewProduct = () => {
                         <WrittenInfoSection />
                         <View style={{ marginBottom: 60 }} />
                     </View>
-                </ProductViewScrollWrapper>
-            </TouchableOpacity>
+                </TouchableOpacity>
+            </ProductViewScrollWrapper>
         </BottomSheetView>
     );
 };
