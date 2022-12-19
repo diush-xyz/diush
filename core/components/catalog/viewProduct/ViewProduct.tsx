@@ -41,7 +41,8 @@ import { triggerProductSharePopup } from "../../../utils/share.util";
 import Header from "./Header";
 import ImageModal from "./ImageModal";
 import { useSellerViewProductStore } from "../../../state/auth/SellerViewProductStore";
-import DeleteConfirmation from "./DeleteConfirmation";
+import DeleteConfirmation from "../../lib/Modals/DeleteConfirmation";
+import CustomDeleteConfirmation from "./CustomDeleteConfirmation";
 
 const ViewProduct = () => {
     const catalogStore = useCatalogStore();
@@ -96,7 +97,7 @@ const ViewProduct = () => {
                     <View style={{ marginTop: -185, paddingHorizontal: 22 }}>
                         {sellerViewProductStore.imageModal && <ImageModal />}
                         {sellerViewProductStore.deleteConfirmation && (
-                            <DeleteConfirmation />
+                            <CustomDeleteConfirmation />
                         )}
                         <Header />
                         <SnapshotBox

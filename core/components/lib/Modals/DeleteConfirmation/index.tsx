@@ -12,10 +12,10 @@ import {
 import InfoIcon from "../../../../icons/common/info";
 import { useCatalogStore } from "../../../../state/auth/Catalog.store";
 import { useSellerViewProductStore } from "../../../../state/auth/SellerViewProductStore";
-import CustomText from "../../../lib/CustomText";
+import CustomText from "../../CustomText";
 import { useTheme } from "../../../../utils/useTheme.util";
-import CompactIcon from "./CompactIcon";
-import LargeButton from "../../../lib/LargeButton";
+import CompactIcon from "../../../catalog/viewProduct/CustomDeleteConfirmation/CompactIcon";
+import LargeButton from "../../LargeButton";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../../../../config/firebase";
 import { CatalogStatus } from "../../../../@types/GlobalTypes";
@@ -85,17 +85,19 @@ const ModalPopup = ({ visible, children }) => {
     );
 };
 
-const DeleteConfirmation = () => {
+interface IDeleteConfirmation {
+    icon: React.ReactNode;
+    title: string;
+    desc: string;
+    buttonText: string;
+    buttonOnClick: () => void;
+    footerText: string;
+    onFooterClick: () => void;
+}
+
+const DeleteConfirmation = (props: IDeleteConfirmation) => {
     const catalogStore = useCatalogStore();
     const sellerViewProductStore = useSellerViewProductStore();
-
-    const deleteProduct = async () => {
-        await deleteDoc(
-            doc(db, "products", catalogStore.activeProduct.id)
-        ).then(() => {
-            catalogStore.setStatus(CatalogStatus.ACTIVE_DASH);
-        });
-    };
 
     return (
         <View
@@ -111,13 +113,14 @@ const DeleteConfirmation = () => {
                         paddingHorizontal: 12,
                     }}
                 >
-                    <CompactIcon />
+                    {props.icon}
+                    {/* <CompactIcon /> */}
                     <CustomText
                         font="Bold"
                         fontSize={20}
                         style={{ marginTop: 9 }}
                     >
-                        be careful!
+                        {props.title}
                     </CustomText>
                     <CustomText
                         secondary
@@ -125,21 +128,20 @@ const DeleteConfirmation = () => {
                         textAlign="center"
                         style={{ marginTop: 9, marginBottom: 27 }}
                     >
-                        by deleting this product, you also {"\n"} decline all
+                        {props.desc}
+                        {/* by deleting this product, you also {"\n"} decline all
                         offers pertaining to this{"\n"} product and delete all
-                        data.
+                        data. */}
                     </CustomText>
                     <LargeButton
-                        title="i understand, do it"
-                        onPress={() => {
-                            deleteProduct();
-                            sellerViewProductStore.setDeleteConfirmation();
-                        }}
+                        title={props.title}
+                        onPress={props.buttonOnClick}
+                        // deleteProduct();
+                        // sellerViewProductStore.setDeleteConfirmation();
                         footer
-                        footerButtonTitle="nope, cancel"
-                        footerButtonOnPress={() =>
-                            sellerViewProductStore.setDeleteConfirmation()
-                        }
+                        footerButtonTitle={props.footerText}
+                        footerButtonOnPress={props.onFooterClick}
+                        // sellerViewProductStore.setDeleteConfirmation()
                     />
                 </View>
             </ModalPopup>
