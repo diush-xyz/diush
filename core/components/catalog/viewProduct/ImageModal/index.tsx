@@ -13,7 +13,7 @@ import InfoIcon from "../../../../icons/common/info";
 import { useCatalogStore } from "../../../../state/auth/Catalog.store";
 import { useSellerViewProductStore } from "../../../../state/auth/SellerViewProductStore";
 
-const ModalPoup = ({ visible, children }) => {
+const ModalPopup = ({ visible, children }) => {
     const [showModal, setShowModal] = React.useState(visible);
     const scaleValue = React.useRef(new Animated.Value(0)).current;
     const sellerViewProductStore = useSellerViewProductStore();
@@ -84,7 +84,7 @@ const ImageModal = () => {
         <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
-            <ModalPoup visible={sellerViewProductStore.imageModal}>
+            <ModalPopup visible={sellerViewProductStore.imageModal}>
                 <View style={{ alignItems: "center" }}></View>
                 <View style={{ alignItems: "center" }}>
                     <Image
@@ -99,7 +99,7 @@ const ImageModal = () => {
                         }}
                     />
                 </View>
-            </ModalPoup>
+            </ModalPopup>
         </View>
     );
 };

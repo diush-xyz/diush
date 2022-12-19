@@ -21,6 +21,13 @@ export default class SellerViewProductStore {
     setProductOptionsPopup() {
         this.productOptionsPopup = !this.productOptionsPopup;
     }
+
+    deleteConfirmation: boolean = false;
+
+    setDeleteConfirmation() {
+        this.deleteConfirmation = !this.deleteConfirmation;
+        this.productOptionsPopup = false;
+    }
 }
 
 const StoreContext = React.createContext<SellerViewProductStore>(

@@ -41,6 +41,7 @@ import { triggerProductSharePopup } from "../../../utils/share.util";
 import Header from "./Header";
 import ImageModal from "./ImageModal";
 import { useSellerViewProductStore } from "../../../state/auth/SellerViewProductStore";
+import DeleteConfirmation from "./DeleteConfirmation";
 
 const ViewProduct = () => {
     const catalogStore = useCatalogStore();
@@ -93,9 +94,10 @@ const ViewProduct = () => {
                     />
                     <ImageOverlay style={{ position: "absolute", top: 0 }} />
                     <View style={{ marginTop: -185, paddingHorizontal: 22 }}>
-                        {sellerViewProductStore.imageModal ? (
-                            <ImageModal />
-                        ) : null}
+                        {sellerViewProductStore.imageModal && <ImageModal />}
+                        {sellerViewProductStore.deleteConfirmation && (
+                            <DeleteConfirmation />
+                        )}
                         <Header />
                         <SnapshotBox
                             askingPrice={catalogStore.activeProduct.askingPrice}

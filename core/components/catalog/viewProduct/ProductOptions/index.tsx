@@ -23,7 +23,11 @@ const ProductOptions = () => {
     const DATA: IProductOptionsElement[] = [
         { text: "Copy link", icon: <CopyIcon />, onClick: () => null },
         { text: "Edit listing", icon: <EditIcon />, onClick: () => null },
-        { text: "Delete listing", icon: <TrashIcon />, onClick: () => null },
+        {
+            text: "Delete listing",
+            icon: <TrashIcon />,
+            onClick: () => sellerViewProductStore.setDeleteConfirmation(),
+        },
     ];
 
     const Wrapper = styled(Animated.View)`
