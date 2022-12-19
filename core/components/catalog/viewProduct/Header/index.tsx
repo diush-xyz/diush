@@ -15,6 +15,9 @@ import { IUser } from "../../../../@types/GlobalTypes";
 import { fetchUserFromDb } from "../../../../utils/user.utils";
 import { observer } from "mobx-react";
 import { useSellerViewProductStore } from "../../../../state/auth/SellerViewProductStore";
+import ProductOptions from "../ProductOptions";
+import * as Haptics from "expo-haptics";
+import { hapticFeedback } from "../../../../utils/haptics.util";
 
 const Header = () => {
     const catalogStore = useCatalogStore();
@@ -43,7 +46,10 @@ const Header = () => {
             >
                 <TouchableOpacity
                     style={{ display: "flex", flexDirection: "row" }}
-                    onPress={() => sellerViewProductStore.setImageModal()}
+                    onPress={() => {
+                        sellerViewProductStore.setImageModal();
+                        hapticFeedback();
+                    }}
                 >
                     <CarouselIcon />
                     <CustomText
@@ -57,7 +63,10 @@ const Header = () => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={{ display: "flex", flexDirection: "row" }}
-                    onPress={() => triggerProductSharePopup("/hjfhj/hjdfhj")}
+                    onPress={() => {
+                        hapticFeedback();
+                        triggerProductSharePopup("/hjfhj/hjdfhj");
+                    }}
                 >
                     <ShareIcon />
                     <CustomText
@@ -82,7 +91,17 @@ const Header = () => {
                 <CustomText font="Heavy" fontSize={22}>
                     {catalogStore.activeProduct.title}
                 </CustomText>
-                <RoundedMoreIcon />
+                <TouchableOpacity
+                    onPress={() => {
+                        hapticFeedback();
+                        sellerViewProductStore.setProductOptionsPopup();
+                    }}
+                >
+                    <RoundedMoreIcon />
+                </TouchableOpacity>
+                {sellerViewProductStore.productOptionsPopup && (
+                    <ProductOptions />
+                )}
             </View>
             <View
                 style={{

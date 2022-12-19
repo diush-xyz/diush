@@ -15,6 +15,12 @@ export default class SellerViewProductStore {
     setImageModal() {
         this.imageModal = !this.imageModal;
     }
+
+    productOptionsPopup: boolean = false;
+
+    setProductOptionsPopup() {
+        this.productOptionsPopup = !this.productOptionsPopup;
+    }
 }
 
 const StoreContext = React.createContext<SellerViewProductStore>(
