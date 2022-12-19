@@ -7,6 +7,7 @@ import { useSellerViewProductStore } from "../../../../state/auth/SellerViewProd
 import CopyIcon from "../../../../icons/catalog/Copy";
 import EditIcon from "../../../../icons/catalog/Edit";
 import TrashIcon from "../../../../icons/catalog/Trash";
+import styled from "styled-components/native";
 
 interface IProductOptionsElement {
     text: string;
@@ -25,6 +26,10 @@ const ProductOptions = () => {
         { text: "Delete listing", icon: <TrashIcon />, onClick: () => null },
     ];
 
+    const Wrapper = styled(Animated.View)`
+        box-shadow: 0px 0px 5px ${theme.line};
+    `;
+
     React.useEffect(() => {
         if (sellerViewProductStore.productOptionsPopup) {
             Animated.spring(scaleValue, {
@@ -41,8 +46,9 @@ const ProductOptions = () => {
             }).start();
         }
     });
+
     return (
-        <Animated.View
+        <Wrapper
             style={[
                 {
                     width: "70%",
@@ -85,7 +91,7 @@ const ProductOptions = () => {
                     </TouchableOpacity>
                 );
             })}
-        </Animated.View>
+        </Wrapper>
     );
 };
 
