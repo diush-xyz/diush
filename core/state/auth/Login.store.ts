@@ -1,6 +1,5 @@
 import { makeAutoObservable } from "mobx";
 import React from "react";
-import { AuthStatus, IUser, SignupMethods } from "../../@types/GlobalTypes";
 
 /**
  * A store to handle anything signup-related.
