@@ -11,6 +11,7 @@ import TrashIcon from "../../../../icons/catalog/Trash";
 interface IProductOptionsElement {
     text: string;
     icon: React.ReactNode;
+    onClick: () => void;
 }
 
 const ProductOptions = () => {
@@ -19,9 +20,9 @@ const ProductOptions = () => {
     const scaleValue = React.useRef(new Animated.Value(0)).current;
 
     const DATA: IProductOptionsElement[] = [
-        { text: "Copy link", icon: <CopyIcon /> },
-        { text: "Edit listing", icon: <EditIcon /> },
-        { text: "Delete listing", icon: <TrashIcon /> },
+        { text: "Copy link", icon: <CopyIcon />, onClick: () => null },
+        { text: "Edit listing", icon: <EditIcon />, onClick: () => null },
+        { text: "Delete listing", icon: <TrashIcon />, onClick: () => null },
     ];
 
     React.useEffect(() => {
@@ -68,7 +69,7 @@ const ProductOptions = () => {
                             borderBottomWidth: idx !== DATA.length - 1 && 1,
                             borderBottomColor: "#ffffff0d",
                         }}
-                        onPress={() => console.log("The best")}
+                        onPress={elem.onClick}
                     >
                         <CustomText
                             style={{
