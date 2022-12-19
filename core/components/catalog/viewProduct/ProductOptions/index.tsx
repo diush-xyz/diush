@@ -2,14 +2,27 @@ import React from "react";
 import { Animated, TouchableOpacity, View } from "react-native";
 import { useTheme } from "../../../../utils/useTheme.util";
 import CustomText from "../../../lib/CustomText";
-import InfoIcon from "../../../../icons/common/info";
 import { observer } from "mobx-react";
 import { useSellerViewProductStore } from "../../../../state/auth/SellerViewProductStore";
+import CopyIcon from "../../../../icons/catalog/Copy";
+import EditIcon from "../../../../icons/catalog/Edit";
+import TrashIcon from "../../../../icons/catalog/Trash";
+
+interface IProductOptionsElement {
+    text: string;
+    icon: React.ReactNode;
+}
 
 const ProductOptions = () => {
     const theme = useTheme();
     const sellerViewProductStore = useSellerViewProductStore();
     const scaleValue = React.useRef(new Animated.Value(0)).current;
+
+    const DATA: IProductOptionsElement[] = [
+        { text: "Copy link", icon: <CopyIcon /> },
+        { text: "Edit listing", icon: <EditIcon /> },
+        { text: "Delete listing", icon: <TrashIcon /> },
+    ];
 
     React.useEffect(() => {
         if (sellerViewProductStore.productOptionsPopup) {
@@ -32,11 +45,9 @@ const ProductOptions = () => {
             style={[
                 {
                     width: "70%",
-                    borderRadius: 20,
+                    borderRadius: 12,
                     elevation: 20,
                     position: "absolute",
-                    paddingVertical: 11,
-                    paddingHorizontal: 16,
                     right: 0,
                     bottom: 32,
                     backgroundColor: theme.popupBackground,
@@ -45,12 +56,34 @@ const ProductOptions = () => {
                 { transform: [{ scale: scaleValue }] },
             ]}
         >
-            <TouchableOpacity onPress={() => console.log("Please WORK!!!!")}>
-                <View style={{ display: "flex", flexDirection: "row" }}>
-                    <CustomText>Copy</CustomText>
-                    <InfoIcon />
-                </View>
-            </TouchableOpacity>
+            {DATA.map((elem: IProductOptionsElement, idx: number) => {
+                return (
+                    <TouchableOpacity
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            paddingVertical: 11,
+                            paddingHorizontal: 16,
+                            borderBottomWidth: idx !== DATA.length - 1 && 1,
+                            borderBottomColor: "#ffffff0d",
+                        }}
+                        onPress={() => console.log("The best")}
+                    >
+                        <CustomText
+                            style={{
+                                color:
+                                    idx == DATA.length - 1
+                                        ? "#FF453A"
+                                        : "#ffffff",
+                            }}
+                        >
+                            {elem.text}
+                        </CustomText>
+                        {elem.icon}
+                    </TouchableOpacity>
+                );
+            })}
         </Animated.View>
     );
 };
