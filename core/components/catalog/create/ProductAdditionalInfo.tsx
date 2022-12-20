@@ -28,6 +28,10 @@ const ProductAdditionalInfo = () => {
     const [allClear, setAllClear] = React.useState(false);
     const [errMsg, setErrMsg] = React.useState<string>("");
 
+    const checkIfProceed = () => {
+        createProductStore.setCurrentStep(createProductStore.currentStep + 1);
+    };
+
     React.useEffect(() => {
         console.log("the additionalInfo: " + createProductStore.additionalInfo);
         console.log(allClear);
@@ -69,6 +73,7 @@ const ProductAdditionalInfo = () => {
                         errMsg={errMsg}
                         returnKeyType="done"
                         isLarge
+                        onSubmitEditing={() => checkIfProceed()}
                     />
                     <LargeButton
                         title={
@@ -77,11 +82,7 @@ const ProductAdditionalInfo = () => {
                                 ? "nope, I'm good"
                                 : "continue"
                         }
-                        onPress={() =>
-                            createProductStore.setCurrentStep(
-                                createProductStore.currentStep + 1
-                            )
-                        }
+                        onPress={() => checkIfProceed()}
                         footer
                         disabled={!allClear && !firstTime}
                         footerButtonTitle="cancel"
