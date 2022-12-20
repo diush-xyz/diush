@@ -21,6 +21,13 @@ const EmailLogin = () => {
     const [allClear, setAllClear] = React.useState(false);
     const [errMsg, setErrMsg] = React.useState<string>("");
 
+    const checkIfProceed = () => {
+        setFirstTime(false);
+        if (allClear) {
+            loginStore.setCurrentStep(loginStore.currentStep + 1);
+        }
+    };
+
     React.useEffect(() => {
         //TODO: Come back later (two-letter domain extensions do not work, neither does .ed.cr,)
         // setIsReady(validateEmail(signupStore.email));
@@ -62,17 +69,12 @@ const EmailLogin = () => {
                         isErr={!allClear && !firstTime}
                         errMsg={errMsg}
                         returnKeyType="done"
+                        autoCorrect={false}
+                        onSubmitEditing={() => checkIfProceed()}
                     />
                     <LargeButton
                         title="continue"
-                        onPress={() => {
-                            setFirstTime(false);
-                            if (allClear) {
-                                loginStore.setCurrentStep(
-                                    loginStore.currentStep + 1
-                                );
-                            }
-                        }}
+                        onPress={() => checkIfProceed()}
                         footer
                         disabled={!allClear && !firstTime}
                         footerButtonTitle="cancel"

@@ -76,6 +76,7 @@ const DisplayNameSignup = () => {
                         isErr={!allClear && !firstTime}
                         errMsg={errMsg}
                         returnKeyType="done"
+                        autoCorrect={false}
                         onSubmitEditing={() => checkIfProceed()}
                     />
                     <LargeButton
