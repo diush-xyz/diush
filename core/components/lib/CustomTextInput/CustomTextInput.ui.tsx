@@ -4,6 +4,8 @@ import {
     TextInput,
     KeyboardTypeOptions,
     ReturnKeyTypeOptions,
+    TextInputSubmitEditingEventData,
+    NativeSyntheticEvent,
 } from "react-native";
 import React from "react";
 import { observer } from "mobx-react";
@@ -29,6 +31,10 @@ interface ICustomTextInput {
     isPassword?: boolean;
     isSearch?: boolean;
     isLarge?: boolean;
+    autoCorrect?: boolean;
+    onSubmitEditing?: (
+        e: NativeSyntheticEvent<TextInputSubmitEditingEventData>
+    ) => void;
 }
 
 const CustomTextInput = (props: ICustomTextInput) => {
@@ -87,6 +93,8 @@ const CustomTextInput = (props: ICustomTextInput) => {
                     defaultValue={props.defaultValue}
                     returnKeyType={props.returnKeyType}
                     secureTextEntry={secure}
+                    autoCorrect={props.autoCorrect}
+                    onSubmitEditing={props.onSubmitEditing}
                 />
                 {props.isValid && <SuccessIcon />}
                 {props.isErr && <WarningIcon />}
