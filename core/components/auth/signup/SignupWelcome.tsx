@@ -22,9 +22,7 @@ const SignupWelcome = () => {
             <FlowTemplate
                 circleEmoji="🪴"
                 title="create an acc"
-                desc={
-                    "what’s most comfortable for you? we \n promise this will be quick (<2min)."
-                }
+                desc={"we promise this will be quick (less than 2min)."}
             >
                 <SignupOptionButton
                     text="continue with email"
