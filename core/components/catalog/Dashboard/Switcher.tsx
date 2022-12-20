@@ -1,7 +1,7 @@
 import { View, Text, Animated } from "react-native";
 import React from "react";
-import { useTheme } from "../../utils/useTheme.util";
-import CustomText from "../lib/CustomText";
+import { useTheme } from "../../../utils/useTheme.util";
+import CustomText from "../../lib/CustomText";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Switcher = () => {

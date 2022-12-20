@@ -22,7 +22,8 @@ export const createProductInDb = async (product: IProduct) => {
         // offers: product.offers,
         createdAt: new Date(),
         // categories: product.categories,
-        // condition: product.condition,
+        condition: product.condition,
+        additionalInfo: product.additionalInfo,
     })
         .then(() => console.log("Created in db!"))
         .catch(error => console.log("db error: " + error));

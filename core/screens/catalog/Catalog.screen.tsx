@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import CatalogHome from "../../components/catalog/Home";
 import { useCatalogStore } from "../../state/auth/Catalog.store";
@@ -8,9 +8,16 @@ import { observer } from "mobx-react";
 import CreateProductFlow from "./CreateProduct/CreateProduct.flow";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { GLOBAL_STYLES } from "../../@types/GlobalStyles";
-import { BOTTOM_SHEET_SNAP_POINTS } from "../../utils/constants";
+import {
+    BOTTOM_SHEET_SNAP_POINTS,
+    PRODUCT_BOTTOM_SHEET_SNAP_POINTS,
+} from "../../utils/constants";
+import ViewProduct from "../../components/catalog/viewProduct/ViewProduct";
+import ImageOverlay from "../../components/catalog/viewProduct/ImageOverlay";
+import { useSellerViewProductStore } from "../../state/auth/SellerViewProductStore";
 
 const CatalogScreen = () => {
+    const sellerViewProductStore = useSellerViewProductStore();
     const catalogStore = useCatalogStore();
 
     const sheetRef = React.useRef<BottomSheet>(null);
@@ -20,16 +27,6 @@ const CatalogScreen = () => {
         catalogStore.setStatus(CatalogStatus.CREATE);
     }, []);
 
-    const populateFlowContent = () => {
-        switch (catalogStore.status) {
-            case CatalogStatus.ACTIVE_DASH:
-                return <CatalogHome />;
-            case CatalogStatus.CREATE:
-                //TODO: Change to be a popup (create flow)
-                return <CreateProductFlow />;
-        }
-    };
-
     return (
         <>
             <CatalogHome />
@@ -38,13 +35,28 @@ const CatalogScreen = () => {
                     handleIndicatorStyle={GLOBAL_STYLES.handleIndicatorStyle}
                     handleStyle={GLOBAL_STYLES.handleStyle}
                     ref={sheetRef}
-                    snapPoints={BOTTOM_SHEET_SNAP_POINTS}
+                    snapPoints={PRODUCT_BOTTOM_SHEET_SNAP_POINTS}
                     enablePanDownToClose={true}
                     onClose={() =>
                         catalogStore.setStatus(CatalogStatus.ACTIVE_DASH)
                     }
                 >
                     <CreateProductFlow />
+                </BottomSheet>
+            )}
+            {catalogStore.status === CatalogStatus.VIEW && (
+                <BottomSheet
+                    handleIndicatorStyle={GLOBAL_STYLES.handleIndicatorStyle}
+                    handleStyle={GLOBAL_STYLES.handleStyle}
+                    ref={sheetRef}
+                    snapPoints={PRODUCT_BOTTOM_SHEET_SNAP_POINTS}
+                    enablePanDownToClose={true}
+                    onClose={() =>
+                        catalogStore.setStatus(CatalogStatus.ACTIVE_DASH)
+                    }
+                    style={{ borderRadius: 35, overflow: "hidden" }}
+                >
+                    <ViewProduct />
                 </BottomSheet>
             )}
         </>

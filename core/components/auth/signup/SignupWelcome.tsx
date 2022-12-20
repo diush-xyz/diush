@@ -35,14 +35,14 @@ const SignupWelcome = () => {
                     }}
                     marginBottom={17}
                 />
-                <SignupOptionButton
+                {/* <SignupOptionButton
                     text="continue with phone"
                     icon="phone"
                     onPress={() => {
                         signupStore.setMethod(SignupMethod.PHONE);
                         signupStore.setCurrentStep(1);
                     }}
-                />
+                /> */}
             </FlowTemplate>
         </BottomSheetView>
     );

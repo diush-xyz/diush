@@ -1,27 +1,24 @@
 import { View, Text, KeyboardAvoidingView, ScrollView } from "react-native";
 import React from "react";
-import { useUtilStore } from "../../../state/Util.store";
 
-interface IScrollWrapper {
+interface IProductViewScrollWrapper {
     children: React.ReactNode;
-    isTextArea?: boolean;
-    height?: number;
 }
 
-const ScrollWrapper = (props: IScrollWrapper) => {
-    const utilStore = useUtilStore();
+const ProductViewScrollWrapper = (props: IProductViewScrollWrapper) => {
+    // const utilStore = useUtilStore();
 
     return (
         <KeyboardAvoidingView
             style={{
                 width: "100%",
-                position: utilStore.isKeyboardOpen ? "absolute" : null,
-                top: utilStore.isKeyboardOpen ? 75 : null,
+                // position: utilStore.isKeyboardOpen ? "absolute" : null,
+                // top: utilStore.isKeyboardOpen ? 75 : null,
             }}
         >
             <ScrollView
                 style={{
-                    height: props.height ?? (props.isTextArea ? 450 : 400),
+                    height: "100%",
                 }}
                 showsVerticalScrollIndicator={false}
                 //hide the keyboard when the user taps outside
@@ -34,4 +31,4 @@ const ScrollWrapper = (props: IScrollWrapper) => {
     );
 };
 
-export default ScrollWrapper;
+export default ProductViewScrollWrapper;

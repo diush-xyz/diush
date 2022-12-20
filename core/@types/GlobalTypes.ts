@@ -17,7 +17,8 @@ export interface IProduct {
     offers?: IOffer[];
     createdAt?: Date;
     categories?: ICategory[];
-    condition?: ProductCondition;
+    condition: number;
+    additionalInfo?: string;
     //TODO: Add more
 }
 
@@ -64,6 +65,7 @@ export enum CatalogStatus {
     ACTIVE_DASH,
     SOLD_DASH,
     CREATE,
+    VIEW,
     EDIT,
     DELETE,
 }
