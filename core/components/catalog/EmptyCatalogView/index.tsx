@@ -24,7 +24,7 @@ const EmptyCatalogView = () => {
                 font="bold"
                 style={{ marginTop: 12 }}
             >
-                create a new product and it will appear here.
+                create a new product to share it with your friends.
             </CustomText>
         </View>
     );
