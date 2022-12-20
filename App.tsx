@@ -22,6 +22,7 @@ import {
     TouchableOpacity,
     TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
+import CopiedIndicator from "./core/components/lib/CopiedIndicator";
 
 const App = () => {
     const [isAppReady, setIsAppReady] = React.useState<boolean>(false);
@@ -96,7 +97,10 @@ const App = () => {
                     onWillHide={() => utilStore.setIsKeyboardOpen(false)}
                 />
                 {authStore.authStatus == AuthStatus.AUTHENTICATED ? (
-                    <ScreenHandler />
+                    <>
+                        {utilStore.copyIndicator && <CopiedIndicator />}
+                        <ScreenHandler />
+                    </>
                 ) : (
                     <AuthScreen />
                 )}
