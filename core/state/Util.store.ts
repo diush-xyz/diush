@@ -28,6 +28,15 @@ export default class UtilStore {
     setIsKeyboardOpen(isOpen: boolean) {
         this.isKeyboardOpen = isOpen;
     }
+
+    copyIndicator: boolean = false;
+
+    copyIndicatorText: string = "Copied!";
+
+    setCopyIndicator(copyIndicatorText?: string) {
+        this.copyIndicator = !this.copyIndicator;
+        this.copyIndicatorText = copyIndicatorText;
+    }
 }
 
 const StoreContext = React.createContext<UtilStore>(new UtilStore());

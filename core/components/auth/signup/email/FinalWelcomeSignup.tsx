@@ -71,9 +71,9 @@ const FinalWelcomeSignup = () => {
                     style={{ marginBottom: 40 }}
                 >
                     we are thrilled to have you as the newest{"\n"} member of
-                    the diush community.
+                    our community.
                 </CustomText>
-                <LargeButton title="let's go" onPress={() => signUp()} />
+                <LargeButton title="cool, let's go" onPress={() => signUp()} />
             </View>
         </BottomSheetView>
     );

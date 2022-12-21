@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import React from "react";
-import { AuthStatus, IUser, SignupMethods } from "../../@types/GlobalTypes";
+import { SignupMethod } from "../../@types/GlobalTypes";
 
 /**
  * A store to handle anything signup-related.
@@ -34,9 +34,9 @@ export default class SignupStore {
         this.username = newUsername;
     }
 
-    method: SignupMethods;
+    method: SignupMethod;
 
-    setMethod(newMethod: SignupMethods) {
+    setMethod(newMethod: SignupMethod) {
         this.method = newMethod;
     }
 

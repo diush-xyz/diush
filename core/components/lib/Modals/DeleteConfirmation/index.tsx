@@ -134,7 +134,7 @@ const DeleteConfirmation = (props: IDeleteConfirmation) => {
                         data. */}
                     </CustomText>
                     <LargeButton
-                        title={props.title}
+                        title={props.buttonText}
                         onPress={props.buttonOnClick}
                         // deleteProduct();
                         // sellerViewProductStore.setDeleteConfirmation();

@@ -19,6 +19,13 @@ const DisplayNameSignup = () => {
     const [errMsg, setErrMsg] = React.useState<string>("");
     const [firstTime, setFirstTime] = React.useState<boolean>(true);
 
+    const checkIfProceed = () => {
+        setFirstTime(false);
+        if (allClear) {
+            signupStore.setCurrentStep(signupStore.currentStep + 1);
+        }
+    };
+
     React.useEffect(() => {
         if (
             signupStore.displayName === "" ||
@@ -69,17 +76,12 @@ const DisplayNameSignup = () => {
                         isErr={!allClear && !firstTime}
                         errMsg={errMsg}
                         returnKeyType="done"
+                        autoCorrect={false}
+                        onSubmitEditing={() => checkIfProceed()}
                     />
                     <LargeButton
                         title="continue"
-                        onPress={() => {
-                            setFirstTime(false);
-                            if (allClear) {
-                                signupStore.setCurrentStep(
-                                    signupStore.currentStep + 1
-                                );
-                            }
-                        }}
+                        onPress={() => checkIfProceed()}
                         footer
                         disabled={!allClear && !firstTime}
                         footerButtonTitle="cancel"

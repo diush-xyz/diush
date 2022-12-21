@@ -24,9 +24,7 @@ const CustomDeleteConfirmation = () => {
         <DeleteConfirmation
             icon={<CompactIcon />}
             title="be careful!"
-            desc={`by deleting this product, you also \n decline all
-            offers pertaining to this\n product and delete all
-            data.`}
+            desc={`by deleting this product, you also \n decline all offers pertaining to this\n product and delete all data.`}
             buttonText="i understand, do it"
             buttonOnClick={() => {
                 deleteProduct();

@@ -22,6 +22,7 @@ const PasswordSignup = () => {
     const [errMsg, setErrMsg] = React.useState<string>("");
 
     const login = () => {
+        setAllClear(true);
         setFirstTime(false);
         signInWithEmailAndPassword(auth, loginStore.email, loginStore.password)
             .then(userCredentials => {
@@ -83,6 +84,8 @@ const PasswordSignup = () => {
                         errMsg={errMsg}
                         returnKeyType="done"
                         isPassword
+                        autoCorrect={false}
+                        onSubmitEditing={() => login()}
                     />
                     <LargeButton
                         title="continue"

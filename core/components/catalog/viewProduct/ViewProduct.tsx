@@ -43,6 +43,9 @@ import ImageModal from "./ImageModal";
 import { useSellerViewProductStore } from "../../../state/auth/SellerViewProductStore";
 import DeleteConfirmation from "../../lib/Modals/DeleteConfirmation";
 import CustomDeleteConfirmation from "./CustomDeleteConfirmation";
+import styled from "styled-components/native";
+import { MAX_WIDTH } from "../../../utils/constants";
+import CopiedIndicator from "../../lib/CopiedIndicator";
 
 const ViewProduct = () => {
     const catalogStore = useCatalogStore();

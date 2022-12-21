@@ -8,6 +8,8 @@ import CopyIcon from "../../../../icons/catalog/Copy";
 import EditIcon from "../../../../icons/catalog/Edit";
 import TrashIcon from "../../../../icons/catalog/Trash";
 import styled from "styled-components/native";
+import { copyToClipboard } from "../../../../utils/clipboard.util";
+import { useUtilStore } from "../../../../state/Util.store";
 
 interface IProductOptionsElement {
     text: string;
@@ -19,9 +21,21 @@ const ProductOptions = () => {
     const theme = useTheme();
     const sellerViewProductStore = useSellerViewProductStore();
     const scaleValue = React.useRef(new Animated.Value(0)).current;
+    const utilStore = useUtilStore();
 
     const DATA: IProductOptionsElement[] = [
-        { text: "Copy link", icon: <CopyIcon />, onClick: () => null },
+        {
+            text: "Copy link",
+            icon: <CopyIcon />,
+            onClick: () => {
+                copyToClipboard(`https://diush.xyz/hjdhj/hjdhj`);
+                sellerViewProductStore.setProductOptionsPopup();
+                utilStore.setCopyIndicator("Link copied!");
+                setTimeout(() => {
+                    utilStore.setCopyIndicator();
+                }, 2500);
+            },
+        }, //TODO: Properly make this url link to something once the buyer flow is built out
         { text: "Edit listing", icon: <EditIcon />, onClick: () => null },
         {
             text: "Delete listing",
@@ -70,6 +84,7 @@ const ProductOptions = () => {
             {DATA.map((elem: IProductOptionsElement, idx: number) => {
                 return (
                     <TouchableOpacity
+                        key={idx}
                         style={{
                             display: "flex",
                             flexDirection: "row",
