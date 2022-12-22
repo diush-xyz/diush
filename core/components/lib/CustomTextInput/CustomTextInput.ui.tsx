@@ -6,8 +6,9 @@ import {
     ReturnKeyTypeOptions,
     TextInputSubmitEditingEventData,
     NativeSyntheticEvent,
+    TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useRef } from "react";
 import { observer } from "mobx-react";
 import { useTheme } from "../../../utils/useTheme.util";
 import CustomText from "../CustomText";
@@ -40,6 +41,7 @@ interface ICustomTextInput {
 const CustomTextInput = (props: ICustomTextInput) => {
     const theme = useTheme();
     const [secure, setSecure] = React.useState<boolean>(false);
+    const textInputRef = useRef();
 
     React.useEffect(() => {
         if (props.isPassword) {
@@ -56,7 +58,11 @@ const CustomTextInput = (props: ICustomTextInput) => {
                 width: "100%",
             }}
         >
-            <View
+            <TouchableOpacity
+                onPress={() => {
+                    //@ts-ignore
+                    textInputRef.current.focus();
+                }}
                 style={{
                     display: "flex",
                     alignItems: props.isLarge ? "flex-start" : "center",
@@ -71,9 +77,11 @@ const CustomTextInput = (props: ICustomTextInput) => {
                     paddingHorizontal: 20,
                     paddingTop: props.isLarge && 14,
                 }}
+                activeOpacity={1}
             >
                 {props.isSearch && <SearchIcon style={{ marginRight: 8 }} />}
                 <TextInput
+                    ref={textInputRef}
                     style={{
                         display: "flex",
                         alignItems: "center",
@@ -98,7 +106,7 @@ const CustomTextInput = (props: ICustomTextInput) => {
                 />
                 {props.isValid && <SuccessIcon />}
                 {props.isErr && <WarningIcon />}
-            </View>
+            </TouchableOpacity>
             {props.isErr && (
                 <View
                     style={{
