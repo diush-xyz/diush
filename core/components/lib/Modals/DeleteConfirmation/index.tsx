@@ -19,6 +19,7 @@ import LargeButton from "../../LargeButton";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../../../../config/firebase";
 import { CatalogStatus } from "../../../../@types/GlobalTypes";
+import { HAPTIC_OPTIONS, hapticFeedback } from "../../../../utils/haptics.util";
 
 const ModalPopup = ({ visible, children }) => {
     const [showModal, setShowModal] = React.useState(visible);
@@ -98,6 +99,12 @@ interface IDeleteConfirmation {
 const DeleteConfirmation = (props: IDeleteConfirmation) => {
     const catalogStore = useCatalogStore();
     const sellerViewProductStore = useSellerViewProductStore();
+
+    React.useEffect(() => {
+        if (sellerViewProductStore.deleteConfirmation) {
+            hapticFeedback(HAPTIC_OPTIONS.WARNING);
+        }
+    });
 
     return (
         <View
