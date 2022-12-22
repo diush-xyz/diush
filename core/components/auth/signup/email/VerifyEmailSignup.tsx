@@ -13,6 +13,8 @@ import OTPInputField from "../../OTPInputField/OTPInputField";
 import { censorEmail } from "../../../../utils/censor.util";
 import { useTheme } from "../../../../utils/useTheme.util";
 
+//NOTE: THIS IS NOT ACTIVE. Will prob implement later
+
 const VerifyEmailSignup = () => {
     const signupStore = useSignupStore();
     const theme = useTheme();

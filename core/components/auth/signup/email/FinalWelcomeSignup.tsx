@@ -20,6 +20,7 @@ const FinalWelcomeSignup = () => {
     const authStore = useAuthStore();
 
     const displayName = signupStore.displayName;
+    const location = signupStore.location;
 
     const signUp = () => {
         createUserWithEmailAndPassword(
@@ -38,6 +39,7 @@ const FinalWelcomeSignup = () => {
                     displayName: displayName,
                     email: user.email,
                     photoURL: null,
+                    location: location,
                 }).then(() => {
                     console.log(displayName);
                 });

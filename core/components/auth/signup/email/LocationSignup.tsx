@@ -1,41 +1,24 @@
 import { View, Text } from "react-native";
 import React from "react";
-import CustomText from "../../../lib/CustomText";
 import { BottomSheetView } from "@gorhom/bottom-sheet";
 import { GLOBAL_STYLES } from "../../../../@types/GlobalStyles";
+import FlowTemplate from "../../../lib/FlowTemplate";
 import PopupHeader from "../../../lib/PopupHeader";
 import { useSignupStore } from "../../../../state/auth/Signup.store";
-import { observer } from "mobx-react";
-import FlowTemplate from "../../../lib/FlowTemplate";
+import CustomText from "../../../lib/CustomText";
 import CustomTextInput from "../../../lib/CustomTextInput";
 import LargeButton from "../../../lib/LargeButton";
+import { observer } from "mobx-react";
 import { useUtilStore } from "../../../../state/Util.store";
 import ScrollWrapper from "../../ScrollWrapper/ScrollWrapper";
 
-const PasswordSignup = () => {
+const LocationSignup = () => {
     const signupStore = useSignupStore();
     const utilStore = useUtilStore();
     const [allClear, setAllClear] = React.useState<boolean>(false);
-    const [firstTime, setFirstTime] = React.useState<boolean>(true);
     const [errMsg, setErrMsg] = React.useState<string>("");
+    const [firstTime, setFirstTime] = React.useState<boolean>(true);
 
-    const checkIfProceed = () => {
-        setFirstTime(false);
-        if (allClear) {
-            signupStore.setCurrentStep(signupStore.currentStep + 1);
-        }
-    };
-
-    React.useEffect(() => {
-        if (signupStore.password.length < 10) {
-            setAllClear(false);
-            setErrMsg(
-                "Hold up! your password must be at least 10 characters long."
-            );
-        } else {
-            setAllClear(true);
-        }
-    });
     return (
         <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
             <PopupHeader
@@ -43,36 +26,51 @@ const PasswordSignup = () => {
                 backArrowOnPress={() =>
                     signupStore.setCurrentStep(signupStore.currentStep - 1)
                 }
-                title="password"
+                title="name"
                 subtitle="signup"
                 progressIndicator
-                currentStep={3}
+                currentStep={6}
                 totalSteps={6}
             />
             <ScrollWrapper>
                 <FlowTemplate
-                    circleEmoji="🔐"
-                    title="password"
-                    desc="make sure it's difficult for others to guess."
+                    circleEmoji="🗺️"
+                    title="where are you located?"
+                    desc={
+                        "although optional, it's convenient for your potential\n buyers to know where the item is right now.\n Can be as simple as 'Dallas, TX'."
+                    }
                     marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
                 >
                     <CustomTextInput
-                        placeholder="password"
-                        onChangeText={text => signupStore.setPassword(text)}
+                        placeholder="San Francisco, California"
+                        onChangeText={text => signupStore.setLocation(text)}
                         marginBottom={32}
-                        defaultValue={signupStore.password}
+                        defaultValue={signupStore.location}
                         isValid={allClear}
                         isErr={!allClear && !firstTime}
                         errMsg={errMsg}
                         returnKeyType="done"
-                        isPassword
-                        onSubmitEditing={() => checkIfProceed()}
+                        autoCorrect={false}
+                        onSubmitEditing={() =>
+                            signupStore.setCurrentStep(
+                                signupStore.currentStep + 1
+                            )
+                        }
                     />
                     <LargeButton
-                        title="continue"
-                        onPress={() => checkIfProceed()}
+                        title={
+                            signupStore.location == "" ||
+                            signupStore.location == null
+                                ? "skip"
+                                : "continue"
+                        }
+                        onPress={() =>
+                            signupStore.setCurrentStep(
+                                signupStore.currentStep + 1
+                            )
+                        }
                         footer
-                        // disabled={!allClear && !firstTime}
+                        disabled={!allClear && !firstTime}
                         footerButtonTitle="cancel"
                         footerButtonOnPress={() => signupStore.cancel()}
                     />
@@ -82,4 +80,4 @@ const PasswordSignup = () => {
     );
 };
 
-export default observer(PasswordSignup);
+export default observer(LocationSignup);

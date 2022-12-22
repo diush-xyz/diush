@@ -56,7 +56,7 @@ const DisplayNameSignup = () => {
                 subtitle="signup"
                 progressIndicator
                 currentStep={5}
-                totalSteps={5}
+                totalSteps={6}
             />
             <ScrollWrapper>
                 <FlowTemplate

@@ -17,23 +17,23 @@ const HomeScreen = () => {
     const authStore = useAuthStore();
     const utilStore = useUtilStore();
 
-    const [fetchedUser, setFetchedUser] = React.useState<IUser | null>(null);
-
     React.useEffect(() => {
-        // run this if there is a user:
-        if (auth.currentUser) {
-            fetchUserFromDb({
-                id: auth.currentUser?.uid,
-                setUser: (user: IUser) => {
-                    setFetchedUser(user);
-                },
-            });
-        }
-    });
+        console.log("the user from the home screen: ");
+        console.log(authStore.user);
+    }, []);
+
+    if (authStore.userFetchLoading) {
+        return (
+            <>
+                <CustomText accent>Loading...</CustomText>
+            </>
+        );
+    }
+
     return (
         <View style={{ width: "100%" }}>
             <CustomText primary textAlign="center">
-                Welcome, {fetchedUser?.displayName}.
+                Welcome, {authStore.user?.displayName}.
             </CustomText>
             <LargeButton
                 title="My catalog"

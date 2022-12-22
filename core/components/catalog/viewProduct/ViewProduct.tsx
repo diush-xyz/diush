@@ -49,26 +49,7 @@ import CopiedIndicator from "../../lib/CopiedIndicator";
 
 const ViewProduct = () => {
     const catalogStore = useCatalogStore();
-    const createProductStore = useCreateProductStore();
-    const utilStore = useUtilStore();
-    const authStore = useAuthStore();
     const sellerViewProductStore = useSellerViewProductStore();
-    const [firstTime, setFirstTime] = React.useState<boolean>(true);
-    const [allClear, setAllClear] = React.useState(false);
-    const [errMsg, setErrMsg] = React.useState<string>("");
-    const [fetchedUser, setFetchedUser] = React.useState<IUser>();
-    const theme = useTheme();
-
-    React.useEffect(() => {
-        //TODO: Come back later (two-letter domain extensions do not work, neither does .ed.cr,)
-        // setIsReady(validateEmail(signupStore.email));
-        fetchUserFromDb({
-            id: auth.currentUser?.uid,
-            setUser: (user: IUser) => {
-                setFetchedUser(user);
-            },
-        });
-    }, []);
 
     return (
         <BottomSheetView style={GLOBAL_STYLES.viewProductSheetViewStyle}>

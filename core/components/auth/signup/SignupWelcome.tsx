@@ -17,7 +17,7 @@ const SignupWelcome = () => {
                 subtitle="signup"
                 progressIndicator
                 currentStep={1}
-                totalSteps={5}
+                totalSteps={6}
             />
             <FlowTemplate
                 circleEmoji="🪴"

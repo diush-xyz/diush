@@ -10,6 +10,12 @@ export default class AuthStore {
         makeAutoObservable(this);
     }
 
+    userFetchLoading: boolean = true;
+
+    setUserFetchLoading(status: boolean) {
+        this.userFetchLoading = status;
+    }
+
     user: IUser;
 
     setUser(newUser: IUser) {

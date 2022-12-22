@@ -66,7 +66,7 @@ const EmailSignup = () => {
                 subtitle="signup"
                 progressIndicator
                 currentStep={2}
-                totalSteps={5}
+                totalSteps={6}
             />
             <ScrollWrapper>
                 <FlowTemplate

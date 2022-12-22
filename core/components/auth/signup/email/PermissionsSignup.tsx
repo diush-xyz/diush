@@ -117,7 +117,7 @@ const PermissionsSignup = () => {
                 subtitle="signup"
                 progressIndicator
                 currentStep={4}
-                totalSteps={5}
+                totalSteps={6}
             />
             <FlowTemplate
                 circleEmoji="🔑"

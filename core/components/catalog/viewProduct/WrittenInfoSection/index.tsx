@@ -5,9 +5,16 @@ import CustomText from "../../../lib/CustomText";
 import HorizontalLine from "../HorizontalLine";
 import { observer } from "mobx-react";
 import { View } from "react-native";
+import { useAuthStore } from "../../../../state/auth/Auth.store";
 
 const WrittenInfoSection = () => {
     const catalogStore = useCatalogStore();
+    const authStore = useAuthStore();
+
+    React.useEffect(() => {
+        console.log(authStore.user);
+    }, []);
+
     return (
         <View
             style={{
@@ -37,15 +44,23 @@ const WrittenInfoSection = () => {
                 seller location
             </CustomText>
             <CustomText secondary fontSize={17}>
-                This is my location.
+                {authStore.user.location}
             </CustomText>
-            <HorizontalLine />
-            <CustomText fontSize={18} font="Heavy" style={{ marginBottom: 14 }}>
-                additional info
-            </CustomText>
-            <CustomText secondary fontSize={17}>
-                {catalogStore.activeProduct.additionalInfo}
-            </CustomText>
+            {catalogStore.activeProduct.additionalInfo && (
+                <>
+                    <HorizontalLine />
+                    <CustomText
+                        fontSize={18}
+                        font="Heavy"
+                        style={{ marginBottom: 14 }}
+                    >
+                        additional info
+                    </CustomText>
+                    <CustomText secondary fontSize={17}>
+                        {catalogStore.activeProduct.additionalInfo}
+                    </CustomText>
+                </>
+            )}
         </View>
     );
 };

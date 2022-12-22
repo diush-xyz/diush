@@ -28,10 +28,10 @@ export default class SignupStore {
         this.password = newPassword;
     }
 
-    username: string = "";
+    location: string = "";
 
-    setUsername(newUsername: string) {
-        this.username = newUsername;
+    setLocation(newUsername: string) {
+        this.location = newUsername;
     }
 
     method: SignupMethod;
@@ -68,7 +68,7 @@ export default class SignupStore {
         this.currentStep = 0;
         this.email = "";
         this.password = "";
-        this.username = "";
+        this.location = null;
         this.displayName = "";
         this.method = null;
         this.otpCode = "";
