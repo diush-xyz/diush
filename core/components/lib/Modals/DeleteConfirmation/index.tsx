@@ -97,7 +97,6 @@ interface IDeleteConfirmation {
 }
 
 const DeleteConfirmation = (props: IDeleteConfirmation) => {
-    const catalogStore = useCatalogStore();
     const sellerViewProductStore = useSellerViewProductStore();
 
     React.useEffect(() => {
