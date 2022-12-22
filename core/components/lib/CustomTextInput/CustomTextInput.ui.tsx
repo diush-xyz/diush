@@ -41,7 +41,7 @@ interface ICustomTextInput {
 const CustomTextInput = (props: ICustomTextInput) => {
     const theme = useTheme();
     const [secure, setSecure] = React.useState<boolean>(false);
-    const textInputRef = useRef();
+    const textInputRef = useRef<TextInput>();
 
     React.useEffect(() => {
         if (props.isPassword) {
@@ -59,10 +59,7 @@ const CustomTextInput = (props: ICustomTextInput) => {
             }}
         >
             <TouchableOpacity
-                onPress={() => {
-                    //@ts-ignore
-                    textInputRef.current.focus();
-                }}
+                onPress={() => textInputRef.current.focus()}
                 style={{
                     display: "flex",
                     alignItems: props.isLarge ? "flex-start" : "center",
