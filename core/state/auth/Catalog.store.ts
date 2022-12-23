@@ -21,6 +21,10 @@ export default class CatalogStore {
     setActiveProduct(newProduct: IProduct) {
         this.activeProduct = newProduct;
     }
+
+    setActiveProductImage(url: string) {
+        this.activeProduct.imageURL = url;
+    }
 }
 
 const StoreContext = React.createContext<CatalogStore>(new CatalogStore());
