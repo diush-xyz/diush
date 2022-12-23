@@ -102,6 +102,9 @@ const ImageSection = () => {
                     />
                 </View>
             </TouchableOpacity>
+            <CustomText secondary style={{ marginTop: 12 }} textAlign="center">
+                tap to replace
+            </CustomText>
         </View>
     );
 };
