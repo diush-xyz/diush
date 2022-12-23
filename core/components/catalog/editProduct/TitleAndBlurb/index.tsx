@@ -6,11 +6,7 @@ import { useCatalogStore } from "../../../../state/auth/Catalog.store";
 import { observer } from "mobx-react";
 import HorizontalLine from "../../../lib/HorizontalLine";
 
-interface ITitleAndBlurb {
-    setHasChanged: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const TitleAndBlurb = (props: ITitleAndBlurb) => {
+const TitleAndBlurb = () => {
     const catalogStore = useCatalogStore();
 
     return (
@@ -22,7 +18,7 @@ const TitleAndBlurb = (props: ITitleAndBlurb) => {
                 defaultValue={catalogStore.activeProduct.title}
                 placeholder="PlayStation 5"
                 onChangeText={(text: string) => {
-                    props.setHasChanged(true);
+                    catalogStore.setHasChanged(true);
                     catalogStore.setActiveProductTitle(text);
                 }}
                 onSubmitEditing={() => Keyboard.dismiss()}
@@ -39,7 +35,7 @@ const TitleAndBlurb = (props: ITitleAndBlurb) => {
                 defaultValue={catalogStore.activeProduct.blurb}
                 placeholder="make it special"
                 onChangeText={(text: string) => {
-                    props.setHasChanged(true);
+                    catalogStore.setHasChanged(true);
                     catalogStore.setActiveProductBlurb(text);
                 }}
                 onSubmitEditing={() => Keyboard.dismiss()}

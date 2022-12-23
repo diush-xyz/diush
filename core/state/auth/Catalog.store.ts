@@ -23,6 +23,19 @@ export default class CatalogStore {
 
     activeProduct: IProduct = null;
 
+    isPriceEditPopupOpen: boolean = false;
+
+    //for editing
+    hasChanged: boolean = false;
+
+    setHasChanged(newStatus: boolean) {
+        this.hasChanged = newStatus;
+    }
+
+    setIsPriceEditPopupOpen(newStatus: boolean) {
+        this.isPriceEditPopupOpen = newStatus;
+    }
+
     setActiveProduct(newProduct: IProduct) {
         this.activeProduct = newProduct;
     }
@@ -37,6 +50,10 @@ export default class CatalogStore {
 
     setActiveProductBlurb(text: string) {
         this.activeProduct.blurb = text;
+    }
+
+    setActiveProductAskingPrice(newAskingPrice: number) {
+        this.activeProduct.askingPrice = newAskingPrice;
     }
 
     setActiveProductCondition(newCondition: ProductCondition) {

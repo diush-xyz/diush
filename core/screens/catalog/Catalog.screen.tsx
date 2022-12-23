@@ -16,6 +16,8 @@ import ViewProduct from "../../components/catalog/viewProduct/ViewProduct";
 import ImageOverlay from "../../components/catalog/viewProduct/ImageOverlay";
 import { useSellerViewProductStore } from "../../state/auth/SellerViewProductStore";
 import EditProduct from "./EditProduct/EditProduct.screen";
+import PriceInput from "../../components/lib/PriceInput";
+import PriceEditSelectorContent from "../../components/catalog/editProduct/askingPrice/PriceEditSelectorContent";
 
 const CatalogScreen = () => {
     const sellerViewProductStore = useSellerViewProductStore();
@@ -62,6 +64,19 @@ const CatalogScreen = () => {
                     style={{ borderRadius: 35, overflow: "hidden" }}
                 >
                     <ViewProduct />
+                </BottomSheet>
+            )}
+            {catalogStore.isPriceEditPopupOpen && (
+                <BottomSheet
+                    handleIndicatorStyle={GLOBAL_STYLES.handleIndicatorStyle}
+                    handleStyle={GLOBAL_STYLES.handleStyle}
+                    ref={sheetRef}
+                    snapPoints={PRODUCT_BOTTOM_SHEET_SNAP_POINTS}
+                    enablePanDownToClose={true}
+                    onClose={() => catalogStore.setIsPriceEditPopupOpen(false)}
+                    style={{ borderRadius: 35, overflow: "hidden" }}
+                >
+                    <PriceEditSelectorContent />
                 </BottomSheet>
             )}
         </>

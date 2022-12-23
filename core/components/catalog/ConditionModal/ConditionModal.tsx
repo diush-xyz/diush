@@ -60,7 +60,9 @@ const ConditionModal = (props: IConditionModal) => {
                                             ProductCondition.NEW_WITH_BOX
                                         );
                                     }
-                                    props.onSelectionPress();
+                                    if (props.onSelectionPress) {
+                                        props.onSelectionPress();
+                                    }
                                     props.setModalVisible(!props.modalVisible);
                                 }}
                             />
@@ -76,7 +78,9 @@ const ConditionModal = (props: IConditionModal) => {
                                             ProductCondition.NEW_WITHOUT_BOX
                                         );
                                     }
-                                    props.onSelectionPress();
+                                    if (props.onSelectionPress) {
+                                        props.onSelectionPress();
+                                    }
                                     props.setModalVisible(!props.modalVisible);
                                 }}
                             />
@@ -92,7 +96,9 @@ const ConditionModal = (props: IConditionModal) => {
                                             ProductCondition.NEW_WITH_DEFECTS
                                         );
                                     }
-                                    props.onSelectionPress();
+                                    if (props.onSelectionPress) {
+                                        props.onSelectionPress();
+                                    }
                                     props.setModalVisible(!props.modalVisible);
                                 }}
                             />
@@ -108,7 +114,9 @@ const ConditionModal = (props: IConditionModal) => {
                                             ProductCondition.USED_GOOD_CONDITION
                                         );
                                     }
-                                    props.onSelectionPress();
+                                    if (props.onSelectionPress) {
+                                        props.onSelectionPress();
+                                    }
                                     props.setModalVisible(!props.modalVisible);
                                 }}
                             />
@@ -124,7 +132,9 @@ const ConditionModal = (props: IConditionModal) => {
                                             ProductCondition.USED_DECENT_CONDITION
                                         );
                                     }
-                                    props.onSelectionPress();
+                                    if (props.onSelectionPress) {
+                                        props.onSelectionPress();
+                                    }
                                     props.setModalVisible(!props.modalVisible);
                                 }}
                                 noBorderBottom

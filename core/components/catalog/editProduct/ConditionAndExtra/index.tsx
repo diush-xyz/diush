@@ -8,11 +8,7 @@ import { deriveProductConditionFromDb } from "../../../../utils/productCondition
 import ConditionModal from "../../ConditionModal/ConditionModal";
 import CustomTextInput from "../../../lib/CustomTextInput";
 
-interface IConditionAndExtra {
-    setHasChanged: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const ConditionAndExtra = (props: IConditionAndExtra) => {
+const ConditionAndExtra = () => {
     const catalogStore = useCatalogStore();
     const [selector, setSelector] = React.useState<boolean>(false);
 
@@ -69,7 +65,7 @@ const ConditionAndExtra = (props: IConditionAndExtra) => {
                 defaultValue={catalogStore.activeProduct.additionalInfo}
                 placeholder="anything else to add?"
                 onChangeText={(text: string) => {
-                    props.setHasChanged(true);
+                    catalogStore.setHasChanged(true);
                     catalogStore.setActiveProductAdditionalInfo(text);
                 }}
                 onSubmitEditing={() => Keyboard.dismiss()}
@@ -78,7 +74,7 @@ const ConditionAndExtra = (props: IConditionAndExtra) => {
                 modalVisible={selector}
                 setModalVisible={setSelector}
                 usage="edit"
-                onSelectionPress={() => props.setHasChanged(true)}
+                onSelectionPress={() => catalogStore.setHasChanged(true)}
             />
         </View>
     );

@@ -5,6 +5,7 @@ import { useTheme } from "../../../../utils/useTheme.util";
 import { useCatalogStore } from "../../../../state/auth/Catalog.store";
 import LargeButton from "../../../lib/LargeButton";
 import SmallButton from "../../../lib/SmallButton";
+import { observer } from "mobx-react";
 
 const AskingPriceSection = () => {
     const theme = useTheme();
@@ -43,11 +44,16 @@ const AskingPriceSection = () => {
                     </CustomText>
                 </View>
                 <View>
-                    <SmallButton title="edit" onPress={() => null} />
+                    <SmallButton
+                        title="edit"
+                        onPress={() =>
+                            catalogStore.setIsPriceEditPopupOpen(true)
+                        }
+                    />
                 </View>
             </View>
         </View>
     );
 };
 
-export default AskingPriceSection;
+export default observer(AskingPriceSection);

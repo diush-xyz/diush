@@ -30,7 +30,6 @@ import ConditionAndExtra from "./ConditionAndExtra";
 
 const EditProductHome = () => {
     const catalogStore = useCatalogStore();
-    const [hasChanged, setHasChanged] = React.useState<boolean>(false);
 
     const save = async () => {
         const productRef = doc(db, "products", catalogStore.activeProduct.id);
@@ -65,7 +64,7 @@ const EditProductHome = () => {
                 button
                 buttonText="save"
                 onButtonPress={() => save()}
-                buttonDisabled={!hasChanged}
+                buttonDisabled={!catalogStore.hasChanged}
                 paddingBottom={16}
             />
             <ProductEditScrollWrapper>
@@ -77,13 +76,13 @@ const EditProductHome = () => {
                     }}
                 >
                     <HorizontalLine marginVertical={0} />
-                    <ImageSection setHasChanged={setHasChanged} />
+                    <ImageSection />
                     <HorizontalLine />
-                    <TitleAndBlurb setHasChanged={setHasChanged} />
+                    <TitleAndBlurb />
                     <HorizontalLine />
                     <AskingPriceSection />
                     <HorizontalLine />
-                    <ConditionAndExtra setHasChanged={setHasChanged} />
+                    <ConditionAndExtra />
                 </View>
             </ProductEditScrollWrapper>
         </View>

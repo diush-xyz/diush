@@ -13,11 +13,7 @@ import {
 } from "firebase/storage";
 import { observer } from "mobx-react";
 
-interface IImageSection {
-    setHasChanged: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const ImageSection = (props: IImageSection) => {
+const ImageSection = () => {
     const catalogStore = useCatalogStore();
     const theme = useTheme();
 
@@ -58,7 +54,7 @@ const ImageSection = (props: IImageSection) => {
 
             await uploadBytes(storageRef, bytes).then(() => {
                 getDownloadURL(storageRef).then(url => {
-                    props.setHasChanged(true);
+                    catalogStore.setHasChanged(true);
                     catalogStore.setActiveProductImage(url);
                 });
             }); //upload images
