@@ -34,7 +34,6 @@ const EditProductHome = () => {
                 onButtonPress={() => null}
                 buttonDisabled={false}
             />
-            <Switcher />
         </View>
     );
 };
