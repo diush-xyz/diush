@@ -1,14 +1,18 @@
 import React from "react";
 import { View } from "react-native";
 
-const HorizontalLine = () => {
+interface IHorizontalLine {
+    marginVertical?: number;
+}
+
+const HorizontalLine = (props: IHorizontalLine) => {
     return (
         <View
             style={{
                 width: "100%",
                 height: 1,
                 backgroundColor: "#ffffff0D",
-                marginVertical: 25,
+                marginVertical: props.marginVertical ?? 25,
             }}
         />
     );
