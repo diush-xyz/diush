@@ -26,6 +26,7 @@ import TitleAndBlurb from "./TitleAndBlurb";
 import ProductEditScrollWrapper from "./ProductEditScrollWrapper";
 import AskingPrice from "../create/AskingPrice";
 import AskingPriceSection from "./askingPrice";
+import ConditionAndExtra from "./ConditionAndExtra";
 
 const EditProductHome = () => {
     const catalogStore = useCatalogStore();
@@ -37,6 +38,8 @@ const EditProductHome = () => {
         await updateDoc(productRef, {
             title: catalogStore.activeProduct.title,
             blurb: catalogStore.activeProduct.blurb,
+            askingPrice: catalogStore.activeProduct.askingPrice,
+            condition: catalogStore.activeProduct.condition,
         }).then(() => {
             catalogStore.setStatus(CatalogStatus.VIEW);
         });
@@ -78,6 +81,8 @@ const EditProductHome = () => {
                     <TitleAndBlurb setHasChanged={setHasChanged} />
                     <HorizontalLine />
                     <AskingPriceSection />
+                    <HorizontalLine />
+                    <ConditionAndExtra setHasChanged={setHasChanged} />
                 </View>
             </ProductEditScrollWrapper>
         </View>

@@ -108,6 +108,7 @@ const ProductCondition = () => {
                     <ConditionModal
                         modalVisible={selector}
                         setModalVisible={setSelector}
+                        usage="create"
                     />
                 </FlowTemplate>
             </ScrollWrapper>

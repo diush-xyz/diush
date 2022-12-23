@@ -1,6 +1,11 @@
 import { makeAutoObservable } from "mobx";
 import React from "react";
-import { CatalogStatus, IProduct } from "../../@types/GlobalTypes";
+import {
+    CatalogStatus,
+    IProduct,
+    ProductCondition,
+} from "../../@types/GlobalTypes";
+import { productConditionToDb } from "../../utils/productCondition.util";
 
 /**
  * A store to handle anything catalog-related.
@@ -32,6 +37,10 @@ export default class CatalogStore {
 
     setActiveProductBlurb(text: string) {
         this.activeProduct.blurb = text;
+    }
+
+    setActiveProductCondition(newCondition: ProductCondition) {
+        this.activeProduct.condition = productConditionToDb(newCondition);
     }
 }
 

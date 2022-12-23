@@ -16,16 +16,23 @@ import { useCreateProductStore } from "../../../state/auth/CreateProduct.store";
 import { useTheme } from "../../../utils/useTheme.util";
 import CustomText from "../../lib/CustomText";
 import ModalElement from "./ModalElement";
+import { useCatalogStore } from "../../../state/auth/Catalog.store";
 
 interface IConditionModal {
     modalVisible: boolean;
     setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+    usage: "create" | "edit";
+    onSelectionPress?: () => void;
 }
 
+//must be out here in this file
 const theme = useTheme();
 
 const ConditionModal = (props: IConditionModal) => {
+    //create
     const createProductStore = useCreateProductStore();
+    //edit
+    const catalogStore = useCatalogStore();
     return (
         <View style={styles.centeredView}>
             <Modal
@@ -33,7 +40,6 @@ const ConditionModal = (props: IConditionModal) => {
                 transparent
                 visible={props.modalVisible}
                 onRequestClose={() => {
-                    Alert.alert("Modal has been closed.");
                     props.setModalVisible(!props.modalVisible);
                 }}
             >
@@ -45,45 +51,80 @@ const ConditionModal = (props: IConditionModal) => {
                             <ModalElement
                                 text={ProductCondition.NEW_WITH_BOX}
                                 onPress={() => {
-                                    createProductStore.setCondition(
-                                        ProductCondition.NEW_WITH_BOX
-                                    );
+                                    if (props.usage == "create") {
+                                        createProductStore.setCondition(
+                                            ProductCondition.NEW_WITH_BOX
+                                        );
+                                    } else {
+                                        catalogStore.setActiveProductCondition(
+                                            ProductCondition.NEW_WITH_BOX
+                                        );
+                                    }
+                                    props.onSelectionPress();
                                     props.setModalVisible(!props.modalVisible);
                                 }}
                             />
                             <ModalElement
                                 text={ProductCondition.NEW_WITHOUT_BOX}
                                 onPress={() => {
-                                    createProductStore.setCondition(
-                                        ProductCondition.NEW_WITHOUT_BOX
-                                    );
+                                    if (props.usage == "create") {
+                                        createProductStore.setCondition(
+                                            ProductCondition.NEW_WITHOUT_BOX
+                                        );
+                                    } else {
+                                        catalogStore.setActiveProductCondition(
+                                            ProductCondition.NEW_WITHOUT_BOX
+                                        );
+                                    }
+                                    props.onSelectionPress();
                                     props.setModalVisible(!props.modalVisible);
                                 }}
                             />
                             <ModalElement
                                 text={ProductCondition.NEW_WITH_DEFECTS}
                                 onPress={() => {
-                                    createProductStore.setCondition(
-                                        ProductCondition.NEW_WITH_DEFECTS
-                                    );
+                                    if (props.usage == "create") {
+                                        createProductStore.setCondition(
+                                            ProductCondition.NEW_WITH_DEFECTS
+                                        );
+                                    } else {
+                                        catalogStore.setActiveProductCondition(
+                                            ProductCondition.NEW_WITH_DEFECTS
+                                        );
+                                    }
+                                    props.onSelectionPress();
                                     props.setModalVisible(!props.modalVisible);
                                 }}
                             />
                             <ModalElement
                                 text={ProductCondition.USED_GOOD_CONDITION}
                                 onPress={() => {
-                                    createProductStore.setCondition(
-                                        ProductCondition.USED_GOOD_CONDITION
-                                    );
+                                    if (props.usage == "create") {
+                                        createProductStore.setCondition(
+                                            ProductCondition.USED_GOOD_CONDITION
+                                        );
+                                    } else {
+                                        catalogStore.setActiveProductCondition(
+                                            ProductCondition.USED_GOOD_CONDITION
+                                        );
+                                    }
+                                    props.onSelectionPress();
                                     props.setModalVisible(!props.modalVisible);
                                 }}
                             />
                             <ModalElement
                                 text={ProductCondition.USED_DECENT_CONDITION}
                                 onPress={() => {
-                                    createProductStore.setCondition(
-                                        ProductCondition.USED_DECENT_CONDITION
-                                    );
+                                    if (props.usage == "create") {
+                                        createProductStore.setCondition(
+                                            ProductCondition.USED_DECENT_CONDITION
+                                        );
+                                    } else {
+                                        catalogStore.setActiveProductCondition(
+                                            ProductCondition.USED_DECENT_CONDITION
+                                        );
+                                    }
+                                    props.onSelectionPress();
                                     props.setModalVisible(!props.modalVisible);
                                 }}
                                 noBorderBottom
