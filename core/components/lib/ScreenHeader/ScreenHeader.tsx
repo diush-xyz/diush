@@ -23,6 +23,7 @@ export interface IScreenHeader {
     buttonText?: string;
     onButtonPress?: () => void;
     buttonDisabled?: boolean;
+    paddingBottom?: number;
 }
 
 /**
@@ -31,7 +32,7 @@ export interface IScreenHeader {
 const ScreenHeader = (props: IScreenHeader) => {
     const theme = useTheme();
     return (
-        <HeaderWrapper>
+        <HeaderWrapper style={{ paddingBottom: props.paddingBottom ?? null }}>
             <View
                 style={{
                     flex: 1,

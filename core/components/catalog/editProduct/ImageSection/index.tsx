@@ -13,7 +13,11 @@ import {
 } from "firebase/storage";
 import { observer } from "mobx-react";
 
-const ImageSection = () => {
+interface IImageSection {
+    setHasChanged: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const ImageSection = (props: IImageSection) => {
     const catalogStore = useCatalogStore();
     const theme = useTheme();
 
@@ -54,6 +58,7 @@ const ImageSection = () => {
 
             await uploadBytes(storageRef, bytes).then(() => {
                 getDownloadURL(storageRef).then(url => {
+                    props.setHasChanged(true);
                     catalogStore.setActiveProductImage(url);
                 });
             }); //upload images
@@ -61,8 +66,10 @@ const ImageSection = () => {
     };
 
     return (
-        <View style={{ display: "flex", flexDirection: "column" }}>
-            <CustomText fontSize={18} style={{ marginBottom: 12 }}>
+        <View
+            style={{ display: "flex", flexDirection: "column", marginTop: 16 }}
+        >
+            <CustomText fontSize={18} font="Bold" style={{ marginBottom: 12 }}>
                 image
             </CustomText>
             <TouchableOpacity

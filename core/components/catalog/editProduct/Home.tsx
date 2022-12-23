@@ -23,17 +23,20 @@ import CustomTextInput from "../../lib/CustomTextInput";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../config/firebase";
 import TitleAndBlurb from "./TitleAndBlurb";
+import ProductEditScrollWrapper from "./ProductEditScrollWrapper";
+import AskingPrice from "../create/AskingPrice";
+import AskingPriceSection from "./askingPrice";
 
 const EditProductHome = () => {
     const catalogStore = useCatalogStore();
-    const utilStore = useUtilStore();
-    const theme = useTheme();
+    const [hasChanged, setHasChanged] = React.useState<boolean>(false);
 
     const save = async () => {
         const productRef = doc(db, "products", catalogStore.activeProduct.id);
 
         await updateDoc(productRef, {
             title: catalogStore.activeProduct.title,
+            blurb: catalogStore.activeProduct.blurb,
         }).then(() => {
             catalogStore.setStatus(CatalogStatus.VIEW);
         });
@@ -58,20 +61,25 @@ const EditProductHome = () => {
                 button
                 buttonText="save"
                 onButtonPress={() => save()}
-                buttonDisabled={false}
+                buttonDisabled={!hasChanged}
+                paddingBottom={16}
             />
-            <View
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    width: MAX_WIDTH,
-                }}
-            >
-                <HorizontalLine marginVertical={16} />
-                <ImageSection />
-                <HorizontalLine />
-                <TitleAndBlurb />
-            </View>
+            <ProductEditScrollWrapper>
+                <View
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: MAX_WIDTH,
+                    }}
+                >
+                    <HorizontalLine marginVertical={0} />
+                    <ImageSection setHasChanged={setHasChanged} />
+                    <HorizontalLine />
+                    <TitleAndBlurb setHasChanged={setHasChanged} />
+                    <HorizontalLine />
+                    <AskingPriceSection />
+                </View>
+            </ProductEditScrollWrapper>
         </View>
     );
 };

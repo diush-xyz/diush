@@ -29,6 +29,10 @@ export default class CatalogStore {
     setActiveProductTitle(text: string) {
         this.activeProduct.title = text;
     }
+
+    setActiveProductBlurb(text: string) {
+        this.activeProduct.blurb = text;
+    }
 }
 
 const StoreContext = React.createContext<CatalogStore>(new CatalogStore());
