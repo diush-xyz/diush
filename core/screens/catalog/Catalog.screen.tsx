@@ -15,6 +15,7 @@ import {
 import ViewProduct from "../../components/catalog/viewProduct/ViewProduct";
 import ImageOverlay from "../../components/catalog/viewProduct/ImageOverlay";
 import { useSellerViewProductStore } from "../../state/auth/SellerViewProductStore";
+import EditProduct from "./EditProduct/EditProduct.screen";
 
 const CatalogScreen = () => {
     const sellerViewProductStore = useSellerViewProductStore();
@@ -29,7 +30,11 @@ const CatalogScreen = () => {
 
     return (
         <>
-            <CatalogHome />
+            {catalogStore.status == CatalogStatus.EDIT ? (
+                <EditProduct />
+            ) : (
+                <CatalogHome />
+            )}
             {catalogStore.status === CatalogStatus.CREATE && (
                 <BottomSheet
                     handleIndicatorStyle={GLOBAL_STYLES.handleIndicatorStyle}

@@ -10,6 +10,8 @@ import TrashIcon from "../../../../icons/catalog/Trash";
 import styled from "styled-components/native";
 import { copyToClipboard } from "../../../../utils/clipboard.util";
 import { useUtilStore } from "../../../../state/Util.store";
+import { useCatalogStore } from "../../../../state/auth/Catalog.store";
+import { CatalogStatus } from "../../../../@types/GlobalTypes";
 
 interface IProductOptionsElement {
     text: string;
@@ -22,6 +24,7 @@ const ProductOptions = () => {
     const sellerViewProductStore = useSellerViewProductStore();
     const scaleValue = React.useRef(new Animated.Value(0)).current;
     const utilStore = useUtilStore();
+    const catalogStore = useCatalogStore();
 
     const DATA: IProductOptionsElement[] = [
         {
@@ -36,7 +39,14 @@ const ProductOptions = () => {
                 }, 2500);
             },
         }, //TODO: Properly make this url link to something once the buyer flow is built out
-        { text: "Edit listing", icon: <EditIcon />, onClick: () => null },
+        {
+            text: "Edit listing",
+            icon: <EditIcon />,
+            onClick: () => {
+                catalogStore.setStatus(CatalogStatus.EDIT);
+                sellerViewProductStore.setProductOptionsPopup();
+            },
+        },
         {
             text: "Delete listing",
             icon: <TrashIcon />,
