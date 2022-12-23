@@ -34,7 +34,7 @@ import RoundedMoreIcon from "../../../icons/catalog/RoundedMore";
 import ActiveIndicator from "./ActiveIndicator";
 import SnapshotBox from "./SnapshotBox";
 import ProductViewScrollWrapper from "./ProductViewScrollWrapper";
-import HorizontalLine from "./HorizontalLine";
+import HorizontalLine from "../../lib/HorizontalLine";
 import { deriveProductConditionFromDb } from "../../../utils/productCondition.util";
 import WrittenInfoSection from "./WrittenInfoSection";
 import { triggerProductSharePopup } from "../../../utils/share.util";

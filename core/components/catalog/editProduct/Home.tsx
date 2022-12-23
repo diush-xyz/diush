@@ -7,6 +7,8 @@ import { useUtilStore } from "../../../state/Util.store";
 import { useCatalogStore } from "../../../state/auth/Catalog.store";
 import ScreenHeader from "../../lib/ScreenHeader";
 import Switcher from "../Dashboard/Switcher";
+import HorizontalLine from "../../lib/HorizontalLine";
+import { MAX_WIDTH } from "../../../utils/constants";
 
 const EditProductHome = () => {
     const catalogStore = useCatalogStore();
@@ -34,6 +36,15 @@ const EditProductHome = () => {
                 onButtonPress={() => null}
                 buttonDisabled={false}
             />
+            <View
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: MAX_WIDTH,
+                }}
+            >
+                <HorizontalLine />
+            </View>
         </View>
     );
 };

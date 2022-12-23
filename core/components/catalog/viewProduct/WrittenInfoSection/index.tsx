@@ -2,7 +2,7 @@ import React from "react";
 import { useCatalogStore } from "../../../../state/auth/Catalog.store";
 import { deriveProductConditionFromDb } from "../../../../utils/productCondition.util";
 import CustomText from "../../../lib/CustomText";
-import HorizontalLine from "../HorizontalLine";
+import HorizontalLine from "../../../lib/HorizontalLine";
 import { observer } from "mobx-react";
 import { View } from "react-native";
 import { useAuthStore } from "../../../../state/auth/Auth.store";
