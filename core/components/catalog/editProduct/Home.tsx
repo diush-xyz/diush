@@ -28,6 +28,11 @@ const EditProductHome = () => {
                     catalogStore.setStatus(CatalogStatus.VIEW)
                 }
                 title="edit listing"
+                subtitle="my catalog"
+                button
+                buttonText="save"
+                onButtonPress={() => null}
+                buttonDisabled={false}
             />
             <Switcher />
         </View>

@@ -8,6 +8,8 @@ import React from "react";
 import { HeaderWrapper } from "./styles";
 import CustomText from "../CustomText";
 import LeftArrowIcon from "../../../icons/common/leftArrow";
+import LargeButton from "../LargeButton";
+import { useTheme } from "../../../utils/useTheme.util";
 
 export interface IScreenHeader {
     backArrow?: boolean;
@@ -17,12 +19,17 @@ export interface IScreenHeader {
     progressIndicator?: boolean;
     currentStep?: number;
     totalSteps?: number;
+    button?: boolean;
+    buttonText?: string;
+    onButtonPress?: () => void;
+    buttonDisabled?: boolean;
 }
 
 /**
- * Acts as a nav bar (header) of sorts for popups.
+ * Acts as a nav bar (header) of sorts.
  */
 const ScreenHeader = (props: IScreenHeader) => {
+    const theme = useTheme();
     return (
         <HeaderWrapper>
             <View
@@ -92,6 +99,26 @@ const ScreenHeader = (props: IScreenHeader) => {
                             {`${props.currentStep}/${props.totalSteps}`}
                         </CustomText>
                     </View>
+                )}
+                {props.button && (
+                    <TouchableOpacity
+                        onPress={() => props.onButtonPress()}
+                        disabled={props.buttonDisabled}
+                        style={{
+                            paddingVertical: 6,
+                            paddingHorizontal: 10,
+                            display: "flex",
+                            alignItems: "center",
+                            marginLeft: "auto",
+                            backgroundColor: theme.accent,
+                            borderRadius: 12,
+                            opacity: props.buttonDisabled && 0.5,
+                        }}
+                    >
+                        <CustomText fontSize={16}>
+                            {props.buttonText}
+                        </CustomText>
+                    </TouchableOpacity>
                 )}
             </View>
         </HeaderWrapper>
