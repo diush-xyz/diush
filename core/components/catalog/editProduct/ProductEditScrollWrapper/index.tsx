@@ -1,14 +1,13 @@
 import { View, Text, KeyboardAvoidingView, ScrollView } from "react-native";
 import React from "react";
 import { useUtilStore } from "../../../../state/Util.store";
+import CustomText from "../../../lib/CustomText";
 
 interface IProductEditScrollWrapper {
     children: React.ReactNode;
 }
 
 const ProductEditScrollWrapper = (props: IProductEditScrollWrapper) => {
-    const utilStore = useUtilStore();
-
     return (
         <ScrollView
             style={{
@@ -20,7 +19,20 @@ const ProductEditScrollWrapper = (props: IProductEditScrollWrapper) => {
         >
             {/*@ts-ignore*/}
             {props.children}
-            <View style={{ height: 100, width: "100%" }} />
+            <View
+                style={{
+                    height: 300,
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "flex-end",
+                    paddingBottom: 100,
+                }}
+            >
+                <CustomText secondary font="Bold" textAlign="center">
+                    brought to you with ❤️{"\n"} by the diush community.
+                </CustomText>
+            </View>
         </ScrollView>
     );
 };

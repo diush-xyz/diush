@@ -37,7 +37,7 @@ const TitleAndBlurb = (props: ITitleAndBlurb) => {
             <CustomTextInput
                 isLarge
                 defaultValue={catalogStore.activeProduct.blurb}
-                placeholder="Make it special..."
+                placeholder="make it special"
                 onChangeText={(text: string) => {
                     props.setHasChanged(true);
                     catalogStore.setActiveProductBlurb(text);

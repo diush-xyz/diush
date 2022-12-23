@@ -42,6 +42,10 @@ export default class CatalogStore {
     setActiveProductCondition(newCondition: ProductCondition) {
         this.activeProduct.condition = productConditionToDb(newCondition);
     }
+
+    setActiveProductAdditionalInfo(text: string) {
+        this.activeProduct.additionalInfo = text;
+    }
 }
 
 const StoreContext = React.createContext<CatalogStore>(new CatalogStore());

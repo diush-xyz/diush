@@ -40,6 +40,7 @@ const EditProductHome = () => {
             blurb: catalogStore.activeProduct.blurb,
             askingPrice: catalogStore.activeProduct.askingPrice,
             condition: catalogStore.activeProduct.condition,
+            additionalInfo: catalogStore.activeProduct.additionalInfo,
         }).then(() => {
             catalogStore.setStatus(CatalogStatus.VIEW);
         });

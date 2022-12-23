@@ -1,11 +1,12 @@
 import React from "react";
-import { TouchableOpacity, View } from "react-native";
+import { Keyboard, TouchableOpacity, View } from "react-native";
 import CustomText from "../../../lib/CustomText";
 import DropdownIcon from "../../../../icons/catalog/Dropdown";
 import { useCatalogStore } from "../../../../state/auth/Catalog.store";
 import { MAX_WIDTH } from "../../../../utils/constants";
 import { deriveProductConditionFromDb } from "../../../../utils/productCondition.util";
 import ConditionModal from "../../ConditionModal/ConditionModal";
+import CustomTextInput from "../../../lib/CustomTextInput";
 
 interface IConditionAndExtra {
     setHasChanged: React.Dispatch<React.SetStateAction<boolean>>;
@@ -59,6 +60,20 @@ const ConditionAndExtra = (props: IConditionAndExtra) => {
                     <DropdownIcon />
                 </View>
             </TouchableOpacity>
+
+            <CustomText fontSize={18} font="Bold" style={{ marginBottom: 12 }}>
+                additional info
+            </CustomText>
+            <CustomTextInput
+                isLarge
+                defaultValue={catalogStore.activeProduct.additionalInfo}
+                placeholder="anything else to add?"
+                onChangeText={(text: string) => {
+                    props.setHasChanged(true);
+                    catalogStore.setActiveProductAdditionalInfo(text);
+                }}
+                onSubmitEditing={() => Keyboard.dismiss()}
+            />
             <ConditionModal
                 modalVisible={selector}
                 setModalVisible={setSelector}
