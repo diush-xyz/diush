@@ -19,11 +19,25 @@ import {
 } from "firebase/storage";
 import * as ImagePicker from "expo-image-picker";
 import ImageSection from "./ImageSection";
+import CustomTextInput from "../../lib/CustomTextInput";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../../../config/firebase";
+import TitleAndBlurb from "./TitleAndBlurb";
 
 const EditProductHome = () => {
     const catalogStore = useCatalogStore();
     const utilStore = useUtilStore();
     const theme = useTheme();
+
+    const save = async () => {
+        const productRef = doc(db, "products", catalogStore.activeProduct.id);
+
+        await updateDoc(productRef, {
+            title: catalogStore.activeProduct.title,
+        }).then(() => {
+            catalogStore.setStatus(CatalogStatus.VIEW);
+        });
+    };
 
     return (
         <View
@@ -43,7 +57,7 @@ const EditProductHome = () => {
                 subtitle="my catalog"
                 button
                 buttonText="save"
-                onButtonPress={() => null}
+                onButtonPress={() => save()}
                 buttonDisabled={false}
             />
             <View
@@ -55,6 +69,8 @@ const EditProductHome = () => {
             >
                 <HorizontalLine marginVertical={16} />
                 <ImageSection />
+                <HorizontalLine />
+                <TitleAndBlurb />
             </View>
         </View>
     );

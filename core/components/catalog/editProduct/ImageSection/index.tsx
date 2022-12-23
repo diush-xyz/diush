@@ -11,6 +11,7 @@ import {
     ref,
     uploadBytes,
 } from "firebase/storage";
+import { observer } from "mobx-react";
 
 const ImageSection = () => {
     const catalogStore = useCatalogStore();
@@ -52,7 +53,6 @@ const ImageSection = () => {
             const bytes = await img.blob();
 
             await uploadBytes(storageRef, bytes).then(() => {
-                console.log("Uploaded a blob or file!");
                 getDownloadURL(storageRef).then(url => {
                     catalogStore.setActiveProductImage(url);
                 });
@@ -109,4 +109,4 @@ const ImageSection = () => {
     );
 };
 
-export default ImageSection;
+export default observer(ImageSection);
