@@ -3,6 +3,7 @@ import {
     Text,
     GestureResponderEvent,
     TouchableOpacity,
+    Image,
 } from "react-native";
 import React from "react";
 import { HeaderWrapper } from "./styles";
@@ -12,6 +13,8 @@ import LargeButton from "../LargeButton";
 import { useTheme } from "../../../utils/useTheme.util";
 
 export interface IScreenHeader {
+    pfp?: boolean;
+    photoURL?: string;
     backArrow?: boolean;
     backArrowOnPress?: (event: GestureResponderEvent) => void;
     title: string;
@@ -46,9 +49,19 @@ const ScreenHeader = (props: IScreenHeader) => {
                         props.backArrow ? props.backArrowOnPress : () => null
                     }
                 >
-                    <LeftArrowIcon
-                        style={{ opacity: props.backArrow ? 1 : 0 }}
-                    />
+                    {props.backArrow && <LeftArrowIcon />}
+                    {props.pfp && (
+                        <Image
+                            borderRadius={16} //TODO: Find a way to make this a string and just make this 50% without using styled-components/native
+                            source={{
+                                uri: props.photoURL,
+                            }}
+                            style={{
+                                height: 32,
+                                width: 32,
+                            }}
+                        />
+                    )}
                 </TouchableOpacity>
             </View>
             <View

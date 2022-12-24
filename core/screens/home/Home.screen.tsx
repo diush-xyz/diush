@@ -18,6 +18,9 @@ import { PRODUCT_BOTTOM_SHEET_SNAP_POINTS } from "../../utils/constants";
 import { useCatalogStore } from "../../state/auth/Catalog.store";
 import { useHomeStore } from "../../state/auth/Home.store";
 import ControlCenter from "../../components/home/ControlCenter";
+import ScreenHeader from "../../components/lib/ScreenHeader";
+import Switcher from "../../components/catalog/Dashboard/Switcher";
+import CustomTextInput from "../../components/lib/CustomTextInput";
 
 const HomeScreen = () => {
     const signupStore = useSignupStore();
@@ -44,36 +47,37 @@ const HomeScreen = () => {
         <>
             <View
                 style={{
-                    width: "100%",
-                    height: "100%",
-                    display: "flex",
                     alignItems: "center",
-                    justifyContent: "center",
+                    flex: 1,
+                    marginTop: 55,
+                    width: "100%",
                 }}
             >
-                <CustomText primary textAlign="center">
-                    Welcome, {authStore.user?.displayName}.
-                </CustomText>
-                <LargeButton
-                    title="Open sidebar"
-                    onPress={() => homeStore.setIsSidebarOpen(true)}
+                <ScreenHeader
+                    pfp
+                    photoURL={
+                        authStore.user.photoURL ??
+                        "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80"
+                    }
+                    // backArrow
+                    // backArrowOnPress={() =>
+                    //     utilStore.setCurrentLoggedInScreen(LoggedInScreen.HOME)
+                    // }
+                    title="home base"
+                />
+                <Switcher />
+                <CustomTextInput
+                    placeholder="search my products"
+                    onChangeText={() => null}
+                    isSearch
                 />
                 <LargeButton
-                    title="My catalog"
+                    title="my catalog"
                     onPress={() =>
                         utilStore.setCurrentLoggedInScreen(
                             LoggedInScreen.CATALOG
                         )
                     }
-                />
-                <LargeButton
-                    title="Log out"
-                    onPress={() => {
-                        auth.signOut();
-                        authStore.setIsSheetOpen(false);
-                        loginStore.cancel();
-                        signupStore.cancel();
-                    }}
                 />
             </View>
             <ControlCenter />
