@@ -10,12 +10,15 @@ import { IUser, LoggedInScreen } from "../../@types/GlobalTypes";
 import SignupStore, { useSignupStore } from "../../state/auth/Signup.store";
 import { useLoginStore } from "../../state/auth/Login.store";
 import { useUtilStore } from "../../state/Util.store";
+import { useTheme } from "../../utils/useTheme.util";
+import Sidebar from "../../components/home/Sidebar";
 
 const HomeScreen = () => {
     const signupStore = useSignupStore();
     const loginStore = useLoginStore();
     const authStore = useAuthStore();
     const utilStore = useUtilStore();
+    const theme = useTheme();
 
     React.useEffect(() => {
         console.log("the user from the home screen: ");
@@ -31,7 +34,16 @@ const HomeScreen = () => {
     }
 
     return (
-        <View style={{ width: "100%" }}>
+        <View
+            style={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+            }}
+        >
+            <Sidebar />
             <CustomText primary textAlign="center">
                 Welcome, {authStore.user?.displayName}.
             </CustomText>
