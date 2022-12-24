@@ -78,7 +78,7 @@ const HomeScreen = () => {
                     }
                 />
                 <CustomTextInput
-                    placeholder="search my products"
+                    placeholder="search chats"
                     onChangeText={() => null}
                     isSearch
                 />
