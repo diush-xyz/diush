@@ -11,12 +11,13 @@ import SignupStore, { useSignupStore } from "../../state/auth/Signup.store";
 import { useLoginStore } from "../../state/auth/Login.store";
 import { useUtilStore } from "../../state/Util.store";
 import { useTheme } from "../../utils/useTheme.util";
-import Sidebar from "../../components/home/Sidebar";
+import Sidebar from "../../components/home/ControlCenter/ControlCenterContent";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { GLOBAL_STYLES } from "../../@types/GlobalStyles";
 import { PRODUCT_BOTTOM_SHEET_SNAP_POINTS } from "../../utils/constants";
 import { useCatalogStore } from "../../state/auth/Catalog.store";
 import { useHomeStore } from "../../state/auth/Home.store";
+import ControlCenter from "../../components/home/ControlCenter";
 
 const HomeScreen = () => {
     const signupStore = useSignupStore();
@@ -25,8 +26,6 @@ const HomeScreen = () => {
     const utilStore = useUtilStore();
     const theme = useTheme();
     const homeStore = useHomeStore();
-
-    const sheetRef = React.useRef<BottomSheet>(null);
 
     React.useEffect(() => {
         console.log("the user from the home screen: ");
@@ -77,31 +76,7 @@ const HomeScreen = () => {
                     }}
                 />
             </View>
-            {homeStore.isSidebarOpen && (
-                <BottomSheet
-                    handleIndicatorStyle={GLOBAL_STYLES.handleIndicatorStyle}
-                    handleStyle={GLOBAL_STYLES.handleStyle}
-                    ref={sheetRef}
-                    snapPoints={["44%"]}
-                    enablePanDownToClose={true}
-                    onClose={() => homeStore.setIsSidebarOpen(false)}
-                    style={{
-                        shadowColor: "#000",
-                        shadowOffset: {
-                            width: 0,
-                            height: 12,
-                        },
-                        shadowOpacity: 0.58,
-                        shadowRadius: 16.0,
-
-                        elevation: 24,
-                    }}
-                >
-                    <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
-                        <Sidebar />
-                    </BottomSheetView>
-                </BottomSheet>
-            )}
+            <ControlCenter />
         </>
     );
 };

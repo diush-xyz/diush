@@ -1,11 +1,13 @@
 import { View, Text, KeyboardAvoidingView, ScrollView } from "react-native";
 import React from "react";
 
-interface ISidebarScrollWrapper {
+interface IControlCenterContentScrollWrapper {
     children: React.ReactNode;
 }
 
-const SidebarScrollWrapper = (props: ISidebarScrollWrapper) => {
+const ControlCenterContentScrollWrapper = (
+    props: IControlCenterContentScrollWrapper
+) => {
     // const utilStore = useUtilStore();
 
     return (
@@ -31,4 +33,4 @@ const SidebarScrollWrapper = (props: ISidebarScrollWrapper) => {
     );
 };
 
-export default SidebarScrollWrapper;
+export default ControlCenterContentScrollWrapper;

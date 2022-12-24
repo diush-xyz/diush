@@ -1,25 +1,25 @@
 import React from "react";
-import { useTheme } from "../../../utils/useTheme.util";
-import CustomText from "../../lib/CustomText";
+import { useTheme } from "../../../../utils/useTheme.util";
+import CustomText from "../../../lib/CustomText";
 import { View, Image, TouchableOpacity } from "react-native";
-import { useAuthStore } from "../../../state/auth/Auth.store";
-import RoundedMoreIcon from "../../../icons/common/RoundedMore";
-import DealsIcon from "../../../icons/home/sidebar/deals";
-import HorizontalLine from "../../lib/HorizontalLine";
+import { useAuthStore } from "../../../../state/auth/Auth.store";
+import RoundedMoreIcon from "../../../../icons/common/RoundedMore";
+import DealsIcon from "../../../../icons/home/sidebar/deals";
+import HorizontalLine from "../../../lib/HorizontalLine";
 import { observer } from "mobx-react";
-import SidebarScrollWrapper from "./SidebarScrollWrapper";
+import ControlCenterContentScrollWrapper from "./ControlCenterContentScrollWrapper";
 
-export interface ISIDEBAR_DATA {
+export interface ICONTROL_CENTER_DATA {
     icon: React.ReactNode;
     text: string;
     onClick: () => void;
 }
 
-const Sidebar = () => {
+const ControlCenterContent = () => {
     const theme = useTheme();
     const authStore = useAuthStore();
 
-    const SIDEBAR_DATA: ISIDEBAR_DATA[] = [
+    const CONTROL_CENTER_DATA: ICONTROL_CENTER_DATA[] = [
         {
             icon: <DealsIcon />,
             text: "deals",
@@ -60,7 +60,7 @@ const Sidebar = () => {
                 paddingHorizontal: 25,
             }}
         >
-            <SidebarScrollWrapper>
+            <ControlCenterContentScrollWrapper>
                 <View
                     style={{
                         display: "flex",
@@ -98,28 +98,33 @@ const Sidebar = () => {
                         marginTop: 30,
                     }}
                 >
-                    {SIDEBAR_DATA.map((elem: ISIDEBAR_DATA, idx: number) => {
-                        return (
-                            <TouchableOpacity
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    marginBottom:
-                                        idx !== SIDEBAR_DATA.length - 1 && 30,
-                                }}
-                                onPress={elem.onClick}
-                            >
-                                {elem.icon}
-                                <CustomText
-                                    font="Bold"
-                                    fontSize={18}
-                                    style={{ marginLeft: 18 }}
+                    {CONTROL_CENTER_DATA.map(
+                        (elem: ICONTROL_CENTER_DATA, idx: number) => {
+                            return (
+                                <TouchableOpacity
+                                    key={idx}
+                                    style={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        marginBottom:
+                                            idx !==
+                                                CONTROL_CENTER_DATA.length -
+                                                    1 && 30,
+                                    }}
+                                    onPress={elem.onClick}
                                 >
-                                    {elem.text}
-                                </CustomText>
-                            </TouchableOpacity>
-                        );
-                    })}
+                                    {elem.icon}
+                                    <CustomText
+                                        font="Bold"
+                                        fontSize={18}
+                                        style={{ marginLeft: 18 }}
+                                    >
+                                        {elem.text}
+                                    </CustomText>
+                                </TouchableOpacity>
+                            );
+                        }
+                    )}
                 </View>
                 <HorizontalLine />
                 <View style={{ display: "flex" }}>
@@ -141,9 +146,9 @@ const Sidebar = () => {
                 </View>
                 {/*spacer*/}
                 <View style={{ height: 100, width: "100%" }} />
-            </SidebarScrollWrapper>
+            </ControlCenterContentScrollWrapper>
         </View>
     );
 };
 
-export default observer(Sidebar);
+export default observer(ControlCenterContent);
