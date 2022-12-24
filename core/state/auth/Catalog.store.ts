@@ -25,6 +25,12 @@ export default class CatalogStore {
 
     isPriceEditPopupOpen: boolean = false;
 
+    isUnsavedChangesModalOpen: boolean = false;
+
+    setIsUnsavedChangesModalOpen(newStatus: boolean) {
+        this.isUnsavedChangesModalOpen = newStatus;
+    }
+
     //for editing
     hasChanged: boolean = false;
 

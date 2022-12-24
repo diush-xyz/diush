@@ -1,5 +1,4 @@
 import React from "react";
-import DeleteConfirmation from "../../../lib/Modals/WarningConfirmation";
 import { useSellerViewProductStore } from "../../../../state/auth/SellerViewProductStore";
 import { observer } from "mobx-react";
 import { deleteDoc, doc } from "firebase/firestore";
@@ -7,6 +6,7 @@ import { db } from "../../../../../config/firebase";
 import { useCatalogStore } from "../../../../state/auth/Catalog.store";
 import { CatalogStatus } from "../../../../@types/GlobalTypes";
 import CompactIcon from "./CompactIcon";
+import WarningConfirmation from "../../../lib/Modals/WarningConfirmation";
 
 const CustomDeleteConfirmation = () => {
     const catalogStore = useCatalogStore();
@@ -21,7 +21,7 @@ const CustomDeleteConfirmation = () => {
     };
 
     return (
-        <DeleteConfirmation
+        <WarningConfirmation
             icon={<CompactIcon />}
             title="be careful!"
             desc={`by deleting this product, you also \n decline all offers pertaining to this\n product and delete all data.`}

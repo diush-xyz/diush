@@ -1,4 +1,4 @@
-import { TouchableOpacity, View, Image } from "react-native";
+import { TouchableOpacity, View, Image, Keyboard } from "react-native";
 import React from "react";
 import { observer } from "mobx-react";
 import { CatalogStatus } from "../../../@types/GlobalTypes";
@@ -27,6 +27,8 @@ import ProductEditScrollWrapper from "./ProductEditScrollWrapper";
 import AskingPrice from "../create/AskingPrice";
 import AskingPriceSection from "./askingPrice";
 import ConditionAndExtra from "./ConditionAndExtra";
+import WarningConfirmation from "../../lib/Modals/WarningConfirmation";
+import CompactIcon from "../viewProduct/CustomDeleteConfirmation/CompactIcon";
 
 const EditProductHome = () => {
     const catalogStore = useCatalogStore();
@@ -57,8 +59,13 @@ const EditProductHome = () => {
             <ScreenHeader
                 backArrow
                 backArrowOnPress={() => {
-                    catalogStore.setStatus(CatalogStatus.VIEW);
-                    catalogStore.setHasChanged(false);
+                    if (catalogStore.hasChanged) {
+                        catalogStore.setIsUnsavedChangesModalOpen(true);
+                        Keyboard.dismiss();
+                    } else {
+                        catalogStore.setStatus(CatalogStatus.VIEW);
+                        catalogStore.setHasChanged(false);
+                    }
                 }}
                 title="edit listing"
                 subtitle="my catalog"
@@ -86,6 +93,22 @@ const EditProductHome = () => {
                     <ConditionAndExtra />
                 </View>
             </ProductEditScrollWrapper>
+            <WarningConfirmation
+                icon={<CompactIcon />}
+                title="are you sure?"
+                desc={`you have unsaved changes. if you\n leave now, they won’t save.`}
+                buttonText="i understand, do it"
+                buttonOnClick={() => {
+                    catalogStore.setIsUnsavedChangesModalOpen(false);
+                    catalogStore.setStatus(CatalogStatus.VIEW);
+                    catalogStore.setHasChanged(false);
+                }}
+                footerText="nope, cancel"
+                onFooterClick={() => {
+                    catalogStore.setIsUnsavedChangesModalOpen(false);
+                }}
+                visible={catalogStore.isUnsavedChangesModalOpen}
+            />
         </View>
     );
 };
