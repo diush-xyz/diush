@@ -47,7 +47,7 @@ this project is utilizing what I'm designating as the _"TERF"_ stack.
 -   **TypeScript:** Base language for all files - handles backend integration and UI/UX duties with RN.
 -   **Expo:** Provides a shared native runtime to avoid writing native code, dealing with iOS or Android-specific settings, or even opening up Xcode. Managed Expo projects have "their own workflow including Expo CLI (a command line interface) to make developing and deploying easy". Learn more [here](https://docs.expo.dev/workflow/already-used-react-native/).
 -   **React Native:** Base for Expo - allows the usage of React + TypeScript for easy cross-platform mobile development.
--   **Firebase:** Cloud Firestore (Real-Time Database) + Authentication are handled through here
+-   **Firebase:** Cloud Firestore (Real-Time Database), Storage (images, files, etc.) + Authentication are handled through here
 
 [//]: # "### 1. create an item"
 [//]: # "this part is pretty straight-forward. Using an intuitive UI, people who wish to sell an item via diush are able to seamlessly create a listing within the app."
