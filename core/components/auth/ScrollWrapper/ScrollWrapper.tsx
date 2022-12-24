@@ -1,4 +1,4 @@
-import { View, Text, KeyboardAvoidingView, ScrollView } from "react-native";
+import { KeyboardAvoidingView, ScrollView } from "react-native";
 import React from "react";
 import { useUtilStore } from "../../../state/Util.store";
 

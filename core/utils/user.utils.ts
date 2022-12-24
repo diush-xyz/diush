@@ -17,6 +17,7 @@ export const createUserInDb = async (user: IUser) => {
         displayName: user.displayName,
         email: user.email,
         photoURL: user.photoURL,
+        location: user.location,
     })
         .then(() => console.log("Created in db!"))
         .catch(error => console.log("db error: " + error));

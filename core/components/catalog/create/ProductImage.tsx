@@ -66,7 +66,7 @@ const ProductImage = () => {
             quality: 1,
         });
 
-        if (!result.cancelled) {
+        if (!result.canceled) {
             const storage = getStorage();
             const storageRef = ref(
                 storage,

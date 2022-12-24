@@ -16,16 +16,20 @@ import { useCreateProductStore } from "../../../state/auth/CreateProduct.store";
 import { useTheme } from "../../../utils/useTheme.util";
 import CustomText from "../../lib/CustomText";
 import ModalElement from "./ModalElement";
+import { useCatalogStore } from "../../../state/auth/Catalog.store";
 
 interface IConditionModal {
     modalVisible: boolean;
     setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+    condition: ProductCondition;
+    setCondition: React.Dispatch<React.SetStateAction<ProductCondition>>;
+    onSelectionPress?: () => void;
 }
 
+//must be out here in this file
 const theme = useTheme();
 
 const ConditionModal = (props: IConditionModal) => {
-    const createProductStore = useCreateProductStore();
     return (
         <View style={styles.centeredView}>
             <Modal
@@ -33,7 +37,6 @@ const ConditionModal = (props: IConditionModal) => {
                 transparent
                 visible={props.modalVisible}
                 onRequestClose={() => {
-                    Alert.alert("Modal has been closed.");
                     props.setModalVisible(!props.modalVisible);
                 }}
             >
@@ -45,45 +48,60 @@ const ConditionModal = (props: IConditionModal) => {
                             <ModalElement
                                 text={ProductCondition.NEW_WITH_BOX}
                                 onPress={() => {
-                                    createProductStore.setCondition(
+                                    props.setCondition(
                                         ProductCondition.NEW_WITH_BOX
                                     );
+                                    if (props.onSelectionPress) {
+                                        props.onSelectionPress();
+                                    }
                                     props.setModalVisible(!props.modalVisible);
                                 }}
                             />
                             <ModalElement
                                 text={ProductCondition.NEW_WITHOUT_BOX}
                                 onPress={() => {
-                                    createProductStore.setCondition(
+                                    props.setCondition(
                                         ProductCondition.NEW_WITHOUT_BOX
                                     );
+                                    if (props.onSelectionPress) {
+                                        props.onSelectionPress();
+                                    }
                                     props.setModalVisible(!props.modalVisible);
                                 }}
                             />
                             <ModalElement
                                 text={ProductCondition.NEW_WITH_DEFECTS}
                                 onPress={() => {
-                                    createProductStore.setCondition(
+                                    props.setCondition(
                                         ProductCondition.NEW_WITH_DEFECTS
                                     );
+                                    if (props.onSelectionPress) {
+                                        props.onSelectionPress();
+                                    }
                                     props.setModalVisible(!props.modalVisible);
                                 }}
                             />
                             <ModalElement
                                 text={ProductCondition.USED_GOOD_CONDITION}
                                 onPress={() => {
-                                    createProductStore.setCondition(
+                                    props.setCondition(
                                         ProductCondition.USED_GOOD_CONDITION
                                     );
+                                    if (props.onSelectionPress) {
+                                        props.onSelectionPress();
+                                    }
                                     props.setModalVisible(!props.modalVisible);
                                 }}
                             />
                             <ModalElement
                                 text={ProductCondition.USED_DECENT_CONDITION}
                                 onPress={() => {
-                                    createProductStore.setCondition(
+                                    props.setCondition(
                                         ProductCondition.USED_DECENT_CONDITION
                                     );
+                                    if (props.onSelectionPress) {
+                                        props.onSelectionPress();
+                                    }
                                     props.setModalVisible(!props.modalVisible);
                                 }}
                                 noBorderBottom

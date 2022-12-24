@@ -20,6 +20,7 @@ import { useUtilStore } from "../../../state/Util.store";
 import { useCatalogStore } from "../../../state/auth/Catalog.store";
 import ScrollWrapper from "../../auth/ScrollWrapper/ScrollWrapper";
 
+//TODO: FIX ISSUE WHERE WHEN THE USER SUBMITS WITH AN ENTER IT BREAKS THE NEXT PAGE'S MARGINS
 const ProductAdditionalInfo = () => {
     const catalogStore = useCatalogStore();
     const createProductStore = useCreateProductStore();

@@ -19,6 +19,7 @@ import LargeButton from "../../LargeButton";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../../../../config/firebase";
 import { CatalogStatus } from "../../../../@types/GlobalTypes";
+import { HAPTIC_OPTIONS, hapticFeedback } from "../../../../utils/haptics.util";
 
 const ModalPopup = ({ visible, children }) => {
     const [showModal, setShowModal] = React.useState(visible);
@@ -85,7 +86,7 @@ const ModalPopup = ({ visible, children }) => {
     );
 };
 
-interface IDeleteConfirmation {
+interface IWarningConfirmation {
     icon: React.ReactNode;
     title: string;
     desc: string;
@@ -93,17 +94,21 @@ interface IDeleteConfirmation {
     buttonOnClick: () => void;
     footerText: string;
     onFooterClick: () => void;
+    visible: boolean;
 }
 
-const DeleteConfirmation = (props: IDeleteConfirmation) => {
-    const catalogStore = useCatalogStore();
-    const sellerViewProductStore = useSellerViewProductStore();
+const WarningConfirmation = (props: IWarningConfirmation) => {
+    React.useEffect(() => {
+        if (props.visible) {
+            hapticFeedback(HAPTIC_OPTIONS.WARNING);
+        }
+    });
 
     return (
         <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
-            <ModalPopup visible={sellerViewProductStore.deleteConfirmation}>
+            <ModalPopup visible={props.visible}>
                 <View
                     style={{
                         display: "flex",
@@ -149,4 +154,4 @@ const DeleteConfirmation = (props: IDeleteConfirmation) => {
     );
 };
 
-export default DeleteConfirmation;
+export default WarningConfirmation;

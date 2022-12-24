@@ -18,22 +18,13 @@ import { useSellerViewProductStore } from "../../../../state/auth/SellerViewProd
 import ProductOptions from "../ProductOptions";
 import * as Haptics from "expo-haptics";
 import { hapticFeedback } from "../../../../utils/haptics.util";
+import { useAuthStore } from "../../../../state/auth/Auth.store";
 
 const Header = () => {
     const catalogStore = useCatalogStore();
     const sellerViewProductStore = useSellerViewProductStore();
-    const [fetchedUser, setFetchedUser] = React.useState<IUser>();
+    const { user } = useAuthStore();
 
-    React.useEffect(() => {
-        //TODO: Come back later (two-letter domain extensions do not work, neither does .ed.cr,)
-        // setIsReady(validateEmail(signupStore.email));
-        fetchUserFromDb({
-            id: auth.currentUser?.uid,
-            setUser: (user: IUser) => {
-                setFetchedUser(user);
-            },
-        });
-    }, []);
     return (
         <>
             <View
@@ -115,7 +106,7 @@ const Header = () => {
                     borderRadius={10}
                     source={{
                         uri:
-                            fetchedUser?.photoURL ??
+                            user?.photoURL ??
                             "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80",
                     }}
                     style={{

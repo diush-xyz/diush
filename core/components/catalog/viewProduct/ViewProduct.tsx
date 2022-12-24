@@ -34,14 +34,14 @@ import RoundedMoreIcon from "../../../icons/catalog/RoundedMore";
 import ActiveIndicator from "./ActiveIndicator";
 import SnapshotBox from "./SnapshotBox";
 import ProductViewScrollWrapper from "./ProductViewScrollWrapper";
-import HorizontalLine from "./HorizontalLine";
+import HorizontalLine from "../../lib/HorizontalLine";
 import { deriveProductConditionFromDb } from "../../../utils/productCondition.util";
 import WrittenInfoSection from "./WrittenInfoSection";
 import { triggerProductSharePopup } from "../../../utils/share.util";
 import Header from "./Header";
 import ImageModal from "./ImageModal";
 import { useSellerViewProductStore } from "../../../state/auth/SellerViewProductStore";
-import DeleteConfirmation from "../../lib/Modals/DeleteConfirmation";
+import DeleteConfirmation from "../../lib/Modals/WarningConfirmation";
 import CustomDeleteConfirmation from "./CustomDeleteConfirmation";
 import styled from "styled-components/native";
 import { MAX_WIDTH } from "../../../utils/constants";
@@ -49,26 +49,7 @@ import CopiedIndicator from "../../lib/CopiedIndicator";
 
 const ViewProduct = () => {
     const catalogStore = useCatalogStore();
-    const createProductStore = useCreateProductStore();
-    const utilStore = useUtilStore();
-    const authStore = useAuthStore();
     const sellerViewProductStore = useSellerViewProductStore();
-    const [firstTime, setFirstTime] = React.useState<boolean>(true);
-    const [allClear, setAllClear] = React.useState(false);
-    const [errMsg, setErrMsg] = React.useState<string>("");
-    const [fetchedUser, setFetchedUser] = React.useState<IUser>();
-    const theme = useTheme();
-
-    React.useEffect(() => {
-        //TODO: Come back later (two-letter domain extensions do not work, neither does .ed.cr,)
-        // setIsReady(validateEmail(signupStore.email));
-        fetchUserFromDb({
-            id: auth.currentUser?.uid,
-            setUser: (user: IUser) => {
-                setFetchedUser(user);
-            },
-        });
-    }, []);
 
     return (
         <BottomSheetView style={GLOBAL_STYLES.viewProductSheetViewStyle}>

@@ -29,7 +29,7 @@ const App = () => {
     const utilStore = useUtilStore();
     const authStore = useAuthStore();
     const signupStore = useSignupStore();
-    const [fetchedUser, setFetchedUser] = React.useState<IUser>();
+    // const [fetchedUser, setFetchedUser] = React.useState<IUser>();
 
     //TODO: Add this back later (and prepare() function - view Font and SplashScreen docs from Expo)
     // if (!fontsLoaded) {
@@ -67,18 +67,26 @@ const App = () => {
                 authStore.setAuthStatus(AuthStatus.AUTHENTICATED);
                 signupStore.cancel();
 
+                console.log("We have a user");
+
                 fetchUserFromDb({
                     id: user.uid,
-                    setUser: (user: IUser) => {
-                        setFetchedUser(user);
+                    setUser: (fUser: IUser) => {
+                        // setFetchedUser(fUser);
+                        console.log("We have fetched the user");
+                        authStore.setUser({
+                            id: user.uid,
+                            displayName: fUser.displayName,
+                            email: fUser.email,
+                            photoURL: fUser.photoURL,
+                            location: fUser.location,
+                            //TODO: Add products and other fields later
+                        });
+
+                        authStore.setUserFetchLoading(false);
+                        console.log("the user: ");
+                        console.log(authStore.user);
                     },
-                });
-                authStore.setUser({
-                    id: user.uid,
-                    displayName: fetchedUser?.displayName,
-                    email: fetchedUser?.email,
-                    photoURL: fetchedUser?.photoURL,
-                    //TODO: Add products and other fields later
                 });
             } else {
                 authStore.setAuthStatus(AuthStatus.SQUARE_ONE);
