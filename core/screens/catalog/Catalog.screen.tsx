@@ -66,19 +66,6 @@ const CatalogScreen = () => {
                     <ViewProduct />
                 </BottomSheet>
             )}
-            {catalogStore.isPriceEditPopupOpen && (
-                <BottomSheet
-                    handleIndicatorStyle={GLOBAL_STYLES.handleIndicatorStyle}
-                    handleStyle={GLOBAL_STYLES.handleStyle}
-                    ref={sheetRef}
-                    snapPoints={PRODUCT_BOTTOM_SHEET_SNAP_POINTS}
-                    enablePanDownToClose={true}
-                    onClose={() => catalogStore.setIsPriceEditPopupOpen(false)}
-                    style={{ borderRadius: 35, overflow: "hidden" }}
-                >
-                    <PriceEditSelectorContent />
-                </BottomSheet>
-            )}
         </>
     );
 };

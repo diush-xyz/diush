@@ -21,7 +21,8 @@ import { useCatalogStore } from "../../../state/auth/Catalog.store";
 interface IConditionModal {
     modalVisible: boolean;
     setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
-    usage: "create" | "edit";
+    condition: ProductCondition;
+    setCondition: React.Dispatch<React.SetStateAction<ProductCondition>>;
     onSelectionPress?: () => void;
 }
 
@@ -29,10 +30,6 @@ interface IConditionModal {
 const theme = useTheme();
 
 const ConditionModal = (props: IConditionModal) => {
-    //create
-    const createProductStore = useCreateProductStore();
-    //edit
-    const catalogStore = useCatalogStore();
     return (
         <View style={styles.centeredView}>
             <Modal
@@ -51,15 +48,9 @@ const ConditionModal = (props: IConditionModal) => {
                             <ModalElement
                                 text={ProductCondition.NEW_WITH_BOX}
                                 onPress={() => {
-                                    if (props.usage == "create") {
-                                        createProductStore.setCondition(
-                                            ProductCondition.NEW_WITH_BOX
-                                        );
-                                    } else {
-                                        catalogStore.setActiveProductCondition(
-                                            ProductCondition.NEW_WITH_BOX
-                                        );
-                                    }
+                                    props.setCondition(
+                                        ProductCondition.NEW_WITH_BOX
+                                    );
                                     if (props.onSelectionPress) {
                                         props.onSelectionPress();
                                     }
@@ -69,15 +60,9 @@ const ConditionModal = (props: IConditionModal) => {
                             <ModalElement
                                 text={ProductCondition.NEW_WITHOUT_BOX}
                                 onPress={() => {
-                                    if (props.usage == "create") {
-                                        createProductStore.setCondition(
-                                            ProductCondition.NEW_WITHOUT_BOX
-                                        );
-                                    } else {
-                                        catalogStore.setActiveProductCondition(
-                                            ProductCondition.NEW_WITHOUT_BOX
-                                        );
-                                    }
+                                    props.setCondition(
+                                        ProductCondition.NEW_WITHOUT_BOX
+                                    );
                                     if (props.onSelectionPress) {
                                         props.onSelectionPress();
                                     }
@@ -87,15 +72,9 @@ const ConditionModal = (props: IConditionModal) => {
                             <ModalElement
                                 text={ProductCondition.NEW_WITH_DEFECTS}
                                 onPress={() => {
-                                    if (props.usage == "create") {
-                                        createProductStore.setCondition(
-                                            ProductCondition.NEW_WITH_DEFECTS
-                                        );
-                                    } else {
-                                        catalogStore.setActiveProductCondition(
-                                            ProductCondition.NEW_WITH_DEFECTS
-                                        );
-                                    }
+                                    props.setCondition(
+                                        ProductCondition.NEW_WITH_DEFECTS
+                                    );
                                     if (props.onSelectionPress) {
                                         props.onSelectionPress();
                                     }
@@ -105,15 +84,9 @@ const ConditionModal = (props: IConditionModal) => {
                             <ModalElement
                                 text={ProductCondition.USED_GOOD_CONDITION}
                                 onPress={() => {
-                                    if (props.usage == "create") {
-                                        createProductStore.setCondition(
-                                            ProductCondition.USED_GOOD_CONDITION
-                                        );
-                                    } else {
-                                        catalogStore.setActiveProductCondition(
-                                            ProductCondition.USED_GOOD_CONDITION
-                                        );
-                                    }
+                                    props.setCondition(
+                                        ProductCondition.USED_GOOD_CONDITION
+                                    );
                                     if (props.onSelectionPress) {
                                         props.onSelectionPress();
                                     }
@@ -123,15 +96,9 @@ const ConditionModal = (props: IConditionModal) => {
                             <ModalElement
                                 text={ProductCondition.USED_DECENT_CONDITION}
                                 onPress={() => {
-                                    if (props.usage == "create") {
-                                        createProductStore.setCondition(
-                                            ProductCondition.USED_DECENT_CONDITION
-                                        );
-                                    } else {
-                                        catalogStore.setActiveProductCondition(
-                                            ProductCondition.USED_DECENT_CONDITION
-                                        );
-                                    }
+                                    props.setCondition(
+                                        ProductCondition.USED_DECENT_CONDITION
+                                    );
                                     if (props.onSelectionPress) {
                                         props.onSelectionPress();
                                     }

@@ -5,7 +5,11 @@ import FlowTemplate from "../../lib/FlowTemplate";
 import PopupHeader from "../../lib/PopupHeader";
 import { observer } from "mobx-react";
 import { useSignupStore } from "../../../state/auth/Signup.store";
-import { CatalogStatus, SignupMethod } from "../../../@types/GlobalTypes";
+import {
+    CatalogStatus,
+    ProductCondition as PCType,
+    SignupMethod,
+} from "../../../@types/GlobalTypes";
 import SignupOptionButton from "../../auth/SignupOptionbutton/SignupOptionButton";
 import { TouchableOpacity, View } from "react-native";
 import { useCreateProductStore } from "../../../state/auth/CreateProduct.store";
@@ -19,6 +23,10 @@ import CustomText from "../../lib/CustomText";
 import LeftArrowIcon from "../../../icons/common/leftArrow";
 import DropdownIcon from "../../../icons/catalog/Dropdown";
 import ConditionModal from "../ConditionModal/ConditionModal";
+import {
+    deriveProductConditionFromDb,
+    productConditionToDb,
+} from "../../../utils/productCondition.util";
 
 const ProductCondition = () => {
     const catalogStore = useCatalogStore();
@@ -108,7 +116,12 @@ const ProductCondition = () => {
                     <ConditionModal
                         modalVisible={selector}
                         setModalVisible={setSelector}
-                        usage="create"
+                        condition={deriveProductConditionFromDb(
+                            createProductStore.condition
+                        )}
+                        setCondition={(c: PCType) =>
+                            createProductStore.setCondition(c)
+                        }
                     />
                 </FlowTemplate>
             </ScrollWrapper>

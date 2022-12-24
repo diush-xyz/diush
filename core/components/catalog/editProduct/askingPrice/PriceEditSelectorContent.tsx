@@ -9,10 +9,15 @@ import PopupHeader from "../../../lib/PopupHeader";
 import { observer } from "mobx-react";
 import LargeButton from "../../../lib/LargeButton";
 
-const PriceEditSelectorContent = () => {
+interface IPriceEditSelectorContent {
+    askingPrice: number;
+    setAskingPrice: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const PriceEditSelectorContent = (props: IPriceEditSelectorContent) => {
     const catalogStore = useCatalogStore();
     const [price, setPrice] = React.useState<string>(
-        catalogStore.activeProduct.askingPrice.toString()
+        props.askingPrice.toString()
     );
 
     return (
@@ -40,18 +45,12 @@ const PriceEditSelectorContent = () => {
                         onPress={() => {
                             const parsedPrice = Number(price);
                             if (parsedPrice > 0) {
-                                catalogStore.setActiveProductAskingPrice(
-                                    parsedPrice
-                                );
-                                catalogStore.setHasChanged(true);
+                                props.setAskingPrice(parsedPrice);
                                 catalogStore.setIsPriceEditPopupOpen(false);
                             }
                         }}
                         footer
-                        disabled={
-                            Number(price) ==
-                            catalogStore.activeProduct.askingPrice
-                        }
+                        disabled={Number(price) == props.askingPrice}
                         // disabled={!allClear && !firstTime}
                         footerButtonTitle="cancel"
                         footerButtonOnPress={() => {

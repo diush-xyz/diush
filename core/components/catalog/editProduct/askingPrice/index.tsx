@@ -7,9 +7,14 @@ import LargeButton from "../../../lib/LargeButton";
 import SmallButton from "../../../lib/SmallButton";
 import { observer } from "mobx-react";
 
-const AskingPriceSection = () => {
+interface IAskingPriceSection {
+    askingPrice: number;
+}
+
+const AskingPriceSection = (props: IAskingPriceSection) => {
     const theme = useTheme();
     const catalogStore = useCatalogStore();
+
     return (
         <View
             style={{
@@ -40,7 +45,7 @@ const AskingPriceSection = () => {
                         asking price
                     </CustomText>
                     <CustomText accent font="Bold" fontSize={24}>
-                        ${catalogStore.activeProduct.askingPrice}
+                        ${props.askingPrice}
                     </CustomText>
                 </View>
                 <View>

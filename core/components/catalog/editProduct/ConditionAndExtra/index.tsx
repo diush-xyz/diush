@@ -4,11 +4,22 @@ import CustomText from "../../../lib/CustomText";
 import DropdownIcon from "../../../../icons/catalog/Dropdown";
 import { useCatalogStore } from "../../../../state/auth/Catalog.store";
 import { MAX_WIDTH } from "../../../../utils/constants";
-import { deriveProductConditionFromDb } from "../../../../utils/productCondition.util";
+import {
+    deriveProductConditionFromDb,
+    productConditionToDb,
+} from "../../../../utils/productCondition.util";
 import ConditionModal from "../../ConditionModal/ConditionModal";
 import CustomTextInput from "../../../lib/CustomTextInput";
+import { ProductCondition } from "../../../../@types/GlobalTypes";
 
-const ConditionAndExtra = () => {
+interface IConditionAndExtra {
+    condition: number;
+    setCondition: React.Dispatch<React.SetStateAction<number>>;
+    additionalInfo: string;
+    setAdditionalInfo: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const ConditionAndExtra = (props: IConditionAndExtra) => {
     const catalogStore = useCatalogStore();
     const [selector, setSelector] = React.useState<boolean>(false);
 
@@ -44,13 +55,11 @@ const ConditionAndExtra = () => {
                         marginBottom: 32,
                     }}
                 >
-                    {catalogStore.activeProduct.condition == null ? (
+                    {props.condition == null ? (
                         <CustomText secondary>status</CustomText>
                     ) : (
                         <CustomText>
-                            {deriveProductConditionFromDb(
-                                catalogStore.activeProduct.condition
-                            )}
+                            {deriveProductConditionFromDb(props.condition)}
                         </CustomText>
                     )}
                     <DropdownIcon />
@@ -62,19 +71,21 @@ const ConditionAndExtra = () => {
             </CustomText>
             <CustomTextInput
                 isLarge
-                defaultValue={catalogStore.activeProduct.additionalInfo}
+                defaultValue={props.additionalInfo}
                 placeholder="anything else to add?"
                 onChangeText={(text: string) => {
-                    catalogStore.setHasChanged(true);
-                    catalogStore.setActiveProductAdditionalInfo(text);
+                    props.setAdditionalInfo(text);
                 }}
                 onSubmitEditing={() => Keyboard.dismiss()}
             />
             <ConditionModal
                 modalVisible={selector}
                 setModalVisible={setSelector}
-                usage="edit"
-                onSelectionPress={() => catalogStore.setHasChanged(true)}
+                condition={deriveProductConditionFromDb(props.condition)}
+                setCondition={(c: ProductCondition) =>
+                    props.setCondition(productConditionToDb(c))
+                }
+                // onSelectionPress={() => catalogStore.setHasChanged(true)}
             />
         </View>
     );

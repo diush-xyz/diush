@@ -10,9 +10,9 @@ export const productConditionToDb = (
             return 1;
         case ProductCondition.NEW_WITH_DEFECTS:
             return 2;
-        case ProductCondition.USED_DECENT_CONDITION:
-            return 3;
         case ProductCondition.USED_GOOD_CONDITION:
+            return 3;
+        case ProductCondition.USED_DECENT_CONDITION:
             return 4;
     }
 };
@@ -28,7 +28,7 @@ export const deriveProductConditionFromDb = (
         case 2:
             return ProductCondition.NEW_WITH_DEFECTS;
         case 3:
-            return ProductCondition.USED_DECENT_CONDITION;
+            return ProductCondition.USED_GOOD_CONDITION;
         case 4:
             return ProductCondition.USED_DECENT_CONDITION;
     }

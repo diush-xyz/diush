@@ -6,20 +6,25 @@ import { useCatalogStore } from "../../../../state/auth/Catalog.store";
 import { observer } from "mobx-react";
 import HorizontalLine from "../../../lib/HorizontalLine";
 
-const TitleAndBlurb = () => {
-    const catalogStore = useCatalogStore();
+interface ITitleAndBlurb {
+    title: string;
+    setTitle: React.Dispatch<React.SetStateAction<string>>;
+    blurb: string;
+    setBlurb: React.Dispatch<React.SetStateAction<string>>;
+}
 
+const TitleAndBlurb = (props: ITitleAndBlurb) => {
+    const catalogStore = useCatalogStore();
     return (
         <View style={{ display: "flex", flexDirection: "column" }}>
             <CustomText fontSize={18} font="Bold" style={{ marginBottom: 12 }}>
                 title
             </CustomText>
             <CustomTextInput
-                defaultValue={catalogStore.activeProduct.title}
+                defaultValue={props.title}
                 placeholder="PlayStation 5"
                 onChangeText={(text: string) => {
-                    catalogStore.setHasChanged(true);
-                    catalogStore.setActiveProductTitle(text);
+                    props.setTitle(text);
                 }}
                 onSubmitEditing={() => Keyboard.dismiss()}
             />
@@ -32,11 +37,10 @@ const TitleAndBlurb = () => {
             </CustomText>
             <CustomTextInput
                 isLarge
-                defaultValue={catalogStore.activeProduct.blurb}
+                defaultValue={props.blurb}
                 placeholder="make it special"
                 onChangeText={(text: string) => {
-                    catalogStore.setHasChanged(true);
-                    catalogStore.setActiveProductBlurb(text);
+                    props.setBlurb(text);
                 }}
                 onSubmitEditing={() => Keyboard.dismiss()}
             />

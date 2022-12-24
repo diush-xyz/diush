@@ -13,9 +13,14 @@ import {
 } from "firebase/storage";
 import { observer } from "mobx-react";
 
-const ImageSection = () => {
-    const catalogStore = useCatalogStore();
+interface IImageSection {
+    imageURL: string;
+    setImageURL: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const ImageSection = (props: IImageSection) => {
     const theme = useTheme();
+    const catalogStore = useCatalogStore();
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -34,9 +39,9 @@ const ImageSection = () => {
 
             //delete the file in the db before uploading a new one
             if (
-                catalogStore.activeProduct.imageURL !== "" ||
-                catalogStore.activeProduct.imageURL !== undefined ||
-                catalogStore.activeProduct.imageURL !== null
+                props.imageURL !== "" ||
+                props.imageURL !== undefined ||
+                props.imageURL !== null
             ) {
                 // Delete the file
                 deleteObject(storageRef)
@@ -54,8 +59,7 @@ const ImageSection = () => {
 
             await uploadBytes(storageRef, bytes).then(() => {
                 getDownloadURL(storageRef).then(url => {
-                    catalogStore.setHasChanged(true);
-                    catalogStore.setActiveProductImage(url);
+                    props.setImageURL(url);
                 });
             }); //upload images
         }
@@ -100,7 +104,7 @@ const ImageSection = () => {
                             borderRadius: 12,
                         }}
                         source={{
-                            uri: catalogStore.activeProduct.imageURL,
+                            uri: props.imageURL,
                         }}
                     />
                 </View>

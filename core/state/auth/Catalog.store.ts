@@ -31,13 +31,6 @@ export default class CatalogStore {
         this.isUnsavedChangesModalOpen = newStatus;
     }
 
-    //for editing
-    hasChanged: boolean = false;
-
-    setHasChanged(newStatus: boolean) {
-        this.hasChanged = newStatus;
-    }
-
     setIsPriceEditPopupOpen(newStatus: boolean) {
         this.isPriceEditPopupOpen = newStatus;
     }
@@ -46,7 +39,7 @@ export default class CatalogStore {
         this.activeProduct = newProduct;
     }
 
-    setActiveProductImage(url: string) {
+    setActiveProductImageURL(url: string) {
         this.activeProduct.imageURL = url;
     }
 
