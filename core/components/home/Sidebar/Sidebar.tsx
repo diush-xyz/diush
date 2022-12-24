@@ -5,6 +5,7 @@ import { View, Image, TouchableOpacity } from "react-native";
 import { useAuthStore } from "../../../state/auth/Auth.store";
 import RoundedMoreIcon from "../../../icons/common/RoundedMore";
 import DealsIcon from "../../../icons/home/sidebar/deals";
+import HorizontalLine from "../../lib/HorizontalLine";
 
 export interface ISIDEBAR_DATA {
     icon: React.ReactNode;
@@ -55,7 +56,6 @@ const Sidebar = () => {
                 width: "80%",
                 height: "100%",
                 paddingTop: 60,
-                paddingHorizontal: 25,
             }}
         >
             <View
@@ -65,6 +65,7 @@ const Sidebar = () => {
                     alignItems: "flex-start",
                     justifyContent: "space-between",
                     width: "100%",
+                    paddingHorizontal: 25,
                 }}
             >
                 <View style={{ display: "flex" }}>
@@ -85,11 +86,17 @@ const Sidebar = () => {
                         {authStore.user.displayName}
                     </CustomText>
                 </View>
-                <View>
+                <TouchableOpacity onPress={() => null}>
                     <RoundedMoreIcon />
-                </View>
+                </TouchableOpacity>
             </View>
-            <View style={{ display: "flex", marginTop: 30 }}>
+            <View
+                style={{
+                    display: "flex",
+                    marginTop: 30,
+                    paddingHorizontal: 25,
+                }}
+            >
                 {SIDEBAR_DATA.map((elem: ISIDEBAR_DATA, idx: number) => {
                     return (
                         <TouchableOpacity
@@ -113,6 +120,7 @@ const Sidebar = () => {
                     );
                 })}
             </View>
+            <HorizontalLine />
         </View>
     );
 };
