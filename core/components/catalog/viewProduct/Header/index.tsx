@@ -3,7 +3,7 @@ import CustomText from "../../../lib/CustomText";
 import { View, TouchableOpacity, Image } from "react-native";
 import CarouselIcon from "../../../../icons/catalog/Carousel";
 import ChevronRight from "../../../../icons/catalog/ChevronRight";
-import RoundedMoreIcon from "../../../../icons/catalog/RoundedMore";
+import RoundedMoreIcon from "../../../../icons/common/RoundedMore";
 import ShareIcon from "../../../../icons/catalog/Share";
 import TicketIcon from "../../../../icons/catalog/Ticket";
 import { triggerProductSharePopup } from "../../../../utils/share.util";
