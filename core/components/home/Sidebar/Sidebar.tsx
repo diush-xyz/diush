@@ -121,6 +121,21 @@ const Sidebar = () => {
                 })}
             </View>
             <HorizontalLine />
+            <View style={{ display: "flex", paddingHorizontal: 25 }}>
+                <TouchableOpacity onPress={() => null}>
+                    <CustomText font="Bold" style={{ marginBottom: 30 }}>
+                        help center
+                    </CustomText>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => null}>
+                    <CustomText font="Bold" style={{ marginBottom: 30 }}>
+                        give feedback ❤️
+                    </CustomText>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => null}>
+                    <CustomText>referral program</CustomText>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 };
