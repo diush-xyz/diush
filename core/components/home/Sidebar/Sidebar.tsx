@@ -1,13 +1,49 @@
 import React from "react";
 import { useTheme } from "../../../utils/useTheme.util";
 import CustomText from "../../lib/CustomText";
-import { View, Image } from "react-native";
+import { View, Image, TouchableOpacity } from "react-native";
 import { useAuthStore } from "../../../state/auth/Auth.store";
 import RoundedMoreIcon from "../../../icons/common/RoundedMore";
+import DealsIcon from "../../../icons/home/sidebar/deals";
+
+export interface ISIDEBAR_DATA {
+    icon: React.ReactNode;
+    text: string;
+    onClick: () => void;
+}
 
 const Sidebar = () => {
     const theme = useTheme();
     const authStore = useAuthStore();
+
+    const SIDEBAR_DATA: ISIDEBAR_DATA[] = [
+        {
+            icon: <DealsIcon />,
+            text: "deals",
+            onClick: () => null,
+        },
+        {
+            icon: <DealsIcon />,
+            text: "my catalog",
+            onClick: () => null,
+        },
+        {
+            icon: <DealsIcon />,
+            text: "metrics",
+            onClick: () => null,
+        },
+        {
+            icon: <DealsIcon />,
+            text: "settings",
+            onClick: () => null,
+        },
+        {
+            icon: <DealsIcon />,
+            text: "my profile",
+            onClick: () => null,
+        },
+    ];
+
     return (
         <View
             style={{
@@ -52,6 +88,30 @@ const Sidebar = () => {
                 <View>
                     <RoundedMoreIcon />
                 </View>
+            </View>
+            <View style={{ display: "flex", marginTop: 30 }}>
+                {SIDEBAR_DATA.map((elem: ISIDEBAR_DATA, idx: number) => {
+                    return (
+                        <TouchableOpacity
+                            style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                marginBottom:
+                                    idx !== SIDEBAR_DATA.length - 1 && 30,
+                            }}
+                            onPress={elem.onClick}
+                        >
+                            {elem.icon}
+                            <CustomText
+                                font="Bold"
+                                fontSize={18}
+                                style={{ marginLeft: 18 }}
+                            >
+                                {elem.text}
+                            </CustomText>
+                        </TouchableOpacity>
+                    );
+                })}
             </View>
         </View>
     );
