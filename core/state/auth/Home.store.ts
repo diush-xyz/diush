@@ -14,6 +14,18 @@ export default class HomeStore {
     setIsSidebarOpen(newStatus: boolean) {
         this.isSidebarOpen = newStatus;
     }
+
+    isIncomingChatsActive: boolean = true;
+
+    setIsIncomingChatsActive(status: boolean) {
+        this.isIncomingChatsActive = status;
+    }
+
+    isOutboundChatsActive: boolean = false;
+
+    setIsOutboundChatsActive(status: boolean) {
+        this.isOutboundChatsActive = status;
+    }
 }
 
 const StoreContext = React.createContext<HomeStore>(new HomeStore());

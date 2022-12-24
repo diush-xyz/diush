@@ -65,7 +65,18 @@ const HomeScreen = () => {
                     // }
                     title="home base"
                 />
-                <Switcher />
+                <Switcher
+                    text1="incoming"
+                    text2="to others"
+                    is1Active={homeStore.isIncomingChatsActive}
+                    set1Active={(status: boolean) =>
+                        homeStore.setIsIncomingChatsActive(status)
+                    }
+                    is2Active={homeStore.isOutboundChatsActive}
+                    set2Active={(status: boolean) =>
+                        homeStore.setIsOutboundChatsActive(status)
+                    }
+                />
                 <CustomTextInput
                     placeholder="search my products"
                     onChangeText={() => null}

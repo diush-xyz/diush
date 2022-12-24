@@ -135,7 +135,18 @@ const CatalogHome = () => {
                 }
                 title="my catalog"
             />
-            <Switcher />
+            <Switcher
+                text1="active"
+                text2="sold"
+                is1Active={catalogStore.activeProductsDashboard}
+                set1Active={(status: boolean) =>
+                    catalogStore.setActiveProductsDashboard(status)
+                }
+                is2Active={catalogStore.soldProductsDashboard}
+                set2Active={(status: boolean) =>
+                    catalogStore.setSoldProductsDashboard(status)
+                }
+            />
             <CustomTextInput
                 placeholder="search my products"
                 onChangeText={() => null}
