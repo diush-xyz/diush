@@ -56,9 +56,10 @@ const EditProductHome = () => {
         >
             <ScreenHeader
                 backArrow
-                backArrowOnPress={() =>
-                    catalogStore.setStatus(CatalogStatus.VIEW)
-                }
+                backArrowOnPress={() => {
+                    catalogStore.setStatus(CatalogStatus.VIEW);
+                    catalogStore.setHasChanged(false);
+                }}
                 title="edit listing"
                 subtitle="my catalog"
                 button

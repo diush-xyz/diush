@@ -2,6 +2,8 @@ import React from "react";
 import { FlatList, TouchableOpacity } from "react-native";
 import DeleteIcon from "../../../icons/catalog/Delete";
 import CustomText from "../CustomText";
+import { setPersistence } from "firebase/auth";
+import { observer } from "mobx-react";
 
 interface IPriceInput {
     price: string;
@@ -10,6 +12,7 @@ interface IPriceInput {
 
 const PriceInput = (props: IPriceInput) => {
     const NUM_PAD_DATA = [1, 2, 3, 4, 5, 6, 7, 8, 9, ".", 0, "del"];
+    const [tapCount, setTapCount] = React.useState<number>(0);
 
     return (
         <>
@@ -31,6 +34,7 @@ const PriceInput = (props: IPriceInput) => {
                             //if item is ., add a . if there is not already one
                             //if item is 0, add a 0 if there is not already one
                             //if item is 1-9, add the number
+                            setTapCount(tapCount + 1);
                             if (item === "del") {
                                 props.setPrice(props.price.slice(0, -1));
                             } else if (item === ".") {
@@ -46,7 +50,9 @@ const PriceInput = (props: IPriceInput) => {
                                     props.setPrice(item.toString());
                                 } else {
                                     props.setPrice(
-                                        props.price + item.toString()
+                                        tapCount == 0
+                                            ? item.toString()
+                                            : props.price + item.toString()
                                     );
                                 }
                             }
@@ -77,4 +83,4 @@ const PriceInput = (props: IPriceInput) => {
     );
 };
 
-export default PriceInput;
+export default observer(PriceInput);

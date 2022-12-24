@@ -1,5 +1,5 @@
 import React from "react";
-import DeleteConfirmation from "../../../lib/Modals/DeleteConfirmation";
+import DeleteConfirmation from "../../../lib/Modals/WarningConfirmation";
 import { useSellerViewProductStore } from "../../../../state/auth/SellerViewProductStore";
 import { observer } from "mobx-react";
 import { deleteDoc, doc } from "firebase/firestore";
@@ -34,6 +34,7 @@ const CustomDeleteConfirmation = () => {
             onFooterClick={() => {
                 sellerViewProductStore.setDeleteConfirmation();
             }}
+            visible={sellerViewProductStore.deleteConfirmation}
         />
     );
 };

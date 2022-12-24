@@ -41,7 +41,7 @@ import { triggerProductSharePopup } from "../../../utils/share.util";
 import Header from "./Header";
 import ImageModal from "./ImageModal";
 import { useSellerViewProductStore } from "../../../state/auth/SellerViewProductStore";
-import DeleteConfirmation from "../../lib/Modals/DeleteConfirmation";
+import DeleteConfirmation from "../../lib/Modals/WarningConfirmation";
 import CustomDeleteConfirmation from "./CustomDeleteConfirmation";
 import styled from "styled-components/native";
 import { MAX_WIDTH } from "../../../utils/constants";

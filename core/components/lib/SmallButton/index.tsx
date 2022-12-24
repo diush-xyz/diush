@@ -25,10 +25,6 @@ interface ICustomChildSmallButton {
 
 const BORDER_COLORS = ["#C897F9", "#FF3F70"];
 
-const LinearGradientWrapper = styled(LinearGradient)`
-    height: 30;
-`;
-
 /**
  * Same as Large Button (only no provided child with props). Fully custom.
  */
@@ -36,7 +32,7 @@ export const CustomChildSmallButton = (props: ICustomChildSmallButton) => {
     return (
         <>
             {/*@ts-ignore*/}
-            <LinearGradientWrapper
+            <LinearGradient
                 colors={props.disabled ? ["transparent"] : BORDER_COLORS}
                 start={{ x: 0.0, y: 1.0 }}
                 end={{ x: 1.0, y: 1.0 }}
@@ -47,6 +43,7 @@ export const CustomChildSmallButton = (props: ICustomChildSmallButton) => {
                     borderRadius: 22,
                     maxWidth: MAX_WIDTH,
                     padding: 2,
+                    height: 30,
                 }}
             >
                 <TouchableOpacity
@@ -57,7 +54,7 @@ export const CustomChildSmallButton = (props: ICustomChildSmallButton) => {
                     {/*@ts-ignore*/}
                     {props.children}
                 </TouchableOpacity>
-            </LinearGradientWrapper>
+            </LinearGradient>
         </>
     );
 };

@@ -86,7 +86,7 @@ const ModalPopup = ({ visible, children }) => {
     );
 };
 
-interface IDeleteConfirmation {
+interface IWarningConfirmation {
     icon: React.ReactNode;
     title: string;
     desc: string;
@@ -94,13 +94,12 @@ interface IDeleteConfirmation {
     buttonOnClick: () => void;
     footerText: string;
     onFooterClick: () => void;
+    visible: boolean;
 }
 
-const DeleteConfirmation = (props: IDeleteConfirmation) => {
-    const sellerViewProductStore = useSellerViewProductStore();
-
+const WarningConfirmation = (props: IWarningConfirmation) => {
     React.useEffect(() => {
-        if (sellerViewProductStore.deleteConfirmation) {
+        if (props.visible) {
             hapticFeedback(HAPTIC_OPTIONS.WARNING);
         }
     });
@@ -109,7 +108,7 @@ const DeleteConfirmation = (props: IDeleteConfirmation) => {
         <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
-            <ModalPopup visible={sellerViewProductStore.deleteConfirmation}>
+            <ModalPopup visible={props.visible}>
                 <View
                     style={{
                         display: "flex",
@@ -155,4 +154,4 @@ const DeleteConfirmation = (props: IDeleteConfirmation) => {
     );
 };
 
-export default DeleteConfirmation;
+export default WarningConfirmation;
