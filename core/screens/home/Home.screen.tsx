@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Image } from "react-native";
 import React from "react";
 import { observer } from "mobx-react";
 import AuthStore, { useAuthStore } from "../../state/auth/Auth.store";
@@ -14,7 +14,10 @@ import { useTheme } from "../../utils/useTheme.util";
 import Sidebar from "../../components/home/ControlCenter/ControlCenterContent";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { GLOBAL_STYLES } from "../../@types/GlobalStyles";
-import { PRODUCT_BOTTOM_SHEET_SNAP_POINTS } from "../../utils/constants";
+import {
+    MAX_WIDTH,
+    PRODUCT_BOTTOM_SHEET_SNAP_POINTS,
+} from "../../utils/constants";
 import { useCatalogStore } from "../../state/auth/Catalog.store";
 import { useHomeStore } from "../../state/auth/Home.store";
 import ControlCenter from "../../components/home/ControlCenter";
@@ -83,6 +86,38 @@ const HomeScreen = () => {
                     onChangeText={() => null}
                     isSearch
                 />
+                <View
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        width: "100%",
+                        maxWidth: MAX_WIDTH,
+                    }}
+                >
+                    <View style={{ display: "flex", flexDirection: "row" }}>
+                        <Image
+                            borderRadius={15.5} //TODO: Find a way to make this a string and just make this 50% without using styled-components/native
+                            source={{
+                                uri: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80",
+                            }}
+                            style={{
+                                height: 31,
+                                width: 31,
+                            }}
+                        />
+                        <View
+                            style={{ display: "flex", flexDirection: "column" }}
+                        >
+                            <CustomText>Jessica O'Malley</CustomText>
+                        </View>
+                    </View>
+                    <View style={{ display: "flex", flexDirection: "column" }}>
+                        <CustomText secondary>3:56pm</CustomText>
+                        <CustomText>3</CustomText>
+                    </View>
+                </View>
             </View>
             <ControlCenter />
         </>
