@@ -8,6 +8,8 @@ import DealsIcon from "../../../../icons/home/sidebar/deals";
 import HorizontalLine from "../../../lib/HorizontalLine";
 import { observer } from "mobx-react";
 import ControlCenterContentScrollWrapper from "./ControlCenterContentScrollWrapper";
+import { useUtilStore } from "../../../../state/Util.store";
+import { LoggedInScreen } from "../../../../@types/GlobalTypes";
 
 export interface ICONTROL_CENTER_DATA {
     icon: React.ReactNode;
@@ -18,6 +20,7 @@ export interface ICONTROL_CENTER_DATA {
 const ControlCenterContent = () => {
     const theme = useTheme();
     const authStore = useAuthStore();
+    const utilStore = useUtilStore();
 
     const CONTROL_CENTER_DATA: ICONTROL_CENTER_DATA[] = [
         {
@@ -28,7 +31,8 @@ const ControlCenterContent = () => {
         {
             icon: <DealsIcon />,
             text: "my catalog",
-            onClick: () => null,
+            onClick: () =>
+                utilStore.setCurrentLoggedInScreen(LoggedInScreen.CATALOG),
         },
         {
             icon: <DealsIcon />,

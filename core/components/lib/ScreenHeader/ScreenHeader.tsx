@@ -11,10 +11,12 @@ import CustomText from "../CustomText";
 import LeftArrowIcon from "../../../icons/common/leftArrow";
 import LargeButton from "../LargeButton";
 import { useTheme } from "../../../utils/useTheme.util";
+import { observer } from "mobx-react";
 
 export interface IScreenHeader {
     pfp?: boolean;
     photoURL?: string;
+    onPfpPress?: (event: GestureResponderEvent) => void;
     backArrow?: boolean;
     backArrowOnPress?: (event: GestureResponderEvent) => void;
     title: string;
@@ -44,13 +46,13 @@ const ScreenHeader = (props: IScreenHeader) => {
                     marginRight: "auto",
                 }}
             >
-                <TouchableOpacity
-                    onPress={
-                        props.backArrow ? props.backArrowOnPress : () => null
-                    }
-                >
-                    {props.backArrow && <LeftArrowIcon />}
-                    {props.pfp && (
+                {props.backArrow && (
+                    <TouchableOpacity onPress={props.backArrowOnPress}>
+                        <LeftArrowIcon />
+                    </TouchableOpacity>
+                )}
+                {props.pfp && (
+                    <TouchableOpacity onPress={props.onPfpPress}>
                         <Image
                             borderRadius={16} //TODO: Find a way to make this a string and just make this 50% without using styled-components/native
                             source={{
@@ -61,8 +63,8 @@ const ScreenHeader = (props: IScreenHeader) => {
                                 width: 32,
                             }}
                         />
-                    )}
-                </TouchableOpacity>
+                    </TouchableOpacity>
+                )}
             </View>
             <View
                 style={{ flex: 1, display: "flex", justifyContent: "center" }}
@@ -139,4 +141,4 @@ const ScreenHeader = (props: IScreenHeader) => {
     );
 };
 
-export default ScreenHeader;
+export default observer(ScreenHeader);

@@ -3,6 +3,7 @@ import { useHomeStore } from "../../../state/auth/Home.store";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { GLOBAL_STYLES } from "../../../@types/GlobalStyles";
 import ControlCenterContent from "./ControlCenterContent";
+import { observer } from "mobx-react";
 
 const ControlCenter = () => {
     const homeStore = useHomeStore();
@@ -39,4 +40,4 @@ const ControlCenter = () => {
     );
 };
 
-export default ControlCenter;
+export default observer(ControlCenter);
