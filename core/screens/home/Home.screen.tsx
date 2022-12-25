@@ -4,7 +4,7 @@ import { observer } from "mobx-react";
 import AuthStore, { useAuthStore } from "../../state/auth/Auth.store";
 import CustomText from "../../components/lib/CustomText";
 import LargeButton from "../../components/lib/LargeButton";
-import { auth } from "../../../config/firebase";
+import { auth, db } from "../../../config/firebase";
 import { fetchUserFromDb } from "../../utils/user.utils";
 import { CatalogStatus, IUser, LoggedInScreen } from "../../@types/GlobalTypes";
 import SignupStore, { useSignupStore } from "../../state/auth/Signup.store";
@@ -24,6 +24,9 @@ import ControlCenter from "../../components/home/ControlCenter";
 import ScreenHeader from "../../components/lib/ScreenHeader";
 import Switcher from "../../components/catalog/Dashboard/Switcher";
 import CustomTextInput from "../../components/lib/CustomTextInput";
+import ConversationInstance from "../../components/home/ConversationInstance";
+import { query, collection, where, onSnapshot } from "firebase/firestore";
+import { CONVERSATION } from "../../components/home/ConversationInstance/ConversationInstance";
 
 const HomeScreen = () => {
     const signupStore = useSignupStore();
@@ -32,13 +35,32 @@ const HomeScreen = () => {
     const utilStore = useUtilStore();
     const theme = useTheme();
     const homeStore = useHomeStore();
+    const [loading, setLoading] = React.useState<boolean>(true);
+    const [incomingConversations, setIncomingConversations] =
+        React.useState(null);
 
     React.useEffect(() => {
-        console.log("the user from the home screen: ");
-        console.log(authStore.user);
+        const q = query(
+            collection(db, "conversations"),
+            where("sellerUID", "==", auth.currentUser?.uid)
+        );
+
+        onSnapshot(q, querySnapshot => {
+            const fetched = [];
+
+            querySnapshot.forEach(documentSnapshot => {
+                fetched.push({
+                    ...documentSnapshot.data(),
+                    key: documentSnapshot.id,
+                });
+            });
+
+            setIncomingConversations(fetched);
+            setLoading(false);
+        });
     }, []);
 
-    if (authStore.userFetchLoading) {
+    if (authStore.userFetchLoading || loading) {
         return (
             <>
                 <CustomText accent>Loading...</CustomText>
@@ -89,34 +111,20 @@ const HomeScreen = () => {
                 <View
                     style={{
                         display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        width: "100%",
                         maxWidth: MAX_WIDTH,
+                        marginTop: 22,
                     }}
                 >
-                    <View style={{ display: "flex", flexDirection: "row" }}>
-                        <Image
-                            borderRadius={15.5} //TODO: Find a way to make this a string and just make this 50% without using styled-components/native
-                            source={{
-                                uri: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80",
-                            }}
-                            style={{
-                                height: 31,
-                                width: 31,
-                            }}
-                        />
-                        <View
-                            style={{ display: "flex", flexDirection: "column" }}
-                        >
-                            <CustomText>Jessica O'Malley</CustomText>
-                        </View>
-                    </View>
-                    <View style={{ display: "flex", flexDirection: "column" }}>
-                        <CustomText secondary>3:56pm</CustomText>
-                        <CustomText>3</CustomText>
-                    </View>
+                    {incomingConversations &&
+                        incomingConversations.map((elem, idx) => {
+                            return (
+                                <ConversationInstance
+                                    key={idx}
+                                    type={CONVERSATION.INCOMING}
+                                    data={elem}
+                                />
+                            );
+                        })}
                 </View>
             </View>
             <ControlCenter />

@@ -4,7 +4,7 @@ export interface IUser {
     email: string;
     photoURL: string;
     location?: string;
-    products?: IProduct[];
+    // products?: IProduct[];
 }
 
 export interface IProduct {
@@ -22,12 +22,19 @@ export interface IProduct {
     //TODO: Add more
 }
 
+export interface IConversation {
+    id: string;
+    sellerUID: string;
+    buyerUID: string;
+    linkedProductID: string;
+}
+
 export interface IOffer {
     id: string;
-    placedByUID: string;
-    linkedProductID: string;
+    linkedConversationID: string;
     amount: number;
     isCounterOffer?: boolean;
+    isReadByRecipient: boolean;
 }
 
 export interface ICategory {
