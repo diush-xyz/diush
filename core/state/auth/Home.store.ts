@@ -9,10 +9,10 @@ export default class HomeStore {
         makeAutoObservable(this);
     }
 
-    isSidebarOpen: boolean = false;
+    controlCenter: boolean = false;
 
-    setIsSidebarOpen(newStatus: boolean) {
-        this.isSidebarOpen = newStatus;
+    setControlCenter(newStatus: boolean) {
+        this.controlCenter = newStatus;
     }
 
     isIncomingChatsActive: boolean = true;

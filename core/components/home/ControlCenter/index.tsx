@@ -11,14 +11,14 @@ const ControlCenter = () => {
 
     return (
         <>
-            {homeStore.isSidebarOpen && (
+            {homeStore.controlCenter && (
                 <BottomSheet
                     handleIndicatorStyle={GLOBAL_STYLES.handleIndicatorStyle}
                     handleStyle={GLOBAL_STYLES.handleStyle}
                     ref={sheetRef}
                     snapPoints={["44%"]}
                     enablePanDownToClose={true}
-                    onClose={() => homeStore.setIsSidebarOpen(false)}
+                    onClose={() => homeStore.setControlCenter(false)}
                     style={{
                         shadowColor: "#000",
                         shadowOffset: {
