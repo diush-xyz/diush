@@ -83,14 +83,6 @@ const HomeScreen = () => {
                     onChangeText={() => null}
                     isSearch
                 />
-                <LargeButton
-                    title="my catalog"
-                    onPress={() =>
-                        utilStore.setCurrentLoggedInScreen(
-                            LoggedInScreen.CATALOG
-                        )
-                    }
-                />
             </View>
             <ControlCenter />
         </>

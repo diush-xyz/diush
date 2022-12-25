@@ -10,6 +10,7 @@ import { observer } from "mobx-react";
 import ControlCenterContentScrollWrapper from "./ControlCenterContentScrollWrapper";
 import { useUtilStore } from "../../../../state/Util.store";
 import { LoggedInScreen } from "../../../../@types/GlobalTypes";
+import { useHomeStore } from "../../../../state/auth/Home.store";
 
 export interface ICONTROL_CENTER_DATA {
     icon: React.ReactNode;
@@ -21,6 +22,7 @@ const ControlCenterContent = () => {
     const theme = useTheme();
     const authStore = useAuthStore();
     const utilStore = useUtilStore();
+    const homeStore = useHomeStore();
 
     const CONTROL_CENTER_DATA: ICONTROL_CENTER_DATA[] = [
         {
@@ -115,7 +117,10 @@ const ControlCenterContent = () => {
                                                 CONTROL_CENTER_DATA.length -
                                                     1 && 30,
                                     }}
-                                    onPress={elem.onClick}
+                                    onPress={() => {
+                                        elem.onClick();
+                                        homeStore.setControlCenter(false);
+                                    }}
                                 >
                                     {elem.icon}
                                     <CustomText
