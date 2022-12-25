@@ -30,7 +30,9 @@ export interface IConversation {
 }
 
 export interface IOffer {
+    placedByUID: string;
     id: string;
+    timestamp: Date;
     linkedConversationID: string;
     amount: number;
     isCounterOffer?: boolean;

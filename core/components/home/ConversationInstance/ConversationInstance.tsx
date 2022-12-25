@@ -25,6 +25,7 @@ const ConversationInstance = (props: IConversationInstance) => {
     const authStore = useAuthStore();
     const [otherUser, setOtherUser] = React.useState<IUser>(null);
     const [linkedProduct, setLinkedProduct] = React.useState(null);
+    const [offers, setOffers] = React.useState([]);
 
     const fetchOtherUser = () => {
         fetchUserFromDb({
@@ -50,9 +51,31 @@ const ConversationInstance = (props: IConversationInstance) => {
         });
     };
 
+    const fetchOffers = () => {
+        const q = query(
+            collection(db, "offers"),
+            where("linkedConversationID", "==", props.data.id)
+        );
+
+        onSnapshot(q, querySnapshot => {
+            const fetched = [];
+
+            querySnapshot.forEach(documentSnapshot => {
+                fetched.push({
+                    ...documentSnapshot.data(),
+                    key: documentSnapshot.id,
+                });
+            });
+
+            setOffers(fetched);
+            console.log(offers);
+        });
+    };
+
     React.useEffect(() => {
         fetchOtherUser();
         fetchLinkedProduct();
+        fetchOffers();
     }, []);
 
     return (
