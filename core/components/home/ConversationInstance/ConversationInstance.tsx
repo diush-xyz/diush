@@ -72,19 +72,8 @@ const ConversationInstance = (props: IConversationInstance) => {
             setOffers([]);
 
             querySnapshot.forEach(documentSnapshot => {
-                // fetched.push({
-                //     ...documentSnapshot.data(),
-                //     key: documentSnapshot.id,
-                // });
-
                 setOffers(prev => [...prev, documentSnapshot.data()]);
             });
-
-            // console.log("fetched: ");
-            // console.log(fetched);
-            // // setOffers(fetched);
-            // console.log("state: ");
-            // console.log(offers);
         });
     };
 
