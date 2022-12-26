@@ -3,7 +3,12 @@ import { View, Image } from "react-native";
 import { MAX_WIDTH } from "../../../utils/constants";
 import CustomText from "../../lib/CustomText";
 import { useTheme } from "../../../utils/useTheme.util";
-import { IConversation, IProduct, IUser } from "../../../@types/GlobalTypes";
+import {
+    IConversation,
+    IOffer,
+    IProduct,
+    IUser,
+} from "../../../@types/GlobalTypes";
 import { useAuthStore } from "../../../state/auth/Auth.store";
 import { observer } from "mobx-react";
 import { fetchUserFromDb } from "../../../utils/user.utils";
@@ -18,6 +23,7 @@ export enum CONVERSATION {
 interface IConversationInstance {
     type: CONVERSATION;
     data: IConversation;
+    canFetch: boolean;
 }
 
 const ConversationInstance = (props: IConversationInstance) => {
@@ -26,6 +32,10 @@ const ConversationInstance = (props: IConversationInstance) => {
     const [otherUser, setOtherUser] = React.useState<IUser>(null);
     const [linkedProduct, setLinkedProduct] = React.useState(null);
     const [offers, setOffers] = React.useState([]);
+    const [mostRecentOffer, setMostRecentOffer] = React.useState<IOffer>(null);
+    const [loading, setLoading] = React.useState<boolean>(true);
+    const [unreadOffersCount, setUnreadOffersCount] = React.useState<number>(0);
+    const [executeCount, setExecuteCount] = React.useState<number>(0);
 
     const fetchOtherUser = () => {
         fetchUserFromDb({
@@ -59,24 +69,83 @@ const ConversationInstance = (props: IConversationInstance) => {
 
         onSnapshot(q, querySnapshot => {
             const fetched = [];
+            setOffers([]);
 
             querySnapshot.forEach(documentSnapshot => {
-                fetched.push({
-                    ...documentSnapshot.data(),
-                    key: documentSnapshot.id,
-                });
+                // fetched.push({
+                //     ...documentSnapshot.data(),
+                //     key: documentSnapshot.id,
+                // });
+
+                setOffers(prev => [...prev, documentSnapshot.data()]);
             });
 
-            setOffers(fetched);
-            console.log(offers);
+            // console.log("fetched: ");
+            // console.log(fetched);
+            // // setOffers(fetched);
+            // console.log("state: ");
+            // console.log(offers);
         });
     };
 
-    React.useEffect(() => {
+    //get the offer that is the most recent based on its timestamp property
+    const getMostRecentOffer = () => {
+        let mostRecentOffer = null;
+        offers.forEach(offer => {
+            if (mostRecentOffer == null) {
+                mostRecentOffer = offer;
+            } else {
+                if (offer.timestamp > mostRecentOffer.timestamp) {
+                    mostRecentOffer = offer;
+                }
+            }
+        });
+        setMostRecentOffer(mostRecentOffer);
+    };
+
+    //get only the offers whose property isReadByRecipient is false
+    const getUnreadOffers = () => {
+        const unreadOffers = [];
+        offers.forEach(offer => {
+            if (!offer.isReadByRecipient) {
+                unreadOffers.push(offer);
+            }
+        });
+        setUnreadOffersCount(unreadOffers.length);
+    };
+
+    const execute = () => {
         fetchOtherUser();
         fetchLinkedProduct();
         fetchOffers();
-    }, []);
+
+        setExecuteCount(executeCount + 1);
+    };
+
+    React.useEffect(() => {
+        if (props.canFetch && executeCount == 0) {
+            execute();
+        }
+    }, [loading, props.canFetch]);
+
+    React.useEffect(() => {
+        if (offers.length > 0) {
+            getMostRecentOffer();
+            getUnreadOffers();
+        }
+    }, [offers]);
+
+    React.useEffect(() => {
+        if (otherUser == null || linkedProduct == null || offers.length == 0) {
+            setLoading(true);
+        } else {
+            setLoading(false);
+        }
+    }, [otherUser, linkedProduct, offers]);
+
+    if (loading && !props.canFetch) {
+        return <></>;
+    }
 
     return (
         <View
@@ -120,7 +189,8 @@ const ConversationInstance = (props: IConversationInstance) => {
                         style={{ marginBottom: 2 }}
                     >
                         {otherUser?.displayName}{" "}
-                        <CustomText secondary>•</CustomText> $95
+                        <CustomText secondary>•</CustomText> $
+                        {mostRecentOffer?.amount}
                     </CustomText>
                     {/* <CustomText
                 fontSize={14}
@@ -155,7 +225,7 @@ const ConversationInstance = (props: IConversationInstance) => {
                     }}
                 >
                     <CustomText fontSize={12} font="Semibold">
-                        3
+                        {unreadOffersCount?.toString()}
                     </CustomText>
                 </View>
             </View>

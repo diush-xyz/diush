@@ -36,8 +36,9 @@ const HomeScreen = () => {
     const theme = useTheme();
     const homeStore = useHomeStore();
     const [loading, setLoading] = React.useState<boolean>(true);
-    const [incomingConversations, setIncomingConversations] =
-        React.useState(null);
+    const [incomingConversations, setIncomingConversations] = React.useState(
+        []
+    );
 
     React.useEffect(() => {
         const q = query(
@@ -115,16 +116,20 @@ const HomeScreen = () => {
                         marginTop: 22,
                     }}
                 >
-                    {incomingConversations &&
-                        incomingConversations.map((elem, idx) => {
-                            return (
-                                <ConversationInstance
-                                    key={idx}
-                                    type={CONVERSATION.INCOMING}
-                                    data={elem}
-                                />
-                            );
-                        })}
+                    {incomingConversations.length > 0
+                        ? incomingConversations.map((elem, idx) => {
+                              return (
+                                  <ConversationInstance
+                                      key={idx}
+                                      type={CONVERSATION.INCOMING}
+                                      data={elem}
+                                      canFetch={
+                                          incomingConversations.length > 0
+                                      }
+                                  />
+                              );
+                          })
+                        : null}
                 </View>
             </View>
             <ControlCenter />
