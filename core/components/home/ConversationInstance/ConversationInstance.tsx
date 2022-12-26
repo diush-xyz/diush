@@ -14,6 +14,7 @@ import { observer } from "mobx-react";
 import { fetchUserFromDb } from "../../../utils/user.utils";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../../../../config/firebase";
+import TimeAgo from "javascript-time-ago";
 
 export enum CONVERSATION {
     INCOMING,
@@ -33,6 +34,8 @@ const ConversationInstance = (props: IConversationInstance) => {
     const [linkedProduct, setLinkedProduct] = React.useState(null);
     const [offers, setOffers] = React.useState([]);
     const [mostRecentOffer, setMostRecentOffer] = React.useState<IOffer>(null);
+    const [mostRecentOfferTimeAgo, setMostRecentOfferTimeAgo] =
+        React.useState<string>(null);
     const [loading, setLoading] = React.useState<boolean>(true);
     const [unreadOffersCount, setUnreadOffersCount] = React.useState<number>(0);
     const [executeCount, setExecuteCount] = React.useState<number>(0);
@@ -72,10 +75,17 @@ const ConversationInstance = (props: IConversationInstance) => {
             setOffers([]);
 
             querySnapshot.forEach(documentSnapshot => {
+                console.log(documentSnapshot.data().timestamp);
                 setOffers(prev => [...prev, documentSnapshot.data()]);
             });
         });
     };
+
+    function toDateTime(secs) {
+        var t = new Date(1970, 0, 1); // Epoch
+        t.setSeconds(secs);
+        return t;
+    }
 
     //get the offer that is the most recent based on its timestamp property
     const getMostRecentOffer = () => {
@@ -89,6 +99,26 @@ const ConversationInstance = (props: IConversationInstance) => {
                 }
             }
         });
+
+        // const dateObj = toDateTime(mostRecentOffer.timestamp.seconds);
+
+        // console.log("tuki: ");
+        // console.log(dateObj);
+
+        // //@ts-ignore
+        // setMostRecentOfferTimeAgo(timeSince(new Date(Date.now() - dateObj)));
+        // Create formatter (English).
+        const tAgo = new TimeAgo("en-US");
+        console.log("recap: ");
+        console.log(Date.now());
+        console.log(mostRecentOffer.timestamp.seconds);
+        const ms = mostRecentOffer.timestamp.seconds;
+        const offerTimeAgo = tAgo.format(
+            1672037221955 - 1672037182785 / 1000,
+            "mini-now"
+        );
+        setMostRecentOfferTimeAgo(offerTimeAgo);
+        console.log(offerTimeAgo);
         setMostRecentOffer(mostRecentOffer);
     };
 
@@ -200,7 +230,7 @@ const ConversationInstance = (props: IConversationInstance) => {
                     alignItems: "flex-end",
                 }}
             >
-                <CustomText secondary>3:56pm</CustomText>
+                <CustomText secondary>{mostRecentOfferTimeAgo}</CustomText>
                 <View
                     style={{
                         paddingVertical: 2,

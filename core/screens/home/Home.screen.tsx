@@ -27,6 +27,8 @@ import CustomTextInput from "../../components/lib/CustomTextInput";
 import ConversationInstance from "../../components/home/ConversationInstance";
 import { query, collection, where, onSnapshot } from "firebase/firestore";
 import { CONVERSATION } from "../../components/home/ConversationInstance/ConversationInstance";
+import { createOfferInDb } from "../../utils/offers.util";
+import { v4 as uuidv4 } from "uuid";
 
 const HomeScreen = () => {
     const signupStore = useSignupStore();
@@ -131,6 +133,19 @@ const HomeScreen = () => {
                           })
                         : null}
                 </View>
+                <LargeButton
+                    title="create offer"
+                    onPress={() => {
+                        createOfferInDb({
+                            id: uuidv4(),
+                            amount: 800,
+                            isReadByRecipient: false,
+                            linkedConversationID: "qkLN7ikP9MS3eO7JhmyY",
+                            placedByUID: "7kJNkJEE99budW0BO4cEBjyYLOs1",
+                            timestamp: new Date(),
+                        });
+                    }}
+                />
             </View>
             <ControlCenter />
         </>

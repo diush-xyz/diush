@@ -23,6 +23,8 @@ import {
     TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
 import CopiedIndicator from "./core/components/lib/CopiedIndicator";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
 
 const App = () => {
     const [isAppReady, setIsAppReady] = React.useState<boolean>(false);
@@ -37,6 +39,7 @@ const App = () => {
     // }
 
     React.useEffect(() => {
+        TimeAgo.addDefaultLocale(en);
         async function prepare() {
             try {
                 //TODO: come back later (reference: https://github.com/expo/expo/issues/8067)
