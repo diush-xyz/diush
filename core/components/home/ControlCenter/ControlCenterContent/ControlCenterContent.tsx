@@ -11,6 +11,7 @@ import ControlCenterContentScrollWrapper from "./ControlCenterContentScrollWrapp
 import { useUtilStore } from "../../../../state/Util.store";
 import { LoggedInScreen } from "../../../../@types/GlobalTypes";
 import { useHomeStore } from "../../../../state/auth/Home.store";
+import ProfileImage from "../../../lib/ProfileImage";
 
 export interface ICONTROL_CENTER_DATA {
     icon: React.ReactNode;
@@ -77,18 +78,10 @@ const ControlCenterContent = () => {
                     }}
                 >
                     <View style={{ display: "flex" }}>
-                        <Image
-                            borderRadius={27.5} //TODO: Find a way to make this a string and just make this 50% without using styled-components/native
-                            source={{
-                                uri:
-                                    authStore.user.photoURL ??
-                                    "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80",
-                            }}
-                            style={{
-                                height: 55,
-                                width: 55,
-                                marginBottom: 12,
-                            }}
+                        <ProfileImage
+                            specificUser={authStore.user}
+                            size={55}
+                            style={{ marginBottom: 12 }}
                         />
                         <CustomText font="Bold" fontSize={19}>
                             {authStore.user.displayName}
