@@ -11,7 +11,7 @@ import KeyboardListener from "react-native-keyboard-listener";
 import { useUtilStore } from "./core/state/Util.store";
 import { useAuthStore } from "./core/state/auth/Auth.store";
 import { AuthStatus, IUser } from "./core/@types/GlobalTypes";
-import HomeScreen from "./core/screens/home/Home.screen";
+import HomeScreen from "./core/screens/home/HomeBase/HomeBase.screen";
 import { observer } from "mobx-react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/firebase";

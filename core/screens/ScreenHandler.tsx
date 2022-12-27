@@ -3,8 +3,8 @@ import React from "react";
 import { observer } from "mobx-react";
 import { useUtilStore } from "../state/Util.store";
 import { LoggedInScreen } from "../@types/GlobalTypes";
-import HomeScreen from "./home/Home.screen";
 import CatalogScreen from "./catalog/Catalog.screen";
+import HomeScreen from "./home/Home.screen";
 
 const ScreenHandler = () => {
     const utilStore = useUtilStore();

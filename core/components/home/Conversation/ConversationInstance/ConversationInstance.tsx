@@ -1,17 +1,17 @@
 import React from "react";
-import { View, Image } from "react-native";
-import { MAX_WIDTH } from "../../../utils/constants";
-import CustomText from "../../lib/CustomText";
-import { useTheme } from "../../../utils/useTheme.util";
+import { View, Image, TouchableOpacity } from "react-native";
+import { MAX_WIDTH } from "../../../../utils/constants";
+import CustomText from "../../../lib/CustomText";
+import { useTheme } from "../../../../utils/useTheme.util";
 import {
     IConversation,
     IOffer,
     IProduct,
     IUser,
-} from "../../../@types/GlobalTypes";
-import { useAuthStore } from "../../../state/auth/Auth.store";
+} from "../../../../@types/GlobalTypes";
+import { useAuthStore } from "../../../../state/auth/Auth.store";
 import { observer } from "mobx-react";
-import { fetchUserFromDb } from "../../../utils/user.utils";
+import { fetchUserFromDb } from "../../../../utils/user.utils";
 import {
     Timestamp,
     collection,
@@ -19,7 +19,7 @@ import {
     query,
     where,
 } from "firebase/firestore";
-import { db } from "../../../../config/firebase";
+import { db } from "../../../../../config/firebase";
 import TimeAgo from "javascript-time-ago";
 
 export enum CONVERSATION {
@@ -31,6 +31,7 @@ interface IConversationInstance {
     type: CONVERSATION;
     data: IConversation;
     canFetch: boolean;
+    onPress: () => void;
 }
 
 const ConversationInstance = (props: IConversationInstance) => {
@@ -173,7 +174,8 @@ const ConversationInstance = (props: IConversationInstance) => {
     }
 
     return (
-        <View
+        <TouchableOpacity
+            onPress={() => props.onPress()}
             style={{
                 display: "flex",
                 flexDirection: "row",
@@ -254,7 +256,7 @@ const ConversationInstance = (props: IConversationInstance) => {
                     </CustomText>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 };
 

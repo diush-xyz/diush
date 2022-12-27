@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import React from "react";
+import { IConversation } from "../../@types/GlobalTypes";
 
 /**
  * A store to handle anything signup-related.
