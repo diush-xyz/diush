@@ -15,6 +15,7 @@ import RoundedMoreIcon from "../../../../icons/common/RoundedMore";
 import { useCatalogStore } from "../../../../state/auth/Catalog.store";
 import { useConversationStore } from "../../../../state/auth/Conversation.store";
 import MoreIcon from "../../../../icons/common/more";
+import ProfileImage from "../../../lib/ProfileImage";
 
 /**
  * Acts as a nav bar (header) of sorts.
@@ -53,18 +54,13 @@ const CustomDMScreenHeader = () => {
                     }}
                 >
                     <View style={{ display: "flex", flexDirection: "row" }}>
-                        <Image
-                            borderRadius={11} //TODO: Find a way to make this a string and just make this 50% without using styled-components/native
-                            source={{
-                                uri: "https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?cs=srgb&dl=pexels-suliman-sallehi-1704488.jpg&fm=jpg",
-                            }}
-                            style={{
-                                height: 22,
-                                width: 22,
-                                borderColor: theme.accent,
-                                borderWidth: 2,
-                                marginRight: 8,
-                            }}
+                        <ProfileImage
+                            specificUser={
+                                conversationStore.activeConvoOtherUser
+                            }
+                            size={22}
+                            border
+                            style={{ marginRight: 8 }}
                         />
                         <CustomText
                             primary
