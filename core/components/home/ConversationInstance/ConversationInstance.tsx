@@ -12,7 +12,13 @@ import {
 import { useAuthStore } from "../../../state/auth/Auth.store";
 import { observer } from "mobx-react";
 import { fetchUserFromDb } from "../../../utils/user.utils";
-import { collection, onSnapshot, query, where } from "firebase/firestore";
+import {
+    Timestamp,
+    collection,
+    onSnapshot,
+    query,
+    where,
+} from "firebase/firestore";
 import { db } from "../../../../config/firebase";
 import TimeAgo from "javascript-time-ago";
 
@@ -114,9 +120,9 @@ const ConversationInstance = (props: IConversationInstance) => {
         console.log(mostRecentOffer.timestamp.seconds);
         const ms = mostRecentOffer.timestamp.seconds;
         const offerTimeAgo = tAgo.format(
-            1672037221955 - 1672037182785 / 1000,
+            Date.now() - mostRecentOffer.timestamp.seconds * 1000,
             "mini-now"
-        );
+        ); //TODO: Fix (erroneous reading provided)
         setMostRecentOfferTimeAgo(offerTimeAgo);
         console.log(offerTimeAgo);
         setMostRecentOffer(mostRecentOffer);
