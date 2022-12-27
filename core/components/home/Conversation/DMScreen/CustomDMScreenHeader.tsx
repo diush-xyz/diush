@@ -14,6 +14,7 @@ import CustomText from "../../../lib/CustomText";
 import RoundedMoreIcon from "../../../../icons/common/RoundedMore";
 import { useCatalogStore } from "../../../../state/auth/Catalog.store";
 import { useConversationStore } from "../../../../state/auth/Conversation.store";
+import MoreIcon from "../../../../icons/common/more";
 
 /**
  * Acts as a nav bar (header) of sorts.
@@ -91,8 +92,7 @@ const CustomDMScreenHeader = () => {
                         marginLeft: "auto",
                     }}
                 >
-                    {/*TODO: Change icon*/}
-                    <RoundedMoreIcon />
+                    <MoreIcon />
                 </View>
             </View>
         </HeaderWrapper>
