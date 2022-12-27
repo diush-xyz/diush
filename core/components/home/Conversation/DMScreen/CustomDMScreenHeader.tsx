@@ -12,12 +12,16 @@ import { useTheme } from "../../../../utils/useTheme.util";
 import LeftArrowIcon from "../../../../icons/common/leftArrow";
 import CustomText from "../../../lib/CustomText";
 import RoundedMoreIcon from "../../../../icons/common/RoundedMore";
+import { useCatalogStore } from "../../../../state/auth/Catalog.store";
+import { useConversationStore } from "../../../../state/auth/Conversation.store";
 
 /**
  * Acts as a nav bar (header) of sorts.
  */
 const CustomDMScreenHeader = () => {
     const theme = useTheme();
+    const conversationStore = useConversationStore();
+
     return (
         <HeaderWrapper>
             <View
@@ -28,7 +32,11 @@ const CustomDMScreenHeader = () => {
                     marginRight: "auto",
                 }}
             >
-                <TouchableOpacity onPress={() => null}>
+                <TouchableOpacity
+                    onPress={() =>
+                        conversationStore.setActiveConversation(null)
+                    }
+                >
                     <LeftArrowIcon />
                 </TouchableOpacity>
             </View>
@@ -63,7 +71,7 @@ const CustomDMScreenHeader = () => {
                             font="Bold"
                             fontSize={18}
                         >
-                            Jessica
+                            {conversationStore.activeConvoOtherUser.displayName}
                         </CustomText>
                     </View>
                     {/* <CustomText secondary textAlign="center" fontSize={16}>

@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import React from "react";
-import { IConversation } from "../../@types/GlobalTypes";
+import { IConversation, IUser } from "../../@types/GlobalTypes";
 
 /**
  * A store to handle anything signup-related.
@@ -14,6 +14,12 @@ export default class ConversationStore {
 
     setActiveConversation(conversation: IConversation) {
         this.activeConversation = conversation;
+    }
+
+    activeConvoOtherUser: IUser = null;
+
+    setActiveConvoOtherUser(user: IUser) {
+        this.activeConvoOtherUser = user;
     }
 }
 

@@ -21,6 +21,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../../../../config/firebase";
 import TimeAgo from "javascript-time-ago";
+import { useConversationStore } from "../../../../state/auth/Conversation.store";
 
 export enum CONVERSATION {
     INCOMING,
@@ -35,6 +36,7 @@ interface IConversationInstance {
 }
 
 const ConversationInstance = (props: IConversationInstance) => {
+    const conversationStore = useConversationStore();
     const theme = useTheme();
     const authStore = useAuthStore();
     const [otherUser, setOtherUser] = React.useState<IUser>(null);
@@ -175,7 +177,10 @@ const ConversationInstance = (props: IConversationInstance) => {
 
     return (
         <TouchableOpacity
-            onPress={() => props.onPress()}
+            onPress={() => {
+                props.onPress();
+                conversationStore.setActiveConvoOtherUser(otherUser);
+            }}
             style={{
                 display: "flex",
                 flexDirection: "row",
