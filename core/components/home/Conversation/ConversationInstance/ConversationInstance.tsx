@@ -22,6 +22,7 @@ import {
 import { db } from "../../../../../config/firebase";
 import TimeAgo from "javascript-time-ago";
 import { useConversationStore } from "../../../../state/auth/Conversation.store";
+import { getInitials } from "../../../../utils/initials.util";
 
 export enum CONVERSATION {
     INCOMING,
@@ -196,18 +197,38 @@ const ConversationInstance = (props: IConversationInstance) => {
                     alignItems: "center",
                 }}
             >
-                <Image
-                    borderRadius={17.5} //TODO: Find a way to make this a string and just make this 50% without using styled-components/native
-                    source={{
-                        uri: "https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?cs=srgb&dl=pexels-suliman-sallehi-1704488.jpg&fm=jpg",
-                    }}
-                    style={{
-                        height: 35,
-                        width: 35,
-                        borderColor: theme.accent,
-                        borderWidth: 2,
-                    }}
-                />
+                {otherUser?.photoURL ? (
+                    <Image
+                        borderRadius={17.5} //TODO: Find a way to make this a string and just make this 50% without using styled-components/native
+                        source={{
+                            uri: "https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?cs=srgb&dl=pexels-suliman-sallehi-1704488.jpg&fm=jpg",
+                        }}
+                        style={{
+                            height: 35,
+                            width: 35,
+                            borderColor: theme.accent,
+                            borderWidth: 2,
+                        }}
+                    />
+                ) : (
+                    <View
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            borderRadius: 17.5,
+                            height: 35,
+                            width: 35,
+                            padding: 5,
+                            backgroundColor: theme.accent,
+                        }}
+                    >
+                        <CustomText>
+                            {getInitials(otherUser?.displayName)}
+                        </CustomText>
+                    </View>
+                )}
+
                 <View
                     style={{
                         display: "flex",
