@@ -12,6 +12,8 @@ import LeftArrowIcon from "../../../icons/common/leftArrow";
 import LargeButton from "../LargeButton";
 import { useTheme } from "../../../utils/useTheme.util";
 import { observer } from "mobx-react";
+import ProfileImage from "../ProfileImage";
+import { useAuthStore } from "../../../state/auth/Auth.store";
 
 export interface IScreenHeader {
     pfp?: boolean;
@@ -36,6 +38,8 @@ export interface IScreenHeader {
  */
 const ScreenHeader = (props: IScreenHeader) => {
     const theme = useTheme();
+    const authStore = useAuthStore();
+
     return (
         <HeaderWrapper style={{ paddingBottom: props.paddingBottom ?? null }}>
             <View
@@ -53,16 +57,7 @@ const ScreenHeader = (props: IScreenHeader) => {
                 )}
                 {props.pfp && (
                     <TouchableOpacity onPress={props.onPfpPress}>
-                        <Image
-                            borderRadius={16} //TODO: Find a way to make this a string and just make this 50% without using styled-components/native
-                            source={{
-                                uri: props.photoURL,
-                            }}
-                            style={{
-                                height: 32,
-                                width: 32,
-                            }}
-                        />
+                        <ProfileImage specificUser={authStore.user} size={32} />
                     </TouchableOpacity>
                 )}
             </View>

@@ -198,7 +198,7 @@ const ConversationInstance = (props: IConversationInstance) => {
                     alignItems: "center",
                 }}
             >
-                <ProfileImage specificUser={otherUser} size={35} />
+                <ProfileImage specificUser={otherUser} size={35} border />
                 <View
                     style={{
                         display: "flex",

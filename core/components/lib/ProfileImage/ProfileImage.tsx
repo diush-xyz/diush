@@ -18,6 +18,7 @@ interface IProfileImage {
     specificUser: IUser;
     size: number;
     style?: StyleProp<ViewStyle>;
+    border?: boolean;
 }
 
 const ProfileImage = (props: IProfileImage) => {
@@ -27,18 +28,18 @@ const ProfileImage = (props: IProfileImage) => {
     const fontSize = props.size / 2.5;
 
     return (
-        <TouchableOpacity style={props.style}>
+        <View style={props.style}>
             {props.specificUser?.photoURL ? (
                 <Image
                     borderRadius={BORDER_RADIUS} //TODO: Find a way to make this a string and just make this 50% without using styled-components/native
                     source={{
-                        uri: "https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?cs=srgb&dl=pexels-suliman-sallehi-1704488.jpg&fm=jpg",
+                        uri: props.specificUser?.photoURL,
                     }}
                     style={{
                         height: props.size,
                         width: props.size,
-                        borderColor: theme.accent,
-                        borderWidth: 2,
+                        borderColor: props.border ? theme.accent : null,
+                        borderWidth: props.border ? 2 : 0,
                     }}
                 />
             ) : (
@@ -60,7 +61,7 @@ const ProfileImage = (props: IProfileImage) => {
                     </CustomText>
                 </View>
             )}
-        </TouchableOpacity>
+        </View>
     );
 };
 
