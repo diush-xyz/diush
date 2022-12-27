@@ -24,6 +24,8 @@ const ProfileImage = (props: IProfileImage) => {
     const theme = useTheme();
     const BORDER_RADIUS = props.size / 2;
 
+    const fontSize = props.size / 2.5;
+
     return (
         <TouchableOpacity style={props.style}>
             {props.specificUser?.photoURL ? (
@@ -52,7 +54,7 @@ const ProfileImage = (props: IProfileImage) => {
                         backgroundColor: theme.accent,
                     }}
                 >
-                    <CustomText>
+                    <CustomText fontSize={fontSize}>
                         {props.specificUser &&
                             getInitials(props.specificUser?.displayName)}
                     </CustomText>
