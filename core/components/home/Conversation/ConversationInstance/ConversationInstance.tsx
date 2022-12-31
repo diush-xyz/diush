@@ -24,6 +24,7 @@ import TimeAgo from "javascript-time-ago";
 import { useConversationStore } from "../../../../state/auth/Conversation.store";
 import { getInitials } from "../../../../utils/initials.util";
 import ProfileImage from "../../../lib/ProfileImage";
+import dayjs from "dayjs";
 
 export enum CONVERSATION {
     INCOMING,
@@ -50,6 +51,9 @@ const ConversationInstance = (props: IConversationInstance) => {
     const [loading, setLoading] = React.useState<boolean>(true);
     const [unreadOffersCount, setUnreadOffersCount] = React.useState<number>(0);
     const [executeCount, setExecuteCount] = React.useState<number>(0);
+
+    const relativeTime = require("dayjs/plugin/relativeTime");
+    dayjs.extend(relativeTime);
 
     const fetchOtherUser = () => {
         fetchUserFromDb({
@@ -92,12 +96,6 @@ const ConversationInstance = (props: IConversationInstance) => {
         });
     };
 
-    function toDateTime(secs) {
-        var t = new Date(1970, 0, 1); // Epoch
-        t.setSeconds(secs);
-        return t;
-    }
-
     //get the offer that is the most recent based on its timestamp property
     const getMostRecentOffer = () => {
         let mostRecentOffer = null;
@@ -110,26 +108,13 @@ const ConversationInstance = (props: IConversationInstance) => {
                 }
             }
         });
+        const parsed = dayjs.unix(mostRecentOffer.timestamp.seconds);
 
-        // const dateObj = toDateTime(mostRecentOffer.timestamp.seconds);
-
-        // console.log("tuki: ");
-        // console.log(dateObj);
-
-        // //@ts-ignore
-        // setMostRecentOfferTimeAgo(timeSince(new Date(Date.now() - dateObj)));
-        // Create formatter (English).
-        const tAgo = new TimeAgo("en-US");
-        console.log("recap: ");
-        console.log(Date.now());
-        console.log(mostRecentOffer.timestamp.seconds);
-        const ms = mostRecentOffer.timestamp.seconds;
-        const offerTimeAgo = tAgo.format(
-            Date.now() - mostRecentOffer.timestamp.seconds * 1000,
-            "mini-now"
-        ); //TODO: Fix (erroneous reading provided)
-        setMostRecentOfferTimeAgo(offerTimeAgo);
-        console.log(offerTimeAgo);
+        //TWO ACTIONS:
+        setMostRecentOfferTimeAgo(
+            //@ts-ignore
+            dayjs(parsed).fromNow()
+        );
         setMostRecentOffer(mostRecentOffer);
     };
 
