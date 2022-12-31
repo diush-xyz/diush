@@ -165,7 +165,9 @@ const OfferCard = (props: IOfferCard) => {
                             }}
                         >
                             <CustomText>status</CustomText>
-                            <CustomText>{props.offer.status}</CustomText>
+                            <CustomText>
+                                {props.offer.status.toLowerCase()}
+                            </CustomText>
                         </View>
                     </View>
                     <LargeButton title="review offer" onPress={() => null} />
