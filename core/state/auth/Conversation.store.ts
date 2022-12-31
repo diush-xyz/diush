@@ -1,6 +1,11 @@
 import { makeAutoObservable } from "mobx";
 import React from "react";
-import { IConversation, IOffer, IUser } from "../../@types/GlobalTypes";
+import {
+    IConversation,
+    IOffer,
+    IProduct,
+    IUser,
+} from "../../@types/GlobalTypes";
 
 /**
  * A store to handle anything signup-related.
@@ -26,6 +31,12 @@ export default class ConversationStore {
 
     setActiveConversationOffers(offers: IOffer[]) {
         this.activeConversationOffers = offers;
+    }
+
+    activeConversationProduct: IProduct = null;
+
+    setActiveConversationProduct(product: IProduct) {
+        this.activeConversationProduct = product;
     }
 }
 

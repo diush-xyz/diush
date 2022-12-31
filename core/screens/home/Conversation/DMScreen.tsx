@@ -12,6 +12,7 @@ import OfferCard from "../../../components/lib/OfferCard";
 const DMScreen = () => {
     const conversationStore = useConversationStore();
     const [offers, setOffers] = React.useState([]);
+    const [linkedProduct, setLinkedProduct] = React.useState(null);
 
     const fetchOffers = () => {
         const q = query(
@@ -34,14 +35,35 @@ const DMScreen = () => {
         });
     };
 
+    const fetchLinkedProduct = () => {
+        const q = query(
+            collection(db, "products"),
+            where(
+                "id",
+                "==",
+                conversationStore.activeConversation.linkedProductID
+            )
+        );
+        onSnapshot(q, querySnapshot => {
+            querySnapshot.forEach(doc => {
+                setLinkedProduct(doc.data());
+            });
+        });
+    };
+
     React.useEffect(() => {
         fetchOffers();
+        fetchLinkedProduct();
     }, []);
 
     React.useEffect(() => {
         conversationStore.setActiveConversationOffers(offers);
         console.log(conversationStore.activeConversationOffers);
     }, [offers]);
+
+    React.useEffect(() => {
+        conversationStore.setActiveConversationProduct(linkedProduct);
+    }, [linkedProduct]);
 
     return (
         <View
@@ -54,9 +76,14 @@ const DMScreen = () => {
         >
             <CustomDMScreenHeader />
             {conversationStore.activeConversationOffers?.map((elem, idx) => {
-                return <CustomText>{elem.amount}</CustomText>;
+                return (
+                    <OfferCard
+                        specificUser={conversationStore.activeConvoOtherUser}
+                        offer={elem}
+                        product={conversationStore.activeConversationProduct}
+                    />
+                );
             })}
-            <OfferCard title="The best" />
         </View>
     );
 };

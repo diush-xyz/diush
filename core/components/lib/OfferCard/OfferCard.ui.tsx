@@ -1,5 +1,6 @@
 import React from "react";
 import {
+    Image,
     NativeSyntheticEvent,
     NativeTouchEvent,
     StyleProp,
@@ -14,6 +15,8 @@ import { useTheme } from "../../../utils/useTheme.util";
 import { MAX_WIDTH } from "../../../utils/constants";
 import LargeButton from "../LargeButton";
 import SmallButton from "../SmallButton";
+import ProfileImage from "../ProfileImage";
+import { IOffer, IProduct, IUser } from "../../../@types/GlobalTypes";
 
 //TODO: Must add proper gradient background to button (not working, blank for now)
 
@@ -56,7 +59,9 @@ export const CustomChildOfferCard = (props: ICustomChildOfferCard) => {
 };
 
 interface IOfferCard {
-    title: string;
+    specificUser: IUser;
+    offer: IOffer;
+    product: IProduct;
 }
 
 /**
@@ -65,6 +70,7 @@ interface IOfferCard {
  */
 const OfferCard = (props: IOfferCard) => {
     const theme = useTheme();
+
     return (
         <View style={{ display: "flex", width: "100%" }}>
             <CustomChildOfferCard
@@ -87,15 +93,41 @@ const OfferCard = (props: IOfferCard) => {
                         justifyContent: "space-between",
                     }}
                 >
-                    <CustomText
-                        primary
-                        font="Bold"
-                        style={{
-                            alignSelf: "center",
-                        }}
-                    >
-                        {props.title}
-                    </CustomText>
+                    <View style={{ display: "flex", flexDirection: "row" }}>
+                        <Image
+                            source={{
+                                uri: "https://i.dailymail.co.uk/1s/2022/09/15/20/62457065-0-image-a-16_1663270200100.jpg",
+                            }}
+                            style={{ height: 29, width: 41 }}
+                        />
+                        <View style={{ display: "flex" }}>
+                            <CustomText
+                                primary
+                                font="Heavy"
+                                fontSize={16}
+                                style={{
+                                    alignSelf: "flex-start",
+                                }}
+                            >
+                                {props.product.title}
+                            </CustomText>
+                            <View
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                }}
+                            >
+                                <ProfileImage
+                                    specificUser={props.specificUser}
+                                    size={14}
+                                />
+                                <CustomText secondary style={{ marginLeft: 5 }}>
+                                    {props.specificUser.displayName} • $
+                                    {props.offer?.amount}
+                                </CustomText>
+                            </View>
+                        </View>
+                    </View>
                     <LargeButton title="review offer" onPress={() => null} />
                 </View>
             </CustomChildOfferCard>
