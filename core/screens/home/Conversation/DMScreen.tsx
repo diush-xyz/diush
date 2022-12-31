@@ -8,6 +8,8 @@ import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../../../../config/firebase";
 import CustomText from "../../../components/lib/CustomText";
 import OfferCard from "../../../components/lib/OfferCard";
+import ProfileImage from "../../../components/lib/ProfileImage";
+import { MAX_WIDTH } from "../../../utils/constants";
 
 const DMScreen = () => {
     const conversationStore = useConversationStore();
@@ -68,10 +70,9 @@ const DMScreen = () => {
     return (
         <View
             style={{
-                alignItems: "center",
                 flex: 1,
                 marginTop: 55,
-                width: "100%",
+                justifyContent: "center",
             }}
         >
             <CustomDMScreenHeader />
@@ -79,15 +80,38 @@ const DMScreen = () => {
                 {conversationStore.activeConversationOffers?.map(
                     (elem, idx) => {
                         return (
-                            <OfferCard
-                                specificUser={
-                                    conversationStore.activeConvoOtherUser
-                                }
-                                offer={elem}
-                                product={
-                                    conversationStore.activeConversationProduct
-                                }
-                            />
+                            <View
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    marginTop: idx == 0 && 16,
+                                }}
+                            >
+                                <View
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "flex-end",
+                                    }}
+                                >
+                                    <ProfileImage
+                                        specificUser={
+                                            conversationStore.activeConvoOtherUser
+                                        }
+                                        size={40}
+                                    />
+                                </View>
+                                <View>
+                                    <OfferCard
+                                        specificUser={
+                                            conversationStore.activeConvoOtherUser
+                                        }
+                                        offer={elem}
+                                        product={
+                                            conversationStore.activeConversationProduct
+                                        }
+                                    />
+                                </View>
+                            </View>
                         );
                     }
                 )}

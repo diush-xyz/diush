@@ -25,7 +25,13 @@ const CustomDMScreenHeader = () => {
     const conversationStore = useConversationStore();
 
     return (
-        <HeaderWrapper>
+        <HeaderWrapper
+            style={{
+                paddingBottom: 16,
+                borderBottomWidth: 1,
+                borderBottomColor: "#ffffff0D",
+            }}
+        >
             <View
                 style={{
                     flex: 1,

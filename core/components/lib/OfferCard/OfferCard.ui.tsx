@@ -77,7 +77,6 @@ const OfferCard = (props: IOfferCard) => {
                 style={{
                     flex: 1.0,
                     paddingVertical: 15,
-                    alignSelf: "center",
                     justifyContent: "center",
                     width: "100%",
                     backgroundColor: theme.background,
