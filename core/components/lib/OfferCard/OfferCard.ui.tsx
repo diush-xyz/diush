@@ -49,10 +49,10 @@ export const CustomChildOfferCard = (props: ICustomChildOfferCard) => {
                     maxWidth: MAX_WIDTH,
                 }}
             >
-                <TouchableOpacity style={props.style}>
+                <View style={props.style}>
                     {/*@ts-ignore*/}
                     {props.children}
-                </TouchableOpacity>
+                </View>
             </LinearGradient>
         </>
     );
