@@ -41,7 +41,7 @@ export const CustomChildOfferCard = (props: ICustomChildOfferCard) => {
                 end={{ x: 1.0, y: 1.0 }}
                 style={{
                     height: 180,
-                    width: "100%",
+                    width: 281,
                     justifyContent: "center",
                     alignSelf: "center",
                     borderRadius: 22,
@@ -89,18 +89,23 @@ const OfferCard = (props: IOfferCard) => {
                     style={{
                         height: "100%",
                         display: "flex",
-                        alignItems: "center",
                         justifyContent: "space-between",
                     }}
                 >
-                    <View style={{ display: "flex", flexDirection: "row" }}>
+                    <View
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                        }}
+                    >
                         <Image
                             source={{
                                 uri: "https://i.dailymail.co.uk/1s/2022/09/15/20/62457065-0-image-a-16_1663270200100.jpg",
                             }}
-                            style={{ height: 29, width: 41 }}
+                            style={{ height: 29, width: 41, borderRadius: 5 }}
                         />
-                        <View style={{ display: "flex" }}>
+                        <View style={{ display: "flex", marginLeft: 11 }}>
                             <CustomText
                                 primary
                                 font="Heavy"
@@ -115,15 +120,23 @@ const OfferCard = (props: IOfferCard) => {
                                 style={{
                                     display: "flex",
                                     flexDirection: "row",
+                                    marginTop: 5,
                                 }}
                             >
                                 <ProfileImage
                                     specificUser={props.specificUser}
                                     size={14}
                                 />
-                                <CustomText secondary style={{ marginLeft: 5 }}>
-                                    {props.specificUser.displayName} • $
-                                    {props.offer?.amount}
+                                <CustomText
+                                    font="Bold"
+                                    secondary
+                                    fontSize={14}
+                                    style={{ marginLeft: 5 }}
+                                >
+                                    {props.specificUser.displayName} •{" "}
+                                    <CustomText accent fontSize={14}>
+                                        ${props.offer?.amount}
+                                    </CustomText>
                                 </CustomText>
                             </View>
                         </View>
