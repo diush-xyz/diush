@@ -37,6 +37,7 @@ export interface IOffer {
     amount: number;
     isCounterOffer?: boolean;
     isReadByRecipient: boolean;
+    status: OfferStatus;
 }
 
 export interface ICategory {
@@ -77,4 +78,10 @@ export enum CatalogStatus {
     VIEW,
     EDIT,
     DELETE,
+}
+
+export enum OfferStatus {
+    PENDING = "PENDING",
+    ACCEPTED = "ACCEPTED",
+    DECLINED = "DECLINED",
 }

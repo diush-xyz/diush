@@ -114,7 +114,7 @@ const OfferCard = (props: IOfferCard) => {
                                     alignSelf: "flex-start",
                                 }}
                             >
-                                {props.product.title}
+                                {props.product?.title}
                             </CustomText>
                             <View
                                 style={{
@@ -133,7 +133,7 @@ const OfferCard = (props: IOfferCard) => {
                                     fontSize={14}
                                     style={{ marginLeft: 5 }}
                                 >
-                                    {props.specificUser.displayName} •{" "}
+                                    {props.specificUser?.displayName} •{" "}
                                     <CustomText accent fontSize={14}>
                                         ${props.offer?.amount}
                                     </CustomText>
@@ -152,7 +152,7 @@ const OfferCard = (props: IOfferCard) => {
                         >
                             <CustomText>original asking price:</CustomText>
                             <CustomText>
-                                ${props.product.askingPrice}
+                                ${props.product?.askingPrice}
                             </CustomText>
                         </View>
                         <View
@@ -165,7 +165,7 @@ const OfferCard = (props: IOfferCard) => {
                             }}
                         >
                             <CustomText>status</CustomText>
-                            <CustomText>pending</CustomText>
+                            <CustomText>{props.offer.status}</CustomText>
                         </View>
                     </View>
                     <LargeButton title="review offer" onPress={() => null} />
