@@ -91,6 +91,7 @@ const DMScreen = () => {
                                     style={{
                                         display: "flex",
                                         justifyContent: "flex-end",
+                                        marginRight: 8,
                                     }}
                                 >
                                     <ProfileImage
