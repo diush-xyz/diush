@@ -166,7 +166,7 @@ const OfferCard = (props: IOfferCard) => {
                         >
                             <CustomText>status</CustomText>
                             <CustomText>
-                                {props.offer.status.toLowerCase()}
+                                {props.offer.status?.toLowerCase()}
                             </CustomText>
                         </View>
                     </View>

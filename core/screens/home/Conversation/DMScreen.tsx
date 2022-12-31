@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import ScreenHeader from "../../../components/lib/ScreenHeader";
 import { observer } from "mobx-react";
 import CustomDMScreenHeader from "../../../components/home/Conversation/DMScreen/CustomDMScreenHeader";
@@ -75,15 +75,23 @@ const DMScreen = () => {
             }}
         >
             <CustomDMScreenHeader />
-            {conversationStore.activeConversationOffers?.map((elem, idx) => {
-                return (
-                    <OfferCard
-                        specificUser={conversationStore.activeConvoOtherUser}
-                        offer={elem}
-                        product={conversationStore.activeConversationProduct}
-                    />
-                );
-            })}
+            <ScrollView>
+                {conversationStore.activeConversationOffers?.map(
+                    (elem, idx) => {
+                        return (
+                            <OfferCard
+                                specificUser={
+                                    conversationStore.activeConvoOtherUser
+                                }
+                                offer={elem}
+                                product={
+                                    conversationStore.activeConversationProduct
+                                }
+                            />
+                        );
+                    }
+                )}
+            </ScrollView>
         </View>
     );
 };

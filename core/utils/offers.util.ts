@@ -11,5 +11,6 @@ export const createOfferInDb = async (offer: IOffer) => {
         linkedConversationID: offer.linkedConversationID,
         placedByUID: offer.placedByUID,
         timestamp: offer.timestamp,
+        status: offer.status,
     });
 };

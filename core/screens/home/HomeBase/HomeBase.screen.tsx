@@ -10,6 +10,7 @@ import {
     CatalogStatus,
     IUser,
     LoggedInScreen,
+    OfferStatus,
 } from "../../../@types/GlobalTypes";
 import SignupStore, { useSignupStore } from "../../../state/auth/Signup.store";
 import { useLoginStore } from "../../../state/auth/Login.store";
@@ -151,6 +152,7 @@ const HomeBaseScreen = () => {
                                 linkedConversationID: "qkLN7ikP9MS3eO7JhmyY",
                                 placedByUID: "7kJNkJEE99budW0BO4cEBjyYLOs1",
                                 timestamp: new Date(),
+                                status: OfferStatus.PENDING,
                             });
                         }}
                     />
