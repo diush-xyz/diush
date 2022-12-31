@@ -141,6 +141,33 @@ const OfferCard = (props: IOfferCard) => {
                             </View>
                         </View>
                     </View>
+                    <View style={{ display: "flex" }}>
+                        <View
+                            style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                            }}
+                        >
+                            <CustomText>original asking price:</CustomText>
+                            <CustomText>
+                                ${props.product.askingPrice}
+                            </CustomText>
+                        </View>
+                        <View
+                            style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                marginTop: 5,
+                            }}
+                        >
+                            <CustomText>status</CustomText>
+                            <CustomText>pending</CustomText>
+                        </View>
+                    </View>
                     <LargeButton title="review offer" onPress={() => null} />
                 </View>
             </CustomChildOfferCard>
