@@ -10,6 +10,7 @@ import CustomText from "../../../components/lib/CustomText";
 import OfferCard from "../../../components/lib/OfferCard";
 import ProfileImage from "../../../components/lib/ProfileImage";
 import { MAX_WIDTH } from "../../../utils/constants";
+import dayjs from "dayjs";
 
 const DMScreen = () => {
     const conversationStore = useConversationStore();
@@ -79,38 +80,60 @@ const DMScreen = () => {
             <ScrollView>
                 {conversationStore.activeConversationOffers?.map(
                     (elem, idx) => {
+                        //@ts-ignore
+                        const parsed = dayjs.unix(elem.timestamp.seconds);
+                        //@ts-ignore
+                        const offerTimestamp = dayjs(parsed).fromNow();
+
                         return (
                             <View
                                 style={{
                                     display: "flex",
-                                    flexDirection: "row",
                                     marginTop: idx == 0 && 16,
+                                    paddingLeft: 23, //TODO: Must change when offers are on the right side
                                 }}
                             >
                                 <View
                                     style={{
                                         display: "flex",
-                                        justifyContent: "flex-end",
-                                        marginRight: 8,
+                                        flexDirection: "row",
                                     }}
                                 >
-                                    <ProfileImage
-                                        specificUser={
-                                            conversationStore.activeConvoOtherUser
-                                        }
-                                        size={40}
-                                    />
+                                    <View
+                                        style={{
+                                            display: "flex",
+                                            justifyContent: "flex-end",
+                                            marginRight: 8,
+                                        }}
+                                    >
+                                        <ProfileImage
+                                            specificUser={
+                                                conversationStore.activeConvoOtherUser
+                                            }
+                                            size={24}
+                                        />
+                                    </View>
+                                    <View>
+                                        <OfferCard
+                                            specificUser={
+                                                conversationStore.activeConvoOtherUser
+                                            }
+                                            offer={elem}
+                                            product={
+                                                conversationStore.activeConversationProduct
+                                            }
+                                        />
+                                    </View>
                                 </View>
-                                <View>
-                                    <OfferCard
-                                        specificUser={
-                                            conversationStore.activeConvoOtherUser
-                                        }
-                                        offer={elem}
-                                        product={
-                                            conversationStore.activeConversationProduct
-                                        }
-                                    />
+                                <View
+                                    style={{
+                                        marginLeft: 32, //TODO: Must change when offers are on the right side
+                                        marginTop: 10,
+                                    }}
+                                >
+                                    <CustomText secondary>
+                                        {offerTimestamp}
+                                    </CustomText>
                                 </View>
                             </View>
                         );
