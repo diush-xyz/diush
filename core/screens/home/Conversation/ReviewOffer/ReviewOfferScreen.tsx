@@ -51,11 +51,7 @@ const ReviewOfferScreen = () => {
                                 •
                             </CustomText>{" "}
                             <CustomText accent font="Heavy" fontSize={22}>
-                                $
-                                {
-                                    conversationStore.activeConversationProduct
-                                        .askingPrice
-                                }
+                                ${offerStore.offerBeingReviewed.amount}
                             </CustomText>
                         </CustomText>
                     </View>
