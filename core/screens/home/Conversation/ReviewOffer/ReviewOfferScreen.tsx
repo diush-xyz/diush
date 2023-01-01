@@ -81,6 +81,25 @@ const ReviewOfferScreen = () => {
                     {/*TODO: Come back to this*/}
                     <ChevronRight style={{ marginLeft: 7 }} />
                 </View>
+                <View style={{ display: "flex", marginTop: 30 }}>
+                    <View
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            width: "100%",
+                            justifyContent: "space-between",
+                        }}
+                    >
+                        <CustomText>original asking price</CustomText>
+                        <CustomText>
+                            $
+                            {
+                                conversationStore.activeConversationProduct
+                                    .askingPrice
+                            }
+                        </CustomText>
+                    </View>
+                </View>
             </View>
         </View>
     );
