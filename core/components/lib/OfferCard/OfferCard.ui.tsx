@@ -62,6 +62,7 @@ interface IOfferCard {
     specificUser: IUser;
     offer: IOffer;
     product: IProduct;
+    onReviewPress: () => void;
 }
 
 /**
@@ -169,7 +170,10 @@ const OfferCard = (props: IOfferCard) => {
                             </CustomText>
                         </View>
                     </View>
-                    <LargeButton title="review offer" onPress={() => null} />
+                    <LargeButton
+                        title="review offer"
+                        onPress={() => props.onReviewPress()}
+                    />
                 </View>
             </CustomChildOfferCard>
         </View>

@@ -1,18 +1,20 @@
 import React from "react";
 import { ScrollView, View } from "react-native";
-import ScreenHeader from "../../../components/lib/ScreenHeader";
+import ScreenHeader from "../../../../components/lib/ScreenHeader";
 import { observer } from "mobx-react";
-import CustomDMScreenHeader from "../../../components/home/Conversation/DMScreen/CustomDMScreenHeader";
-import { useConversationStore } from "../../../state/auth/Conversation.store";
+import CustomDMScreenHeader from "../../../../components/home/Conversation/DMScreen/CustomDMScreenHeader";
+import { useConversationStore } from "../../../../state/auth/Conversation.store";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
-import { db } from "../../../../config/firebase";
-import CustomText from "../../../components/lib/CustomText";
-import OfferCard from "../../../components/lib/OfferCard";
-import ProfileImage from "../../../components/lib/ProfileImage";
-import { MAX_WIDTH } from "../../../utils/constants";
+import { db } from "../../../../../config/firebase";
+import CustomText from "../../../../components/lib/CustomText";
+import OfferCard from "../../../../components/lib/OfferCard";
+import ProfileImage from "../../../../components/lib/ProfileImage";
+import { MAX_WIDTH } from "../../../../utils/constants";
 import dayjs from "dayjs";
+import { useOfferStore } from "../../../../state/auth/Offer.store";
 
 const DMScreen = () => {
+    const offerStore = useOfferStore();
     const conversationStore = useConversationStore();
     const [offers, setOffers] = React.useState([]);
     const [linkedProduct, setLinkedProduct] = React.useState(null);
@@ -121,6 +123,11 @@ const DMScreen = () => {
                                             offer={elem}
                                             product={
                                                 conversationStore.activeConversationProduct
+                                            }
+                                            onReviewPress={() =>
+                                                offerStore.setOfferBeingReviewed(
+                                                    elem
+                                                )
                                             }
                                         />
                                     </View>
