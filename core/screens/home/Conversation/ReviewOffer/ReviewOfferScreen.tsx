@@ -83,6 +83,30 @@ const ReviewOfferScreen = () => {
                     <ChevronRight style={{ marginLeft: 7 }} />
                 </View>
                 <InfoSection />
+                <View style={{ marginTop: 45 }}>
+                    <CustomText font="Heavy" fontSize={18}>
+                        offer summary
+                    </CustomText>
+                    <CustomText secondary style={{ marginTop: 6 }}>
+                        by accepting this offer, you agree to sell{" "}
+                        <CustomText secondary font="Black">
+                            one
+                        </CustomText>{" "}
+                        item’s worth of your product,{" "}
+                        <CustomText secondary font="Black">
+                            {conversationStore.activeConversationProduct.title}
+                        </CustomText>{" "}
+                        to{" "}
+                        <CustomText secondary font="Black">
+                            {conversationStore.activeConvoOtherUser.displayName}
+                        </CustomText>{" "}
+                        for{" "}
+                        <CustomText secondary font="Black">
+                            ${offerStore.offerBeingReviewed.amount}
+                        </CustomText>
+                        .
+                    </CustomText>
+                </View>
             </View>
         </View>
     );
