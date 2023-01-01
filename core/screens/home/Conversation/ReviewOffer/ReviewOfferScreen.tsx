@@ -7,10 +7,14 @@ import { useOfferStore } from "../../../../state/auth/Offer.store";
 import { useConversationStore } from "../../../../state/auth/Conversation.store";
 import RoundedMoreIcon from "../../../../icons/common/RoundedMore";
 import { MAX_WIDTH } from "../../../../utils/constants";
+import ProfileImage from "../../../../components/lib/ProfileImage";
+import { useAuthStore } from "../../../../state/auth/Auth.store";
+import ChevronRight from "../../../../icons/catalog/ChevronRight";
 
 const ReviewOfferScreen = () => {
     const offerStore = useOfferStore();
     const conversationStore = useConversationStore();
+    const { user } = useAuthStore();
 
     return (
         <View
@@ -31,7 +35,7 @@ const ReviewOfferScreen = () => {
                 // buttonDisabled={!hasChanged}
                 paddingBottom={16}
             />
-            <View style={{ display: "flex", width: MAX_WIDTH }}>
+            <View style={{ display: "flex", width: MAX_WIDTH, marginTop: 16 }}>
                 <View
                     style={{
                         display: "flex",
@@ -58,6 +62,28 @@ const ReviewOfferScreen = () => {
                     <View>
                         <RoundedMoreIcon />
                     </View>
+                </View>
+                <View
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        marginTop: 10,
+                        alignItems: "center",
+                    }}
+                >
+                    <ProfileImage specificUser={user} size={20} />
+                    <CustomText
+                        fontSize={16}
+                        style={{ marginLeft: 6 }}
+                        font="Bold"
+                    >
+                        <CustomText font="Bold" style={{ opacity: 0.5 }}>
+                            listed by
+                        </CustomText>{" "}
+                        me
+                    </CustomText>
+                    {/*TODO: Come back to this*/}
+                    <ChevronRight style={{ marginLeft: 7 }} />
                 </View>
             </View>
         </View>
