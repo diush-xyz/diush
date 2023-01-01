@@ -25,7 +25,7 @@ const InfoSection = () => {
         {
             text: "highest overall offer",
             value: `$${highestOffer.amount}`,
-        },
+        }, //TODO: get the highest offer from the entire product's offers, not just this conversation
         {
             text: "items",
             value: "1 unit",

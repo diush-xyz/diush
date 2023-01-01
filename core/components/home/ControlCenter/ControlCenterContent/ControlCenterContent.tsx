@@ -12,6 +12,7 @@ import { useUtilStore } from "../../../../state/Util.store";
 import { LoggedInScreen } from "../../../../@types/GlobalTypes";
 import { useHomeStore } from "../../../../state/auth/Home.store";
 import ProfileImage from "../../../lib/ProfileImage";
+import { auth } from "../../../../../config/firebase";
 
 export interface ICONTROL_CENTER_DATA {
     icon: React.ReactNode;
@@ -142,8 +143,16 @@ const ControlCenterContent = () => {
                     >
                         <CustomText font="Bold">give feedback ❤️</CustomText>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => null}>
+                    <TouchableOpacity
+                        onPress={() => null}
+                        style={{ marginBottom: 30 }}
+                    >
                         <CustomText>referral program</CustomText>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => auth.signOut()}>
+                        <CustomText style={{ color: "#FF453A" }}>
+                            log out
+                        </CustomText>
                     </TouchableOpacity>
                 </View>
                 {/*spacer*/}
