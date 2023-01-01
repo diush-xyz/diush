@@ -10,6 +10,7 @@ import { MAX_WIDTH } from "../../../../utils/constants";
 import ProfileImage from "../../../../components/lib/ProfileImage";
 import { useAuthStore } from "../../../../state/auth/Auth.store";
 import ChevronRight from "../../../../icons/catalog/ChevronRight";
+import InfoSection from "../../../../components/home/Conversation/ReviewOfferScreen/InfoSection";
 
 const ReviewOfferScreen = () => {
     const offerStore = useOfferStore();
@@ -81,25 +82,7 @@ const ReviewOfferScreen = () => {
                     {/*TODO: Come back to this*/}
                     <ChevronRight style={{ marginLeft: 7 }} />
                 </View>
-                <View style={{ display: "flex", marginTop: 30 }}>
-                    <View
-                        style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            width: "100%",
-                            justifyContent: "space-between",
-                        }}
-                    >
-                        <CustomText>original asking price</CustomText>
-                        <CustomText>
-                            $
-                            {
-                                conversationStore.activeConversationProduct
-                                    .askingPrice
-                            }
-                        </CustomText>
-                    </View>
-                </View>
+                <InfoSection />
             </View>
         </View>
     );
