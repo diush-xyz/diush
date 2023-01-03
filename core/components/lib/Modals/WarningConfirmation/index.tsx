@@ -98,11 +98,20 @@ interface IWarningConfirmation {
 }
 
 const WarningConfirmation = (props: IWarningConfirmation) => {
+    const [count, setCount] = React.useState<number>(0);
+
     React.useEffect(() => {
-        if (props.visible) {
+        if (props.visible && count == 0) {
             hapticFeedback(HAPTIC_OPTIONS.WARNING);
+            setCount(count + 1);
         }
     });
+
+    React.useEffect(() => {
+        if (!props.visible) {
+            setCount(0);
+        }
+    }, [props.visible]);
 
     return (
         <View

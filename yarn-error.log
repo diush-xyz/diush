@@ -1,30 +1,30 @@
 Arguments: 
-  /opt/homebrew/Cellar/node/18.11.0/bin/node /opt/homebrew/Cellar/yarn/1.22.19/libexec/bin/yarn.js add @react-native-masked-view
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.22.10/libexec/bin/yarn.js add react-native-swipe-detector
 
 PATH: 
-  /opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/filippofonseca/.fig/bin:/Users/filippofonseca/.local/bin:/Applications/Visual Studio Code.app/Contents/Resources/app/bin:/Applications/Visual Studio Code.app/Contents/Resources/app/bin
+  /Users/filippofonseca/.cargo/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/Developer/Personal/Projects/proj-init/batch/create.bat:/usr/local/go/bin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/filippofonseca/.cargo/bin:/Users/filippofonseca/.fig/bin:/Users/filippofonseca/Developer/SDKs/flutter/bin:/Users/filippofonseca/Developer/SDKs/flutter/bin
 
 Yarn version: 
-  1.22.19
+  1.22.10
 
 Node version: 
-  18.11.0
+  16.14.2
 
 Platform: 
-  darwin arm64
+  darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@react-native-masked-view: Request "https://registry.yarnpkg.com/@react-native-masked-view" returned a 405
-      at params.callback [as _callback] (/opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:66154:18)
-      at self.callback (/opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:140890:22)
-      at Request.emit (node:events:513:28)
-      at Request.<anonymous> (/opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:141862:10)
-      at Request.emit (node:events:513:28)
-      at IncomingMessage.<anonymous> (/opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:141784:12)
-      at Object.onceWrapper (node:events:627:28)
-      at IncomingMessage.emit (node:events:525:35)
-      at endReadableNT (node:internal/streams/readable:1359:12)
-      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+  Error: https://registry.yarnpkg.com/react-native-swipe-detector: Not found
+      at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/1.22.10/libexec/lib/cli.js:66988:18)
+      at Request.self.callback (/usr/local/Cellar/yarn/1.22.10/libexec/lib/cli.js:140749:22)
+      at Request.emit (node:events:526:28)
+      at Request.<anonymous> (/usr/local/Cellar/yarn/1.22.10/libexec/lib/cli.js:141721:10)
+      at Request.emit (node:events:526:28)
+      at IncomingMessage.<anonymous> (/usr/local/Cellar/yarn/1.22.10/libexec/lib/cli.js:141643:12)
+      at Object.onceWrapper (node:events:645:28)
+      at IncomingMessage.emit (node:events:538:35)
+      at endReadableNT (node:internal/streams/readable:1345:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
 
 npm manifest: 
   {
@@ -46,7 +46,7 @@ npm manifest:
           "@react-navigation/stack": "6.2.1",
           "@twotalltotems/react-native-otp-input": "1.3.11",
           "@types/styled-components": "5.1.25",
-          "dayjs": "1.11.1",
+          "dayjs": "1.11.7",
           "expo": "^47.0.0",
           "expo-checkbox": "~2.2.2",
           "expo-clipboard": "^4.0.1",
@@ -60,6 +60,7 @@ npm manifest:
           "expo-splash-screen": "~0.17.5",
           "expo-status-bar": "~1.4.2",
           "firebase": "9.6.11",
+          "javascript-time-ago": "^2.5.9",
           "mobx": "6.5.0",
           "mobx-react": "7.3.0",
           "nanoid": "3.3.3",
@@ -71,9 +72,8 @@ npm manifest:
           "react-native-get-random-values": "~1.8.0",
           "react-native-haptic-feedback": "1.13.1",
           "react-native-keyboard-listener": "1.1.0",
-          "react-native-linear-gradient-text": "^0.3.1",
           "react-native-modal": "^13.0.1",
-          "react-native-reanimated": "~2.12.0",
+          "react-native-reanimated": "2.13.0",
           "react-native-safe-area-context": "4.4.1",
           "react-native-screens": "~3.18.0",
           "react-native-simple-modal": "^9.0.1",
@@ -4205,7 +4205,12 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/dag-map/-/dag-map-1.0.2.tgz#e8379f041000ed561fc515475c1ed2c85eece8d7"
     integrity sha512-+LSAiGFwQ9dRnRdOeaj7g47ZFJcOUPukAP8J3A3fuZ1g9Y44BG+P1sgApjLXTQPOzC4+7S9Wr8kXsfpINM4jpw==
   
-  dayjs@1.11.1, dayjs@^1.8.15:
+  dayjs@1.11.7:
+    version "1.11.7"
+    resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.7.tgz#4b296922642f70999544d1144a2c25730fce63e2"
+    integrity sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==
+  
+  dayjs@^1.8.15:
     version "1.11.1"
     resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.1.tgz#90b33a3dda3417258d48ad2771b415def6545eb0"
     integrity sha512-ER7EjqVAMkRRsxNCC5YqJ9d9VQYuWdGt7aiH2qA5R5wt8ZmWaP2dLUSIK6y/kVzLMlmh1Tvu5xUf4M/wdGJ5KA==
@@ -5914,6 +5919,13 @@ Lockfile:
     resolved "https://registry.npmjs.org/isobject/-/isobject-3.0.1.tgz"
     integrity sha1-TkMekrEalzFjaqH5yNHMvP2reN8=
   
+  javascript-time-ago@^2.5.9:
+    version "2.5.9"
+    resolved "https://registry.yarnpkg.com/javascript-time-ago/-/javascript-time-ago-2.5.9.tgz#3c5d8012cd493d764c6b26a0ffe6e8b20afcf1fe"
+    integrity sha512-pQ8mNco/9g9TqWXWWjP0EWl6i/lAQScOyEeXy5AB+f7MfLSdgyV9BJhiOD1zrIac/lrxPYOWNbyl/IW8CW5n0A==
+    dependencies:
+      relative-time-format "^1.1.6"
+  
   jest-get-type@^26.3.0:
     version "26.3.0"
     resolved "https://registry.npmjs.org/jest-get-type/-/jest-get-type-26.3.0.tgz"
@@ -7596,11 +7608,6 @@ Lockfile:
     dependencies:
       prop-types "^15.6.0"
   
-  react-native-linear-gradient-text@^0.3.1:
-    version "0.3.1"
-    resolved "https://registry.yarnpkg.com/react-native-linear-gradient-text/-/react-native-linear-gradient-text-0.3.1.tgz#a4efbc3bc673202ff7bc7741c0376401a7536f5d"
-    integrity sha512-6xgS6XdjXlLdXriUluwgA7J2Z1l2n0RPB+gsZCr33iQQFG4joOAgNaJlK95P8e0DH2lvejyA7UWglcL1ORauEw==
-  
   react-native-modal@^13.0.1:
     version "13.0.1"
     resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-13.0.1.tgz#691f1e646abb96fa82c1788bf18a16d585da37cd"
@@ -7609,10 +7616,10 @@ Lockfile:
       prop-types "^15.6.2"
       react-native-animatable "1.3.3"
   
-  react-native-reanimated@~2.12.0:
-    version "2.12.0"
-    resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.12.0.tgz#5821eecfb1769b1617a67a2d4dec12fdeedb2b6e"
-    integrity sha512-nrlPyw+Hx9u4iJhZk9PoTvDo/QmVAd+bo7OK9Tv3hveNEF9++5oig/g3Uv9V93shy9avTYGsUprUvAEt/xdzeQ==
+  react-native-reanimated@2.13.0:
+    version "2.13.0"
+    resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.13.0.tgz#d64c1386626822d4dc22094b4efe028ff2c49cc9"
+    integrity sha512-yUHyYVIegWWIza4+nVyS3CSmI/Mc8kLFVHw2c6gnSHaYhYA4LeEjH/jBkoMzHk9Xd0Ra3cwtjYKAMG8OTp6JVg==
     dependencies:
       "@babel/plugin-transform-object-assign" "^7.16.7"
       "@babel/preset-typescript" "^7.16.7"
@@ -7874,6 +7881,11 @@ Lockfile:
     integrity sha512-dQUtn90WanSNl+7mQKcXAgZxvUe7Z0SqXlgzv0za4LwiUhyzBC58yQO3liFoUgu8GiJVInAhJjkj1N0EtQ5nkQ==
     dependencies:
       jsesc "~0.5.0"
+  
+  relative-time-format@^1.1.6:
+    version "1.1.6"
+    resolved "https://registry.yarnpkg.com/relative-time-format/-/relative-time-format-1.1.6.tgz#724a5fbc3794b8e0471b6b61419af2ce699eb9f1"
+    integrity sha512-aCv3juQw4hT1/P/OrVltKWLlp15eW1GRcwP1XdxHrPdZE9MtgqFpegjnTjLhi2m2WI9MT/hQQtE+tjEWG1hgkQ==
   
   remove-trailing-slash@^0.1.0:
     version "0.1.1"

@@ -49,6 +49,7 @@
         "react-native-screens": "~3.18.0",
         "react-native-simple-modal": "^9.0.1",
         "react-native-svg": "13.4.0",
+        "react-native-swipe-detect": "1.0.10",
         "react-native-web": "~0.18.7",
         "styled-components": "5.3.5",
         "true": "0.0.4",
