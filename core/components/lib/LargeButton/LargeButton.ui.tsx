@@ -67,6 +67,7 @@ interface ILargeButton {
     footerButtonTitle?: string;
     footerButtonOnPress?: (ev: NativeSyntheticEvent<NativeTouchEvent>) => void;
     disabled?: boolean;
+    footerButtonPrimary?: boolean;
 }
 
 /**
@@ -106,7 +107,8 @@ const LargeButton = (props: ILargeButton) => {
                 <TouchableOpacity onPress={props.footerButtonOnPress}>
                     <CustomText
                         font="Heavy"
-                        secondary
+                        primary={props.footerButtonPrimary}
+                        secondary={!props.footerButtonPrimary}
                         style={{
                             alignSelf: "center",
                             marginTop: 25,

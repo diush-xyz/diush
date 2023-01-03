@@ -54,6 +54,7 @@ const AuthScreen = () => {
                         handleSnapPress(0);
                     }}
                     footer
+                    footerButtonPrimary
                     footerButtonTitle="i already have an account"
                     footerButtonOnPress={() => {
                         authStore.setAuthStatus(AuthStatus.LOGIN);
