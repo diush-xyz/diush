@@ -2,7 +2,7 @@ import React from "react";
 import CustomText from "../../../../components/lib/CustomText";
 import { observer } from "mobx-react";
 import ScreenHeader from "../../../../components/lib/ScreenHeader";
-import { View } from "react-native";
+import { Animated, Dimensions, Easing, View } from "react-native";
 import { useOfferStore } from "../../../../state/auth/Offer.store";
 import { useConversationStore } from "../../../../state/auth/Conversation.store";
 import RoundedMoreIcon from "../../../../icons/common/RoundedMore";
@@ -11,11 +11,44 @@ import ProfileImage from "../../../../components/lib/ProfileImage";
 import { useAuthStore } from "../../../../state/auth/Auth.store";
 import ChevronRight from "../../../../icons/catalog/ChevronRight";
 import InfoSection from "../../../../components/home/Conversation/ReviewOfferScreen/InfoSection";
+import LeftArrowIcon from "../../../../icons/common/leftArrow";
+import { useTheme } from "../../../../utils/useTheme.util";
+import ChevronUpIcon from "../../../../icons/home/conversation/ChevronUp";
+import styled from "styled-components/native";
 
 const ReviewOfferScreen = () => {
     const offerStore = useOfferStore();
     const conversationStore = useConversationStore();
     const { user } = useAuthStore();
+    const theme = useTheme();
+
+    const ChevronUpWrapper = styled(View)`
+        box-shadow: 0px 0px 5px ${theme.primaryText};
+    `;
+
+    const animatedValue = React.useRef(new Animated.Value(0)).current;
+    const [isTop, setIsTop] = React.useState(true);
+
+    const startAnimation = toValue => {
+        Animated.timing(animatedValue, {
+            toValue,
+            duration: 1000,
+            easing: Easing.linear,
+            useNativeDriver: true,
+        }).start(() => {
+            setIsTop(!isTop);
+        });
+    };
+
+    React.useEffect(() => {
+        startAnimation(isTop ? 1 : 0);
+    }, [isTop]);
+
+    const translateY = animatedValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, 10],
+        extrapolate: "clamp",
+    });
 
     return (
         <View
@@ -106,6 +139,37 @@ const ReviewOfferScreen = () => {
                         </CustomText>
                         .
                     </CustomText>
+                </View>
+            </View>
+            <View
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    position: "absolute",
+                    bottom: 0,
+                    width: "100%",
+                    backgroundColor: theme.success,
+                    height: 100,
+                }}
+            >
+                <View
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginBottom: 20,
+                    }}
+                >
+                    <Animated.View
+                        style={{
+                            transform: [{ translateY }],
+                            marginBottom: 15,
+                        }}
+                    >
+                        <ChevronUpIcon />
+                    </Animated.View>
+                    <CustomText font="Heavy">swipe up to accept</CustomText>
                 </View>
             </View>
         </View>
