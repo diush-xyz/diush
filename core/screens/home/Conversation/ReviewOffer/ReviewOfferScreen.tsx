@@ -234,9 +234,9 @@ const ReviewOfferScreen = () => {
             </GestureRecognizer>
             <WarningConfirmation
                 icon={<CompactIcon />}
-                title="are you sure?"
-                desc={`you have unsaved changes. if you\n leave now, they won’t save.`}
-                buttonText="yes, i'm sure"
+                title="accept offer"
+                desc={`once you agree to sell to ${conversationStore.activeConvoOtherUser.displayName}, you agree to our Seller Terms.`}
+                buttonText="let's do it"
                 buttonOnClick={() => {
                     console.log("tuki");
                 }}
