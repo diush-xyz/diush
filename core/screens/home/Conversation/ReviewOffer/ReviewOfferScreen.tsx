@@ -50,6 +50,12 @@ const ReviewOfferScreen = () => {
         extrapolate: "clamp",
     });
 
+    const scale = animatedValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [1.3, 0.9],
+        extrapolate: "clamp",
+    });
+
     return (
         <View
             style={{
@@ -151,6 +157,7 @@ const ReviewOfferScreen = () => {
                     width: "100%",
                     backgroundColor: theme.success,
                     height: 100,
+                    borderRadius: -20,
                 }}
             >
                 <View
@@ -163,7 +170,7 @@ const ReviewOfferScreen = () => {
                 >
                     <Animated.View
                         style={{
-                            transform: [{ translateY }],
+                            transform: [{ translateY }, { scale }],
                             marginBottom: 15,
                         }}
                     >
