@@ -42,7 +42,7 @@ the following is a diagram detailing the thought process & concept behind the pl
 
 ## infrastructure/architecture
 
-this project is utilizing what I'm designating as the _"TERF"_ stack.
+this project is utilizing the following stack:
 
 -   **TypeScript:** Base language for all files - handles backend integration and UI/UX duties with RN.
 -   **Expo:** Provides a shared native runtime to avoid writing native code, dealing with iOS or Android-specific settings, or even opening up Xcode. Managed Expo projects have "their own workflow including Expo CLI (a command line interface) to make developing and deploying easy". Learn more [here](https://docs.expo.dev/workflow/already-used-react-native/).
