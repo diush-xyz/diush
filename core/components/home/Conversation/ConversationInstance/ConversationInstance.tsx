@@ -184,7 +184,12 @@ const ConversationInstance = (props: IConversationInstance) => {
                     alignItems: "center",
                 }}
             >
-                <ProfileImage specificUser={otherUser} size={35} border />
+                <ProfileImage
+                    specificUser={otherUser}
+                    size={35}
+                    border
+                    borderColor={props.data.dealReached && theme.success} //TODO: fix, not working properly
+                />
                 <View
                     style={{
                         display: "flex",

@@ -81,11 +81,21 @@ const ReviewOfferScreen = () => {
 
     const onAcceptOffer = async () => {
         const offerRef = doc(db, "offers", offerStore.offerBeingReviewed.id);
+        const conversationRef = doc(
+            db,
+            "conversations",
+            conversationStore.activeConversation.id
+        );
 
         await updateDoc(offerRef, {
             status: OfferStatus.ACCEPTED,
         }).then(() => {
             offerStore.setOfferBeingReviewed(null);
+        });
+
+        await updateDoc(conversationRef, {
+            dealReached: true,
+        }).then(() => {
             conversationStore.setActiveConversation({
                 ...conversationStore.activeConversation,
                 dealReached: true,
@@ -140,7 +150,12 @@ const ReviewOfferScreen = () => {
                         offerStore.setOfferBeingReviewed(null)
                     }
                     title="offer review"
-                    button
+                    button={
+                        !(
+                            offerStore.offerBeingReviewed.status ==
+                            OfferStatus.ACCEPTED
+                        )
+                    }
                     buttonText="counter"
                     // onButtonPress={() => save()}
                     // buttonDisabled={!hasChanged}
@@ -207,7 +222,10 @@ const ReviewOfferScreen = () => {
                             offer summary
                         </CustomText>
                         <CustomText secondary style={{ marginTop: 6 }}>
-                            by accepting this offer, you agree to sell{" "}
+                            {offerStore.offerBeingReviewed.status ==
+                            OfferStatus.ACCEPTED
+                                ? "when you accepted this offer, you agreed to sell"
+                                : "by accepting this offer, you agree to sell"}{" "}
                             <CustomText secondary font="Black">
                                 one
                             </CustomText>{" "}

@@ -19,6 +19,7 @@ interface IProfileImage {
     size: number;
     style?: StyleProp<ViewStyle>;
     border?: boolean;
+    borderColor?: string;
 }
 
 const ProfileImage = (props: IProfileImage) => {
@@ -26,6 +27,7 @@ const ProfileImage = (props: IProfileImage) => {
     const BORDER_RADIUS = props.size / 2;
 
     const fontSize = props.size / 2.5;
+    const borderColor = props.borderColor ?? theme.accent;
 
     return (
         <View style={props.style}>
@@ -38,7 +40,7 @@ const ProfileImage = (props: IProfileImage) => {
                     style={{
                         height: props.size,
                         width: props.size,
-                        borderColor: props.border ? theme.accent : null,
+                        borderColor: props.border ? borderColor : null,
                         borderWidth: props.border ? 2 : 0,
                     }}
                 />
