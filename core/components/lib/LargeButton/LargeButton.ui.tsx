@@ -20,20 +20,28 @@ interface ICustomChildLargeButton {
     onPress: (ev: NativeSyntheticEvent<NativeTouchEvent>) => void;
     disabled?: boolean;
     style?: StyleProp<ViewStyle>;
+    isSuccessButton?: boolean;
 }
-
-const BORDER_COLORS = ["#C897F9", "#FF3F70"];
 
 /**
  * Same as Large Button (only no provided child with props). Fully custom.
  */
 export const CustomChildLargeButton = (props: ICustomChildLargeButton) => {
     const theme = useTheme();
+    const BORDER_COLORS = ["#C897F9", "#FF3F70"];
+    const SUCCESS_BORDER_COLORS = [theme.success, theme.success];
+
     return (
         <>
             {/*@ts-ignore*/}
             <LinearGradient
-                colors={props.disabled ? ["transparent"] : BORDER_COLORS}
+                colors={
+                    props.disabled
+                        ? ["transparent"]
+                        : props.isSuccessButton
+                        ? SUCCESS_BORDER_COLORS
+                        : BORDER_COLORS
+                }
                 start={{ x: 0.0, y: 1.0 }}
                 end={{ x: 1.0, y: 1.0 }}
                 style={{
@@ -68,6 +76,7 @@ interface ILargeButton {
     footerButtonOnPress?: (ev: NativeSyntheticEvent<NativeTouchEvent>) => void;
     disabled?: boolean;
     footerButtonPrimary?: boolean;
+    isSuccessButton?: boolean;
 }
 
 /**
@@ -91,6 +100,7 @@ const LargeButton = (props: ILargeButton) => {
                     opacity: props.disabled ? 0.5 : 1,
                 }}
                 disabled={props.disabled}
+                isSuccessButton={props.isSuccessButton}
             >
                 <CustomText
                     primary

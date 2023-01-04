@@ -95,6 +95,7 @@ interface IWarningConfirmation {
     footerText: string;
     onFooterClick: () => void;
     visible: boolean;
+    isSuccessButton?: boolean;
 }
 
 const WarningConfirmation = (props: IWarningConfirmation) => {
@@ -156,6 +157,7 @@ const WarningConfirmation = (props: IWarningConfirmation) => {
                         footerButtonTitle={props.footerText}
                         footerButtonOnPress={props.onFooterClick}
                         // sellerViewProductStore.setDeleteConfirmation()
+                        isSuccessButton={props.isSuccessButton}
                     />
                 </View>
             </ModalPopup>

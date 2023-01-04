@@ -18,6 +18,7 @@ import styled from "styled-components/native";
 import GestureRecognizer from "react-native-swipe-detect";
 import WarningConfirmation from "../../../../components/lib/Modals/WarningConfirmation";
 import CompactIcon from "../../../../components/catalog/viewProduct/CustomDeleteConfirmation/CompactIcon";
+import MoneyCompactIcon from "../../../../icons/home/conversation/MoneyCompactIcon";
 
 const ReviewOfferScreen = () => {
     const offerStore = useOfferStore();
@@ -233,7 +234,7 @@ const ReviewOfferScreen = () => {
                 </View>
             </GestureRecognizer>
             <WarningConfirmation
-                icon={<CompactIcon />}
+                icon={<MoneyCompactIcon />}
                 title="accept offer"
                 desc={`once you agree to sell to ${conversationStore.activeConvoOtherUser.displayName}, you agree to our Seller Terms.`}
                 buttonText="let's do it"
@@ -247,6 +248,7 @@ const ReviewOfferScreen = () => {
                     setIsWarningModalOpen(false);
                 }}
                 visible={isWarningModalOpen}
+                isSuccessButton
             />
         </>
     );
