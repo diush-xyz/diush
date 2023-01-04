@@ -113,7 +113,7 @@ const ConversationInstance = (props: IConversationInstance) => {
         //TWO ACTIONS:
         setMostRecentOfferTimeAgo(
             //@ts-ignore
-            dayjs(parsed).fromNow()
+            dayjs(parsed).fromNow(true)
         );
         setMostRecentOffer(mostRecentOffer);
     };
