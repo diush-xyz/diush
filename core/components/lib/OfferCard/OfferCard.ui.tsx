@@ -200,7 +200,11 @@ const OfferCard = (props: IOfferCard) => {
                         </View>
                     </View>
                     <LargeButton
-                        title="review offer"
+                        title={
+                            props.offer.status == OfferStatus.ACCEPTED
+                                ? "view details"
+                                : "review offer"
+                        }
                         onPress={() => props.onReviewPress()}
                         isSuccessButton={
                             props.offer.status == OfferStatus.ACCEPTED
