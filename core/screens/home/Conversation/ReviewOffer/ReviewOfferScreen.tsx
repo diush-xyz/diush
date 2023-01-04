@@ -105,11 +105,21 @@ const ReviewOfferScreen = () => {
 
     const onUndoOffer = async () => {
         const offerRef = doc(db, "offers", offerStore.offerBeingReviewed.id);
+        const conversationRef = doc(
+            db,
+            "conversations",
+            conversationStore.activeConversation.id
+        );
 
         await updateDoc(offerRef, {
             status: OfferStatus.PENDING,
         }).then(() => {
             offerStore.setOfferBeingReviewed(null);
+        });
+
+        await updateDoc(conversationRef, {
+            dealReached: false,
+        }).then(() => {
             conversationStore.setActiveConversation({
                 ...conversationStore.activeConversation,
                 dealReached: false,
