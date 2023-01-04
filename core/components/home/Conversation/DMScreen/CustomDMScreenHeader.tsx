@@ -67,6 +67,11 @@ const CustomDMScreenHeader = () => {
                             size={22}
                             border
                             style={{ marginRight: 8 }}
+                            borderColor={
+                                conversationStore.activeConversation.dealReached
+                                    ? theme.success
+                                    : theme.accent
+                            }
                         />
                         <CustomText
                             primary

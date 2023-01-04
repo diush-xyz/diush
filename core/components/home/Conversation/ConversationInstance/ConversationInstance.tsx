@@ -198,7 +198,9 @@ const ConversationInstance = (props: IConversationInstance) => {
                     specificUser={otherUser}
                     size={35}
                     border
-                    borderColor={props.data.dealReached && theme.success} //TODO: fix, not working properly
+                    borderColor={
+                        props.data.dealReached ? theme.success : theme.accent
+                    } //TODO: fix, not working properly
                 />
                 <View
                     style={{
@@ -237,28 +239,27 @@ const ConversationInstance = (props: IConversationInstance) => {
                 }}
             >
                 <CustomText secondary>{mostRecentOfferTimeAgo}</CustomText>
-                {unreadOffersCount > 0 && (
-                    <View
-                        style={{
-                            paddingVertical: 2,
-                            paddingHorizontal: 8,
-                            backgroundColor:
-                                props.data.dealReached == true &&
-                                props.data.dealReached !== null
-                                    ? theme.success
-                                    : theme.accent,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            borderRadius: 12,
-                            marginTop: 4,
-                        }}
-                    >
-                        <CustomText fontSize={12} font="Semibold">
-                            {unreadOffersCount?.toString()}
-                        </CustomText>
-                    </View>
-                )}
+                <View
+                    style={{
+                        paddingVertical: 2,
+                        paddingHorizontal: 8,
+                        backgroundColor:
+                            props.data.dealReached == true &&
+                            props.data.dealReached !== null
+                                ? theme.success
+                                : theme.accent,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        borderRadius: 12,
+                        marginTop: 4,
+                        opacity: unreadOffersCount == 0 ? 0 : 1,
+                    }}
+                >
+                    <CustomText fontSize={12} font="Semibold">
+                        {unreadOffersCount?.toString()}
+                    </CustomText>
+                </View>
             </View>
         </TouchableOpacity>
     );
