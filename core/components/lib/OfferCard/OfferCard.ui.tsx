@@ -16,27 +16,38 @@ import { MAX_WIDTH } from "../../../utils/constants";
 import LargeButton from "../LargeButton";
 import SmallButton from "../SmallButton";
 import ProfileImage from "../ProfileImage";
-import { IOffer, IProduct, IUser } from "../../../@types/GlobalTypes";
+import {
+    IOffer,
+    IProduct,
+    IUser,
+    OfferStatus,
+} from "../../../@types/GlobalTypes";
 
 //TODO: Must add proper gradient background to button (not working, blank for now)
 
 interface ICustomChildOfferCard {
     children: React.ReactNode;
     style?: StyleProp<ViewStyle>;
+    isOfferAccepted: boolean;
 }
-
-const BORDER_COLORS = ["#C897F9", "#FF3F70"];
 
 /**
  * Same as Large Button (only no provided child with props). Fully custom.
  */
 export const CustomChildOfferCard = (props: ICustomChildOfferCard) => {
     const theme = useTheme();
+    const BORDER_COLORS = ["#C897F9", "#FF3F70"];
+    const ACCEPTED_BORDER_COLORS = [theme.success, theme.success];
+
     return (
         <>
             {/*@ts-ignore*/}
             <LinearGradient
-                colors={BORDER_COLORS}
+                colors={
+                    props.isOfferAccepted
+                        ? ACCEPTED_BORDER_COLORS
+                        : BORDER_COLORS
+                }
                 start={{ x: 0.0, y: 1.0 }}
                 end={{ x: 1.0, y: 1.0 }}
                 style={{
@@ -75,6 +86,7 @@ const OfferCard = (props: IOfferCard) => {
     return (
         <View style={{ display: "flex", width: "100%" }}>
             <CustomChildOfferCard
+                isOfferAccepted={props.offer.status === OfferStatus.ACCEPTED}
                 style={{
                     flex: 1.0,
                     paddingVertical: 15,
@@ -165,7 +177,15 @@ const OfferCard = (props: IOfferCard) => {
                             }}
                         >
                             <CustomText>status</CustomText>
-                            <CustomText>
+                            <CustomText
+                                style={{
+                                    color:
+                                        props.offer.status ==
+                                        OfferStatus.ACCEPTED
+                                            ? theme.success
+                                            : theme.primaryText,
+                                }}
+                            >
                                 {props.offer.status?.toLowerCase()}
                             </CustomText>
                         </View>

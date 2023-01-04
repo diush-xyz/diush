@@ -19,6 +19,11 @@ import GestureRecognizer from "react-native-swipe-detect";
 import WarningConfirmation from "../../../../components/lib/Modals/WarningConfirmation";
 import CompactIcon from "../../../../components/catalog/viewProduct/CustomDeleteConfirmation/CompactIcon";
 import MoneyCompactIcon from "../../../../icons/home/conversation/MoneyCompactIcon";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../../../../config/firebase";
+import { CatalogStatus, OfferStatus } from "../../../../@types/GlobalTypes";
+import askingPrice from "../../../../components/catalog/editProduct/askingPrice";
+import { deriveProductConditionFromDb } from "../../../../utils/productCondition.util";
 
 const ReviewOfferScreen = () => {
     const offerStore = useOfferStore();
@@ -67,6 +72,21 @@ const ReviewOfferScreen = () => {
     const config = {
         velocityThreshold: 0.3,
         directionalOffsetThreshold: 80,
+    };
+
+    const onAcceptOffer = async () => {
+        const offerRef = doc(db, "offers", offerStore.offerBeingReviewed.id);
+        console.log("bruh");
+
+        await updateDoc(offerRef, {
+            status: OfferStatus.ACCEPTED,
+        }).then(() => {
+            offerStore.setOfferBeingReviewed(null);
+            conversationStore.setActiveConversation({
+                ...conversationStore.activeConversation,
+                dealReached: true,
+            });
+        });
     };
 
     React.useEffect(() => {
@@ -239,7 +259,8 @@ const ReviewOfferScreen = () => {
                 desc={`once you agree to sell to ${conversationStore.activeConvoOtherUser.displayName}, you agree to our Seller Terms.`}
                 buttonText="let's do it"
                 buttonOnClick={() => {
-                    console.log("tuki");
+                    console.log("hi");
+                    onAcceptOffer();
                 }}
                 footerText="nope, cancel"
                 onFooterClick={() => {

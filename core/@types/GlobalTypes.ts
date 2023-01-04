@@ -14,7 +14,6 @@ export interface IProduct {
     blurb: string;
     askingPrice: number;
     imageURL: string;
-    offers?: IOffer[];
     createdAt?: Date;
     categories?: ICategory[];
     condition: number;
@@ -27,6 +26,7 @@ export interface IConversation {
     sellerUID: string;
     buyerUID: string;
     linkedProductID: string;
+    dealReached?: boolean;
 }
 
 export interface IOffer {

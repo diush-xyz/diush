@@ -8,6 +8,8 @@ import {
     Text,
     TouchableOpacity,
     Animated,
+    NativeSyntheticEvent,
+    NativeTouchEvent,
 } from "react-native";
 import InfoIcon from "../../../../icons/common/info";
 import { useCatalogStore } from "../../../../state/auth/Catalog.store";
@@ -91,7 +93,7 @@ interface IWarningConfirmation {
     title: string;
     desc: string;
     buttonText: string;
-    buttonOnClick: () => void;
+    buttonOnClick: (ev: NativeSyntheticEvent<NativeTouchEvent>) => void;
     footerText: string;
     onFooterClick: () => void;
     visible: boolean;
@@ -150,7 +152,7 @@ const WarningConfirmation = (props: IWarningConfirmation) => {
                     </CustomText>
                     <LargeButton
                         title={props.buttonText}
-                        onPress={props.buttonOnClick}
+                        onPress={ev => props.buttonOnClick(ev)}
                         // deleteProduct();
                         // sellerViewProductStore.setDeleteConfirmation();
                         footer
