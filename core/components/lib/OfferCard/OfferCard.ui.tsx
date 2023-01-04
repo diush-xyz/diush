@@ -22,6 +22,8 @@ import {
     IUser,
     OfferStatus,
 } from "../../../@types/GlobalTypes";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../../../config/firebase";
 
 //TODO: Must add proper gradient background to button (not working, blank for now)
 
@@ -82,6 +84,18 @@ interface IOfferCard {
  */
 const OfferCard = (props: IOfferCard) => {
     const theme = useTheme();
+
+    const updateReadStatus = async () => {
+        const offerRef = doc(db, "offers", props.offer.id);
+
+        await updateDoc(offerRef, {
+            isReadByRecipient: true,
+        });
+    };
+
+    React.useEffect(() => {
+        updateReadStatus();
+    }, []);
 
     return (
         <View style={{ display: "flex", width: "100%" }}>
