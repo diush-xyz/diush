@@ -146,7 +146,16 @@ const OfferCard = (props: IOfferCard) => {
                                     style={{ marginLeft: 5 }}
                                 >
                                     {props.specificUser?.displayName} •{" "}
-                                    <CustomText accent fontSize={14}>
+                                    <CustomText
+                                        fontSize={14}
+                                        style={{
+                                            color:
+                                                props.offer.status ==
+                                                OfferStatus.ACCEPTED
+                                                    ? theme.success
+                                                    : theme.accent,
+                                        }}
+                                    >
                                         ${props.offer?.amount}
                                     </CustomText>
                                 </CustomText>
@@ -193,6 +202,9 @@ const OfferCard = (props: IOfferCard) => {
                     <LargeButton
                         title="review offer"
                         onPress={() => props.onReviewPress()}
+                        isSuccessButton={
+                            props.offer.status == OfferStatus.ACCEPTED
+                        }
                     />
                 </View>
             </CustomChildOfferCard>
