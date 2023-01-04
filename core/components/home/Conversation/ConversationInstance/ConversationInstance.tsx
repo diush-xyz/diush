@@ -174,6 +174,7 @@ const ConversationInstance = (props: IConversationInstance) => {
                 alignItems: "center",
                 justifyContent: "space-between",
                 width: "100%",
+                marginBottom: 25,
             }}
         >
             <View
