@@ -12,8 +12,10 @@ import ProfileImage from "../../../../components/lib/ProfileImage";
 import { MAX_WIDTH } from "../../../../utils/constants";
 import dayjs from "dayjs";
 import { useOfferStore } from "../../../../state/auth/Offer.store";
+import { useTheme } from "../../../../utils/useTheme.util";
 
 const DMScreen = () => {
+    const theme = useTheme();
     const offerStore = useOfferStore();
     const conversationStore = useConversationStore();
     const [offers, setOffers] = React.useState([]);
@@ -79,6 +81,25 @@ const DMScreen = () => {
             }}
         >
             <CustomDMScreenHeader />
+            {conversationStore.activeConversation.dealReached && (
+                <View
+                    style={{
+                        borderTopWidth: 2,
+                        borderBottomWidth: 2,
+                        borderTopColor: theme.success,
+                        borderBottomColor: theme.success,
+                        paddingHorizontal: 17,
+                        paddingVertical: 20,
+                    }}
+                >
+                    <CustomText>
+                        a deal has been reached! we will let you know when the
+                        buyer issues a payment and their preferred shipping
+                        method. you can always accept new offers during this
+                        time, which will cancel this one.
+                    </CustomText>
+                </View>
+            )}
             <ScrollView>
                 {conversationStore.activeConversationOffers?.map(
                     (elem, idx) => {
