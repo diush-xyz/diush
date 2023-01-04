@@ -24,6 +24,7 @@ import { db } from "../../../../../config/firebase";
 import { CatalogStatus, OfferStatus } from "../../../../@types/GlobalTypes";
 import askingPrice from "../../../../components/catalog/editProduct/askingPrice";
 import { deriveProductConditionFromDb } from "../../../../utils/productCondition.util";
+import WarningIcon from "../../../../icons/common/warning";
 
 const ReviewOfferScreen = () => {
     const offerStore = useOfferStore();
@@ -31,7 +32,11 @@ const ReviewOfferScreen = () => {
     const { user } = useAuthStore();
     const theme = useTheme();
     const [swipeStarted, setSwipeStarted] = React.useState<boolean>(false);
-    const [isWarningModalOpen, setIsWarningModalOpen] =
+    const [
+        offerAcceptanceConfirmationModal,
+        setOfferAcceptanceConfirmationModal,
+    ] = React.useState<boolean>(false);
+    const [undoConfirmationModal, setUndoConfirmationModal] =
         React.useState<boolean>(false);
     const [count, setCount] = React.useState<number>(0);
 
@@ -76,7 +81,6 @@ const ReviewOfferScreen = () => {
 
     const onAcceptOffer = async () => {
         const offerRef = doc(db, "offers", offerStore.offerBeingReviewed.id);
-        console.log("bruh");
 
         await updateDoc(offerRef, {
             status: OfferStatus.ACCEPTED,
@@ -89,9 +93,25 @@ const ReviewOfferScreen = () => {
         });
     };
 
+    const onUndoOffer = async () => {
+        const offerRef = doc(db, "offers", offerStore.offerBeingReviewed.id);
+
+        await updateDoc(offerRef, {
+            status: OfferStatus.PENDING,
+        }).then(() => {
+            offerStore.setOfferBeingReviewed(null);
+            conversationStore.setActiveConversation({
+                ...conversationStore.activeConversation,
+                dealReached: false,
+            });
+        });
+    };
+
     React.useEffect(() => {
         if (swipeStarted) {
-            setIsWarningModalOpen(true);
+            offerStore.offerBeingReviewed.status == OfferStatus.ACCEPTED
+                ? setUndoConfirmationModal(true)
+                : setOfferAcceptanceConfirmationModal(true);
         }
     }, [swipeStarted]);
 
@@ -229,7 +249,11 @@ const ReviewOfferScreen = () => {
                     position: "absolute",
                     bottom: 0,
                     width: "100%",
-                    backgroundColor: theme.success,
+                    backgroundColor:
+                        offerStore.offerBeingReviewed.status ==
+                        OfferStatus.ACCEPTED
+                            ? theme.accent
+                            : theme.success,
                     height: 130,
                     borderRadius: -20,
                 }}
@@ -250,7 +274,12 @@ const ReviewOfferScreen = () => {
                     >
                         <ChevronUpIcon />
                     </Animated.View>
-                    <CustomText font="Heavy">swipe up to accept</CustomText>
+                    <CustomText font="Heavy">
+                        {offerStore.offerBeingReviewed.status ==
+                        OfferStatus.ACCEPTED
+                            ? "swipe up to undo acceptance"
+                            : "swipe up to accept"}
+                    </CustomText>
                 </View>
             </GestureRecognizer>
             <WarningConfirmation
@@ -259,17 +288,32 @@ const ReviewOfferScreen = () => {
                 desc={`once you agree to sell to ${conversationStore.activeConvoOtherUser.displayName}, you agree to our Seller Terms.`}
                 buttonText="let's do it"
                 buttonOnClick={() => {
-                    console.log("hi");
                     onAcceptOffer();
                 }}
                 footerText="nope, cancel"
                 onFooterClick={() => {
                     setCount(0);
                     setSwipeStarted(false);
-                    setIsWarningModalOpen(false);
+                    setOfferAcceptanceConfirmationModal(false);
                 }}
-                visible={isWarningModalOpen}
+                visible={offerAcceptanceConfirmationModal}
                 isSuccessButton
+            />
+            <WarningConfirmation
+                icon={<CompactIcon />}
+                title="undo acceptance"
+                desc={`be careful! are you sure you want to\n reverse your previous acceptance of\n this offer by ${conversationStore.activeConvoOtherUser.displayName}?`}
+                buttonText="yes, i'm sure"
+                buttonOnClick={() => {
+                    onUndoOffer();
+                }}
+                footerText="my bad, cancel"
+                onFooterClick={() => {
+                    setCount(0);
+                    setSwipeStarted(false);
+                    setUndoConfirmationModal(false);
+                }}
+                visible={undoConfirmationModal}
             />
         </>
     );

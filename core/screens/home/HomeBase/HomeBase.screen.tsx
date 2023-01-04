@@ -147,7 +147,7 @@ const HomeBaseScreen = () => {
                         onPress={() => {
                             createOfferInDb({
                                 id: uuidv4(),
-                                amount: 720,
+                                amount: 731,
                                 isReadByRecipient: false,
                                 linkedConversationID: "7FEoNJoAGnsXNKT1iVzX",
                                 placedByUID: "4TWjjjjOTxw0TMvOxF9N",
