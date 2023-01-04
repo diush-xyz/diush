@@ -129,6 +129,16 @@ const ConversationInstance = (props: IConversationInstance) => {
         setUnreadOffersCount(unreadOffers.length);
     };
 
+    //sort through offers and determine if any have a status of accepted
+    const hasAcceptedOffer = () => {
+        let hasAccepted = false;
+        offers.forEach(offer => {
+            if (offer.status == "accepted") {
+            }
+        });
+        return hasAccepted;
+    };
+
     const execute = () => {
         fetchOtherUser();
         fetchLinkedProduct();
@@ -199,6 +209,7 @@ const ConversationInstance = (props: IConversationInstance) => {
                 >
                     <CustomText
                         font="Bold"
+                        success={props.data.dealReached}
                         fontSize={18}
                         style={{ marginBottom: 2 }}
                     >
@@ -226,22 +237,28 @@ const ConversationInstance = (props: IConversationInstance) => {
                 }}
             >
                 <CustomText secondary>{mostRecentOfferTimeAgo}</CustomText>
-                <View
-                    style={{
-                        paddingVertical: 2,
-                        paddingHorizontal: 8,
-                        backgroundColor: theme.accent,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        borderRadius: 12,
-                        marginTop: 4,
-                    }}
-                >
-                    <CustomText fontSize={12} font="Semibold">
-                        {unreadOffersCount?.toString()}
-                    </CustomText>
-                </View>
+                {unreadOffersCount > 0 && (
+                    <View
+                        style={{
+                            paddingVertical: 2,
+                            paddingHorizontal: 8,
+                            backgroundColor:
+                                props.data.dealReached == true &&
+                                props.data.dealReached !== null
+                                    ? theme.success
+                                    : theme.accent,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            borderRadius: 12,
+                            marginTop: 4,
+                        }}
+                    >
+                        <CustomText fontSize={12} font="Semibold">
+                            {unreadOffersCount?.toString()}
+                        </CustomText>
+                    </View>
+                )}
             </View>
         </TouchableOpacity>
     );
