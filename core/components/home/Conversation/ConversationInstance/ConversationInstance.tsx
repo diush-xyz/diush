@@ -210,7 +210,7 @@ const ConversationInstance = (props: IConversationInstance) => {
                     }}
                 >
                     <CustomText
-                        font="Bold"
+                        font={unreadOffersCount > 0 ? "Heavy" : "Bold"}
                         success={props.data.dealReached}
                         fontSize={18}
                         style={{ marginBottom: 2 }}
