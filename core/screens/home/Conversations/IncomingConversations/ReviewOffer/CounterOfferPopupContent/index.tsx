@@ -17,6 +17,8 @@ import ChevronRight from "../../../../../../icons/catalog/ChevronRight";
 import RoundedMoreIcon from "../../../../../../icons/common/RoundedMore";
 import { useConversationStore } from "../../../../../../state/auth/Conversation.store";
 import { MAX_WIDTH } from "../../../../../../utils/constants";
+import HorizontalLine from "../../../../../../components/lib/HorizontalLine";
+import InfoIcon from "../../../../../../icons/common/info";
 
 const CounterOfferPopupContent = () => {
     const offerStore = useOfferStore();
@@ -114,6 +116,20 @@ const CounterOfferPopupContent = () => {
                             <CustomText secondary font="Heavy">
                                 $90
                             </CustomText>
+                        </CustomText>
+                    </View>
+                    <HorizontalLine marginVertical={20} />
+                    <View
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }}
+                    >
+                        <InfoIcon />
+                        <CustomText secondary style={{ marginLeft: 5 }}>
+                            learn more about counters
                         </CustomText>
                     </View>
                 </View>
