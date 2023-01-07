@@ -208,7 +208,7 @@ const ReviewOfferScreen = () => {
                             <CustomText font="Heavy" fontSize={22}>
                                 {
                                     conversationStore.activeConversationProduct
-                                        .title
+                                        ?.title
                                 }{" "}
                                 <CustomText
                                     secondary
@@ -265,7 +265,7 @@ const ReviewOfferScreen = () => {
                             <CustomText secondary font="Black">
                                 {
                                     conversationStore.activeConversationProduct
-                                        .title
+                                        ?.title
                                 }
                             </CustomText>{" "}
                             to{" "}

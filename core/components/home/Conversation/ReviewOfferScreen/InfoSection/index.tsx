@@ -11,7 +11,7 @@ const InfoSection = () => {
     const conversationStore = useConversationStore();
 
     //get the highest offer from the conversation
-    const highestOffer = conversationStore.activeConversationOffers.reduce(
+    const highestOffer = conversationStore.activeConversationOffers?.reduce(
         (prev, current) => {
             return prev.amount > current.amount ? prev : current;
         }
@@ -20,11 +20,11 @@ const InfoSection = () => {
     const INFO_SECTION_DATA = [
         {
             text: "original asking price",
-            value: `$${conversationStore.activeConversationProduct.askingPrice}`,
+            value: `$${conversationStore.activeConversationProduct?.askingPrice}`,
         },
         {
             text: "highest overall offer",
-            value: `$${highestOffer.amount}`,
+            value: `$${highestOffer?.amount}`,
         }, //TODO: get the highest offer from the entire product's offers, not just this conversation
         {
             text: "items",
