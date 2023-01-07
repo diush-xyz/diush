@@ -165,7 +165,9 @@ const DMScreen = () => {
                                     <View>
                                         <OfferCard
                                             specificUser={
-                                                conversationStore.activeConvoOtherUser
+                                                elem.isCounterOffer
+                                                    ? user
+                                                    : conversationStore.activeConvoOtherUser
                                             }
                                             offer={elem}
                                             product={
