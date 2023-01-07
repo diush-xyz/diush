@@ -1,20 +1,20 @@
 import React from "react";
 import { ScrollView, View } from "react-native";
-import ScreenHeader from "../../../../components/lib/ScreenHeader";
+import ScreenHeader from "../../../../../components/lib/ScreenHeader";
 import { observer } from "mobx-react";
-import CustomDMScreenHeader from "../../../../components/home/Conversation/DMScreen/CustomDMScreenHeader";
-import { useConversationStore } from "../../../../state/auth/Conversation.store";
+import CustomDMScreenHeader from "../../../../../components/home/Conversation/DMScreen/CustomDMScreenHeader";
+import { useConversationStore } from "../../../../../state/auth/Conversation.store";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
-import { db } from "../../../../../config/firebase";
-import CustomText from "../../../../components/lib/CustomText";
-import OfferCard from "../../../../components/lib/OfferCard";
-import ProfileImage from "../../../../components/lib/ProfileImage";
-import { MAX_WIDTH } from "../../../../utils/constants";
+import { db } from "../../../../../../config/firebase";
+import CustomText from "../../../../../components/lib/CustomText";
+import OfferCard from "../../../../../components/lib/OfferCard";
+import ProfileImage from "../../../../../components/lib/ProfileImage";
+import { MAX_WIDTH } from "../../../../../utils/constants";
 import dayjs from "dayjs";
-import { useOfferStore } from "../../../../state/auth/Offer.store";
-import { useTheme } from "../../../../utils/useTheme.util";
-import { OfferStatus } from "../../../../@types/GlobalTypes";
-import { useAuthStore } from "../../../../state/auth/Auth.store";
+import { useOfferStore } from "../../../../../state/auth/Offer.store";
+import { useTheme } from "../../../../../utils/useTheme.util";
+import { OfferStatus } from "../../../../../@types/GlobalTypes";
+import { useAuthStore } from "../../../../../state/auth/Auth.store";
 
 const DMScreen = () => {
     const theme = useTheme();

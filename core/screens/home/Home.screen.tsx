@@ -1,10 +1,10 @@
 import React from "react";
 import { useHomeStore } from "../../state/auth/Home.store";
-import DMScreen from "./IncomingConversations/DM/DMScreen";
+import DMScreen from "./Conversations/IncomingConversations/DM/DMScreen";
 import HomeBaseScreen from "./HomeBase/HomeBase.screen";
 import { observer } from "mobx-react";
 import { useConversationStore } from "../../state/auth/Conversation.store";
-import ConversationScreenHandler from "./IncomingConversations/ConversationScreenHandler";
+import ConversationScreenHandler from "./Conversations/IncomingConversations/ConversationScreenHandler";
 
 const HomeScreen = () => {
     const conversationStore = useConversationStore();
