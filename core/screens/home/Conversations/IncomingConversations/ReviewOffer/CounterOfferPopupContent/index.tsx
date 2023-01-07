@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useAuthStore } from "../../../../../../state/auth/Auth.store";
 import { BottomSheetView } from "@gorhom/bottom-sheet";
 import { GLOBAL_STYLES } from "../../../../../../@types/GlobalStyles";
+import CustomCounterOfferPopupHeader from "../../../../../../components/home/Conversation/CounterOffer/CustomCounterOfferPopupHeader/CustomCounterOfferPopupHeader";
 
 const CounterOfferPopupContent = () => {
     const offerStore = useOfferStore();
@@ -38,7 +39,15 @@ const CounterOfferPopupContent = () => {
 
     return (
         <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
-            <CustomText>Counter offer</CustomText>
+            <View
+                style={{
+                    flex: 1,
+                    marginTop: 15,
+                }}
+            >
+                <CustomCounterOfferPopupHeader />
+                <CustomText>The best</CustomText>
+            </View>
         </BottomSheetView>
     );
 };
