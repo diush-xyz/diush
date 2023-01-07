@@ -104,6 +104,17 @@ const OfferCard = (props: IOfferCard) => {
         });
     };
 
+    const getButtonText = () => {
+        switch (props.offer.status) {
+            case OfferStatus.ACCEPTED:
+                return "view details";
+            case OfferStatus.DECLINED:
+                return "view details";
+            case OfferStatus.PENDING:
+                return "review offer";
+        }
+    };
+
     React.useEffect(() => {
         updateReadStatus();
     }, []);
@@ -227,9 +238,9 @@ const OfferCard = (props: IOfferCard) => {
                     </View>
                     <LargeButton
                         title={
-                            props.offer.status == OfferStatus.ACCEPTED
-                                ? "view details"
-                                : "review offer"
+                            props.offer.isCounterOffer
+                                ? "view my offer"
+                                : getButtonText()
                         }
                         onPress={() => props.onReviewPress()}
                         isSuccessButton={
