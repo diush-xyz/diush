@@ -102,6 +102,20 @@ const CounterOfferPopupContent = () => {
                         {/*TODO: Come back to this*/}
                         <ChevronRight style={{ marginLeft: 7 }} />
                     </View>
+                    <View style={{ display: "flex", marginTop: 20 }}>
+                        <CustomText secondary>
+                            asking price:{" "}
+                            <CustomText secondary font="Heavy">
+                                $90
+                            </CustomText>
+                        </CustomText>
+                        <CustomText secondary style={{ marginTop: 8 }}>
+                            highest overall offer:
+                            <CustomText secondary font="Heavy">
+                                $90
+                            </CustomText>
+                        </CustomText>
+                    </View>
                 </View>
             </View>
         </BottomSheetView>
