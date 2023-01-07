@@ -1,6 +1,6 @@
 import React from "react";
 import { useOfferStore } from "../../../../state/auth/Offer.store";
-import ReviewOfferScreen from "./ReviewOffer/ReviewOfferScreen";
+import ReviewOfferScreen from "./ReviewOffer";
 import DMScreen from "./DM/DMScreen";
 import { observer } from "mobx-react";
 

@@ -20,6 +20,12 @@ export default class OfferStore {
     setOfferBeingReviewed(offer: IOffer) {
         this.offerBeingReviewed = offer;
     }
+
+    isOfferBeingCountered: boolean = false;
+
+    setIsOfferBeingCountered(isOfferBeingCountered: boolean) {
+        this.isOfferBeingCountered = isOfferBeingCountered;
+    }
 }
 
 const StoreContext = React.createContext<OfferStore>(new OfferStore());

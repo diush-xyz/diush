@@ -1,34 +1,37 @@
 import React from "react";
-import CustomText from "../../../../../components/lib/CustomText";
+import CustomText from "../../../../../../components/lib/CustomText";
 import { observer } from "mobx-react";
-import ScreenHeader from "../../../../../components/lib/ScreenHeader";
+import ScreenHeader from "../../../../../../components/lib/ScreenHeader";
 import { Animated, Dimensions, Easing, View } from "react-native";
-import { useOfferStore } from "../../../../../state/auth/Offer.store";
-import { useConversationStore } from "../../../../../state/auth/Conversation.store";
-import RoundedMoreIcon from "../../../../../icons/common/RoundedMore";
-import { MAX_WIDTH } from "../../../../../utils/constants";
-import ProfileImage from "../../../../../components/lib/ProfileImage";
-import { useAuthStore } from "../../../../../state/auth/Auth.store";
-import ChevronRight from "../../../../../icons/catalog/ChevronRight";
-import InfoSection from "../../../../../components/home/Conversation/ReviewOfferScreen/InfoSection";
-import LeftArrowIcon from "../../../../../icons/common/leftArrow";
-import { useTheme } from "../../../../../utils/useTheme.util";
-import ChevronUpIcon from "../../../../../icons/home/conversation/ChevronUp";
+import { useOfferStore } from "../../../../../../state/auth/Offer.store";
+import { useConversationStore } from "../../../../../../state/auth/Conversation.store";
+import RoundedMoreIcon from "../../../../../../icons/common/RoundedMore";
+import { MAX_WIDTH } from "../../../../../../utils/constants";
+import ProfileImage from "../../../../../../components/lib/ProfileImage";
+import { useAuthStore } from "../../../../../../state/auth/Auth.store";
+import ChevronRight from "../../../../../../icons/catalog/ChevronRight";
+import InfoSection from "../../../../../../components/home/Conversation/ReviewOfferScreen/InfoSection";
+import LeftArrowIcon from "../../../../../../icons/common/leftArrow";
+import { useTheme } from "../../../../../../utils/useTheme.util";
+import ChevronUpIcon from "../../../../../../icons/home/conversation/ChevronUp";
 import styled from "styled-components/native";
 import GestureRecognizer from "react-native-swipe-detect";
-import WarningConfirmation from "../../../../../components/lib/Modals/WarningConfirmation";
-import CompactIcon from "../../../../../components/catalog/viewProduct/CustomDeleteConfirmation/CompactIcon";
-import MoneyCompactIcon from "../../../../../icons/home/conversation/MoneyCompactIcon";
+import WarningConfirmation from "../../../../../../components/lib/Modals/WarningConfirmation";
+import CompactIcon from "../../../../../../components/catalog/viewProduct/CustomDeleteConfirmation/CompactIcon";
+import MoneyCompactIcon from "../../../../../../icons/home/conversation/MoneyCompactIcon";
 import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../../../../../../config/firebase";
-import { CatalogStatus, OfferStatus } from "../../../../../@types/GlobalTypes";
-import askingPrice from "../../../../../components/catalog/editProduct/askingPrice";
-import { deriveProductConditionFromDb } from "../../../../../utils/productCondition.util";
-import WarningIcon from "../../../../../icons/common/warning";
-import { createOfferInDb } from "../../../../../utils/offers.util";
+import { db } from "../../../../../../../config/firebase";
+import {
+    CatalogStatus,
+    OfferStatus,
+} from "../../../../../../@types/GlobalTypes";
+import askingPrice from "../../../../../../components/catalog/editProduct/askingPrice";
+import { deriveProductConditionFromDb } from "../../../../../../utils/productCondition.util";
+import WarningIcon from "../../../../../../icons/common/warning";
+import { createOfferInDb } from "../../../../../../utils/offers.util";
 import { v4 as uuidv4 } from "uuid";
 
-const ReviewOfferScreen = () => {
+const ReviewOfferHome = () => {
     const offerStore = useOfferStore();
     const conversationStore = useConversationStore();
     const { user } = useAuthStore();
@@ -137,26 +140,6 @@ const ReviewOfferScreen = () => {
         }
     }, [swipeStarted]);
 
-    const counterOffer = async () => {
-        const offerRef = doc(db, "offers", offerStore.offerBeingReviewed.id);
-
-        await updateDoc(offerRef, {
-            status: OfferStatus.DECLINED,
-        });
-
-        //create the new offer (counter offer)
-        createOfferInDb({
-            id: uuidv4(),
-            amount: 2000,
-            isReadByRecipient: false,
-            linkedConversationID: "7FEoNJoAGnsXNKT1iVzX",
-            placedByUID: user.id,
-            timestamp: new Date(),
-            isCounterOffer: true,
-            status: OfferStatus.PENDING,
-        });
-    };
-
     return (
         <>
             <View
@@ -189,7 +172,9 @@ const ReviewOfferScreen = () => {
                         )
                     }
                     buttonText="counter"
-                    onButtonPress={() => counterOffer()}
+                    onButtonPress={() =>
+                        offerStore.setIsOfferBeingCountered(true)
+                    }
                     // buttonDisabled={!hasChanged}
                     paddingBottom={16}
                 />
@@ -284,54 +269,57 @@ const ReviewOfferScreen = () => {
                     </View>
                 </View>
             </View>
-            <GestureRecognizer
-                onSwipeUp={() => {
-                    if (count === 0 && !swipeStarted) {
-                        setCount(count + 1);
-                        setSwipeStarted(true);
-                    }
-                }}
-                config={config}
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    position: "absolute",
-                    bottom: 0,
-                    width: "100%",
-                    backgroundColor:
-                        offerStore.offerBeingReviewed.status ==
-                        OfferStatus.ACCEPTED
-                            ? theme.accent
-                            : theme.success,
-                    height: 130,
-                    borderRadius: -20,
-                }}
-            >
-                <View
+            {!offerStore.isOfferBeingCountered && (
+                <GestureRecognizer
+                    onSwipeUp={() => {
+                        if (count === 0 && !swipeStarted) {
+                            setCount(count + 1);
+                            setSwipeStarted(true);
+                        }
+                    }}
+                    config={config}
                     style={{
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        marginBottom: 20,
+                        position: "absolute",
+                        bottom: 0,
+                        width: "100%",
+                        backgroundColor:
+                            offerStore.offerBeingReviewed.status ==
+                            OfferStatus.ACCEPTED
+                                ? theme.accent
+                                : theme.success,
+                        height: 130,
+                        borderRadius: -20,
                     }}
                 >
-                    <Animated.View
+                    <View
                         style={{
-                            transform: [{ translateY }, { scale }],
-                            marginBottom: 15,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            marginBottom: 20,
                         }}
                     >
-                        <ChevronUpIcon />
-                    </Animated.View>
-                    <CustomText font="Heavy">
-                        {offerStore.offerBeingReviewed.status ==
-                        OfferStatus.ACCEPTED
-                            ? "swipe up to undo acceptance"
-                            : "swipe up to accept"}
-                    </CustomText>
-                </View>
-            </GestureRecognizer>
+                        <Animated.View
+                            style={{
+                                transform: [{ translateY }, { scale }],
+                                marginBottom: 15,
+                            }}
+                        >
+                            <ChevronUpIcon />
+                        </Animated.View>
+                        <CustomText font="Heavy">
+                            {offerStore.offerBeingReviewed.status ==
+                            OfferStatus.ACCEPTED
+                                ? "swipe up to undo acceptance"
+                                : "swipe up to accept"}
+                        </CustomText>
+                    </View>
+                </GestureRecognizer>
+            )}
+
             <WarningConfirmation
                 icon={<MoneyCompactIcon />}
                 title="accept offer"
@@ -369,4 +357,4 @@ const ReviewOfferScreen = () => {
     );
 };
 
-export default observer(ReviewOfferScreen);
+export default observer(ReviewOfferHome);
