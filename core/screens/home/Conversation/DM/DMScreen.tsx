@@ -195,7 +195,7 @@ const DMScreen = () => {
                                 </View>
                                 <View
                                     style={{
-                                        marginLeft: 32, //TODO: Must change when offers are on the right side
+                                        marginLeft: 32,
                                         marginTop: 10,
                                     }}
                                 >
