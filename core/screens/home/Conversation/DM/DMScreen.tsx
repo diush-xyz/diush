@@ -65,8 +65,12 @@ const DMScreen = () => {
     }, []);
 
     React.useEffect(() => {
-        conversationStore.setActiveConversationOffers(offers);
-        console.log(conversationStore.activeConversationOffers);
+        //makes the oldest offers at the start of the array and the newest at the bottom in a message-like format:
+        const sortedOffers = offers.sort((a, b) => {
+            return a.timestamp - b.timestamp;
+        });
+        //sets the offers to be displayed in the conversation:
+        conversationStore.setActiveConversationOffers(sortedOffers);
     }, [offers]);
 
     React.useEffect(() => {
