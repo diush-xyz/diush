@@ -13,6 +13,7 @@ import { MAX_WIDTH } from "../../../../utils/constants";
 import dayjs from "dayjs";
 import { useOfferStore } from "../../../../state/auth/Offer.store";
 import { useTheme } from "../../../../utils/useTheme.util";
+import { OfferStatus } from "../../../../@types/GlobalTypes";
 
 const DMScreen = () => {
     const theme = useTheme();
@@ -71,6 +72,19 @@ const DMScreen = () => {
     React.useEffect(() => {
         conversationStore.setActiveConversationProduct(linkedProduct);
     }, [linkedProduct]);
+
+    React.useEffect(() => {
+        //determine if a deal has been reached
+        if (conversationStore.activeConversationOffers) {
+            const dealReached = conversationStore.activeConversationOffers.some(
+                elem => elem.status == OfferStatus.ACCEPTED
+            );
+            conversationStore.setActiveConversation({
+                ...conversationStore.activeConversation,
+                dealReached,
+            });
+        }
+    }, [conversationStore.activeConversationOffers]);
 
     return (
         <View
