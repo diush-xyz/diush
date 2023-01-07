@@ -14,11 +14,13 @@ import dayjs from "dayjs";
 import { useOfferStore } from "../../../../state/auth/Offer.store";
 import { useTheme } from "../../../../utils/useTheme.util";
 import { OfferStatus } from "../../../../@types/GlobalTypes";
+import { useAuthStore } from "../../../../state/auth/Auth.store";
 
 const DMScreen = () => {
     const theme = useTheme();
     const offerStore = useOfferStore();
     const conversationStore = useConversationStore();
+    const { user } = useAuthStore();
     const [offers, setOffers] = React.useState([]);
     const [linkedProduct, setLinkedProduct] = React.useState(null);
 
@@ -130,7 +132,7 @@ const DMScreen = () => {
                             <View
                                 style={{
                                     display: "flex",
-                                    marginTop: idx == 0 && 16,
+                                    marginTop: 16,
                                     alignItems: elem.isCounterOffer
                                         ? "flex-end"
                                         : "flex-start",
@@ -185,9 +187,7 @@ const DMScreen = () => {
                                             }}
                                         >
                                             <ProfileImage
-                                                specificUser={
-                                                    conversationStore.activeConvoOtherUser
-                                                }
+                                                specificUser={user}
                                                 size={24}
                                             />
                                         </View>
