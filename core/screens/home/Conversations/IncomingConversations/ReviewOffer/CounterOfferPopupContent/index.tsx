@@ -20,6 +20,7 @@ import { MAX_WIDTH } from "../../../../../../utils/constants";
 import HorizontalLine from "../../../../../../components/lib/HorizontalLine";
 import InfoIcon from "../../../../../../icons/common/info";
 import PriceInput from "../../../../../../components/lib/PriceInput";
+import LargeButton from "../../../../../../components/lib/LargeButton";
 
 const CounterOfferPopupContent = () => {
     const offerStore = useOfferStore();
@@ -39,7 +40,7 @@ const CounterOfferPopupContent = () => {
         //create the new offer (counter offer)
         createOfferInDb({
             id: uuidv4(),
-            amount: 2000,
+            amount: Number(price),
             isReadByRecipient: false,
             linkedConversationID: "7FEoNJoAGnsXNKT1iVzX",
             placedByUID: user.id,
@@ -47,6 +48,8 @@ const CounterOfferPopupContent = () => {
             isCounterOffer: true,
             status: OfferStatus.PENDING,
         });
+
+        offerStore.setIsOfferBeingCountered(false);
     };
 
     React.useEffect(() => {
@@ -149,6 +152,16 @@ const CounterOfferPopupContent = () => {
                         }}
                     >
                         <PriceInput price={price} setPrice={setPrice} />
+                    </View>
+                    <View style={{ marginTop: 35 }}>
+                        <LargeButton
+                            title="place counter offer"
+                            onPress={counterOffer}
+                            disabled={
+                                conversationStore.activeConversationProduct
+                                    .askingPrice == Number(price)
+                            }
+                        />
                     </View>
                 </View>
             </View>
