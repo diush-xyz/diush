@@ -269,56 +269,58 @@ const ReviewOfferHome = () => {
                     </View>
                 </View>
             </View>
-            {!offerStore.isOfferBeingCountered && (
-                <GestureRecognizer
-                    onSwipeUp={() => {
-                        if (count === 0 && !swipeStarted) {
-                            setCount(count + 1);
-                            setSwipeStarted(true);
-                        }
-                    }}
-                    config={config}
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        position: "absolute",
-                        bottom: 0,
-                        width: "100%",
-                        backgroundColor:
-                            offerStore.offerBeingReviewed.status ==
-                            OfferStatus.ACCEPTED
-                                ? theme.accent
-                                : theme.success,
-                        height: 130,
-                        borderRadius: -20,
-                    }}
-                >
-                    <View
+            {/*TODO: Going to have to update this logic when dealing with outgoing conversations*/}
+            {!offerStore.isOfferBeingCountered &&
+                !offerStore.offerBeingReviewed.isCounterOffer && (
+                    <GestureRecognizer
+                        onSwipeUp={() => {
+                            if (count === 0 && !swipeStarted) {
+                                setCount(count + 1);
+                                setSwipeStarted(true);
+                            }
+                        }}
+                        config={config}
                         style={{
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            marginBottom: 20,
+                            position: "absolute",
+                            bottom: 0,
+                            width: "100%",
+                            backgroundColor:
+                                offerStore.offerBeingReviewed.status ==
+                                OfferStatus.ACCEPTED
+                                    ? theme.accent
+                                    : theme.success,
+                            height: 130,
+                            borderRadius: -20,
                         }}
                     >
-                        <Animated.View
+                        <View
                             style={{
-                                transform: [{ translateY }, { scale }],
-                                marginBottom: 15,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                marginBottom: 20,
                             }}
                         >
-                            <ChevronUpIcon />
-                        </Animated.View>
-                        <CustomText font="Heavy">
-                            {offerStore.offerBeingReviewed.status ==
-                            OfferStatus.ACCEPTED
-                                ? "swipe up to undo acceptance"
-                                : "swipe up to accept"}
-                        </CustomText>
-                    </View>
-                </GestureRecognizer>
-            )}
+                            <Animated.View
+                                style={{
+                                    transform: [{ translateY }, { scale }],
+                                    marginBottom: 15,
+                                }}
+                            >
+                                <ChevronUpIcon />
+                            </Animated.View>
+                            <CustomText font="Heavy">
+                                {offerStore.offerBeingReviewed.status ==
+                                OfferStatus.ACCEPTED
+                                    ? "swipe up to undo acceptance"
+                                    : "swipe up to accept"}
+                            </CustomText>
+                        </View>
+                    </GestureRecognizer>
+                )}
 
             <WarningConfirmation
                 icon={<MoneyCompactIcon />}
