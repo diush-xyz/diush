@@ -19,11 +19,15 @@ import { useConversationStore } from "../../../../../../state/auth/Conversation.
 import { MAX_WIDTH } from "../../../../../../utils/constants";
 import HorizontalLine from "../../../../../../components/lib/HorizontalLine";
 import InfoIcon from "../../../../../../icons/common/info";
+import PriceInput from "../../../../../../components/lib/PriceInput";
 
 const CounterOfferPopupContent = () => {
     const offerStore = useOfferStore();
     const conversationStore = useConversationStore();
     const { user } = useAuthStore();
+    const [price, setPrice] = React.useState<string>(
+        conversationStore.activeConversationProduct?.askingPrice.toString()
+    );
 
     const counterOffer = async () => {
         const offerRef = doc(db, "offers", offerStore.offerBeingReviewed.id);
@@ -44,6 +48,10 @@ const CounterOfferPopupContent = () => {
             status: OfferStatus.PENDING,
         });
     };
+
+    React.useEffect(() => {
+        console.log("price", price);
+    }, [price]);
 
     return (
         <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
@@ -131,6 +139,16 @@ const CounterOfferPopupContent = () => {
                         <CustomText secondary style={{ marginLeft: 5 }}>
                             learn more about counters
                         </CustomText>
+                    </View>
+                    <View
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            marginTop: 35,
+                        }}
+                    >
+                        <PriceInput price={price} setPrice={setPrice} />
                     </View>
                 </View>
             </View>
