@@ -85,6 +85,17 @@ interface IOfferCard {
 const OfferCard = (props: IOfferCard) => {
     const theme = useTheme();
 
+    const getStatusTextColor = () => {
+        switch (props.offer.status) {
+            case OfferStatus.ACCEPTED:
+                return theme.success;
+            case OfferStatus.PENDING:
+                return theme.primaryText;
+            case OfferStatus.DECLINED:
+                return theme.accent;
+        }
+    };
+
     const updateReadStatus = async () => {
         const offerRef = doc(db, "offers", props.offer.id);
 
@@ -202,11 +213,12 @@ const OfferCard = (props: IOfferCard) => {
                             <CustomText>status</CustomText>
                             <CustomText
                                 style={{
-                                    color:
+                                    color: getStatusTextColor(),
+                                    opacity:
                                         props.offer.status ==
-                                        OfferStatus.ACCEPTED
-                                            ? theme.success
-                                            : theme.primaryText,
+                                        OfferStatus.PENDING
+                                            ? 0.5
+                                            : 1,
                                 }}
                             >
                                 {props.offer.status?.toLowerCase()}

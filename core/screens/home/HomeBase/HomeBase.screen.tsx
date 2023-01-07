@@ -153,6 +153,7 @@ const HomeBaseScreen = () => {
                                 placedByUID: "4TWjjjjOTxw0TMvOxF9N",
                                 timestamp: new Date(),
                                 status: OfferStatus.PENDING,
+                                isCounterOffer: false,
                             });
                         }}
                     />

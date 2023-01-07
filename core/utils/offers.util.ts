@@ -12,5 +12,6 @@ export const createOfferInDb = async (offer: IOffer) => {
         placedByUID: offer.placedByUID,
         timestamp: offer.timestamp,
         status: offer.status,
+        isCounterOffer: offer.isCounterOffer,
     });
 };

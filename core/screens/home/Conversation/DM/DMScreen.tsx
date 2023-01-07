@@ -127,7 +127,11 @@ const DMScreen = () => {
                                 style={{
                                     display: "flex",
                                     marginTop: idx == 0 && 16,
-                                    paddingLeft: 23, //TODO: Must change when offers are on the right side
+                                    alignItems: elem.isCounterOffer
+                                        ? "flex-end"
+                                        : "flex-start",
+                                    paddingLeft: !elem.isCounterOffer && 10,
+                                    paddingRight: elem.isCounterOffer && 10,
                                 }}
                             >
                                 <View
@@ -136,20 +140,22 @@ const DMScreen = () => {
                                         flexDirection: "row",
                                     }}
                                 >
-                                    <View
-                                        style={{
-                                            display: "flex",
-                                            justifyContent: "flex-end",
-                                            marginRight: 8,
-                                        }}
-                                    >
-                                        <ProfileImage
-                                            specificUser={
-                                                conversationStore.activeConvoOtherUser
-                                            }
-                                            size={24}
-                                        />
-                                    </View>
+                                    {!elem.isCounterOffer && (
+                                        <View
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "flex-end",
+                                                marginRight: 8,
+                                            }}
+                                        >
+                                            <ProfileImage
+                                                specificUser={
+                                                    conversationStore.activeConvoOtherUser
+                                                }
+                                                size={24}
+                                            />
+                                        </View>
+                                    )}
                                     <View>
                                         <OfferCard
                                             specificUser={
@@ -166,6 +172,22 @@ const DMScreen = () => {
                                             }
                                         />
                                     </View>
+                                    {elem.isCounterOffer && (
+                                        <View
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "flex-end",
+                                                marginLeft: 8,
+                                            }}
+                                        >
+                                            <ProfileImage
+                                                specificUser={
+                                                    conversationStore.activeConvoOtherUser
+                                                }
+                                                size={24}
+                                            />
+                                        </View>
+                                    )}
                                 </View>
                                 <View
                                     style={{

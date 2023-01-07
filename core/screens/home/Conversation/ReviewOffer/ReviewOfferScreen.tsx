@@ -25,6 +25,8 @@ import { CatalogStatus, OfferStatus } from "../../../../@types/GlobalTypes";
 import askingPrice from "../../../../components/catalog/editProduct/askingPrice";
 import { deriveProductConditionFromDb } from "../../../../utils/productCondition.util";
 import WarningIcon from "../../../../icons/common/warning";
+import { createOfferInDb } from "../../../../utils/offers.util";
+import { v4 as uuidv4 } from "uuid";
 
 const ReviewOfferScreen = () => {
     const offerStore = useOfferStore();
@@ -135,6 +137,26 @@ const ReviewOfferScreen = () => {
         }
     }, [swipeStarted]);
 
+    const counterOffer = async () => {
+        const offerRef = doc(db, "offers", offerStore.offerBeingReviewed.id);
+
+        await updateDoc(offerRef, {
+            status: OfferStatus.DECLINED,
+        });
+
+        //create the new offer (counter offer)
+        createOfferInDb({
+            id: uuidv4(),
+            amount: 2000,
+            isReadByRecipient: false,
+            linkedConversationID: "7FEoNJoAGnsXNKT1iVzX",
+            placedByUID: user.id,
+            timestamp: new Date(),
+            isCounterOffer: true,
+            status: OfferStatus.PENDING,
+        });
+    };
+
     return (
         <>
             <View
@@ -167,7 +189,7 @@ const ReviewOfferScreen = () => {
                         )
                     }
                     buttonText="counter"
-                    // onButtonPress={() => save()}
+                    onButtonPress={() => counterOffer()}
                     // buttonDisabled={!hasChanged}
                     paddingBottom={16}
                 />
