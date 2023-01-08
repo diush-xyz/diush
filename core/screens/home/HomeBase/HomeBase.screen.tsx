@@ -44,8 +44,11 @@ const HomeBaseScreen = () => {
     const [incomingConversations, setIncomingConversations] = React.useState(
         []
     );
+    const [outboundConversations, setOutboundConversations] = React.useState(
+        []
+    );
 
-    React.useEffect(() => {
+    const fetchIncomingConversations = () => {
         const q = query(
             collection(db, "conversations"),
             where("sellerUID", "==", auth.currentUser?.uid)
@@ -64,6 +67,32 @@ const HomeBaseScreen = () => {
             setIncomingConversations(fetched);
             setLoading(false);
         });
+    };
+
+    const fetchOutboundConversations = () => {
+        const q = query(
+            collection(db, "conversations"),
+            where("buyerUID", "==", auth.currentUser?.uid)
+        );
+
+        onSnapshot(q, querySnapshot => {
+            const fetched = [];
+
+            querySnapshot.forEach(documentSnapshot => {
+                fetched.push({
+                    ...documentSnapshot.data(),
+                    key: documentSnapshot.id,
+                });
+            });
+
+            setOutboundConversations(fetched);
+            setLoading(false);
+        });
+    };
+
+    React.useEffect(() => {
+        fetchIncomingConversations();
+        fetchOutboundConversations();
     }, []);
 
     if (authStore.userFetchLoading || loading) {
@@ -121,25 +150,40 @@ const HomeBaseScreen = () => {
                         marginTop: 22,
                     }}
                 >
-                    {incomingConversations.length > 0
-                        ? incomingConversations.map((elem, idx) => {
-                              return (
-                                  <ConversationInstance
-                                      key={idx}
-                                      type={CONVERSATION.INCOMING}
-                                      data={elem}
-                                      canFetch={
-                                          incomingConversations.length > 0
-                                      }
-                                      onPress={() =>
-                                          conversationStore.setActiveConversation(
-                                              elem
-                                          )
-                                      }
-                                  />
-                              );
-                          })
-                        : null}
+                    {homeStore.isIncomingChatsActive &&
+                        incomingConversations.length > 0 &&
+                        incomingConversations.map((elem, idx) => {
+                            return (
+                                <ConversationInstance
+                                    key={idx}
+                                    type={CONVERSATION.INCOMING}
+                                    data={elem}
+                                    canFetch={incomingConversations.length > 0}
+                                    onPress={() =>
+                                        conversationStore.setActiveConversation(
+                                            elem
+                                        )
+                                    }
+                                />
+                            );
+                        })}
+                    {homeStore.isOutboundChatsActive &&
+                        outboundConversations.length > 0 &&
+                        outboundConversations.map((elem, idx) => {
+                            return (
+                                <ConversationInstance
+                                    key={idx}
+                                    type={CONVERSATION.TO_OTHERS}
+                                    data={elem}
+                                    canFetch={outboundConversations.length > 0}
+                                    onPress={() =>
+                                        conversationStore.setActiveConversation(
+                                            elem
+                                        )
+                                    }
+                                />
+                            );
+                        })}
                 </View>
                 <View style={{ marginTop: 40, width: "100%" }}>
                     <LargeButton

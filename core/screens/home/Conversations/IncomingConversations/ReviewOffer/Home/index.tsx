@@ -271,7 +271,10 @@ const ReviewOfferHome = () => {
             </View>
             {/*TODO: Going to have to update this logic when dealing with outgoing conversations*/}
             {!offerStore.isOfferBeingCountered &&
-                !offerStore.offerBeingReviewed.isCounterOffer && (
+                !offerStore.offerBeingReviewed.isCounterOffer &&
+                !(
+                    offerStore.offerBeingReviewed.status == OfferStatus.DECLINED
+                ) && (
                     <GestureRecognizer
                         onSwipeUp={() => {
                             if (count === 0 && !swipeStarted) {

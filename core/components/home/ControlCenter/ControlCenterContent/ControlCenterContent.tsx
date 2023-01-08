@@ -149,7 +149,12 @@ const ControlCenterContent = () => {
                     >
                         <CustomText>referral program</CustomText>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => auth.signOut()}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            auth.signOut();
+                            homeStore.setControlCenter(false);
+                        }}
+                    >
                         <CustomText style={{ color: "#FF453A" }}>
                             log out
                         </CustomText>
