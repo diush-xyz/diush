@@ -13,7 +13,7 @@ import { MAX_WIDTH } from "../../../../../utils/constants";
 import dayjs from "dayjs";
 import { useOfferStore } from "../../../../../state/auth/Offer.store";
 import { useTheme } from "../../../../../utils/useTheme.util";
-import { OfferStatus } from "../../../../../@types/GlobalTypes";
+import { IUser, OfferStatus } from "../../../../../@types/GlobalTypes";
 import { useAuthStore } from "../../../../../state/auth/Auth.store";
 
 const DMScreen = () => {
@@ -133,6 +133,7 @@ const DMScreen = () => {
                         let offerCardPositioning: FlexAlignType = "flex-start";
                         let paddingLeft: number;
                         let paddingRight: number;
+                        let specificUser: IUser;
 
                         //@ts-ignore
                         const parsed = dayjs.unix(elem.timestamp.seconds);
@@ -141,25 +142,25 @@ const DMScreen = () => {
 
                         if (elem.isCounterOffer && isOutbound) {
                             offerCardPositioning = "flex-start";
-                        } else if (elem.isCounterOffer && !isOutbound) {
-                            offerCardPositioning = "flex-end";
-                        } else if (!elem.isCounterOffer && isOutbound) {
-                            offerCardPositioning = "flex-end";
-                        } else {
-                            offerCardPositioning = "flex-start";
-                        }
-
-                        if (elem.isCounterOffer && isOutbound) {
                             paddingLeft = 10;
                             paddingRight = 0;
+                            specificUser =
+                                conversationStore.activeConvoOtherUser;
                         } else if (elem.isCounterOffer && !isOutbound) {
+                            offerCardPositioning = "flex-end";
                             paddingLeft = 0;
                             paddingRight = 10;
+                            specificUser = user;
                         } else if (!elem.isCounterOffer && isOutbound) {
+                            offerCardPositioning = "flex-end";
                             paddingLeft = 0;
                             paddingRight = 10;
+                            specificUser = user;
                         } else {
+                            offerCardPositioning = "flex-start";
                             paddingLeft = 10;
+                            specificUser =
+                                conversationStore.activeConvoOtherUser;
                         }
 
                         return (
@@ -188,9 +189,7 @@ const DMScreen = () => {
                                             }}
                                         >
                                             <ProfileImage
-                                                specificUser={
-                                                    conversationStore.activeConvoOtherUser
-                                                }
+                                                specificUser={specificUser}
                                                 size={24}
                                             />
                                         </View>
@@ -204,20 +203,14 @@ const DMScreen = () => {
                                             }}
                                         >
                                             <ProfileImage
-                                                specificUser={
-                                                    conversationStore.activeConvoOtherUser
-                                                }
+                                                specificUser={specificUser}
                                                 size={24}
                                             />
                                         </View>
                                     )}
                                     <View>
                                         <OfferCard
-                                            specificUser={
-                                                elem.isCounterOffer
-                                                    ? user
-                                                    : conversationStore.activeConvoOtherUser
-                                            }
+                                            specificUser={specificUser}
                                             offer={elem}
                                             product={
                                                 conversationStore.activeConversationProduct
@@ -238,7 +231,7 @@ const DMScreen = () => {
                                             }}
                                         >
                                             <ProfileImage
-                                                specificUser={user}
+                                                specificUser={specificUser}
                                                 size={24}
                                             />
                                         </View>
@@ -252,7 +245,7 @@ const DMScreen = () => {
                                             }}
                                         >
                                             <ProfileImage
-                                                specificUser={user}
+                                                specificUser={specificUser}
                                                 size={24}
                                             />
                                         </View>
