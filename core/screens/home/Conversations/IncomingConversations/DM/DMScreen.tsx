@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, View } from "react-native";
+import { FlexAlignType, ScrollView, View } from "react-native";
 import ScreenHeader from "../../../../../components/lib/ScreenHeader";
 import { observer } from "mobx-react";
 import CustomDMScreenHeader from "../../../../../components/home/Conversation/DMScreen/CustomDMScreenHeader";
@@ -23,6 +23,8 @@ const DMScreen = () => {
     const { user } = useAuthStore();
     const [offers, setOffers] = React.useState([]);
     const [linkedProduct, setLinkedProduct] = React.useState(null);
+
+    const [isOutbound, setIsOutbound] = React.useState<boolean>(false);
 
     const fetchOffers = () => {
         const q = query(
@@ -64,6 +66,9 @@ const DMScreen = () => {
     React.useEffect(() => {
         fetchOffers();
         fetchLinkedProduct();
+        setIsOutbound(
+            conversationStore.activeConversation.sellerUID !== user.id
+        );
     }, []);
 
     React.useEffect(() => {
@@ -91,6 +96,8 @@ const DMScreen = () => {
             });
         }
     }, [conversationStore.activeConversationOffers]);
+
+    const handleOfferCardPositioning = (isCounterOffer: boolean) => {};
 
     return (
         <View
@@ -123,21 +130,47 @@ const DMScreen = () => {
             <ScrollView>
                 {conversationStore.activeConversationOffers?.map(
                     (elem, idx) => {
+                        let offerCardPositioning: FlexAlignType = "flex-start";
+                        let paddingLeft: number;
+                        let paddingRight: number;
+
                         //@ts-ignore
                         const parsed = dayjs.unix(elem.timestamp.seconds);
                         //@ts-ignore
                         const offerTimestamp = dayjs(parsed).fromNow();
 
+                        if (elem.isCounterOffer && isOutbound) {
+                            offerCardPositioning = "flex-start";
+                        } else if (elem.isCounterOffer && !isOutbound) {
+                            offerCardPositioning = "flex-end";
+                        } else if (!elem.isCounterOffer && isOutbound) {
+                            offerCardPositioning = "flex-end";
+                        } else {
+                            offerCardPositioning = "flex-start";
+                        }
+
+                        if (elem.isCounterOffer && isOutbound) {
+                            paddingLeft = 10;
+                            paddingRight = 0;
+                        } else if (elem.isCounterOffer && !isOutbound) {
+                            paddingLeft = 0;
+                            paddingRight = 10;
+                        } else if (!elem.isCounterOffer && isOutbound) {
+                            paddingLeft = 0;
+                            paddingRight = 10;
+                        } else {
+                            paddingLeft = 10;
+                        }
+
                         return (
                             <View
+                                //@ts-ignore
                                 style={{
                                     display: "flex",
                                     marginTop: 16,
-                                    alignItems: elem.isCounterOffer
-                                        ? "flex-end"
-                                        : "flex-start",
-                                    paddingLeft: !elem.isCounterOffer && 10,
-                                    paddingRight: elem.isCounterOffer && 10,
+                                    alignItems: offerCardPositioning,
+                                    paddingLeft: paddingLeft,
+                                    paddingRight: paddingRight,
                                 }}
                             >
                                 <View
@@ -146,7 +179,23 @@ const DMScreen = () => {
                                         flexDirection: "row",
                                     }}
                                 >
-                                    {!elem.isCounterOffer && (
+                                    {!elem.isCounterOffer && !isOutbound && (
+                                        <View
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "flex-end",
+                                                marginRight: 8,
+                                            }}
+                                        >
+                                            <ProfileImage
+                                                specificUser={
+                                                    conversationStore.activeConvoOtherUser
+                                                }
+                                                size={24}
+                                            />
+                                        </View>
+                                    )}
+                                    {elem.isCounterOffer && isOutbound && (
                                         <View
                                             style={{
                                                 display: "flex",
@@ -180,7 +229,21 @@ const DMScreen = () => {
                                             }
                                         />
                                     </View>
-                                    {elem.isCounterOffer && (
+                                    {elem.isCounterOffer && !isOutbound && (
+                                        <View
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "flex-end",
+                                                marginLeft: 8,
+                                            }}
+                                        >
+                                            <ProfileImage
+                                                specificUser={user}
+                                                size={24}
+                                            />
+                                        </View>
+                                    )}
+                                    {!elem.isCounterOffer && isOutbound && (
                                         <View
                                             style={{
                                                 display: "flex",

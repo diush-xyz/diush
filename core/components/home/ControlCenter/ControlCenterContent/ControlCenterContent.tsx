@@ -13,6 +13,8 @@ import { LoggedInScreen } from "../../../../@types/GlobalTypes";
 import { useHomeStore } from "../../../../state/auth/Home.store";
 import ProfileImage from "../../../lib/ProfileImage";
 import { auth } from "../../../../../config/firebase";
+import { useLoginStore } from "../../../../state/auth/Login.store";
+import { useSignupStore } from "../../../../state/auth/Signup.store";
 
 export interface ICONTROL_CENTER_DATA {
     icon: React.ReactNode;
@@ -25,6 +27,8 @@ const ControlCenterContent = () => {
     const authStore = useAuthStore();
     const utilStore = useUtilStore();
     const homeStore = useHomeStore();
+    const logInStore = useLoginStore();
+    const signUpStore = useSignupStore();
 
     const CONTROL_CENTER_DATA: ICONTROL_CENTER_DATA[] = [
         {
@@ -114,6 +118,9 @@ const ControlCenterContent = () => {
                                     onPress={() => {
                                         elem.onClick();
                                         homeStore.setControlCenter(false);
+                                        logInStore.cancel();
+                                        signUpStore.cancel();
+                                        authStore.setIsSheetOpen(false);
                                     }}
                                 >
                                     {elem.icon}
