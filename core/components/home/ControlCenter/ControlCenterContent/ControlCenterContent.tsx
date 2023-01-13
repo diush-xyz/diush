@@ -159,6 +159,13 @@ const ControlCenterContent = () => {
                     <TouchableOpacity
                         onPress={() => {
                             auth.signOut();
+                            //TODO: still must fix blank popup that comes up after logout
+                            //reset stuff
+                            homeStore.setControlCenter(false);
+                            logInStore.cancel();
+                            signUpStore.cancel();
+                            homeStore.setIsIncomingChatsActive(true);
+                            homeStore.setIsOutboundChatsActive(false);
                             homeStore.setControlCenter(false);
                         }}
                     >
