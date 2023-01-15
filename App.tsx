@@ -25,12 +25,15 @@ import {
 import CopiedIndicator from "./core/components/lib/CopiedIndicator";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
+import * as Linking from "expo-linking";
+import CustomText from "./core/components/lib/CustomText";
 
 const App = () => {
     const [isAppReady, setIsAppReady] = React.useState<boolean>(false);
     const utilStore = useUtilStore();
     const authStore = useAuthStore();
     const signupStore = useSignupStore();
+    const [data, setData] = React.useState<Linking.ParsedURL>();
     // const [fetchedUser, setFetchedUser] = React.useState<IUser>();
 
     //TODO: Add this back later (and prepare() function - view Font and SplashScreen docs from Expo)
@@ -38,7 +41,20 @@ const App = () => {
     //   return SplashScreen.preventAutoHideAsync();
     // }
 
+    const handleDeepLink = event => {
+        let parsedData = Linking.parse(event.url);
+        setData(parsedData);
+    };
+
     React.useEffect(() => {
+        async function getInitialURL() {
+            const initialURL = await Linking.getInitialURL();
+            if (initialURL) setData(Linking.parse(initialURL));
+        }
+
+        Linking.addEventListener("url", handleDeepLink).remove();
+        if (!data) getInitialURL();
+
         TimeAgo.addDefaultLocale(en);
         async function prepare() {
             try {
@@ -107,7 +123,9 @@ const App = () => {
                     onWillShow={() => utilStore.setIsKeyboardOpen(true)}
                     onWillHide={() => utilStore.setIsKeyboardOpen(false)}
                 />
-                {authStore.authStatus == AuthStatus.AUTHENTICATED ? (
+                {data ? (
+                    <CustomText>{JSON.stringify(data)}</CustomText>
+                ) : authStore.authStatus == AuthStatus.AUTHENTICATED ? (
                     <>
                         {utilStore.copyIndicator && <CopiedIndicator />}
                         <ScreenHandler />
