@@ -35,6 +35,7 @@ import { CONVERSATION } from "../../../components/home/Conversation/Conversation
 import { createOfferInDb } from "../../../utils/offers.util";
 import { v4 as uuidv4 } from "uuid";
 import { useConversationStore } from "../../../state/auth/Conversation.store";
+import EmptyHomeView from "../../../components/home/EmptyHomeView";
 
 const HomeBaseScreen = () => {
     const authStore = useAuthStore();
@@ -184,8 +185,12 @@ const HomeBaseScreen = () => {
                                 />
                             );
                         })}
+                    {homeStore.isIncomingChatsActive &&
+                        incomingConversations.length === 0 && <EmptyHomeView />}
+                    {homeStore.isOutboundChatsActive &&
+                        outboundConversations.length === 0 && <EmptyHomeView />}
                 </View>
-                <View style={{ marginTop: 40, width: "100%" }}>
+                {/* <View style={{ marginTop: 40, width: "100%" }}>
                     <LargeButton
                         title="create offer"
                         onPress={() => {
@@ -201,7 +206,7 @@ const HomeBaseScreen = () => {
                             });
                         }}
                     />
-                </View>
+                </View> */}
             </View>
             <ControlCenter />
         </>
