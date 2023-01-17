@@ -15,7 +15,7 @@ import { useSettingsStore } from "../../../state/auth/Settings.store";
 import { SettingsStatus } from "../../../@types/GlobalTypes";
 import { observer } from "mobx-react";
 
-interface ISettingsData {
+export interface ISettingsData {
     text: string;
     onClick: () => void;
     isToggle?: boolean;
