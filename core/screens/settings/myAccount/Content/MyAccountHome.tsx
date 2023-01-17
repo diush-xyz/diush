@@ -1,18 +1,18 @@
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
-import CustomText from "../../../components/lib/CustomText";
+import CustomText from "../../../../components/lib/CustomText";
 import { observer } from "mobx-react";
-import LargeButton from "../../../components/lib/LargeButton";
-import { useSettingsStore } from "../../../state/auth/Settings.store";
-import { SettingsStatus } from "../../../@types/GlobalTypes";
-import ScreenHeader from "../../../components/lib/ScreenHeader";
-import { useAuthStore } from "../../../state/auth/Auth.store";
-import HorizontalLine from "../../../components/lib/HorizontalLine";
-import ChevronRight from "../../../icons/catalog/ChevronRight";
-import { ISettingsData } from "../home/SettingsHome.screen";
-import { MAX_WIDTH } from "../../../utils/constants";
+import LargeButton from "../../../../components/lib/LargeButton";
+import { useSettingsStore } from "../../../../state/auth/Settings.store";
+import { SettingsStatus } from "../../../../@types/GlobalTypes";
+import ScreenHeader from "../../../../components/lib/ScreenHeader";
+import { useAuthStore } from "../../../../state/auth/Auth.store";
+import HorizontalLine from "../../../../components/lib/HorizontalLine";
+import ChevronRight from "../../../../icons/catalog/ChevronRight";
+import { ISettingsData } from "../../home/SettingsHome.screen";
+import { MAX_WIDTH } from "../../../../utils/constants";
 
-const SettingsMyAccount = () => {
+const MyAccountHome = () => {
     const settingsStore = useSettingsStore();
     const { user } = useAuthStore();
 
@@ -82,4 +82,4 @@ const SettingsMyAccount = () => {
     );
 };
 
-export default observer(SettingsMyAccount);
+export default observer(MyAccountHome);

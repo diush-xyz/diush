@@ -71,6 +71,12 @@ export enum SettingsStatus {
     PAYMENTS,
 }
 
+export enum MyAccountSettingsStatus {
+    HOME,
+    ACCOUNT_DETAILS,
+    DEACTIVATE,
+}
+
 export enum ProductCondition {
     NEW_WITH_BOX = "new with box",
     NEW_WITHOUT_BOX = "new without box",

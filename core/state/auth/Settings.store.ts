@@ -1,6 +1,10 @@
 import { makeAutoObservable } from "mobx";
 import React from "react";
-import { IConversation, SettingsStatus } from "../../@types/GlobalTypes";
+import {
+    IConversation,
+    MyAccountSettingsStatus,
+    SettingsStatus,
+} from "../../@types/GlobalTypes";
 
 /**
  * A store to handle anything signup-related.
@@ -14,6 +18,13 @@ export default class SettingsStore {
 
     setSettingsStatus(newStatus: SettingsStatus) {
         this.settingsStatus = newStatus;
+    }
+
+    myAccountSettingsStatus: MyAccountSettingsStatus =
+        MyAccountSettingsStatus.HOME;
+
+    setMyAccountSettingsStatus(newStatus: MyAccountSettingsStatus) {
+        this.myAccountSettingsStatus = newStatus;
     }
 }
 
