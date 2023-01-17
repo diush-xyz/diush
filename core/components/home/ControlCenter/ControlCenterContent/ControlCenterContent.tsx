@@ -4,7 +4,7 @@ import CustomText from "../../../lib/CustomText";
 import { View, Image, TouchableOpacity } from "react-native";
 import { useAuthStore } from "../../../../state/auth/Auth.store";
 import RoundedMoreIcon from "../../../../icons/common/RoundedMore";
-import DealsIcon from "../../../../icons/home/sidebar/deals";
+import DealsIcon from "../../../../icons/home/controlCenter/deals";
 import HorizontalLine from "../../../lib/HorizontalLine";
 import { observer } from "mobx-react";
 import ControlCenterContentScrollWrapper from "./ControlCenterContentScrollWrapper";
@@ -15,6 +15,7 @@ import ProfileImage from "../../../lib/ProfileImage";
 import { auth } from "../../../../../config/firebase";
 import { useLoginStore } from "../../../../state/auth/Login.store";
 import { useSignupStore } from "../../../../state/auth/Signup.store";
+import CatalogIcon from "../../../../icons/home/controlCenter/catalog";
 
 export interface ICONTROL_CENTER_DATA {
     icon: React.ReactNode;
@@ -37,7 +38,7 @@ const ControlCenterContent = () => {
             onClick: () => null,
         },
         {
-            icon: <DealsIcon />,
+            icon: <CatalogIcon />,
             text: "my catalog",
             onClick: () =>
                 utilStore.setCurrentLoggedInScreen(LoggedInScreen.CATALOG),
