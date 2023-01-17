@@ -5,6 +5,7 @@ import { useUtilStore } from "../state/Util.store";
 import { LoggedInScreen } from "../@types/GlobalTypes";
 import CatalogScreen from "./catalog/Catalog.screen";
 import HomeScreen from "./home/Home.screen";
+import SettingsScreen from "./settings/Settings.screen";
 
 const ScreenHandler = () => {
     const utilStore = useUtilStore();
@@ -15,6 +16,8 @@ const ScreenHandler = () => {
                 return <HomeScreen />;
             case LoggedInScreen.CATALOG:
                 return <CatalogScreen />;
+            case LoggedInScreen.SETTINGS:
+                return <SettingsScreen />;
         }
     };
 

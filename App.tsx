@@ -25,6 +25,7 @@ import {
 import CopiedIndicator from "./core/components/lib/CopiedIndicator";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
+import ControlCenter from "./core/components/home/ControlCenter";
 
 const App = () => {
     const [isAppReady, setIsAppReady] = React.useState<boolean>(false);
@@ -115,6 +116,7 @@ const App = () => {
                 ) : (
                     <AuthScreen />
                 )}
+                <ControlCenter />
                 {/* <Test /> */}
                 <StatusBar style="auto" />
             </View>

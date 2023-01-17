@@ -105,92 +105,91 @@ const HomeBaseScreen = () => {
     }
 
     return (
-        <>
+        <View
+            style={{
+                alignItems: "center",
+                flex: 1,
+                marginTop: 55,
+                width: "100%",
+            }}
+        >
+            <ScreenHeader
+                pfp
+                photoURL={
+                    authStore.user.photoURL ??
+                    "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80"
+                }
+                onPfpPress={() => homeStore.setControlCenter(true)}
+                // backArrow
+                // backArrowOnPress={() =>
+                //     utilStore.setCurrentLoggedInScreen(LoggedInScreen.HOME)
+                // }
+                title="home base"
+            />
+            <Switcher
+                text1="incoming"
+                text2="to others"
+                is1Active={homeStore.isIncomingChatsActive}
+                set1Active={(status: boolean) =>
+                    homeStore.setIsIncomingChatsActive(status)
+                }
+                is2Active={homeStore.isOutboundChatsActive}
+                set2Active={(status: boolean) =>
+                    homeStore.setIsOutboundChatsActive(status)
+                }
+            />
+            <CustomTextInput
+                placeholder="search chats"
+                onChangeText={() => null}
+                isSearch
+            />
             <View
                 style={{
-                    alignItems: "center",
-                    flex: 1,
-                    marginTop: 55,
-                    width: "100%",
+                    display: "flex",
+                    maxWidth: MAX_WIDTH,
+                    marginTop: 22,
                 }}
             >
-                <ScreenHeader
-                    pfp
-                    photoURL={
-                        authStore.user.photoURL ??
-                        "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80"
-                    }
-                    onPfpPress={() => homeStore.setControlCenter(true)}
-                    // backArrow
-                    // backArrowOnPress={() =>
-                    //     utilStore.setCurrentLoggedInScreen(LoggedInScreen.HOME)
-                    // }
-                    title="home base"
-                />
-                <Switcher
-                    text1="incoming"
-                    text2="to others"
-                    is1Active={homeStore.isIncomingChatsActive}
-                    set1Active={(status: boolean) =>
-                        homeStore.setIsIncomingChatsActive(status)
-                    }
-                    is2Active={homeStore.isOutboundChatsActive}
-                    set2Active={(status: boolean) =>
-                        homeStore.setIsOutboundChatsActive(status)
-                    }
-                />
-                <CustomTextInput
-                    placeholder="search chats"
-                    onChangeText={() => null}
-                    isSearch
-                />
-                <View
-                    style={{
-                        display: "flex",
-                        maxWidth: MAX_WIDTH,
-                        marginTop: 22,
-                    }}
-                >
-                    {homeStore.isIncomingChatsActive &&
-                        incomingConversations.length > 0 &&
-                        incomingConversations.map((elem, idx) => {
-                            return (
-                                <ConversationInstance
-                                    key={idx}
-                                    type={CONVERSATION.INCOMING}
-                                    data={elem}
-                                    canFetch={incomingConversations.length > 0}
-                                    onPress={() =>
-                                        conversationStore.setActiveConversation(
-                                            elem
-                                        )
-                                    }
-                                />
-                            );
-                        })}
-                    {homeStore.isOutboundChatsActive &&
-                        outboundConversations.length > 0 &&
-                        outboundConversations.map((elem, idx) => {
-                            return (
-                                <ConversationInstance
-                                    key={idx}
-                                    type={CONVERSATION.TO_OTHERS}
-                                    data={elem}
-                                    canFetch={outboundConversations.length > 0}
-                                    onPress={() =>
-                                        conversationStore.setActiveConversation(
-                                            elem
-                                        )
-                                    }
-                                />
-                            );
-                        })}
-                    {homeStore.isIncomingChatsActive &&
-                        incomingConversations.length === 0 && <EmptyHomeView />}
-                    {homeStore.isOutboundChatsActive &&
-                        outboundConversations.length === 0 && <EmptyHomeView />}
-                </View>
-                {/* <View style={{ marginTop: 40, width: "100%" }}>
+                {homeStore.isIncomingChatsActive &&
+                    incomingConversations.length > 0 &&
+                    incomingConversations.map((elem, idx) => {
+                        return (
+                            <ConversationInstance
+                                key={idx}
+                                type={CONVERSATION.INCOMING}
+                                data={elem}
+                                canFetch={incomingConversations.length > 0}
+                                onPress={() =>
+                                    conversationStore.setActiveConversation(
+                                        elem
+                                    )
+                                }
+                            />
+                        );
+                    })}
+                {homeStore.isOutboundChatsActive &&
+                    outboundConversations.length > 0 &&
+                    outboundConversations.map((elem, idx) => {
+                        return (
+                            <ConversationInstance
+                                key={idx}
+                                type={CONVERSATION.TO_OTHERS}
+                                data={elem}
+                                canFetch={outboundConversations.length > 0}
+                                onPress={() =>
+                                    conversationStore.setActiveConversation(
+                                        elem
+                                    )
+                                }
+                            />
+                        );
+                    })}
+                {homeStore.isIncomingChatsActive &&
+                    incomingConversations.length === 0 && <EmptyHomeView />}
+                {homeStore.isOutboundChatsActive &&
+                    outboundConversations.length === 0 && <EmptyHomeView />}
+            </View>
+            {/* <View style={{ marginTop: 40, width: "100%" }}>
                     <LargeButton
                         title="create offer"
                         onPress={() => {
@@ -207,9 +206,7 @@ const HomeBaseScreen = () => {
                         }}
                     />
                 </View> */}
-            </View>
-            <ControlCenter />
-        </>
+        </View>
     );
 };
 

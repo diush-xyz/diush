@@ -38,7 +38,8 @@ const ControlCenterContent = () => {
         {
             icon: <DealsIcon />,
             text: "deals",
-            onClick: () => null,
+            onClick: () =>
+                utilStore.setCurrentLoggedInScreen(LoggedInScreen.HOME),
         },
         {
             icon: <CatalogIcon />,
@@ -54,7 +55,8 @@ const ControlCenterContent = () => {
         {
             icon: <SettingsIcon />,
             text: "settings",
-            onClick: () => null,
+            onClick: () =>
+                utilStore.setCurrentLoggedInScreen(LoggedInScreen.SETTINGS),
         },
         {
             icon: <MyProfileIcon />,
