@@ -4,6 +4,7 @@ import { View } from "react-native";
 import ScreenHeader from "../../components/lib/ScreenHeader";
 import { useAuthStore } from "../../state/auth/Auth.store";
 import { useHomeStore } from "../../state/auth/Home.store";
+import CustomTextInput from "../../components/lib/CustomTextInput";
 
 const SettingsScreen = () => {
     const authStore = useAuthStore();
@@ -31,6 +32,13 @@ const SettingsScreen = () => {
                 // }
                 title="settings"
             />
+            <View style={{ marginTop: 22 }}>
+                <CustomTextInput
+                    placeholder="search settings"
+                    onChangeText={text => null}
+                    isSearch
+                />
+            </View>
         </View>
     );
 };
