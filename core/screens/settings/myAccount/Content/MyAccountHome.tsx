@@ -4,7 +4,10 @@ import CustomText from "../../../../components/lib/CustomText";
 import { observer } from "mobx-react";
 import LargeButton from "../../../../components/lib/LargeButton";
 import { useSettingsStore } from "../../../../state/auth/Settings.store";
-import { SettingsStatus } from "../../../../@types/GlobalTypes";
+import {
+    MyAccountSettingsStatus,
+    SettingsStatus,
+} from "../../../../@types/GlobalTypes";
 import ScreenHeader from "../../../../components/lib/ScreenHeader";
 import { useAuthStore } from "../../../../state/auth/Auth.store";
 import HorizontalLine from "../../../../components/lib/HorizontalLine";
@@ -19,11 +22,17 @@ const MyAccountHome = () => {
     const SETTINGS_MY_ACCOUNT_DATA: ISettingsData[] = [
         {
             text: "account details",
-            onClick: () => null,
+            onClick: () =>
+                settingsStore.setMyAccountSettingsStatus(
+                    MyAccountSettingsStatus.ACCOUNT_DETAILS
+                ),
         },
         {
             text: "deactivate 💔",
-            onClick: () => null,
+            onClick: () =>
+                settingsStore.setMyAccountSettingsStatus(
+                    MyAccountSettingsStatus.DEACTIVATE
+                ),
         },
     ];
 
@@ -67,11 +76,6 @@ const MyAccountHome = () => {
                                 }}
                             >
                                 <CustomText>{elem.text}</CustomText>
-                                {elem.isToggle ? (
-                                    <CustomText>tg</CustomText>
-                                ) : (
-                                    <ChevronRight />
-                                )}
                             </TouchableOpacity>
                             <HorizontalLine marginVertical={16} />
                         </>

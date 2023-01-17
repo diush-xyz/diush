@@ -3,6 +3,8 @@ import React from "react";
 import { useSettingsStore } from "../../../state/auth/Settings.store";
 import { MyAccountSettingsStatus } from "../../../@types/GlobalTypes";
 import MyAccountHome from "./Content/MyAccountHome";
+import AccountDetails from "./Content/AccountDetails";
+import Deactivate from "./Content/Deactivate";
 
 const SettingsMyAccount = () => {
     const settingsStore = useSettingsStore();
@@ -11,6 +13,10 @@ const SettingsMyAccount = () => {
         switch (settingsStore.myAccountSettingsStatus) {
             case MyAccountSettingsStatus.HOME:
                 return <MyAccountHome />;
+            case MyAccountSettingsStatus.ACCOUNT_DETAILS:
+                return <AccountDetails />;
+            case MyAccountSettingsStatus.DEACTIVATE:
+                return <Deactivate />;
         }
     };
 
