@@ -64,6 +64,13 @@ export enum LoggedInScreen {
     SETTINGS,
 }
 
+export enum SettingsStatus {
+    HOME,
+    MY_ACCOUNT,
+    PRIVACY,
+    PAYMENTS,
+}
+
 export enum ProductCondition {
     NEW_WITH_BOX = "new with box",
     NEW_WITHOUT_BOX = "new without box",
