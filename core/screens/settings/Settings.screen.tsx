@@ -5,6 +5,8 @@ import ScreenHeader from "../../components/lib/ScreenHeader";
 import { useAuthStore } from "../../state/auth/Auth.store";
 import { useHomeStore } from "../../state/auth/Home.store";
 import CustomTextInput from "../../components/lib/CustomTextInput";
+import HorizontalLine from "../../components/lib/HorizontalLine";
+import { MAX_WIDTH } from "../../utils/constants";
 
 const SettingsScreen = () => {
     const authStore = useAuthStore();
@@ -38,6 +40,22 @@ const SettingsScreen = () => {
                     onChangeText={text => null}
                     isSearch
                 />
+            </View>
+            <View
+                style={{
+                    display: "flex",
+                    width: MAX_WIDTH,
+                }}
+            >
+                <CustomText
+                    secondary
+                    font="Heavy"
+                    fontSize={14}
+                    style={{ marginTop: 22 }}
+                >
+                    PREFERENCES
+                </CustomText>
+                <HorizontalLine marginVertical={8} />
             </View>
         </View>
     );
