@@ -16,6 +16,9 @@ import { auth } from "../../../../../config/firebase";
 import { useLoginStore } from "../../../../state/auth/Login.store";
 import { useSignupStore } from "../../../../state/auth/Signup.store";
 import CatalogIcon from "../../../../icons/home/controlCenter/catalog";
+import MetricsIcon from "../../../../icons/home/controlCenter/metrics";
+import SettingsIcon from "../../../../icons/home/controlCenter/settings";
+import MyProfileIcon from "../../../../icons/home/controlCenter/myprofile";
 
 export interface ICONTROL_CENTER_DATA {
     icon: React.ReactNode;
@@ -44,17 +47,17 @@ const ControlCenterContent = () => {
                 utilStore.setCurrentLoggedInScreen(LoggedInScreen.CATALOG),
         },
         {
-            icon: <DealsIcon />,
+            icon: <MetricsIcon />,
             text: "metrics",
             onClick: () => null,
         },
         {
-            icon: <DealsIcon />,
+            icon: <SettingsIcon />,
             text: "settings",
             onClick: () => null,
         },
         {
-            icon: <DealsIcon />,
+            icon: <MyProfileIcon />,
             text: "my profile",
             onClick: () => null,
         },
