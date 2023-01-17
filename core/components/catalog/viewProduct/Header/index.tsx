@@ -3,7 +3,7 @@ import CustomText from "../../../lib/CustomText";
 import { View, TouchableOpacity, Image } from "react-native";
 import CarouselIcon from "../../../../icons/catalog/Carousel";
 import ChevronRight from "../../../../icons/catalog/ChevronRight";
-import RoundedMoreIcon from "../../../../icons/catalog/RoundedMore";
+import RoundedMoreIcon from "../../../../icons/common/RoundedMore";
 import ShareIcon from "../../../../icons/catalog/Share";
 import TicketIcon from "../../../../icons/catalog/Ticket";
 import { triggerProductSharePopup } from "../../../../utils/share.util";
@@ -19,6 +19,7 @@ import ProductOptions from "../ProductOptions";
 import * as Haptics from "expo-haptics";
 import { hapticFeedback } from "../../../../utils/haptics.util";
 import { useAuthStore } from "../../../../state/auth/Auth.store";
+import ProfileImage from "../../../lib/ProfileImage";
 
 const Header = () => {
     const catalogStore = useCatalogStore();
@@ -102,18 +103,7 @@ const Header = () => {
                     alignItems: "center",
                 }}
             >
-                <Image
-                    borderRadius={10}
-                    source={{
-                        uri:
-                            user?.photoURL ??
-                            "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80",
-                    }}
-                    style={{
-                        height: 20,
-                        width: 20,
-                    }}
-                />
+                <ProfileImage specificUser={user} size={20} />
                 <CustomText fontSize={16} style={{ marginLeft: 6 }} font="Bold">
                     <CustomText font="Bold" style={{ opacity: 0.5 }}>
                         listed by

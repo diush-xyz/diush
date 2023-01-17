@@ -4,7 +4,7 @@ export interface IUser {
     email: string;
     photoURL: string;
     location?: string;
-    products?: IProduct[];
+    // products?: IProduct[];
 }
 
 export interface IProduct {
@@ -14,7 +14,6 @@ export interface IProduct {
     blurb: string;
     askingPrice: number;
     imageURL: string;
-    offers?: IOffer[];
     createdAt?: Date;
     categories?: ICategory[];
     condition: number;
@@ -22,12 +21,23 @@ export interface IProduct {
     //TODO: Add more
 }
 
+export interface IConversation {
+    id: string;
+    sellerUID: string;
+    buyerUID: string;
+    linkedProductID: string;
+    dealReached?: boolean;
+}
+
 export interface IOffer {
     id: string;
     placedByUID: string;
-    linkedProductID: string;
+    timestamp: Date;
+    linkedConversationID: string;
     amount: number;
     isCounterOffer?: boolean;
+    isReadByRecipient: boolean;
+    status: OfferStatus;
 }
 
 export interface ICategory {
@@ -68,4 +78,10 @@ export enum CatalogStatus {
     VIEW,
     EDIT,
     DELETE,
+}
+
+export enum OfferStatus {
+    PENDING = "PENDING",
+    ACCEPTED = "ACCEPTED",
+    DECLINED = "DECLINED",
 }

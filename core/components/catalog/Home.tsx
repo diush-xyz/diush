@@ -91,10 +91,6 @@ const CatalogHome = () => {
             where("linkedUID", "==", auth.currentUser?.uid)
         );
         onSnapshot(q, querySnapshot => {
-            // querySnapshot.forEach(doc => {
-            //     setListings(doc.data());
-            // });
-
             const fetched = [];
 
             querySnapshot.forEach(documentSnapshot => {
@@ -106,12 +102,6 @@ const CatalogHome = () => {
 
             setMyProducts(fetched);
             setLoading(false);
-            // setMyProducts(querySnapshot.docs.map(doc => doc.data()));
-
-            // console.log(auth.currentUser?.uid);
-            // console.log("the products: " + myProducts);
-
-            // setListings(querySnapshot.docs.map((doc) => doc.data()))
         });
     }, []);
 
@@ -135,7 +125,18 @@ const CatalogHome = () => {
                 }
                 title="my catalog"
             />
-            <Switcher />
+            <Switcher
+                text1="active"
+                text2="sold"
+                is1Active={catalogStore.activeProductsDashboard}
+                set1Active={(status: boolean) =>
+                    catalogStore.setActiveProductsDashboard(status)
+                }
+                is2Active={catalogStore.soldProductsDashboard}
+                set2Active={(status: boolean) =>
+                    catalogStore.setSoldProductsDashboard(status)
+                }
+            />
             <CustomTextInput
                 placeholder="search my products"
                 onChangeText={() => null}

@@ -30,7 +30,7 @@ import ChevronRight from "../../../icons/catalog/ChevronRight";
 import TicketIcon from "../../../icons/catalog/Ticket";
 import { useTheme } from "../../../utils/useTheme.util";
 import OfferButton from "./OfferButton";
-import RoundedMoreIcon from "../../../icons/catalog/RoundedMore";
+import RoundedMoreIcon from "../../../icons/common/RoundedMore";
 import ActiveIndicator from "./ActiveIndicator";
 import SnapshotBox from "./SnapshotBox";
 import ProductViewScrollWrapper from "./ProductViewScrollWrapper";

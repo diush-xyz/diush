@@ -8,6 +8,8 @@ import {
     Text,
     TouchableOpacity,
     Animated,
+    NativeSyntheticEvent,
+    NativeTouchEvent,
 } from "react-native";
 import InfoIcon from "../../../../icons/common/info";
 import { useCatalogStore } from "../../../../state/auth/Catalog.store";
@@ -91,18 +93,28 @@ interface IWarningConfirmation {
     title: string;
     desc: string;
     buttonText: string;
-    buttonOnClick: () => void;
+    buttonOnClick: (ev: NativeSyntheticEvent<NativeTouchEvent>) => void;
     footerText: string;
     onFooterClick: () => void;
     visible: boolean;
+    isSuccessButton?: boolean;
 }
 
 const WarningConfirmation = (props: IWarningConfirmation) => {
+    const [count, setCount] = React.useState<number>(0);
+
     React.useEffect(() => {
-        if (props.visible) {
+        if (props.visible && count == 0) {
             hapticFeedback(HAPTIC_OPTIONS.WARNING);
+            setCount(count + 1);
         }
     });
+
+    React.useEffect(() => {
+        if (!props.visible) {
+            setCount(0);
+        }
+    }, [props.visible]);
 
     return (
         <View
@@ -140,13 +152,14 @@ const WarningConfirmation = (props: IWarningConfirmation) => {
                     </CustomText>
                     <LargeButton
                         title={props.buttonText}
-                        onPress={props.buttonOnClick}
+                        onPress={ev => props.buttonOnClick(ev)}
                         // deleteProduct();
                         // sellerViewProductStore.setDeleteConfirmation();
                         footer
                         footerButtonTitle={props.footerText}
                         footerButtonOnPress={props.onFooterClick}
                         // sellerViewProductStore.setDeleteConfirmation()
+                        isSuccessButton={props.isSuccessButton}
                     />
                 </View>
             </ModalPopup>

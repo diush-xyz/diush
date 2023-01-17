@@ -4,9 +4,22 @@ import { useTheme } from "../../../utils/useTheme.util";
 import CustomText from "../../lib/CustomText";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const Switcher = () => {
-    const [isSoldActive, setIsSoldActive] = React.useState<boolean>(false);
+interface ISwitcher {
+    text1: string;
+    text2: string;
+    is1Active: boolean;
+    set1Active: (status: boolean) => void;
+    is2Active: boolean;
+    set2Active: (status: boolean) => void;
+}
+
+const Switcher = (props: ISwitcher) => {
     const theme = useTheme();
+
+    const alternateState = () => {
+        props.set1Active(!props.is1Active);
+        props.set2Active(!props.is2Active);
+    };
     return (
         <View
             style={{
@@ -29,15 +42,15 @@ const Switcher = () => {
                         width: "100%",
                         paddingBottom: 12,
                     }}
-                    onPress={() => setIsSoldActive(!isSoldActive)}
+                    onPress={() => alternateState()}
                 >
                     <CustomText
-                        primary={!isSoldActive}
-                        secondary={isSoldActive}
+                        primary={props.is1Active && !props.is2Active}
+                        secondary={!props.is1Active && props.is2Active}
                     >
-                        active
+                        {props.text1}
                     </CustomText>
-                    {!isSoldActive && (
+                    {props.is1Active && (
                         <View
                             style={{
                                 height: 3,
@@ -60,15 +73,15 @@ const Switcher = () => {
                         width: "100%",
                         paddingBottom: 12,
                     }}
-                    onPress={() => setIsSoldActive(!isSoldActive)}
+                    onPress={() => alternateState()}
                 >
                     <CustomText
-                        primary={isSoldActive}
-                        secondary={!isSoldActive}
+                        primary={props.is2Active && !props.is1Active}
+                        secondary={!props.is2Active && props.is1Active}
                     >
-                        sold
+                        {props.text2}
                     </CustomText>
-                    {isSoldActive && (
+                    {props.is2Active && (
                         <View
                             style={{
                                 height: 3,

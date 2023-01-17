@@ -54,13 +54,19 @@ const AuthScreen = () => {
                         handleSnapPress(0);
                     }}
                     footer
+                    footerButtonPrimary
                     footerButtonTitle="i already have an account"
                     footerButtonOnPress={() => {
                         authStore.setAuthStatus(AuthStatus.LOGIN);
                         handleSnapPress(0);
                     }}
                 />
-                {/*  */}
+            </View>
+            <View style={{ position: "absolute", bottom: 70 }}>
+                <CustomText secondary font="Bold" textAlign="center">
+                    made with ❤️ by Filippo Fonseca{"\n"} and the diush
+                    contributors.
+                </CustomText>
             </View>
             {authStore.isSheetOpen ? (
                 <BottomSheet

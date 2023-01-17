@@ -11,7 +11,7 @@ import KeyboardListener from "react-native-keyboard-listener";
 import { useUtilStore } from "./core/state/Util.store";
 import { useAuthStore } from "./core/state/auth/Auth.store";
 import { AuthStatus, IUser } from "./core/@types/GlobalTypes";
-import HomeScreen from "./core/screens/home/Home.screen";
+import HomeScreen from "./core/screens/home/HomeBase/HomeBase.screen";
 import { observer } from "mobx-react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/firebase";
@@ -23,6 +23,8 @@ import {
     TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
 import CopiedIndicator from "./core/components/lib/CopiedIndicator";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
 
 const App = () => {
     const [isAppReady, setIsAppReady] = React.useState<boolean>(false);
@@ -37,6 +39,7 @@ const App = () => {
     // }
 
     React.useEffect(() => {
+        TimeAgo.addDefaultLocale(en);
         async function prepare() {
             try {
                 //TODO: come back later (reference: https://github.com/expo/expo/issues/8067)

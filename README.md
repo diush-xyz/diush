@@ -1,5 +1,3 @@
-WE'RE BACK!!
-
 <p align="center">
   <a href="#">
     
@@ -41,6 +39,7 @@ the following is a diagram detailing the thought process & concept behind the pl
 </p>
 
 ## infrastructure/architecture
+
 
 this project is utilizing the following stack:
 

@@ -3,6 +3,7 @@ import {
     Text,
     GestureResponderEvent,
     TouchableOpacity,
+    Image,
 } from "react-native";
 import React from "react";
 import { HeaderWrapper } from "./styles";
@@ -10,8 +11,14 @@ import CustomText from "../CustomText";
 import LeftArrowIcon from "../../../icons/common/leftArrow";
 import LargeButton from "../LargeButton";
 import { useTheme } from "../../../utils/useTheme.util";
+import { observer } from "mobx-react";
+import ProfileImage from "../ProfileImage";
+import { useAuthStore } from "../../../state/auth/Auth.store";
 
 export interface IScreenHeader {
+    pfp?: boolean;
+    photoURL?: string;
+    onPfpPress?: (event: GestureResponderEvent) => void;
     backArrow?: boolean;
     backArrowOnPress?: (event: GestureResponderEvent) => void;
     title: string;
@@ -31,6 +38,8 @@ export interface IScreenHeader {
  */
 const ScreenHeader = (props: IScreenHeader) => {
     const theme = useTheme();
+    const authStore = useAuthStore();
+
     return (
         <HeaderWrapper style={{ paddingBottom: props.paddingBottom ?? null }}>
             <View
@@ -41,15 +50,16 @@ const ScreenHeader = (props: IScreenHeader) => {
                     marginRight: "auto",
                 }}
             >
-                <TouchableOpacity
-                    onPress={
-                        props.backArrow ? props.backArrowOnPress : () => null
-                    }
-                >
-                    <LeftArrowIcon
-                        style={{ opacity: props.backArrow ? 1 : 0 }}
-                    />
-                </TouchableOpacity>
+                {props.backArrow && (
+                    <TouchableOpacity onPress={props.backArrowOnPress}>
+                        <LeftArrowIcon />
+                    </TouchableOpacity>
+                )}
+                {props.pfp && (
+                    <TouchableOpacity onPress={props.onPfpPress}>
+                        <ProfileImage specificUser={authStore.user} size={32} />
+                    </TouchableOpacity>
+                )}
             </View>
             <View
                 style={{ flex: 1, display: "flex", justifyContent: "center" }}
@@ -126,4 +136,4 @@ const ScreenHeader = (props: IScreenHeader) => {
     );
 };
 
-export default ScreenHeader;
+export default observer(ScreenHeader);

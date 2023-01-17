@@ -6,6 +6,7 @@ interface ICustomText {
     children: React.ReactNode;
     primary?: boolean;
     secondary?: boolean;
+    success?: boolean;
     accent?: boolean;
     customColor?: string;
     fontSize?: number;
@@ -35,6 +36,8 @@ const CustomText = (props: ICustomText) => {
             return theme.accent;
         } else if (props.customColor) {
             return props.customColor;
+        } else if (props.success) {
+            return theme.success;
         }
 
         // if not argument is provided:

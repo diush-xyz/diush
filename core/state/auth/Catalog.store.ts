@@ -21,6 +21,19 @@ export default class CatalogStore {
         this.status = newStatus;
     }
 
+    //dashboard (view)
+    activeProductsDashboard: boolean = true;
+
+    setActiveProductsDashboard(newStatus: boolean) {
+        this.activeProductsDashboard = newStatus;
+    }
+
+    soldProductsDashboard: boolean = false;
+
+    setSoldProductsDashboard(newStatus: boolean) {
+        this.soldProductsDashboard = newStatus;
+    }
+
     activeProduct: IProduct = null;
 
     isPriceEditPopupOpen: boolean = false;
