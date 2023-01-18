@@ -1,17 +1,20 @@
 import React from "react";
-import CustomText from "../../../../components/lib/CustomText";
+import CustomText from "../../../../../components/lib/CustomText";
 import { observer } from "mobx-react";
 import { View } from "react-native";
-import ScreenHeader from "../../../../components/lib/ScreenHeader";
-import { useSettingsStore } from "../../../../state/auth/Settings.store";
-import { MyAccountSettingsStatus } from "../../../../@types/GlobalTypes";
-import { MAX_WIDTH } from "../../../../utils/constants";
-import HorizontalLine from "../../../../components/lib/HorizontalLine";
-import { ISettingsData } from "../../home/SettingsHome.screen";
-import MenuElem from "../../../../components/settings/MenuElem";
-import { useAuthStore } from "../../../../state/auth/Auth.store";
+import ScreenHeader from "../../../../../components/lib/ScreenHeader";
+import { useSettingsStore } from "../../../../../state/auth/Settings.store";
+import {
+    AccountDetailsSettingsStatus,
+    MyAccountSettingsStatus,
+} from "../../../../../@types/GlobalTypes";
+import { MAX_WIDTH } from "../../../../../utils/constants";
+import HorizontalLine from "../../../../../components/lib/HorizontalLine";
+import { ISettingsData } from "../../../home/SettingsHome.screen";
+import MenuElem from "../../../../../components/settings/MenuElem";
+import { useAuthStore } from "../../../../../state/auth/Auth.store";
 
-const AccountDetails = () => {
+const AccountDetailsHome = () => {
     const settingsStore = useSettingsStore();
     const { user } = useAuthStore();
 
@@ -19,8 +22,8 @@ const AccountDetails = () => {
         {
             text: "full name",
             onClick: () =>
-                settingsStore.setMyAccountSettingsStatus(
-                    MyAccountSettingsStatus.ACCOUNT_DETAILS
+                settingsStore.setAccountDetailsSettingsStatus(
+                    AccountDetailsSettingsStatus.CHANGE_DISPLAY_NAME
                 ),
             rightText: user.displayName,
         },
@@ -80,4 +83,4 @@ const AccountDetails = () => {
     );
 };
 
-export default observer(AccountDetails);
+export default observer(AccountDetailsHome);

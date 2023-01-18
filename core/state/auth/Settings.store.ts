@@ -1,6 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import React from "react";
 import {
+    AccountDetailsSettingsStatus,
     IConversation,
     MyAccountSettingsStatus,
     SettingsStatus,
@@ -25,6 +26,13 @@ export default class SettingsStore {
 
     setMyAccountSettingsStatus(newStatus: MyAccountSettingsStatus) {
         this.myAccountSettingsStatus = newStatus;
+    }
+
+    accountDetailsSettingsStatus: AccountDetailsSettingsStatus =
+        AccountDetailsSettingsStatus.HOME;
+
+    setAccountDetailsSettingsStatus(newStatus: AccountDetailsSettingsStatus) {
+        this.accountDetailsSettingsStatus = newStatus;
     }
 }
 

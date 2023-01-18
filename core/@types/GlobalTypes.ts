@@ -77,6 +77,13 @@ export enum MyAccountSettingsStatus {
     DEACTIVATE,
 }
 
+export enum AccountDetailsSettingsStatus {
+    HOME,
+    CHANGE_DISPLAY_NAME,
+    CHANGE_EMAIL,
+    CHANGE_PFP,
+}
+
 export enum ProductCondition {
     NEW_WITH_BOX = "new with box",
     NEW_WITHOUT_BOX = "new without box",

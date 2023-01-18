@@ -3,8 +3,8 @@ import React from "react";
 import { useSettingsStore } from "../../../state/auth/Settings.store";
 import { MyAccountSettingsStatus } from "../../../@types/GlobalTypes";
 import MyAccountHome from "./Content/MyAccountHome";
-import AccountDetails from "./Content/AccountDetails";
 import Deactivate from "./Content/Deactivate";
+import AccountDetails from "./Content/AccountDetails";
 
 const SettingsMyAccount = () => {
     const settingsStore = useSettingsStore();
