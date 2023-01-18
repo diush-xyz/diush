@@ -11,10 +11,13 @@ import {
 import ProfileImage from "../../../../components/lib/ProfileImage";
 import { useAuthStore } from "../../../../state/auth/Auth.store";
 import { MAX_WIDTH } from "../../../../utils/constants";
+import WarningConfirmation from "../../../../components/lib/Modals/WarningConfirmation";
+import CompactIcon from "../../../../components/catalog/viewProduct/CustomDeleteConfirmation/CompactIcon";
 
 const Deactivate = () => {
     const settingsStore = useSettingsStore();
     const { user } = useAuthStore();
+    const [warningModal, setWarningModal] = React.useState<boolean>(false);
 
     return (
         <View
@@ -23,7 +26,6 @@ const Deactivate = () => {
                 flex: 1,
                 marginTop: 55,
                 width: "100%",
-                justifyContent: "space-between",
             }}
         >
             <View style={{ display: "flex", alignItems: "center" }}>
@@ -72,6 +74,7 @@ const Deactivate = () => {
                         we'd love to{" "}
                         <CustomText
                             accent
+                            font="Bold"
                             onPress={() => {
                                 settingsStore.setMyAccountSettingsStatus(
                                     MyAccountSettingsStatus.ACCOUNT_DETAILS
@@ -118,6 +121,7 @@ const Deactivate = () => {
                         account - you can edit these things in{" "}
                         <CustomText
                             accent
+                            font="Bold"
                             onPress={() => {
                                 settingsStore.setMyAccountSettingsStatus(
                                     MyAccountSettingsStatus.ACCOUNT_DETAILS
@@ -132,6 +136,7 @@ const Deactivate = () => {
                     you create in the future,{" "}
                     <CustomText
                         accent
+                        font="Bold"
                         onPress={() => {
                             settingsStore.setMyAccountSettingsStatus(
                                 MyAccountSettingsStatus.ACCOUNT_DETAILS
@@ -144,11 +149,25 @@ const Deactivate = () => {
                 </CustomText> */}
                 </View>
             </View>
-            <TouchableOpacity onPress={() => null}>
-                <CustomText accent font="Bold" style={{ marginBottom: 60 }}>
+            <TouchableOpacity onPress={() => setWarningModal(true)}>
+                <CustomText accent font="Bold" style={{ marginTop: 200 }}>
                     Deactivate
                 </CustomText>
             </TouchableOpacity>
+            <WarningConfirmation
+                icon={<CompactIcon />}
+                title="are you sure?"
+                desc={`deleting your account is an${"\n"} action that cannot be undone.`}
+                buttonText="yes, delete my account :/"
+                buttonOnClick={() => {
+                    setWarningModal(false);
+                }}
+                footerText="no! cancel"
+                onFooterClick={() => {
+                    setWarningModal(false);
+                }}
+                visible={warningModal}
+            />
         </View>
     );
 };
