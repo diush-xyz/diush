@@ -57,8 +57,8 @@ const Deactivate = () => {
                 >
                     <View style={{ display: "flex", flexDirection: "row" }}>
                         <ProfileImage
-                            size={27}
                             specificUser={user}
+                            size={27}
                             style={{ marginRight: 8 }}
                         />
                         <View>
