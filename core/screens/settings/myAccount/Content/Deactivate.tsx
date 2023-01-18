@@ -10,11 +10,23 @@ import { useAuthStore } from "../../../../state/auth/Auth.store";
 import { MAX_WIDTH } from "../../../../utils/constants";
 import WarningConfirmation from "../../../../components/lib/Modals/WarningConfirmation";
 import CompactIcon from "../../../../components/catalog/viewProduct/CustomDeleteConfirmation/CompactIcon";
+import { deleteDoc, doc, where } from "firebase/firestore";
+import { auth, db } from "../../../../../config/firebase";
+import { deleteUser } from "firebase/auth";
 
 const Deactivate = () => {
     const settingsStore = useSettingsStore();
     const { user } = useAuthStore();
     const [warningModal, setWarningModal] = React.useState<boolean>(false);
+    const authUser = auth.currentUser;
+
+    const deleteAccount = async () => {
+        //delete user from db
+        await deleteDoc(doc(db, "users", user.id));
+        //delete the user from auth
+        deleteUser(authUser);
+        //delete the user's offers
+    };
 
     return (
         <View
@@ -150,7 +162,7 @@ const Deactivate = () => {
             </View>
             <TouchableOpacity onPress={() => setWarningModal(true)}>
                 <CustomText accent font="Bold" style={{ marginTop: 200 }}>
-                    Deactivate
+                    delete
                 </CustomText>
             </TouchableOpacity>
             <WarningConfirmation
@@ -158,9 +170,7 @@ const Deactivate = () => {
                 title="are you sure?"
                 desc={`deleting your account is an${"\n"} action that cannot be undone.`}
                 buttonText="yes, delete my account :/"
-                buttonOnClick={() => {
-                    setWarningModal(false);
-                }}
+                buttonOnClick={() => deleteAccount()}
                 footerText="no! cancel"
                 onFooterClick={() => {
                     setWarningModal(false);

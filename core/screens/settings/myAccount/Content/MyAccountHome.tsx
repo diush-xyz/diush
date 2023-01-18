@@ -76,6 +76,7 @@ const MyAccountHome = () => {
                                 }}
                             >
                                 <CustomText>{elem.text}</CustomText>
+                                <ChevronRight />
                             </TouchableOpacity>
                             <HorizontalLine marginVertical={16} />
                         </>
