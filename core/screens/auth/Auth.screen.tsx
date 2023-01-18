@@ -55,11 +55,6 @@ const AuthScreen = () => {
         extrapolate: "clamp",
     });
 
-    const config = {
-        velocityThreshold: 0.3,
-        directionalOffsetThreshold: 80,
-    };
-
     return (
         <>
             <View style={GLOBAL_STYLES.page}>

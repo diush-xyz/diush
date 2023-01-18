@@ -36,6 +36,7 @@ import { createOfferInDb } from "../../../utils/offers.util";
 import { v4 as uuidv4 } from "uuid";
 import { useConversationStore } from "../../../state/auth/Conversation.store";
 import EmptyHomeView from "../../../components/home/EmptyHomeView";
+import GestureRecognizer from "react-native-swipe-detect";
 
 const HomeBaseScreen = () => {
     const authStore = useAuthStore();
@@ -48,6 +49,13 @@ const HomeBaseScreen = () => {
     const [outboundConversations, setOutboundConversations] = React.useState(
         []
     );
+    const [count, setCount] = React.useState<number>(0);
+    const [swipeStarted, setSwipeStarted] = React.useState<boolean>(false);
+
+    const config = {
+        velocityThreshold: 0.3,
+        directionalOffsetThreshold: 80,
+    };
 
     const fetchIncomingConversations = () => {
         const q = query(
@@ -126,69 +134,92 @@ const HomeBaseScreen = () => {
                 // }
                 title="home base"
             />
-            <Switcher
-                text1="incoming"
-                text2="to others"
-                is1Active={homeStore.isIncomingChatsActive}
-                set1Active={(status: boolean) =>
-                    homeStore.setIsIncomingChatsActive(status)
-                }
-                is2Active={homeStore.isOutboundChatsActive}
-                set2Active={(status: boolean) =>
-                    homeStore.setIsOutboundChatsActive(status)
-                }
-            />
-            <CustomTextInput
-                placeholder="search chats"
-                onChangeText={() => null}
-                isSearch
-            />
-            <View
+            <GestureRecognizer
+                onSwipeLeft={() => {
+                    if (count === 0) {
+                        setCount(count + 1);
+                        homeStore.setIsIncomingChatsActive(false);
+                        homeStore.setIsOutboundChatsActive(true);
+                    }
+                }}
+                onSwipeRight={() => {
+                    if (count === 1) {
+                        setCount(count - 1);
+                        homeStore.setIsIncomingChatsActive(true);
+                        homeStore.setIsOutboundChatsActive(false);
+                    }
+                }}
+                config={config}
                 style={{
                     display: "flex",
-                    maxWidth: MAX_WIDTH,
-                    marginTop: 22,
+                    flex: 1,
+                    alignItems: "center",
                 }}
             >
-                {homeStore.isIncomingChatsActive &&
-                    incomingConversations.length > 0 &&
-                    incomingConversations.map((elem, idx) => {
-                        return (
-                            <ConversationInstance
-                                key={idx}
-                                type={CONVERSATION.INCOMING}
-                                data={elem}
-                                canFetch={incomingConversations.length > 0}
-                                onPress={() =>
-                                    conversationStore.setActiveConversation(
-                                        elem
-                                    )
-                                }
-                            />
-                        );
-                    })}
-                {homeStore.isOutboundChatsActive &&
-                    outboundConversations.length > 0 &&
-                    outboundConversations.map((elem, idx) => {
-                        return (
-                            <ConversationInstance
-                                key={idx}
-                                type={CONVERSATION.TO_OTHERS}
-                                data={elem}
-                                canFetch={outboundConversations.length > 0}
-                                onPress={() =>
-                                    conversationStore.setActiveConversation(
-                                        elem
-                                    )
-                                }
-                            />
-                        );
-                    })}
-                {homeStore.isIncomingChatsActive &&
-                    incomingConversations.length === 0 && <EmptyHomeView />}
-                {homeStore.isOutboundChatsActive &&
-                    outboundConversations.length === 0 && <EmptyHomeView />}
-            </View>
+                <Switcher
+                    text1="incoming"
+                    text2="to others"
+                    is1Active={homeStore.isIncomingChatsActive}
+                    set1Active={(status: boolean) =>
+                        homeStore.setIsIncomingChatsActive(status)
+                    }
+                    is2Active={homeStore.isOutboundChatsActive}
+                    set2Active={(status: boolean) =>
+                        homeStore.setIsOutboundChatsActive(status)
+                    }
+                />
+                <CustomTextInput
+                    placeholder="search chats"
+                    onChangeText={() => null}
+                    isSearch
+                />
+                <View
+                    style={{
+                        display: "flex",
+                        maxWidth: MAX_WIDTH,
+                        marginTop: 22,
+                    }}
+                >
+                    {homeStore.isIncomingChatsActive &&
+                        incomingConversations.length > 0 &&
+                        incomingConversations.map((elem, idx) => {
+                            return (
+                                <ConversationInstance
+                                    key={idx}
+                                    type={CONVERSATION.INCOMING}
+                                    data={elem}
+                                    canFetch={incomingConversations.length > 0}
+                                    onPress={() =>
+                                        conversationStore.setActiveConversation(
+                                            elem
+                                        )
+                                    }
+                                />
+                            );
+                        })}
+                    {homeStore.isOutboundChatsActive &&
+                        outboundConversations.length > 0 &&
+                        outboundConversations.map((elem, idx) => {
+                            return (
+                                <ConversationInstance
+                                    key={idx}
+                                    type={CONVERSATION.TO_OTHERS}
+                                    data={elem}
+                                    canFetch={outboundConversations.length > 0}
+                                    onPress={() =>
+                                        conversationStore.setActiveConversation(
+                                            elem
+                                        )
+                                    }
+                                />
+                            );
+                        })}
+                    {homeStore.isIncomingChatsActive &&
+                        incomingConversations.length === 0 && <EmptyHomeView />}
+                    {homeStore.isOutboundChatsActive &&
+                        outboundConversations.length === 0 && <EmptyHomeView />}
+                </View>
+            </GestureRecognizer>
             {/* <View style={{ marginTop: 40, width: "100%" }}>
                     <LargeButton
                         title="create offer"
