@@ -46,7 +46,9 @@ const MenuElem = (props: IMenuElem) => {
                             {props.rightText}
                         </CustomText>
                     )}
-                    {props.cta ? (
+                    {props.isToggle ? (
+                        <CustomText>hj</CustomText>
+                    ) : props.cta ? (
                         <SettingsAccentChevronRight />
                     ) : (
                         <SettingsChevronRight />

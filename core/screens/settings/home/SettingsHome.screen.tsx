@@ -68,12 +68,10 @@ const SettingsHome = () => {
         {
             text: "help center 🌳",
             onClick: () => null,
-            isToggle: true,
         },
         {
             text: "give feedback ❤️",
             onClick: () => null,
-            isToggle: true,
         },
     ];
 
@@ -122,14 +120,7 @@ const SettingsHome = () => {
                     <HorizontalLine marginVertical={8} />
                     {PREFERENCES_SETTINGS_DATA.map(
                         (elem: ISettingsData, idx: number) => {
-                            return (
-                                <MenuElem
-                                    key={idx}
-                                    idx={idx}
-                                    text={elem.text}
-                                    onClick={elem.onClick}
-                                />
-                            );
+                            return <MenuElem key={idx} idx={idx} {...elem} />;
                         }
                     )}
                 </View>
@@ -150,14 +141,7 @@ const SettingsHome = () => {
                     <HorizontalLine marginVertical={8} />
                     {CONNECT_SETTINGS_DATA.map(
                         (elem: ISettingsData, idx: number) => {
-                            return (
-                                <MenuElem
-                                    key={idx}
-                                    idx={idx}
-                                    text={elem.text}
-                                    onClick={elem.onClick}
-                                />
-                            );
+                            return <MenuElem key={idx} idx={idx} {...elem} />;
                         }
                     )}
                     <TouchableOpacity
