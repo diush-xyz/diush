@@ -38,8 +38,8 @@ const AccountDetailsHome = () => {
         {
             text: "profile picture",
             onClick: () =>
-                settingsStore.setMyAccountSettingsStatus(
-                    MyAccountSettingsStatus.DEACTIVATE
+                settingsStore.setAccountDetailsSettingsStatus(
+                    AccountDetailsSettingsStatus.CHANGE_PFP
                 ),
             cta: true,
             rightText: user.photoURL ? "change" : "add",

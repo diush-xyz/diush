@@ -5,6 +5,7 @@ import { AccountDetailsSettingsStatus } from "../../../../../@types/GlobalTypes"
 import AccountDetailsHome from "./AccountDetailsHome";
 import AccountDetailsDisplayName from "./AccountDetailsDisplayName";
 import AccountDetailsLocation from "./AccountDetailsLocation";
+import AccountDetailsPfp from "./AccountDetailsPfp";
 
 const AccountDetails = () => {
     const settingsStore = useSettingsStore();
@@ -17,6 +18,8 @@ const AccountDetails = () => {
                 return <AccountDetailsDisplayName />;
             case AccountDetailsSettingsStatus.CHANGE_LOCATION:
                 return <AccountDetailsLocation />;
+            case AccountDetailsSettingsStatus.CHANGE_PFP:
+                return <AccountDetailsPfp />;
         }
     };
 
