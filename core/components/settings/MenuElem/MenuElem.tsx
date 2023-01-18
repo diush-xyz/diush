@@ -1,16 +1,20 @@
 import React from "react";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import SettingsChevronRight from "../../../icons/settings/chevronRight";
 import CustomText from "../../lib/CustomText";
 import HorizontalLine from "../../lib/HorizontalLine";
+import { ISettingsData } from "../../../screens/settings/home/SettingsHome.screen";
+import { useTheme } from "../../../utils/useTheme.util";
+import styled from "styled-components";
+import SettingsAccentChevronRight from "../../../icons/settings/chevronRight/AccentChevronRight";
 
-interface IMenuElem {
-    text: string;
-    onClick: () => void;
+interface IMenuElem extends ISettingsData {
     idx: number;
 }
 
 const MenuElem = (props: IMenuElem) => {
+    const theme = useTheme();
+
     return (
         <>
             <TouchableOpacity
@@ -25,7 +29,29 @@ const MenuElem = (props: IMenuElem) => {
                 }}
             >
                 <CustomText>{props.text}</CustomText>
-                <SettingsChevronRight />
+                <View
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}
+                >
+                    {props.rightText && (
+                        <CustomText
+                            secondary={!props.cta}
+                            accent={props.cta}
+                            style={{ marginRight: 9 }}
+                        >
+                            {props.rightText}
+                        </CustomText>
+                    )}
+                    {props.cta ? (
+                        <SettingsAccentChevronRight />
+                    ) : (
+                        <SettingsChevronRight />
+                    )}
+                </View>
             </TouchableOpacity>
             <HorizontalLine marginVertical={16} />
         </>

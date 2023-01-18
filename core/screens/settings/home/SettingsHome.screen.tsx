@@ -19,6 +19,8 @@ import MenuElem from "../../../components/settings/MenuElem";
 export interface ISettingsData {
     text: string;
     onClick: () => void;
+    rightText?: string;
+    cta?: boolean;
     isToggle?: boolean;
 }
 
