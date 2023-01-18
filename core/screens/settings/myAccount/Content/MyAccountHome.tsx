@@ -11,9 +11,10 @@ import {
 import ScreenHeader from "../../../../components/lib/ScreenHeader";
 import { useAuthStore } from "../../../../state/auth/Auth.store";
 import HorizontalLine from "../../../../components/lib/HorizontalLine";
-import ChevronRight from "../../../../icons/catalog/ChevronRight";
 import { ISettingsData } from "../../home/SettingsHome.screen";
 import { MAX_WIDTH } from "../../../../utils/constants";
+import SettingsChevronRight from "../../../../icons/settings/chevronRight";
+import MenuElem from "../../../../components/settings/MenuElem";
 
 const MyAccountHome = () => {
     const settingsStore = useSettingsStore();
@@ -61,27 +62,18 @@ const MyAccountHome = () => {
                 }}
             >
                 <HorizontalLine marginVertical={8} />
-                {SETTINGS_MY_ACCOUNT_DATA.map((elem, idx) => {
-                    return (
-                        <>
-                            <TouchableOpacity
-                                onPress={() => elem.onClick()}
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    width: "100%",
-                                    alignItems: "center",
-                                    justifyContent: "space-between",
-                                    marginTop: idx == 0 && 8,
-                                }}
-                            >
-                                <CustomText>{elem.text}</CustomText>
-                                <ChevronRight />
-                            </TouchableOpacity>
-                            <HorizontalLine marginVertical={16} />
-                        </>
-                    );
-                })}
+                {SETTINGS_MY_ACCOUNT_DATA.map(
+                    (elem: ISettingsData, idx: number) => {
+                        return (
+                            <MenuElem
+                                key={idx}
+                                idx={idx}
+                                text={elem.text}
+                                onClick={elem.onClick}
+                            />
+                        );
+                    }
+                )}
             </View>
         </View>
     );

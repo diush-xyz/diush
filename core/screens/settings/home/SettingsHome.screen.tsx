@@ -14,6 +14,7 @@ import { MAX_WIDTH } from "../../../utils/constants";
 import { useSettingsStore } from "../../../state/auth/Settings.store";
 import { SettingsStatus } from "../../../@types/GlobalTypes";
 import { observer } from "mobx-react";
+import MenuElem from "../../../components/settings/MenuElem";
 
 export interface ISettingsData {
     text: string;
@@ -117,31 +118,18 @@ const SettingsHome = () => {
                         PREFERENCES
                     </CustomText>
                     <HorizontalLine marginVertical={8} />
-                    {PREFERENCES_SETTINGS_DATA.map((elem, idx) => {
-                        return (
-                            <>
-                                <TouchableOpacity
-                                    onPress={() => elem.onClick()}
-                                    style={{
-                                        display: "flex",
-                                        flexDirection: "row",
-                                        width: "100%",
-                                        alignItems: "center",
-                                        justifyContent: "space-between",
-                                        marginTop: idx == 0 && 8,
-                                    }}
-                                >
-                                    <CustomText>{elem.text}</CustomText>
-                                    {elem.isToggle ? (
-                                        <CustomText>tg</CustomText>
-                                    ) : (
-                                        <ChevronRight />
-                                    )}
-                                </TouchableOpacity>
-                                <HorizontalLine marginVertical={16} />
-                            </>
-                        );
-                    })}
+                    {PREFERENCES_SETTINGS_DATA.map(
+                        (elem: ISettingsData, idx: number) => {
+                            return (
+                                <MenuElem
+                                    key={idx}
+                                    idx={idx}
+                                    text={elem.text}
+                                    onClick={elem.onClick}
+                                />
+                            );
+                        }
+                    )}
                 </View>
                 <View
                     style={{
@@ -158,27 +146,18 @@ const SettingsHome = () => {
                         CONNECT
                     </CustomText>
                     <HorizontalLine marginVertical={8} />
-                    {CONNECT_SETTINGS_DATA.map((elem, idx) => {
-                        return (
-                            <>
-                                <TouchableOpacity
-                                    onPress={elem.onClick}
-                                    style={{
-                                        display: "flex",
-                                        flexDirection: "row",
-                                        width: "100%",
-                                        alignItems: "center",
-                                        justifyContent: "space-between",
-                                        marginTop: idx == 0 && 8,
-                                    }}
-                                >
-                                    <CustomText>{elem.text}</CustomText>
-                                    <ChevronRight />
-                                </TouchableOpacity>
-                                <HorizontalLine marginVertical={16} />
-                            </>
-                        );
-                    })}
+                    {CONNECT_SETTINGS_DATA.map(
+                        (elem: ISettingsData, idx: number) => {
+                            return (
+                                <MenuElem
+                                    key={idx}
+                                    idx={idx}
+                                    text={elem.text}
+                                    onClick={elem.onClick}
+                                />
+                            );
+                        }
+                    )}
                     <TouchableOpacity
                         onPress={() => {
                             auth.signOut();
