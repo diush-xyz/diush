@@ -80,7 +80,8 @@ export enum MyAccountSettingsStatus {
 export enum AccountDetailsSettingsStatus {
     HOME,
     CHANGE_DISPLAY_NAME,
-    CHANGE_EMAIL,
+    // CHANGE_EMAIL,
+    CHANGE_LOCATION,
     CHANGE_PFP,
 }
 

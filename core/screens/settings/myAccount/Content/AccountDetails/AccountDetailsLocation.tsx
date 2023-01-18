@@ -17,12 +17,11 @@ import CustomTextInput from "../../../../../components/lib/CustomTextInput";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../../../config/firebase";
 import SettingsScrollWrapper from "../../../../../components/settings/SettingsScrollWrapper";
-import { containsWhitespace } from "../../../../../utils/containsWhitespace";
 
-const AccountDetailsDisplayName = () => {
+const AccountDetailsLocation = () => {
     const settingsStore = useSettingsStore();
     const { user } = useAuthStore();
-    const [newName, setNewName] = React.useState<string>("");
+    const [newLocation, setNewLocation] = React.useState<string>("");
 
     const [allClear, setAllClear] = React.useState<boolean>(false);
     const [errMsg, setErrMsg] = React.useState<string>("");
@@ -32,7 +31,7 @@ const AccountDetailsDisplayName = () => {
         const userRef = doc(db, "users", user.id);
 
         await updateDoc(userRef, {
-            displayName: newName,
+            location: newLocation,
         }).then(() => {
             settingsStore.setAccountDetailsSettingsStatus(
                 AccountDetailsSettingsStatus.HOME
@@ -48,13 +47,11 @@ const AccountDetailsDisplayName = () => {
     };
 
     React.useEffect(() => {
-        if (newName === "" || !containsWhitespace(newName)) {
+        if (newLocation === "") {
             setAllClear(false);
             console.log("i was called here");
             setErrMsg(
-                !containsWhitespace(newName)
-                    ? "you must input a first and last name to proceed."
-                    : "the field is empty!"
+                "hold on! the field is empty. we need a location to save."
             );
         } else {
             setAllClear(true);
@@ -77,7 +74,7 @@ const AccountDetailsDisplayName = () => {
                         AccountDetailsSettingsStatus.HOME
                     )
                 }
-                title="update name"
+                title="update location"
                 subtitle="account details"
                 button
                 onButtonPress={() => checkIfProceed()}
@@ -98,7 +95,7 @@ const AccountDetailsDisplayName = () => {
                             current
                         </CustomText>
                         <CustomText font="Bold" secondary>
-                            {user.displayName}
+                            {user.location}
                         </CustomText>
                     </View>
                     <View style={{ marginTop: 22 }}>
@@ -110,7 +107,7 @@ const AccountDetailsDisplayName = () => {
                 {/*this must be out here for the error bar's width to cover 100% of the screen*/}
                 <CustomTextInput
                     placeholder="new name"
-                    onChangeText={text => setNewName(text)}
+                    onChangeText={text => setNewLocation(text)}
                     isValid={allClear}
                     isErr={!allClear && !firstTime}
                     errMsg={errMsg}
@@ -122,4 +119,4 @@ const AccountDetailsDisplayName = () => {
     );
 };
 
-export default observer(AccountDetailsDisplayName);
+export default observer(AccountDetailsLocation);

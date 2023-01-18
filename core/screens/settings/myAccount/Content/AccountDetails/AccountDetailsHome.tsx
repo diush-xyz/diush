@@ -28,12 +28,12 @@ const AccountDetailsHome = () => {
             rightText: user.displayName,
         },
         {
-            text: "email",
+            text: "location",
             onClick: () =>
-                settingsStore.setMyAccountSettingsStatus(
-                    MyAccountSettingsStatus.DEACTIVATE
+                settingsStore.setAccountDetailsSettingsStatus(
+                    AccountDetailsSettingsStatus.CHANGE_LOCATION
                 ),
-            rightText: user.email,
+            rightText: user.location,
         },
         {
             text: "profile picture",
