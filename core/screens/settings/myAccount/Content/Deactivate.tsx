@@ -1,13 +1,10 @@
 import React from "react";
 import CustomText from "../../../../components/lib/CustomText";
 import { observer } from "mobx-react";
-import { TouchableOpacity, View } from "react-native";
+import { Linking, TouchableOpacity, View } from "react-native";
 import ScreenHeader from "../../../../components/lib/ScreenHeader";
 import { useSettingsStore } from "../../../../state/auth/Settings.store";
-import {
-    MyAccountSettingsStatus,
-    SettingsStatus,
-} from "../../../../@types/GlobalTypes";
+import { MyAccountSettingsStatus } from "../../../../@types/GlobalTypes";
 import ProfileImage from "../../../../components/lib/ProfileImage";
 import { useAuthStore } from "../../../../state/auth/Auth.store";
 import { MAX_WIDTH } from "../../../../utils/constants";
@@ -71,20 +68,22 @@ const Deactivate = () => {
                         we are heartbroken to see you go. 💔
                     </CustomText>
                     <CustomText secondary font="Bold">
-                        we'd love to{" "}
+                        hey there! I'm Filippo, the creator of this app. I'd
+                        love to{" "}
                         <CustomText
                             accent
                             font="Bold"
                             onPress={() => {
-                                settingsStore.setMyAccountSettingsStatus(
-                                    MyAccountSettingsStatus.ACCOUNT_DETAILS
+                                Linking.openURL(
+                                    "mailto:filifonsecacagnazzo@gmail.com"
                                 );
                             }}
                         >
                             hear from you
                         </CustomText>{" "}
-                        if you have any feedback, comments, or questions about
-                        the platform.
+                        if you have any feedback or questions about the
+                        platform. I'm always looking for ways to improve diush
+                        to serve you better.
                     </CustomText>
                 </View>
                 <View style={{ marginTop: 22, width: MAX_WIDTH }}>
@@ -93,7 +92,7 @@ const Deactivate = () => {
                         fontSize={18}
                         style={{ marginBottom: 11 }}
                     >
-                        this action will deactivate your account.
+                        this action will delete your account.
                     </CustomText>
                     <CustomText secondary font="Bold">
                         you are beginning the process for deactivating and
