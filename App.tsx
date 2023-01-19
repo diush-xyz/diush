@@ -84,6 +84,7 @@ const App = () => {
                             email: fUser.email,
                             photoURL: fUser.photoURL,
                             location: fUser.location,
+                            notifications: fUser.notifications,
                             //TODO: Add products and other fields later
                         });
 

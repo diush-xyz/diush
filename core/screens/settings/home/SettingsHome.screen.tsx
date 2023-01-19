@@ -1,6 +1,6 @@
 import React from "react";
 import { View, ScrollView, TouchableOpacity } from "react-native";
-import { auth } from "../../../../config/firebase";
+import { auth, db } from "../../../../config/firebase";
 import CustomText from "../../../components/lib/CustomText";
 import CustomTextInput from "../../../components/lib/CustomTextInput";
 import HorizontalLine from "../../../components/lib/HorizontalLine";
@@ -15,6 +15,7 @@ import { useSettingsStore } from "../../../state/auth/Settings.store";
 import { SettingsStatus } from "../../../@types/GlobalTypes";
 import { observer } from "mobx-react";
 import MenuElem from "../../../components/settings/MenuElem";
+import { doc, updateDoc } from "firebase/firestore";
 
 export interface ISettingsData {
     text: string;
@@ -22,6 +23,8 @@ export interface ISettingsData {
     rightText?: string;
     cta?: boolean;
     isToggle?: boolean;
+    toggleValue?: boolean;
+    onToggleChange?: (value: boolean) => void;
 }
 
 const SettingsHome = () => {
@@ -30,6 +33,14 @@ const SettingsHome = () => {
     const logInStore = useLoginStore();
     const signUpStore = useSignupStore();
     const settingsStore = useSettingsStore();
+
+    const updateNotificationSettings = async (value: boolean) => {
+        const userRef = doc(db, "users", authStore.user.id);
+
+        await updateDoc(userRef, {
+            notifications: value,
+        });
+    };
 
     const PREFERENCES_SETTINGS_DATA: ISettingsData[] = [
         {
@@ -49,6 +60,8 @@ const SettingsHome = () => {
             text: "notifications",
             onClick: () => null,
             isToggle: true,
+            toggleValue: authStore.user.notifications,
+            onToggleChange: value => updateNotificationSettings(value),
         },
     ];
 

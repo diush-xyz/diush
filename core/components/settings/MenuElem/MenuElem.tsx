@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity, View } from "react-native";
+import { Switch, TouchableOpacity, View } from "react-native";
 import SettingsChevronRight from "../../../icons/settings/chevronRight";
 import CustomText from "../../lib/CustomText";
 import HorizontalLine from "../../lib/HorizontalLine";
@@ -13,7 +13,11 @@ interface IMenuElem extends ISettingsData {
 }
 
 const MenuElem = (props: IMenuElem) => {
-    const theme = useTheme();
+    const [isOn, setIsOn] = React.useState<boolean>(props.toggleValue);
+
+    React.useEffect(() => {
+        props.isToggle && props.onToggleChange(isOn);
+    }, [isOn]);
 
     return (
         <>
@@ -47,7 +51,10 @@ const MenuElem = (props: IMenuElem) => {
                         </CustomText>
                     )}
                     {props.isToggle ? (
-                        <CustomText>hj</CustomText>
+                        <Switch
+                            value={isOn}
+                            onValueChange={(value: boolean) => setIsOn(value)}
+                        />
                     ) : props.cta ? (
                         <SettingsAccentChevronRight />
                     ) : (

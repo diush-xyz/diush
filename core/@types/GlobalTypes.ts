@@ -4,6 +4,7 @@ export interface IUser {
     email: string;
     photoURL: string;
     location?: string;
+    notifications?: boolean;
     // products?: IProduct[];
 }
 
