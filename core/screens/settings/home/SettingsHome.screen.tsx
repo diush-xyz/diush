@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ScrollView, TouchableOpacity } from "react-native";
+import { View, ScrollView, TouchableOpacity, Linking } from "react-native";
 import { auth, db } from "../../../../config/firebase";
 import CustomText from "../../../components/lib/CustomText";
 import CustomTextInput from "../../../components/lib/CustomTextInput";
@@ -21,10 +21,13 @@ export interface ISettingsData {
     text: string;
     onClick: () => void;
     rightText?: string;
+    isRightSideEmpty?: boolean;
     cta?: boolean;
     isToggle?: boolean;
     toggleValue?: boolean;
     onToggleChange?: (value: boolean) => void;
+    isNotPressable?: boolean;
+    isComingSoon?: boolean;
 }
 
 const SettingsHome = () => {
@@ -55,6 +58,7 @@ const SettingsHome = () => {
         {
             text: "payments",
             onClick: () => null,
+            isComingSoon: true,
         },
         {
             text: "notifications",
@@ -62,29 +66,37 @@ const SettingsHome = () => {
             isToggle: true,
             toggleValue: authStore.user.notifications,
             onToggleChange: value => updateNotificationSettings(value),
+            isNotPressable: true,
         },
     ];
 
     const CONNECT_SETTINGS_DATA: ISettingsData[] = [
         {
             text: "follow us on twitter 🐦",
-            onClick: () => null,
+            onClick: () => Linking.openURL("https://twitter.com/diushxyz"),
+            isRightSideEmpty: true,
         },
         {
             text: "rate us ⭐",
             onClick: () => null,
+            isRightSideEmpty: true,
         },
         {
             text: "about 🎧",
             onClick: () => null,
+            isRightSideEmpty: true,
+        },
+        {
+            text: "give feedback ❤️",
+            onClick: () =>
+                Linking.openURL("mailto:filifonsecacagnazzo@gmail.com"),
+            isRightSideEmpty: true,
         },
         {
             text: "help center 🌳",
             onClick: () => null,
-        },
-        {
-            text: "give feedback ❤️",
-            onClick: () => null,
+            isRightSideEmpty: true,
+            isComingSoon: true,
         },
     ];
 

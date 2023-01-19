@@ -13,6 +13,7 @@ interface IMenuElem extends ISettingsData {
 }
 
 const MenuElem = (props: IMenuElem) => {
+    const theme = useTheme();
     const [isOn, setIsOn] = React.useState<boolean>(props.toggleValue);
 
     React.useEffect(() => {
@@ -23,6 +24,7 @@ const MenuElem = (props: IMenuElem) => {
         <>
             <TouchableOpacity
                 onPress={() => props.onClick()}
+                activeOpacity={props.isNotPressable ? 1 : 0.5}
                 style={{
                     display: "flex",
                     flexDirection: "row",
@@ -30,37 +32,49 @@ const MenuElem = (props: IMenuElem) => {
                     alignItems: "center",
                     justifyContent: "space-between",
                     marginTop: props.idx == 0 && 8,
+                    opacity: props.isComingSoon ? 0.5 : 1,
                 }}
             >
                 <CustomText>{props.text}</CustomText>
-                <View
-                    style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "center",
-                    }}
-                >
-                    {props.rightText && (
-                        <CustomText
-                            secondary={!props.cta}
-                            accent={props.cta}
-                            style={{ marginRight: 9 }}
-                        >
-                            {props.rightText}
-                        </CustomText>
-                    )}
-                    {props.isToggle ? (
-                        <Switch
-                            value={isOn}
-                            onValueChange={(value: boolean) => setIsOn(value)}
-                        />
-                    ) : props.cta ? (
-                        <SettingsAccentChevronRight />
-                    ) : (
-                        <SettingsChevronRight />
-                    )}
-                </View>
+                {!props.isRightSideEmpty && (
+                    <View
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }}
+                    >
+                        {props.rightText && (
+                            <CustomText
+                                secondary={!props.cta}
+                                accent={props.cta}
+                                style={{ marginRight: 9 }}
+                            >
+                                {props.rightText}
+                            </CustomText>
+                        )}
+                        {props.isToggle ? (
+                            <Switch
+                                value={isOn}
+                                onValueChange={(value: boolean) =>
+                                    setIsOn(value)
+                                }
+                                trackColor={{ true: theme.accent }}
+                                style={{
+                                    transform: [
+                                        { scaleX: 0.8 },
+                                        { scaleY: 0.8 },
+                                    ],
+                                }}
+                            />
+                        ) : props.cta ? (
+                            <SettingsAccentChevronRight />
+                        ) : (
+                            <SettingsChevronRight />
+                        )}
+                    </View>
+                )}
             </TouchableOpacity>
             <HorizontalLine marginVertical={16} />
         </>
