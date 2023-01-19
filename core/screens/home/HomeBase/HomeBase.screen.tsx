@@ -220,7 +220,7 @@ const HomeBaseScreen = () => {
                         outboundConversations.length === 0 && <EmptyHomeView />}
                 </View>
             </GestureRecognizer>
-            <View style={{ marginTop: 40, width: "100%" }}>
+            {/* <View style={{ marginTop: 40, width: "100%" }}>
                 <LargeButton
                     title="create offer"
                     onPress={() => {
@@ -236,7 +236,7 @@ const HomeBaseScreen = () => {
                         });
                     }}
                 />
-            </View>
+            </View> */}
         </View>
     );
 };

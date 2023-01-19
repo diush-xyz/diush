@@ -52,8 +52,9 @@ const SettingsHome = () => {
                 settingsStore.setSettingsStatus(SettingsStatus.MY_ACCOUNT),
         },
         {
-            text: "privacy & safety",
-            onClick: () => null,
+            text: "change password",
+            onClick: () =>
+                settingsStore.setSettingsStatus(SettingsStatus.PRIVACY),
         },
         {
             text: "payments",
