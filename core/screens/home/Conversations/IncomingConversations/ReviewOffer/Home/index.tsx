@@ -167,6 +167,9 @@ const ReviewOfferHome = () => {
                     title="offer review"
                     button={
                         !(
+                            offerStore.offerBeingReviewed.placedByUID == user.id
+                        ) &&
+                        !(
                             offerStore.offerBeingReviewed.status ==
                             OfferStatus.ACCEPTED
                         )
@@ -270,8 +273,7 @@ const ReviewOfferHome = () => {
                 </View>
             </View>
             {/*TODO: Going to have to update this logic when dealing with outgoing conversations*/}
-            {!offerStore.isOfferBeingCountered &&
-                !offerStore.offerBeingReviewed.isCounterOffer &&
+            {!(offerStore.offerBeingReviewed.placedByUID == user.id) &&
                 !(
                     offerStore.offerBeingReviewed.status == OfferStatus.DECLINED
                 ) && (

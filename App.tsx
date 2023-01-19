@@ -26,6 +26,8 @@ import CopiedIndicator from "./core/components/lib/CopiedIndicator";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
 import ControlCenter from "./core/components/home/ControlCenter";
+import DefaultScreen from "./core/screens/Default.screen";
+import BuyProductScreen from "./core/screens/BuyProduct.screen";
 
 const App = () => {
     const [isAppReady, setIsAppReady] = React.useState<boolean>(false);
@@ -109,14 +111,8 @@ const App = () => {
                     onWillShow={() => utilStore.setIsKeyboardOpen(true)}
                     onWillHide={() => utilStore.setIsKeyboardOpen(false)}
                 />
-                {authStore.authStatus == AuthStatus.AUTHENTICATED ? (
-                    <>
-                        {utilStore.copyIndicator && <CopiedIndicator />}
-                        <ScreenHandler />
-                    </>
-                ) : (
-                    <AuthScreen />
-                )}
+                <DefaultScreen />
+                {/* <BuyProductScreen /> */}
                 <ControlCenter />
                 {/* <Test /> */}
                 <StatusBar style="auto" />

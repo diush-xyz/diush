@@ -42,7 +42,7 @@ const CounterOfferPopupContent = () => {
             id: uuidv4(),
             amount: Number(price),
             isReadByRecipient: false,
-            linkedConversationID: "7FEoNJoAGnsXNKT1iVzX",
+            linkedConversationID: conversationStore.activeConversation.id,
             placedByUID: user.id,
             timestamp: new Date(),
             isCounterOffer: true,
