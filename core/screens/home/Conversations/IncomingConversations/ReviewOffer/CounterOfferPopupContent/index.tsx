@@ -27,7 +27,7 @@ const CounterOfferPopupContent = () => {
     const conversationStore = useConversationStore();
     const { user } = useAuthStore();
     const [price, setPrice] = React.useState<string>(
-        conversationStore.activeConversationProduct?.askingPrice.toString()
+        offerStore.offerBeingReviewed?.amount?.toString()
     );
 
     const counterOffer = async () => {
@@ -45,7 +45,9 @@ const CounterOfferPopupContent = () => {
             linkedConversationID: conversationStore.activeConversation.id,
             placedByUID: user.id,
             timestamp: new Date(),
-            isCounterOffer: true,
+            isCounterOffer: !(
+                conversationStore.activeConversation.sellerUID !== user.id
+            ),
             status: OfferStatus.PENDING,
         });
 
@@ -158,8 +160,8 @@ const CounterOfferPopupContent = () => {
                             title="place counter offer"
                             onPress={counterOffer}
                             disabled={
-                                conversationStore.activeConversationProduct
-                                    .askingPrice == Number(price)
+                                offerStore.offerBeingReviewed?.amount ==
+                                Number(price)
                             }
                         />
                     </View>
