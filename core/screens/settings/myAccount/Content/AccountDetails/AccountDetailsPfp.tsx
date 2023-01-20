@@ -128,7 +128,7 @@ const AccountDetailsPfp = () => {
                         AccountDetailsSettingsStatus.HOME
                     )
                 }
-                title="update name"
+                title="profile image"
                 subtitle="account details"
             />
             <SettingsScrollWrapper>
@@ -142,13 +142,19 @@ const AccountDetailsPfp = () => {
                     <HorizontalLine marginVertical={8} />
                     <View style={{ marginTop: 10 }}>
                         <CustomText font="Bold" style={{ marginBottom: 8 }}>
-                            tap to replace
+                            {user.photoURL
+                                ? "tap to replace"
+                                : "tap to add a profile image"}
                         </CustomText>
                         <TouchableOpacity
                             onPress={() => pickImage()}
                             style={{ marginTop: 5 }}
                         >
-                            <ProfileImage specificUser={user} size={100} />
+                            <ProfileImage
+                                specificUser={user}
+                                size={100}
+                                border
+                            />
                         </TouchableOpacity>
                     </View>
                 </View>
