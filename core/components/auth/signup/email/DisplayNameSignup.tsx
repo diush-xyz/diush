@@ -11,6 +11,7 @@ import LargeButton from "../../../lib/LargeButton";
 import { observer } from "mobx-react";
 import { useUtilStore } from "../../../../state/Util.store";
 import ScrollWrapper from "../../ScrollWrapper/ScrollWrapper";
+import { containsWhitespace } from "../../../../utils/containsWhitespace";
 
 const DisplayNameSignup = () => {
     const signupStore = useSignupStore();
@@ -29,12 +30,12 @@ const DisplayNameSignup = () => {
     React.useEffect(() => {
         if (
             signupStore.displayName === "" ||
-            signupStore.displayName.length < 4
+            !containsWhitespace(signupStore.displayName)
         ) {
             setAllClear(false);
             setErrMsg(
-                signupStore.displayName.length < 4
-                    ? "you need at least 4 cahracters in your display name to proceed."
+                !containsWhitespace(signupStore.displayName)
+                    ? "please provide your full name. we highly value transparency with our deals."
                     : "hang on! we need a way to refer to you in order to move on."
             );
         } else {
