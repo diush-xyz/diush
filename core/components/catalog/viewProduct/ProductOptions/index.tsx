@@ -33,9 +33,9 @@ const ProductOptions = () => {
             onClick: () => {
                 copyToClipboard(`https://diush.xyz/hjdhj/hjdhj`);
                 sellerViewProductStore.setProductOptionsPopup();
-                utilStore.setCopyIndicator("Link copied!");
+                utilStore.setMsgIndicator("Link copied!");
                 setTimeout(() => {
-                    utilStore.setCopyIndicator();
+                    utilStore.setMsgIndicator();
                 }, 2500);
             },
         }, //TODO: Properly make this url link to something once the buyer flow is built out

@@ -6,7 +6,7 @@ import { useUtilStore } from "../../../state/Util.store";
 import { observer } from "mobx-react";
 import styled from "styled-components/native";
 
-const CopiedIndicator = () => {
+const MsgIndicator = () => {
     const utilStore = useUtilStore();
     const scaleValue = React.useRef(new Animated.Value(0)).current;
 
@@ -16,7 +16,7 @@ const CopiedIndicator = () => {
     `;
 
     React.useEffect(() => {
-        if (utilStore.copyIndicator) {
+        if (utilStore.msgIndicator) {
             Animated.spring(scaleValue, {
                 toValue: 1,
                 //@ts-ignore
@@ -60,11 +60,11 @@ const CopiedIndicator = () => {
                 }}
             >
                 <CustomText font="Bold">
-                    {utilStore.copyIndicatorText}
+                    {utilStore.msgIndicatorText}
                 </CustomText>
             </View>
         </Wrapper>
     );
 };
 
-export default observer(CopiedIndicator);
+export default observer(MsgIndicator);

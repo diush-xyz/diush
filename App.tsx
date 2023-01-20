@@ -22,7 +22,7 @@ import {
     TouchableOpacity,
     TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
-import CopiedIndicator from "./core/components/lib/CopiedIndicator";
+import CopiedIndicator from "./core/components/lib/MsgIndicator";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
 import ControlCenter from "./core/components/home/ControlCenter";

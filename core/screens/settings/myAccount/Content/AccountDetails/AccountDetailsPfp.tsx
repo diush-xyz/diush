@@ -49,7 +49,6 @@ const AccountDetailsPfp = () => {
     };
 
     const pickImage = async () => {
-        setLoading(true);
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
@@ -59,7 +58,10 @@ const AccountDetailsPfp = () => {
 
         if (!result.canceled) {
             const storage = getStorage();
-            const storageRef = ref(storage, `userProfileImages/${user.id}/pfp`);
+            const storageRef = ref(
+                storage,
+                `userProfileImages/${user.id}/pfp.png`
+            );
 
             //delete the file in the db before uploading a new one
             if (
@@ -82,7 +84,7 @@ const AccountDetailsPfp = () => {
             const bytes = await img.blob();
 
             await uploadBytes(storageRef, bytes).then(() => {
-                console.log("Uploaded a blob or file!");
+                setLoading(true);
                 getDownloadURL(storageRef)
                     .then(url => {
                         handleSave(url);

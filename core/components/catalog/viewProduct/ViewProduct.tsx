@@ -45,7 +45,7 @@ import DeleteConfirmation from "../../lib/Modals/WarningConfirmation";
 import CustomDeleteConfirmation from "./CustomDeleteConfirmation";
 import styled from "styled-components/native";
 import { MAX_WIDTH } from "../../../utils/constants";
-import CopiedIndicator from "../../lib/CopiedIndicator";
+import CopiedIndicator from "../../lib/MsgIndicator";
 
 const ViewProduct = () => {
     const catalogStore = useCatalogStore();

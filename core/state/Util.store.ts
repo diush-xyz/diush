@@ -29,13 +29,13 @@ export default class UtilStore {
         this.isKeyboardOpen = isOpen;
     }
 
-    copyIndicator: boolean = false;
+    msgIndicator: boolean = false;
 
-    copyIndicatorText: string = "Copied!";
+    msgIndicatorText: string = "Copied!";
 
-    setCopyIndicator(copyIndicatorText?: string) {
-        this.copyIndicator = !this.copyIndicator;
-        this.copyIndicatorText = copyIndicatorText;
+    setMsgIndicator(msgIndicatorText?: string) {
+        this.msgIndicator = !this.msgIndicator;
+        this.msgIndicatorText = msgIndicatorText;
     }
 }
 
