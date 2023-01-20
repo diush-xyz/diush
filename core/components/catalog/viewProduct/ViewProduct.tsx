@@ -86,7 +86,9 @@ const ViewProduct = () => {
                         <Header />
                         <SnapshotBox
                             askingPrice={catalogStore.activeProduct.askingPrice}
-                            highestOffer={90} //TODO: Backend integration
+                            highestOffer={
+                                sellerViewProductStore.highestOfferAmount
+                            } //TODO: Backend integration
                             posted="14h" //TODO: Backend integration
                         />
                         <WrittenInfoSection />

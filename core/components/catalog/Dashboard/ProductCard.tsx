@@ -7,6 +7,8 @@ import { CatalogStatus, IOffer, IProduct } from "../../../@types/GlobalTypes";
 import { useCatalogStore } from "../../../state/auth/Catalog.store";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db, auth } from "../../../../config/firebase";
+import { getHighestOffer } from "../../../utils/getHighestOffer.util";
+import { useSellerViewProductStore } from "../../../state/auth/SellerViewProductStore";
 
 export interface IProductCard {
     productData: IProduct;
@@ -18,6 +20,7 @@ export interface IProductCard {
 
 const ProductCard = (props: IProductCard) => {
     const catalogStore = useCatalogStore();
+    const sellerViewProductStore = useSellerViewProductStore();
 
     const [conversations, setConversations] = React.useState([]);
     const [offers, setOffers] = React.useState([]);
@@ -70,10 +73,7 @@ const ProductCard = (props: IProductCard) => {
 
     React.useEffect(() => {
         if (offers.length > 0 && !offerLoading) {
-            const highest = offers.reduce((prev, current) =>
-                prev.amount > current.amount ? prev : current
-            );
-            console.warn(highest);
+            const highest = getHighestOffer(offers);
             setHighestOffer(highest);
         }
     }, [offerLoading]);
@@ -83,6 +83,10 @@ const ProductCard = (props: IProductCard) => {
             onPress={() => {
                 catalogStore.setStatus(CatalogStatus.VIEW);
                 catalogStore.setActiveProduct(props.productData);
+
+                sellerViewProductStore.setHighestOfferAmount(
+                    highestOffer.amount
+                );
             }}
         >
             {/*@ts-ignore*/}

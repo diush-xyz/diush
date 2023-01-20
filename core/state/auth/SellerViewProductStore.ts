@@ -16,6 +16,12 @@ export default class SellerViewProductStore {
         this.imageModal = !this.imageModal;
     }
 
+    highestOfferAmount: number = null;
+
+    setHighestOfferAmount(newHighestOfferAmount: number) {
+        this.highestOfferAmount = newHighestOfferAmount;
+    }
+
     productOptionsPopup: boolean = false;
 
     setProductOptionsPopup() {
