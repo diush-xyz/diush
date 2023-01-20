@@ -28,12 +28,14 @@ import en from "javascript-time-ago/locale/en";
 import ControlCenter from "./core/components/home/ControlCenter";
 import DefaultScreen from "./core/screens/Default.screen";
 import BuyProductScreen from "./core/screens/BuyProduct.screen";
+import { useHomeStore } from "./core/state/auth/Home.store";
 
 const App = () => {
     const [isAppReady, setIsAppReady] = React.useState<boolean>(false);
     const utilStore = useUtilStore();
     const authStore = useAuthStore();
     const signupStore = useSignupStore();
+    const homeStore = useHomeStore();
     // const [fetchedUser, setFetchedUser] = React.useState<IUser>();
 
     //TODO: Add this back later (and prepare() function - view Font and SplashScreen docs from Expo)
@@ -107,6 +109,18 @@ const App = () => {
         // @ts-ignore
         <ThemeProvider theme={DarkTheme}>
             <View style={styles.container}>
+                {/* <TouchableOpacity
+                    activeOpacity={1}
+                    onPress={() => {
+                        if (homeStore.controlCenterOptionsSelector) {
+                            homeStore.setControlCenterOptionsSelector(
+                                !homeStore.controlCenterOptionsSelector
+                            );
+                        } else {
+                            null;
+                        }
+                    }}
+                > */}
                 <KeyboardListener
                     onWillShow={() => utilStore.setIsKeyboardOpen(true)}
                     onWillHide={() => utilStore.setIsKeyboardOpen(false)}
@@ -114,6 +128,7 @@ const App = () => {
                 <DefaultScreen />
                 {/* <BuyProductScreen /> */}
                 <ControlCenter />
+                {/* </TouchableOpacity> */}
                 {/* <Test /> */}
                 <StatusBar style="auto" />
             </View>

@@ -19,7 +19,11 @@ import CatalogIcon from "../../../../icons/home/controlCenter/catalog";
 import MetricsIcon from "../../../../icons/home/controlCenter/metrics";
 import SettingsIcon from "../../../../icons/home/controlCenter/settings";
 import MyProfileIcon from "../../../../icons/home/controlCenter/myprofile";
-import ProductOptions from "../../../catalog/viewProduct/ProductOptions";
+import CopyIcon from "../../../../icons/catalog/Copy";
+import OptionsSelector, {
+    IOptionsSelectorElement,
+} from "../../../lib/OptionsSelector";
+import NoBackgroundLogo from "../../../../icons/auth/NoBackgroundLogo";
 
 export interface ICONTROL_CENTER_DATA {
     icon: React.ReactNode;
@@ -69,6 +73,24 @@ const ControlCenterContent = () => {
         },
     ];
 
+    // const OPTIONS_DATA: IOptionsSelectorElement[] = [
+    //     {
+    //         text: "Log out",
+    //         icon: <CopyIcon />,
+    //         onClick: () => {
+    //             auth.signOut();
+    //             //TODO: still must fix blank popup that comes up after the user signs out of their acc
+    //             //reset stuff
+    //             homeStore.setControlCenter(false);
+    //             logInStore.cancel();
+    //             signUpStore.cancel();
+    //             homeStore.setIsIncomingChatsActive(true);
+    //             homeStore.setIsOutboundChatsActive(false);
+    //             homeStore.setControlCenter(false);
+    //         },
+    //     }, //TODO: Properly make this url link to something once the buyer flow is built out
+    // ];
+
     return (
         <View
             style={{
@@ -102,9 +124,22 @@ const ControlCenterContent = () => {
                             {authStore.user.displayName}
                         </CustomText>
                     </View>
-                    <TouchableOpacity onPress={() => null}>
-                        <RoundedMoreIcon />
+                    <TouchableOpacity
+                        activeOpacity={1}
+                        onPress={() => {
+                            // homeStore.setControlCenterOptionsSelector(true)
+                            null;
+                        }}
+                    >
+                        {/* <RoundedMoreIcon /> */}
+                        <NoBackgroundLogo height={24} width={24} />
                     </TouchableOpacity>
+                    {/* {homeStore.controlCenterOptionsSelector && (
+                        <OptionsSelector
+                            visible={homeStore.controlCenterOptionsSelector}
+                            data={OPTIONS_DATA}
+                        />
+                    )} */}
                 </View>
                 <View
                     style={{
