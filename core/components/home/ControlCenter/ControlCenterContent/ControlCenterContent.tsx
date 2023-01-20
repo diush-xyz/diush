@@ -19,11 +19,13 @@ import CatalogIcon from "../../../../icons/home/controlCenter/catalog";
 import MetricsIcon from "../../../../icons/home/controlCenter/metrics";
 import SettingsIcon from "../../../../icons/home/controlCenter/settings";
 import MyProfileIcon from "../../../../icons/home/controlCenter/myprofile";
+import ProductOptions from "../../../catalog/viewProduct/ProductOptions";
 
 export interface ICONTROL_CENTER_DATA {
     icon: React.ReactNode;
     text: string;
     onClick: () => void;
+    isComingSoon?: boolean;
 }
 
 const ControlCenterContent = () => {
@@ -51,6 +53,7 @@ const ControlCenterContent = () => {
             icon: <MetricsIcon />,
             text: "metrics",
             onClick: () => null,
+            isComingSoon: true,
         },
         {
             icon: <SettingsIcon />,
@@ -62,6 +65,7 @@ const ControlCenterContent = () => {
             icon: <MyProfileIcon />,
             text: "my profile",
             onClick: () => null,
+            isComingSoon: true,
         },
     ];
 
@@ -112,31 +116,59 @@ const ControlCenterContent = () => {
                         (elem: ICONTROL_CENTER_DATA, idx: number) => {
                             return (
                                 <TouchableOpacity
+                                    activeOpacity={elem.isComingSoon ? 1 : 0.5}
                                     key={idx}
                                     style={{
                                         display: "flex",
                                         flexDirection: "row",
+                                        alignItems: "center",
+                                        justifyContent: "space-between",
+                                        width: "100%",
                                         marginBottom:
                                             idx !==
                                                 CONTROL_CENTER_DATA.length -
                                                     1 && 30,
                                     }}
                                     onPress={() => {
-                                        elem.onClick();
-                                        homeStore.setControlCenter(false);
-                                        logInStore.cancel();
-                                        signUpStore.cancel();
-                                        authStore.setIsSheetOpen(false);
+                                        if (!elem.isComingSoon) {
+                                            elem.onClick();
+                                            homeStore.setControlCenter(false);
+                                            logInStore.cancel();
+                                            signUpStore.cancel();
+                                            authStore.setIsSheetOpen(false);
+                                        }
                                     }}
                                 >
-                                    {elem.icon}
-                                    <CustomText
-                                        font="Bold"
-                                        fontSize={18}
-                                        style={{ marginLeft: 18 }}
+                                    <View
+                                        style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            opacity: elem.isComingSoon
+                                                ? 0.5
+                                                : 1,
+                                        }}
                                     >
-                                        {elem.text}
-                                    </CustomText>
+                                        {elem.icon}
+                                        <CustomText
+                                            font="Bold"
+                                            fontSize={18}
+                                            style={{ marginLeft: 18 }}
+                                        >
+                                            {elem.text}
+                                        </CustomText>
+                                    </View>
+                                    <View
+                                        style={{
+                                            backgroundColor: "#ffffff0d",
+                                            padding: 5,
+                                            borderRadius: 6,
+                                            opacity: elem.isComingSoon ? 1 : 0,
+                                        }}
+                                    >
+                                        <CustomText fontSize={14}>
+                                            SOON
+                                        </CustomText>
+                                    </View>
                                 </TouchableOpacity>
                             );
                         }
