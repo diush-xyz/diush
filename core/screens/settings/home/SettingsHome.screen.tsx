@@ -186,7 +186,12 @@ const SettingsHome = () => {
                         <CustomText accent>log out</CustomText>
                     </TouchableOpacity>
                 </View>
-                <View style={{ marginBottom: 100 }} />
+                <View style={{ marginBottom: 80 }} />
+                <CustomText textAlign="center" secondary>
+                    Copyright © {new Date().getFullYear()} Filippo Fonseca |
+                    version 0.0.1
+                </CustomText>
+                <View style={{ marginBottom: 40 }} />
             </ScrollView>
         </View>
     );
