@@ -3,8 +3,10 @@ import React from "react";
 import { truncate } from "../../../utils/truncate.util";
 import CustomText from "../../lib/CustomText";
 import { LinearGradient } from "expo-linear-gradient";
-import { CatalogStatus, IProduct } from "../../../@types/GlobalTypes";
+import { CatalogStatus, IOffer, IProduct } from "../../../@types/GlobalTypes";
 import { useCatalogStore } from "../../../state/auth/Catalog.store";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { db, auth } from "../../../../config/firebase";
 
 export interface IProductCard {
     productData: IProduct;
@@ -16,6 +18,66 @@ export interface IProductCard {
 
 const ProductCard = (props: IProductCard) => {
     const catalogStore = useCatalogStore();
+
+    const [conversations, setConversations] = React.useState([]);
+    const [offers, setOffers] = React.useState([]);
+    const [highestOffer, setHighestOffer] = React.useState<IOffer>();
+
+    const [convoLoading, setConvoLoading] = React.useState<boolean>(true);
+    const [offerLoading, setOfferLoading] = React.useState<boolean>(true);
+
+    React.useEffect(() => {
+        const q = query(
+            collection(db, "conversations"),
+            where("linkedProductID", "==", props.productData.id)
+        );
+        onSnapshot(q, querySnapshot => {
+            const fetched = [];
+
+            querySnapshot.forEach(documentSnapshot => {
+                fetched.push({
+                    ...documentSnapshot.data(),
+                    key: documentSnapshot.id,
+                });
+            });
+
+            setConversations(fetched);
+            setConvoLoading(false);
+        });
+    }, []);
+
+    React.useEffect(() => {
+        if (conversations.length > 0 && !convoLoading) {
+            const q = query(
+                collection(db, "offers"),
+                where("linkedConversationID", "==", conversations[0]?.id)
+            );
+            onSnapshot(q, querySnapshot => {
+                const fetched = [];
+
+                querySnapshot.forEach(documentSnapshot => {
+                    fetched.push({
+                        ...documentSnapshot.data(),
+                        key: documentSnapshot.id,
+                    });
+                });
+
+                setOffers(fetched);
+                setOfferLoading(false);
+            });
+        }
+    }, [convoLoading]);
+
+    React.useEffect(() => {
+        if (offers.length > 0 && !offerLoading) {
+            const highest = offers.reduce((prev, current) =>
+                prev.amount > current.amount ? prev : current
+            );
+            console.warn(highest);
+            setHighestOffer(highest);
+        }
+    }, [offerLoading]);
+
     return (
         <TouchableOpacity
             onPress={() => {
@@ -73,19 +135,21 @@ const ProductCard = (props: IProductCard) => {
                         </CustomText>
                     </View>
                     <View>
-                        <CustomText primary fontSize={10} font="Heavy">
-                            highest offer
-                        </CustomText>
-                        <CustomText
-                            accent
-                            font="Black"
-                            fontSize={18}
-                            textAlign="right"
-                        >
-                            {/* ${props.productData.highestOffer} */}
-                            {/*TODO: Calculate highest offer from the backend */}
-                            100
-                        </CustomText>
+                        {offers.length > 0 && !offerLoading && (
+                            <>
+                                <CustomText primary fontSize={10} font="Heavy">
+                                    highest offer
+                                </CustomText>
+                                <CustomText
+                                    accent
+                                    font="Black"
+                                    fontSize={18}
+                                    textAlign="right"
+                                >
+                                    ${highestOffer?.amount}
+                                </CustomText>
+                            </>
+                        )}
                     </View>
                 </View>
                 <View

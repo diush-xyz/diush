@@ -19,7 +19,7 @@ export interface IProduct {
     categories?: ICategory[];
     condition: number;
     additionalInfo?: string;
-    //TODO: Add more
+    //TODO: Add any more props if they are necessary/needed
 }
 
 export interface IConversation {
