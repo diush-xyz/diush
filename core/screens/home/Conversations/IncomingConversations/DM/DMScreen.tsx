@@ -119,11 +119,17 @@ const DMScreen = () => {
                         paddingVertical: 20,
                     }}
                 >
+                    {/* <CustomText>
+                        {conversationStore.activeConversation.sellerUID ==
+                        user.id
+                            ? "a deal has been reached! we will let you know when the buyer issues a payment and their preferred shipping method. you can always accept new offers during this time, which will cancel this one."
+                            : "a deal has been reached! follow the next steps to complete the transaction."}
+                    </CustomText> */}
                     <CustomText>
-                        a deal has been reached! we will let you know when the
-                        buyer issues a payment and their preferred shipping
-                        method. you can always accept new offers during this
-                        time, which will cancel this one.
+                        a deal has been reached! hang tight; this is as far as
+                        the sale functionality goes for the testflight. Payments
+                        and transactions to finalize deals are coming very soon!
+                        stay tuned.
                     </CustomText>
                 </View>
             )}
