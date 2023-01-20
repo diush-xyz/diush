@@ -85,7 +85,7 @@ const ProductCard = (props: IProductCard) => {
                 catalogStore.setActiveProduct(props.productData);
 
                 sellerViewProductStore.setHighestOfferAmount(
-                    highestOffer.amount
+                    highestOffer?.amount ?? null
                 );
             }}
         >

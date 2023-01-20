@@ -5,7 +5,7 @@ import DataElement from "./DataElement";
 
 interface ISnapshotBox {
     askingPrice: number;
-    highestOffer: number;
+    highestOffer?: number;
     posted: string; //must be parsed when passed in
 }
 
@@ -25,7 +25,12 @@ const SnapshotBox = (props: ISnapshotBox) => {
             }}
         >
             <DataElement title="asking price" value={`$${props.askingPrice}`} />
-            <DataElement title="highest" value={`$${props.highestOffer}`} />
+            <DataElement
+                title="highest"
+                value={`${
+                    props.highestOffer ? "$" + props.highestOffer : "N/A"
+                }`}
+            />
             <DataElement title="posted" value={props.posted} />
         </View>
     );

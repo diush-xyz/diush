@@ -46,10 +46,20 @@ import CustomDeleteConfirmation from "./CustomDeleteConfirmation";
 import styled from "styled-components/native";
 import { MAX_WIDTH } from "../../../utils/constants";
 import CopiedIndicator from "../../lib/MsgIndicator";
+import dayjs from "dayjs";
 
 const ViewProduct = () => {
     const catalogStore = useCatalogStore();
     const sellerViewProductStore = useSellerViewProductStore();
+
+    const [timeAgo, setTimeAgo] = React.useState<string>("");
+
+    React.useEffect(() => {
+        //@ts-ignore
+        const parsed = dayjs.unix(catalogStore.activeProduct.createdAt.seconds);
+        //@ts-ignore
+        setTimeAgo(dayjs(parsed).fromNow(true));
+    });
 
     return (
         <BottomSheetView style={GLOBAL_STYLES.viewProductSheetViewStyle}>
@@ -87,9 +97,10 @@ const ViewProduct = () => {
                         <SnapshotBox
                             askingPrice={catalogStore.activeProduct.askingPrice}
                             highestOffer={
-                                sellerViewProductStore.highestOfferAmount
+                                sellerViewProductStore.highestOfferAmount ??
+                                null
                             } //TODO: Backend integration
-                            posted="14h" //TODO: Backend integration
+                            posted={timeAgo} //TODO: Backend integration
                         />
                         <WrittenInfoSection />
                         <View style={{ marginBottom: 60 }} />
