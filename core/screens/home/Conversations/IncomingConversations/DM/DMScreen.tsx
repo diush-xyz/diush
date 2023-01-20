@@ -171,6 +171,7 @@ const DMScreen = () => {
 
                         return (
                             <View
+                                key={idx}
                                 //@ts-ignore
                                 style={{
                                     display: "flex",
@@ -271,6 +272,7 @@ const DMScreen = () => {
                         );
                     }
                 )}
+                <View style={{ marginTop: 100 }} />
             </ScrollView>
         </View>
     );
