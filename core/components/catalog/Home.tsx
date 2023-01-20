@@ -26,6 +26,7 @@ import { observer } from "mobx-react";
 import EmptyCatalogIcon from "../../icons/catalog/Empty";
 import EmptyCatalogView from "./EmptyCatalogView";
 import ImageOverlay from "./viewProduct/ImageOverlay";
+import { MAX_WIDTH } from "../../utils/constants";
 
 const CatalogHome = () => {
     const catalogStore = useCatalogStore();
@@ -146,6 +147,7 @@ const CatalogHome = () => {
                 style={{
                     flex: 1,
                     marginTop: 22,
+                    width: myProducts.length == 1 ? MAX_WIDTH : null, //this is important due to the fact we need the ProductCard to align to the left of the screen if there is only one product in this section, diush :)
                 }}
             >
                 {myProducts.length == 0 ? (
