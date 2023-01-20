@@ -90,7 +90,7 @@ const ProductImage = () => {
             }
 
             //@ts-ignore
-            const img = await fetch(result.uri);
+            const img = await fetch(result.assets[0].uri);
             const bytes = await img.blob();
 
             await uploadBytes(storageRef, bytes).then(() => {

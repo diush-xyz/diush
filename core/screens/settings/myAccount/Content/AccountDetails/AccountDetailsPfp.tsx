@@ -32,6 +32,7 @@ import {
 } from "firebase/storage";
 import * as ImagePicker from "expo-image-picker";
 import ProfileImage from "../../../../../components/lib/ProfileImage";
+import sharp from "sharp";
 
 const AccountDetailsPfp = () => {
     const settingsStore = useSettingsStore();
@@ -58,10 +59,7 @@ const AccountDetailsPfp = () => {
 
         if (!result.canceled) {
             const storage = getStorage();
-            const storageRef = ref(
-                storage,
-                `userProfileImages/${user.id}/pfp.png`
-            );
+            const storageRef = ref(storage, `userProfileImages/${user.id}/pfp`);
 
             //delete the file in the db before uploading a new one
             if (
@@ -79,8 +77,7 @@ const AccountDetailsPfp = () => {
                     });
             }
 
-            //@ts-ignore
-            const img = await fetch(result.uri);
+            const img = await fetch(result.assets[0].uri);
             const bytes = await img.blob();
 
             await uploadBytes(storageRef, bytes).then(() => {
