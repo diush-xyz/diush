@@ -21,10 +21,13 @@ import HorizontalLine from "../../../../../../components/lib/HorizontalLine";
 import InfoIcon from "../../../../../../icons/common/info";
 import PriceInput from "../../../../../../components/lib/PriceInput";
 import LargeButton from "../../../../../../components/lib/LargeButton";
+import { useUtilStore } from "../../../../../../state/Util.store";
+import { hapticFeedback } from "../../../../../../utils/haptics.util";
 
 const CounterOfferPopupContent = () => {
     const offerStore = useOfferStore();
     const conversationStore = useConversationStore();
+    const utilStore = useUtilStore();
     const { user } = useAuthStore();
     const [price, setPrice] = React.useState<string>(
         offerStore.offerBeingReviewed?.amount?.toString()
@@ -51,8 +54,14 @@ const CounterOfferPopupContent = () => {
             status: OfferStatus.PENDING,
         });
 
+        //actions:
         offerStore.setIsOfferBeingCountered(false);
         offerStore.setOfferBeingReviewed(null);
+        hapticFeedback();
+        utilStore.setMsgIndicator("Counter sent!");
+        setTimeout(() => {
+            utilStore.setMsgIndicator();
+        }, 2500);
     };
 
     React.useEffect(() => {
