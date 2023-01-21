@@ -21,18 +21,17 @@ export interface IProductCard {
 const ProductCard = (props: IProductCard) => {
     const catalogStore = useCatalogStore();
     const sellerViewProductStore = useSellerViewProductStore();
-
-    const [conversations, setConversations] = React.useState([]);
     const [offers, setOffers] = React.useState([]);
-    const [highestOffer, setHighestOffer] = React.useState<IOffer>();
 
-    const [convoLoading, setConvoLoading] = React.useState<boolean>(true);
+    const [allProductOffers, setAllProductOffers] = React.useState([]);
     const [offerLoading, setOfferLoading] = React.useState<boolean>(true);
+    const [highestOffer, setHighestOffer] = React.useState<IOffer>(null);
 
+    //get the highest offer for the product (all conversations)
     React.useEffect(() => {
         const q = query(
-            collection(db, "conversations"),
-            where("linkedProductID", "==", props.productData.id)
+            collection(db, "offers"),
+            where("linkedProductID", "==", catalogStore.activeProduct.id)
         );
         onSnapshot(q, querySnapshot => {
             const fetched = [];
@@ -44,36 +43,14 @@ const ProductCard = (props: IProductCard) => {
                 });
             });
 
-            setConversations(fetched);
-            setConvoLoading(false);
+            setAllProductOffers(fetched);
+            setOfferLoading(false);
         });
     }, []);
 
     React.useEffect(() => {
-        if (conversations.length > 0 && !convoLoading) {
-            const q = query(
-                collection(db, "offers"),
-                where("linkedConversationID", "==", conversations[0]?.id)
-            );
-            onSnapshot(q, querySnapshot => {
-                const fetched = [];
-
-                querySnapshot.forEach(documentSnapshot => {
-                    fetched.push({
-                        ...documentSnapshot.data(),
-                        key: documentSnapshot.id,
-                    });
-                });
-
-                setOffers(fetched);
-                setOfferLoading(false);
-            });
-        }
-    }, [convoLoading]);
-
-    React.useEffect(() => {
-        if (offers.length > 0 && !offerLoading) {
-            const highest = getHighestOffer(offers);
+        if (allProductOffers.length > 0 && !offerLoading) {
+            const highest = getHighestOffer(allProductOffers);
             setHighestOffer(highest);
         }
     }, [offerLoading]);
@@ -139,7 +116,7 @@ const ProductCard = (props: IProductCard) => {
                         </CustomText>
                     </View>
                     <View>
-                        {offers.length > 0 && !offerLoading && (
+                        {allProductOffers.length > 0 && !offerLoading && (
                             <>
                                 <CustomText primary fontSize={10} font="Heavy">
                                     highest offer

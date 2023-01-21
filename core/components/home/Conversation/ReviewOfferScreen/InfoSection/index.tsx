@@ -17,15 +17,14 @@ const InfoSection = () => {
     const [loading, setLoading] = React.useState<boolean>(true);
     const [highestOffer, setHighestOffer] = React.useState<IOffer>(null);
 
-    //get the highest offer from the conversation
-
+    //get the highest offer for the product (all conversations)
     React.useEffect(() => {
         const q = query(
             collection(db, "offers"),
             where(
-                "linkedConversationID",
+                "linkedProductID",
                 "==",
-                conversationStore.activeConversation.id
+                conversationStore.activeConversationProduct.id
             )
         );
         onSnapshot(q, querySnapshot => {
@@ -44,7 +43,7 @@ const InfoSection = () => {
     }, []);
 
     React.useEffect(() => {
-        if (!loading) {
+        if (allProductOffers.length > 0 && !loading) {
             const highest = getHighestOffer(allProductOffers);
             setHighestOffer(highest);
         }
@@ -68,6 +67,10 @@ const InfoSection = () => {
             value: `$${offerStore.offerBeingReviewed.amount}`,
         },
     ];
+
+    if (loading) {
+        return <CustomText accent>loading...</CustomText>;
+    }
 
     return (
         <View style={{ display: "flex", marginTop: 30 }}>

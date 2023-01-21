@@ -60,7 +60,7 @@ const CatalogScreen = () => {
                     enablePanDownToClose={true}
                     onClose={() => {
                         catalogStore.setStatus(CatalogStatus.ACTIVE_DASH);
-                        //clear the state here (in case it's null in the next one, meaning there have been no offers yet)
+                        // //clear the state here (in case it's null in the next one, meaning there have been no offers yet)
                         sellerViewProductStore.setHighestOfferAmount(null);
                     }}
                     style={{ borderRadius: 35, overflow: "hidden" }}
