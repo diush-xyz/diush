@@ -44,6 +44,10 @@ const ReviewOfferHome = () => {
     const [undoConfirmationModal, setUndoConfirmationModal] =
         React.useState<boolean>(false);
     const [count, setCount] = React.useState<number>(0);
+    const [isOfferMine, setIsOfferMine] = React.useState<boolean>(null);
+    const [isProductMine, setIsProductMine] = React.useState<boolean>(null);
+    const [buyOrSellText, setBuyOrSellText] = React.useState<string>("");
+    const [loading, setLoading] = React.useState<boolean>(false);
 
     const ChevronUpWrapper = styled(View)`
         box-shadow: 0px 0px 5px ${theme.primaryText};
@@ -159,6 +163,31 @@ const ReviewOfferHome = () => {
         }
     }, [swipeStarted]);
 
+    React.useEffect(() => {
+        if (offerStore.offerBeingReviewed.placedByUID == user.id) {
+            setIsOfferMine(true);
+        } else {
+            setIsOfferMine(false);
+        }
+
+        if (conversationStore.activeConversation.sellerUID == user.id) {
+            setIsProductMine(true);
+        } else {
+            setIsProductMine(false);
+        }
+    }, []);
+
+    React.useEffect(() => {
+        if (isProductMine !== null && isOfferMine !== null) {
+            setBuyOrSellText(isProductMine ? "sell" : "buy");
+            setLoading(false);
+        }
+    }, [isProductMine, isOfferMine]);
+
+    if (loading) {
+        return <CustomText accent>loading...</CustomText>;
+    }
+
     return (
         <>
             <View
@@ -258,24 +287,39 @@ const ReviewOfferHome = () => {
                     <InfoSection />
                     <View style={{ marginTop: 45 }}>
                         <CustomText font="Heavy" fontSize={18}>
-                            offer summary
+                            offer summary & agreement
                         </CustomText>
-                        <CustomText secondary style={{ marginTop: 6 }}>
+                        <CustomText
+                            secondary
+                            style={{
+                                marginTop: 6,
+                                textDecorationLine:
+                                    offerStore.offerBeingReviewed.status ==
+                                    OfferStatus.DECLINED
+                                        ? "line-through"
+                                        : "none",
+                            }}
+                        >
                             {offerStore.offerBeingReviewed.status ==
                             OfferStatus.ACCEPTED
-                                ? "when you accepted this offer, you agreed to sell"
-                                : "by accepting this offer, you agree to sell"}{" "}
+                                ? `when you accepted this offer, you agreed to ${buyOrSellText}`
+                                : isOfferMine
+                                ? `by sending this offer, you agree to ${buyOrSellText}`
+                                : `by accepting this offer, you agree to ${buyOrSellText}`}{" "}
                             <CustomText secondary font="Black">
                                 one
                             </CustomText>{" "}
-                            item’s worth of your product,{" "}
+                            item’s worth of {isProductMine ? "your" : "the"}{" "}
+                            product,{" "}
                             <CustomText secondary font="Black">
+                                '
                                 {
                                     conversationStore.activeConversationProduct
                                         ?.title
                                 }
+                                '
                             </CustomText>{" "}
-                            to{" "}
+                            {isProductMine ? "to" : "from"}{" "}
                             <CustomText secondary font="Black">
                                 {
                                     conversationStore.activeConvoOtherUser
@@ -288,6 +332,16 @@ const ReviewOfferHome = () => {
                             </CustomText>
                             .
                         </CustomText>
+                        {offerStore.offerBeingReviewed.status ==
+                            OfferStatus.DECLINED && (
+                            <CustomText secondary style={{ marginTop: 6 }}>
+                                Given the fact this offer has been declined, its
+                                terms{" "}
+                                <CustomText secondary font="Black">
+                                    no longer stand.
+                                </CustomText>
+                            </CustomText>
+                        )}
                     </View>
                 </View>
             </View>
