@@ -120,6 +120,11 @@ const ReviewOfferHome = () => {
 
     const onUndoOffer = async () => {
         const offerRef = doc(db, "offers", offerStore.offerBeingReviewed.id);
+        const productRef = doc(
+            db,
+            "products",
+            conversationStore.activeConversation.linkedProductID
+        );
         const conversationRef = doc(
             db,
             "conversations",
@@ -139,6 +144,10 @@ const ReviewOfferHome = () => {
                 ...conversationStore.activeConversation,
                 dealReached: false,
             });
+        });
+
+        await updateDoc(productRef, {
+            dealReached: false,
         });
     };
 
