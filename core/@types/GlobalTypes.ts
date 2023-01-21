@@ -19,6 +19,7 @@ export interface IProduct {
     categories?: ICategory[];
     condition: number;
     additionalInfo?: string;
+    dealReached?: boolean;
     //TODO: Add any more props if they are necessary/needed
 }
 
