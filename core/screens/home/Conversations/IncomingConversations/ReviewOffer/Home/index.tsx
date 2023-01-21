@@ -118,7 +118,7 @@ const ReviewOfferHome = () => {
         });
     };
 
-    const onUndoOffer = async () => {
+    const onUndoDeal = async () => {
         const offerRef = doc(db, "offers", offerStore.offerBeingReviewed.id);
         const productRef = doc(
             db,
@@ -369,7 +369,7 @@ const ReviewOfferHome = () => {
                 desc={`be careful! are you sure you want to\n reverse your previous acceptance of\n this offer by ${conversationStore.activeConvoOtherUser.displayName}?`}
                 buttonText="yes, i'm sure"
                 buttonOnClick={() => {
-                    onUndoOffer();
+                    onUndoDeal();
                 }}
                 footerText="my bad, cancel"
                 onFooterClick={() => {

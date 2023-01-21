@@ -52,6 +52,7 @@ const CounterOfferPopupContent = () => {
         });
 
         offerStore.setIsOfferBeingCountered(false);
+        offerStore.setOfferBeingReviewed(null);
     };
 
     React.useEffect(() => {

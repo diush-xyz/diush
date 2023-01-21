@@ -87,7 +87,7 @@ const AccountDetailsPfp = () => {
                         handleSave(url);
                     })
                     .catch(err => {
-                        console.warn(err);
+                        // console.warn(err);
                     });
             }); //upload images
         }
