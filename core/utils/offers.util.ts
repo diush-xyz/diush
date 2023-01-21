@@ -13,5 +13,6 @@ export const createOfferInDb = async (offer: IOffer) => {
         timestamp: offer.timestamp,
         status: offer.status,
         isCounterOffer: offer.isCounterOffer,
+        linkedProductID: offer.linkedProductID,
     });
 };

@@ -40,6 +40,7 @@ export interface IOffer {
     isCounterOffer?: boolean;
     isReadByRecipient: boolean;
     status: OfferStatus;
+    linkedProductID: string;
 }
 
 export interface ICategory {

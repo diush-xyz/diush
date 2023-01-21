@@ -220,23 +220,25 @@ const HomeBaseScreen = () => {
                         outboundConversations.length === 0 && <EmptyHomeView />}
                 </View>
             </GestureRecognizer>
-            {/* <View style={{ marginTop: 40, width: "100%" }}>
+            <View style={{ marginTop: 40, width: "100%" }}>
                 <LargeButton
                     title="create offer"
                     onPress={() => {
                         createOfferInDb({
                             id: uuidv4(),
-                            amount: 2100,
+                            amount: 5200,
                             isReadByRecipient: false,
-                            linkedConversationID: "pNNjrhUQA4XIIZW5cwyD",
-                            placedByUID: "1ekZfMGJtVedOgxW3XjD4vHIdt12",
+                            linkedConversationID: "UIF8t8jTXkEqKPosgzME",
+                            placedByUID: "4TWjjjjOTxw0TMvOxF9N",
                             timestamp: new Date(),
                             status: OfferStatus.PENDING,
                             isCounterOffer: false,
+                            linkedProductID:
+                                "6d656328-655c-42e0-a009-5e92f1aeb23b",
                         });
                     }}
                 />
-            </View> */}
+            </View>
         </View>
     );
 };

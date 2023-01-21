@@ -2,10 +2,17 @@ import React from "react";
 import CustomText from "../../../../../../components/lib/CustomText";
 import { View } from "react-native";
 import { observer } from "mobx-react";
-import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../../../../../../../config/firebase";
+import {
+    collection,
+    doc,
+    onSnapshot,
+    query,
+    updateDoc,
+    where,
+} from "firebase/firestore";
+import { auth, db } from "../../../../../../../config/firebase";
 import { useOfferStore } from "../../../../../../state/auth/Offer.store";
-import { OfferStatus } from "../../../../../../@types/GlobalTypes";
+import { IOffer, OfferStatus } from "../../../../../../@types/GlobalTypes";
 import { createOfferInDb } from "../../../../../../utils/offers.util";
 import { v4 as uuidv4 } from "uuid";
 import { useAuthStore } from "../../../../../../state/auth/Auth.store";
@@ -23,6 +30,7 @@ import PriceInput from "../../../../../../components/lib/PriceInput";
 import LargeButton from "../../../../../../components/lib/LargeButton";
 import { useUtilStore } from "../../../../../../state/Util.store";
 import { hapticFeedback } from "../../../../../../utils/haptics.util";
+import { getHighestOffer } from "../../../../../../utils/getHighestOffer.util";
 
 const CounterOfferPopupContent = () => {
     const offerStore = useOfferStore();
@@ -32,6 +40,9 @@ const CounterOfferPopupContent = () => {
     const [price, setPrice] = React.useState<string>(
         offerStore.offerBeingReviewed?.amount?.toString()
     );
+    const [allProductOffers, setAllProductOffers] = React.useState([]);
+    const [loading, setLoading] = React.useState<boolean>(true);
+    const [highestOffer, setHighestOffer] = React.useState<IOffer>(null);
 
     const counterOffer = async () => {
         const offerRef = doc(db, "offers", offerStore.offerBeingReviewed.id);
@@ -52,6 +63,7 @@ const CounterOfferPopupContent = () => {
                 conversationStore.activeConversation.sellerUID !== user.id
             ),
             status: OfferStatus.PENDING,
+            linkedProductID: conversationStore.activeConversationProduct.id,
         });
 
         //actions:
@@ -65,8 +77,39 @@ const CounterOfferPopupContent = () => {
     };
 
     React.useEffect(() => {
-        console.log("price", price);
-    }, [price]);
+        const q = query(
+            collection(db, "offers"),
+            where(
+                "linkedProductID",
+                "==",
+                conversationStore.activeConversationProduct.id
+            )
+        );
+        onSnapshot(q, querySnapshot => {
+            const fetched = [];
+
+            querySnapshot.forEach(documentSnapshot => {
+                fetched.push({
+                    ...documentSnapshot.data(),
+                    key: documentSnapshot.id,
+                });
+            });
+
+            setAllProductOffers(fetched);
+            setLoading(false);
+        });
+    }, []);
+
+    React.useEffect(() => {
+        if (allProductOffers.length > 0 && !loading) {
+            const highest = getHighestOffer(allProductOffers);
+            setHighestOffer(highest);
+        }
+    }, [loading]);
+
+    if (loading) {
+        return <CustomText accent>loading...</CustomText>;
+    }
 
     return (
         <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
@@ -135,9 +178,9 @@ const CounterOfferPopupContent = () => {
                             </CustomText>
                         </CustomText>
                         <CustomText secondary style={{ marginTop: 8 }}>
-                            highest overall offer:
+                            highest overall offer:{" "}
                             <CustomText secondary font="Heavy">
-                                $90
+                                ${highestOffer?.amount}
                             </CustomText>
                         </CustomText>
                     </View>
