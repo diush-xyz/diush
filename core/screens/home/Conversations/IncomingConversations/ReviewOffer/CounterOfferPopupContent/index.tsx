@@ -174,11 +174,15 @@ const CounterOfferPopupContent = () => {
                         <CustomText secondary>
                             asking price:{" "}
                             <CustomText secondary font="Heavy">
-                                $90
+                                $
+                                {
+                                    conversationStore.activeConversationProduct
+                                        .askingPrice
+                                }
                             </CustomText>
                         </CustomText>
                         <CustomText secondary style={{ marginTop: 8 }}>
-                            highest overall offer:{" "}
+                            highest overall offer (all conversations):{" "}
                             <CustomText secondary font="Heavy">
                                 ${highestOffer?.amount}
                             </CustomText>
