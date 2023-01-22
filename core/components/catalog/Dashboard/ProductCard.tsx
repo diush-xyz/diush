@@ -31,7 +31,7 @@ const ProductCard = (props: IProductCard) => {
     React.useEffect(() => {
         const q = query(
             collection(db, "offers"),
-            where("linkedProductID", "==", catalogStore.activeProduct.id)
+            where("linkedProductID", "==", props.productData.id)
         );
         onSnapshot(q, querySnapshot => {
             const fetched = [];
