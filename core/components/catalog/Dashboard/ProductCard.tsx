@@ -55,6 +55,10 @@ const ProductCard = (props: IProductCard) => {
         }
     }, [offerLoading]);
 
+    if (offerLoading) {
+        return <CustomText accent>loading...</CustomText>;
+    }
+
     return (
         <TouchableOpacity
             onPress={() => {

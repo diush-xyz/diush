@@ -55,7 +55,7 @@ const InfoSection = () => {
             value: `$${conversationStore.activeConversationProduct?.askingPrice}`,
         },
         {
-            text: "highest overall offer",
+            text: "highest overall offer (all conversations)",
             value: `$${highestOffer?.amount}`,
         },
         {
