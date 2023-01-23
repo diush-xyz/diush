@@ -75,28 +75,38 @@ const SettingsHome = () => {
         {
             text: "follow us on twitter 🐦",
             onClick: () => Linking.openURL("https://twitter.com/diushxyz"),
-            isRightSideEmpty: true,
+            // isRightSideEmpty: true,
+        },
+        // {
+        //     text: "rate us ⭐",
+        //     onClick: () => null,
+        //     // isRightSideEmpty: true,
+        // },
+        {
+            text: "terms & privacy policy 🔐",
+            onClick: () => Linking.openURL("https://diush-legal.super.site/"),
+            // isRightSideEmpty: true,
         },
         {
-            text: "rate us ⭐",
-            onClick: () => null,
-            isRightSideEmpty: true,
+            text: "contribute 🎧",
+            onClick: () => Linking.openURL("https://github.com/diush-xyz"),
+            // isRightSideEmpty: true,
         },
-        {
-            text: "about 🎧",
-            onClick: () => null,
-            isRightSideEmpty: true,
-        },
+        // {
+        //     text: "about 🎧",
+        //     onClick: () => null,
+        //     // isRightSideEmpty: true,
+        // },
         {
             text: "give feedback ❤️",
             onClick: () =>
                 Linking.openURL("mailto:filifonsecacagnazzo@gmail.com"),
-            isRightSideEmpty: true,
+            // isRightSideEmpty: true,
         },
         {
             text: "help center 🌳",
             onClick: () => null,
-            isRightSideEmpty: true,
+            // isRightSideEmpty: true,
             isComingSoon: true,
         },
     ];
