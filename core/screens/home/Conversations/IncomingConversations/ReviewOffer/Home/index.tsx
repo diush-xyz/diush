@@ -279,7 +279,11 @@ const ReviewOfferHome = () => {
                             <CustomText font="Bold" style={{ opacity: 0.5 }}>
                                 listed by
                             </CustomText>{" "}
-                            me
+                            {conversationStore.activeConversation.sellerUID ==
+                            user.id
+                                ? "me"
+                                : conversationStore.activeConvoOtherUser
+                                      .displayName}
                         </CustomText>
                         {/*TODO: Come back to this*/}
                         <ChevronRight style={{ marginLeft: 7 }} />
