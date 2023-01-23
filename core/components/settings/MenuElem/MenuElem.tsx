@@ -45,6 +45,18 @@ const MenuElem = (props: IMenuElem) => {
                             justifyContent: "center",
                         }}
                     >
+                        {props.isComingSoon && (
+                            <View
+                                style={{
+                                    backgroundColor: "#ffffff0d",
+                                    padding: 5,
+                                    borderRadius: 6,
+                                    marginRight: 8,
+                                }}
+                            >
+                                <CustomText fontSize={14}>SOON</CustomText>
+                            </View>
+                        )}
                         {props.rightText && (
                             <CustomText
                                 secondary={!props.cta}
