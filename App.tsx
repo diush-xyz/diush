@@ -125,8 +125,8 @@ const App = () => {
                     onWillShow={() => utilStore.setIsKeyboardOpen(true)}
                     onWillHide={() => utilStore.setIsKeyboardOpen(false)}
                 />
-                <DefaultScreen />
-                {/* <BuyProductScreen /> */}
+                {/* <DefaultScreen /> */}
+                <BuyProductScreen />
                 <ControlCenter />
                 {/* </TouchableOpacity> */}
                 {/* <Test /> */}

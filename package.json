@@ -11,6 +11,8 @@
     },
     "dependencies": {
         "@gorhom/bottom-sheet": "^4",
+        "@react-native-firebase/app": "^16.5.2",
+        "@react-native-firebase/dynamic-links": "^16.5.2",
         "@react-navigation/bottom-tabs": "6.3.1",
         "@react-navigation/native": "6.0.10",
         "@react-navigation/native-stack": "6.6.1",
