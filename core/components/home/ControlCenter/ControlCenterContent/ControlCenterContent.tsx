@@ -161,6 +161,7 @@ const ControlCenterContent = () => {
                             auth.signOut();
                             //TODO: still must fix blank popup that comes up after the user signs out of their acc
                             //reset stuff
+                            authStore.setIsSheetOpen(false);
                             homeStore.setControlCenter(false);
                             logInStore.cancel();
                             signUpStore.cancel();
