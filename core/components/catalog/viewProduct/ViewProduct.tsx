@@ -58,7 +58,8 @@ const ViewProduct = () => {
         //@ts-ignore
         const parsed = dayjs.unix(catalogStore.activeProduct.createdAt.seconds);
         //@ts-ignore
-        setTimeAgo(dayjs(parsed).fromNow(true));
+        // setTimeAgo(dayjs(parsed).fromNow(true)); //TODO: Fix this
+        setTimeAgo("hiii");
     });
 
     return (

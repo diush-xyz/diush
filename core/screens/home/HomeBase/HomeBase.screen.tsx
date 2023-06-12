@@ -221,25 +221,25 @@ const HomeBaseScreen = () => {
                     outboundConversations.length === 0 && <EmptyHomeView />}
             </ScrollView>
             {/* </GestureRecognizer> */}
-            <View style={{ marginTop: 40, width: "100%" }}>
+            {/* <View style={{ marginTop: 40, width: "100%" }}>
                 <LargeButton
                     title="create offer"
                     onPress={() => {
                         createOfferInDb({
                             id: uuidv4(),
-                            amount: 5200,
+                            amount: 26,
                             isReadByRecipient: false,
-                            linkedConversationID: "vUmihS0bNTfeFx6ZCS7X",
-                            placedByUID: "4TWjjjjOTxw0TMvOxF9N",
+                            linkedConversationID: "gOe51DwdMtg6lbcYoVoi",
+                            placedByUID: "1ekZfMGJtVedOgxW3XjD4vHIdt12",
                             timestamp: new Date(),
                             status: OfferStatus.PENDING,
                             isCounterOffer: false,
                             linkedProductID:
-                                "517b0a58-70fb-47e8-bd90-56b882813a3e",
+                                "728671c7-35fe-47a3-8996-bc12e0f5076f",
                         });
                     }}
                 />
-            </View>
+            </View> */}
         </View>
     );
 };

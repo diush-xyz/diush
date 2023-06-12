@@ -308,7 +308,7 @@ const ReviewOfferHome = () => {
                             OfferStatus.ACCEPTED
                                 ? `when you accepted this offer, you agreed to ${buyOrSellText}`
                                 : isOfferMine
-                                ? `by sending this offer, you agree to ${buyOrSellText}`
+                                ? `if this offer you sent is accepted, you agree to ${buyOrSellText}`
                                 : `by accepting this offer, you agree to ${buyOrSellText}`}{" "}
                             <CustomText secondary font="Black">
                                 one
