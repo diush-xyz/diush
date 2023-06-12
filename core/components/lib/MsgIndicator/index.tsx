@@ -5,6 +5,7 @@ import { useTheme } from "../../../utils/useTheme.util";
 import { useUtilStore } from "../../../state/Util.store";
 import { observer } from "mobx-react";
 import styled from "styled-components/native";
+import { LoggedInScreen } from "../../../@types/GlobalTypes";
 
 const MsgIndicator = () => {
     const utilStore = useUtilStore();
@@ -53,7 +54,10 @@ const MsgIndicator = () => {
                     position: "absolute",
                     paddingHorizontal: 20,
                     paddingVertical: 15,
-                    top: 50,
+                    top:
+                        utilStore.currentLoggedInScreen == LoggedInScreen.BUY
+                            ? -350
+                            : 50, // this is shit code, but I srly wanna launch this now
                     zIndex: 1000,
                     backgroundColor: "#202226",
                     borderRadius: 15,

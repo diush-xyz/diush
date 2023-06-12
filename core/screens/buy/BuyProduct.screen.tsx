@@ -15,21 +15,23 @@ const BuyProductScreen = () => {
     const utilStore = useUtilStore();
 
     return (
-        <BottomSheet
-            handleIndicatorStyle={GLOBAL_STYLES.handleIndicatorStyle}
-            handleStyle={GLOBAL_STYLES.handleStyle}
-            ref={sheetRef}
-            snapPoints={PRODUCT_BOTTOM_SHEET_SNAP_POINTS}
-            enablePanDownToClose={true}
-            onClose={() => {
-                utilStore.setCurrentLoggedInScreen(LoggedInScreen.HOME);
-                // //clear the state here (in case it's null in the next one, meaning there have been no offers yet)
-                // sellerViewProductStore.setHighestOfferAmount(null);
-            }}
-            style={{ borderRadius: 35, overflow: "hidden" }}
-        >
-            <ScopeProduct />
-        </BottomSheet>
+        <>
+            <BottomSheet
+                handleIndicatorStyle={GLOBAL_STYLES.handleIndicatorStyle}
+                handleStyle={GLOBAL_STYLES.handleStyle}
+                ref={sheetRef}
+                snapPoints={PRODUCT_BOTTOM_SHEET_SNAP_POINTS}
+                enablePanDownToClose={true}
+                onClose={() => {
+                    utilStore.setCurrentLoggedInScreen(LoggedInScreen.HOME);
+                    // //clear the state here (in case it's null in the next one, meaning there have been no offers yet)
+                    // sellerViewProductStore.setHighestOfferAmount(null);
+                }}
+                style={{ borderRadius: 35, overflow: "hidden" }}
+            >
+                <ScopeProduct />
+            </BottomSheet>
+        </>
     );
 };
 
