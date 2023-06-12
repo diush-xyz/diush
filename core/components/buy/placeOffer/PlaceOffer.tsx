@@ -18,6 +18,9 @@ import CustomText from "../../lib/CustomText";
 import ProfileImage from "../../lib/ProfileImage";
 import { useAuthStore } from "../../../state/auth/Auth.store";
 import ProductViewScrollWrapper from "../scopeProduct/ProductViewScrollWrapper";
+import { FlowTemplateWrapper } from "../../lib/FlowTemplate/styles";
+import styled from "styled-components/native";
+import { observer } from "mobx-react";
 
 const PlaceOffer = () => {
     const scopeProductStore = useScopeProductStore();
@@ -28,84 +31,108 @@ const PlaceOffer = () => {
         scopeProductStore.fetchedActiveProduct.askingPrice.toString()
     );
 
+    const Wrapper = styled.View`
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    `;
+
     return (
         <>
             <BottomSheetView style={GLOBAL_STYLES.viewProductSheetViewStyle}>
-                <ProductViewScrollWrapper>
-                    <PopupHeader
-                        title="create listing"
-                        // backArrow
-                        // backArrowOnPress={() =>
-                        //     createProductStore.setCurrentStep(
-                        //         createProductStore.currentStep - 1
-                        //     )
-                        // }
-                        subtitle="my catalog"
-                    />
-                    <View style={{ width: "100%", marginTop: 80 }}>
-                        <View
-                            style={{
-                                display: "flex",
-                                width: MAX_WIDTH,
-                                marginTop: 16,
-                            }}
-                        >
+                <PopupHeader
+                    title="place offer"
+                    backArrow
+                    backArrowOnPress={() =>
+                        buyProductStore.setStatus(BuyFlowStatus.SCOPE)
+                    }
+                />
+                <View
+                    style={{
+                        display: "flex",
+                        width: "100%",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginTop: 50,
+                    }}
+                >
+                    <ProductViewScrollWrapper>
+                        <Wrapper>
                             <View
                                 style={{
                                     display: "flex",
-                                    flexDirection: "row",
-                                    justifyContent: "space-between",
-                                    width: "100%",
-                                }}
-                            >
-                                <View>
-                                    <CustomText font="Heavy" fontSize={22}>
-                                        {
-                                            scopeProductStore
-                                                .fetchedActiveProduct.title
-                                        }
-                                    </CustomText>
-                                </View>
-                                <View>
-                                    <RoundedMoreIcon />
-                                </View>
-                            </View>
-                            <View
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    marginTop: 10,
                                     alignItems: "center",
+                                    justifyContent: "center",
+                                    width: MAX_WIDTH,
                                 }}
                             >
-                                <ProfileImage
-                                    specificUser={buyProductStore.seller}
-                                    size={20}
-                                />
-                                <CustomText
-                                    fontSize={16}
-                                    style={{ marginLeft: 6 }}
-                                    font="Bold"
+                                <View
+                                    style={{
+                                        display: "flex",
+                                        width: "100%",
+                                        marginTop: 16,
+                                    }}
                                 >
-                                    <CustomText
-                                        font="Bold"
-                                        style={{ opacity: 0.5 }}
+                                    <View
+                                        style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            justifyContent: "space-between",
+                                        }}
                                     >
-                                        listed by
-                                    </CustomText>{" "}
-                                    {buyProductStore.seller.displayName}
-                                </CustomText>
-                                {/*TODO: Come back to this*/}
-                                <ChevronRight style={{ marginLeft: 7 }} />
+                                        <View>
+                                            <CustomText
+                                                font="Heavy"
+                                                fontSize={22}
+                                            >
+                                                {
+                                                    scopeProductStore
+                                                        .fetchedActiveProduct
+                                                        .title
+                                                }
+                                            </CustomText>
+                                        </View>
+                                        {/* <View>
+                                            <RoundedMoreIcon />
+                                        </View> */}
+                                    </View>
+                                    <View
+                                        style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            marginTop: 10,
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        <ProfileImage
+                                            specificUser={
+                                                buyProductStore.seller
+                                            }
+                                            size={20}
+                                        />
+                                        <CustomText
+                                            fontSize={16}
+                                            style={{ marginLeft: 6 }}
+                                            font="Bold"
+                                        >
+                                            <CustomText
+                                                font="Bold"
+                                                style={{ opacity: 0.5 }}
+                                            >
+                                                listed by
+                                            </CustomText>{" "}
+                                            {buyProductStore.seller.displayName}
+                                        </CustomText>
+                                        {/*TODO: Come back to this*/}
+                                        <ChevronRight
+                                            style={{ marginLeft: 7 }}
+                                        />
+                                    </View>
+                                    <InfoBar />
+                                </View>
                             </View>
-                            <InfoBar />
-                        </View>
-                        <FlowTemplate
-                            circleEmoji="💰"
-                            title="place an offer."
-                            desc={`tthis is the best.`}
-                            descAndChildMargin={15}
-                        >
                             <PriceInput price={price} setPrice={setPrice} />
                             <LargeButton
                                 title="looks good!"
@@ -134,12 +161,12 @@ const PlaceOffer = () => {
                                     );
                                 }}
                             />
-                        </FlowTemplate>
-                    </View>
-                </ProductViewScrollWrapper>
+                        </Wrapper>
+                    </ProductViewScrollWrapper>
+                </View>
             </BottomSheetView>
         </>
     );
 };
 
-export default PlaceOffer;
+export default observer(PlaceOffer);

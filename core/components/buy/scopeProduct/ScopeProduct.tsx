@@ -46,12 +46,15 @@ const ScopeProduct = () => {
     const [timeAgo, setTimeAgo] = React.useState<string>("");
 
     React.useEffect(() => {
-        //@ts-ignore
-        // const parsed = dayjs.unix(catalogStore.activeProduct.createdAt.seconds);
-        //@ts-ignore
-        // setTimeAgo(dayjs(parsed).fromNow(true)); //TODO: Fix this
-        setTimeAgo("hiii");
-    });
+        if (!loading) {
+            const parsed = dayjs.unix(
+                scopeProductStore.fetchedActiveProduct.createdAt.seconds
+            );
+            //@ts-ignore
+            const offerTimestamp = dayjs(parsed).fromNow(true);
+            setTimeAgo(offerTimestamp);
+        }
+    }, [loading]);
 
     if (loading) {
         return (
@@ -95,14 +98,14 @@ const ScopeProduct = () => {
                             <CustomDeleteConfirmation />
                         )} */}
                         <Header />
-                        {/* <SnapshotBox
-                            askingPrice={catalogStore.activeProduct.askingPrice}
-                            highestOffer={
-                                sellerViewProductStore.highestOfferAmount ??
-                                null
-                            } //TODO: Backend integration
+                        <SnapshotBox
+                            askingPrice={
+                                scopeProductStore.fetchedActiveProduct
+                                    .askingPrice
+                            }
+                            highestOffer={89} //TODO: Backend integration
                             posted={timeAgo} //TODO: Backend integration
-                        /> */}
+                        />
                         <WrittenInfoSection />
                         <View style={{ marginBottom: 60 }} />
                     </View>

@@ -55,11 +55,11 @@ const ViewProduct = () => {
     const [timeAgo, setTimeAgo] = React.useState<string>("");
 
     React.useEffect(() => {
+        // @ts-ignore
+        const parsed = dayjs.unix(catalogStore.activeProduct.createdAt.seconds);
         //@ts-ignore
-        // const parsed = dayjs.unix(catalogStore.activeProduct.createdAt.seconds);
-        //@ts-ignore
-        // setTimeAgo(dayjs(parsed).fromNow(true)); //TODO: Fix this
-        setTimeAgo("hiii");
+        const offerTimestamp = dayjs(parsed).fromNow(true);
+        setTimeAgo(offerTimestamp);
     });
 
     return (

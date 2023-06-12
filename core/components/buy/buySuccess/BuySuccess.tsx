@@ -8,6 +8,7 @@ import CustomText from "../../lib/CustomText";
 import LargeButton from "../../lib/LargeButton/LargeButton.ui";
 import { useUtilStore } from "../../../state/Util.store";
 import { BuyFlowStatus, LoggedInScreen } from "../../../@types/GlobalTypes";
+import { observer } from "mobx-react";
 
 const BuySuccess = () => {
     const scopeProductStore = useScopeProductStore();
@@ -41,4 +42,4 @@ const BuySuccess = () => {
     );
 };
 
-export default BuySuccess;
+export default observer(BuySuccess);

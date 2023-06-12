@@ -19,7 +19,7 @@ const SnapshotBox = (props: ISnapshotBox) => {
                 borderRadius: 12,
                 alignItems: "center",
                 justifyContent: "space-between",
-                paddingHorizontal: 60,
+                paddingHorizontal: 40,
                 paddingVertical: 14,
                 marginTop: 30,
             }}
