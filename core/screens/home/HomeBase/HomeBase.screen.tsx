@@ -39,6 +39,7 @@ import EmptyHomeView from "../../../components/home/EmptyHomeView";
 import GestureRecognizer from "react-native-swipe-detect";
 
 const HomeBaseScreen = () => {
+    const utilStore = useUtilStore();
     const authStore = useAuthStore();
     const conversationStore = useConversationStore();
     const homeStore = useHomeStore();
@@ -240,6 +241,14 @@ const HomeBaseScreen = () => {
                     }}
                 />
             </View> */}
+            <View style={{ marginTop: 40, marginBottom: 50, width: "100%" }}>
+                <LargeButton
+                    title="make a test offer"
+                    onPress={() => {
+                        utilStore.setCurrentLoggedInScreen(LoggedInScreen.BUY);
+                    }}
+                />
+            </View>
         </View>
     );
 };

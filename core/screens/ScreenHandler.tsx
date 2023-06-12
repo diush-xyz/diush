@@ -6,6 +6,7 @@ import { LoggedInScreen } from "../@types/GlobalTypes";
 import CatalogScreen from "./catalog/Catalog.screen";
 import HomeScreen from "./home/Home.screen";
 import SettingsScreen from "./settings/Settings.screen";
+import BuyProductScreen from "./buy/BuyProduct.screen";
 
 const ScreenHandler = () => {
     const utilStore = useUtilStore();
@@ -18,6 +19,8 @@ const ScreenHandler = () => {
                 return <CatalogScreen />;
             case LoggedInScreen.SETTINGS:
                 return <SettingsScreen />;
+            case LoggedInScreen.BUY:
+                return <BuyProductScreen />;
         }
     };
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import CustomText from "../components/lib/CustomText";
+import CustomText from "../../components/lib/CustomText";
 import { observer } from "mobx-react";
 
 const BuyProductScreen = () => {

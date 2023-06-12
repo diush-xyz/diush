@@ -27,7 +27,7 @@ import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
 import ControlCenter from "./core/components/home/ControlCenter";
 import DefaultScreen from "./core/screens/Default.screen";
-import BuyProductScreen from "./core/screens/BuyProduct.screen";
+import BuyProductScreen from "./core/screens/buy/BuyProduct.screen";
 import { useHomeStore } from "./core/state/auth/Home.store";
 
 const App = () => {

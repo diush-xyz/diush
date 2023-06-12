@@ -65,6 +65,7 @@ export enum LoggedInScreen {
     HOME,
     CATALOG,
     SETTINGS,
+    BUY,
 }
 
 export enum SettingsStatus {
