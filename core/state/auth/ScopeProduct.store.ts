@@ -10,7 +10,7 @@ export default class ScopeProductStore {
         makeAutoObservable(this);
     }
 
-    imageModal: boolean;
+    imageModal: boolean = false;
 
     setImageModal() {
         this.imageModal = !this.imageModal;
@@ -28,7 +28,7 @@ export default class ScopeProductStore {
         this.fetchedActiveProduct = newFetchedActiveProduct;
     }
 
-    productOptionsPopup: boolean;
+    productOptionsPopup: boolean = false;
 
     setProductOptionsPopup() {
         this.productOptionsPopup = !this.productOptionsPopup;

@@ -33,6 +33,22 @@ const Header = () => {
     const { user } = useAuthStore();
     const utilStore = useUtilStore();
     const scopeProductStore = useScopeProductStore();
+    const [seller, setSeller] = React.useState<IUser>(null);
+    const [loading, setLoading] = React.useState<boolean>(true);
+
+    const fetchSellerUser = () => {
+        fetchUserFromDb({
+            id: scopeProductStore.fetchedActiveProduct.linkedUID,
+            setUser: (fUser: IUser) => {
+                setSeller(fUser);
+                setLoading(false);
+            },
+        });
+    };
+
+    React.useEffect(() => {
+        fetchSellerUser();
+    }, []);
 
     const PRODUCT_OPTIONS_DATA: IOptionsSelectorElement[] = [
         {
@@ -64,111 +80,125 @@ const Header = () => {
 
     return (
         <>
-            <View
-                style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    marginBottom: 14,
-                }}
-            >
-                <TouchableOpacity
-                    style={{ display: "flex", flexDirection: "row" }}
-                    onPress={() => {
-                        scopeProductStore.setImageModal();
-                        hapticFeedback();
-                    }}
-                >
-                    <CarouselIcon />
-                    <CustomText
-                        accent
-                        font="Heavy"
-                        fontSize={16}
-                        style={{ marginLeft: 6 }}
+            {!loading && (
+                <>
+                    <View
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            marginBottom: 14,
+                        }}
                     >
-                        view image
-                    </CustomText>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={{ display: "flex", flexDirection: "row" }}
-                    onPress={() => {
-                        hapticFeedback();
-                        triggerProductSharePopup("/hjfhj/hjdfhj");
-                    }}
-                >
-                    <ShareIcon />
-                    <CustomText
-                        accent
-                        font="Heavy"
-                        fontSize={16}
-                        style={{ marginLeft: 6 }}
+                        <TouchableOpacity
+                            style={{ display: "flex", flexDirection: "row" }}
+                            onPress={() => {
+                                scopeProductStore.setImageModal();
+                                hapticFeedback();
+                            }}
+                        >
+                            <CarouselIcon />
+                            <CustomText
+                                accent
+                                font="Heavy"
+                                fontSize={16}
+                                style={{ marginLeft: 6 }}
+                            >
+                                view image
+                            </CustomText>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{ display: "flex", flexDirection: "row" }}
+                            onPress={() => {
+                                hapticFeedback();
+                                triggerProductSharePopup("/hjfhj/hjdfhj");
+                            }}
+                        >
+                            <ShareIcon />
+                            <CustomText
+                                accent
+                                font="Heavy"
+                                fontSize={16}
+                                style={{ marginLeft: 6 }}
+                            >
+                                share
+                            </CustomText>
+                        </TouchableOpacity>
+                    </View>
+                    <View
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            width: "100%",
+                        }}
                     >
-                        share
-                    </CustomText>
-                </TouchableOpacity>
-            </View>
-            <View
-                style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    width: "100%",
-                }}
-            >
-                <CustomText font="Heavy" fontSize={22}>
-                    {scopeProductStore.fetchedActiveProduct.title}
-                </CustomText>
-                <TouchableOpacity
-                    onPress={() => {
-                        hapticFeedback();
-                        scopeProductStore.setProductOptionsPopup();
-                    }}
-                >
-                    <RoundedMoreIcon />
-                </TouchableOpacity>
-                {scopeProductStore.productOptionsPopup && (
-                    <OptionsSelector
-                        visible={scopeProductStore.productOptionsPopup}
-                        data={PRODUCT_OPTIONS_DATA}
-                    />
-                )}
-            </View>
-            <View
-                style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    marginTop: 10,
-                    alignItems: "center",
-                }}
-            >
-                <ProfileImage specificUser={user} size={20} />
-                <CustomText fontSize={16} style={{ marginLeft: 6 }} font="Bold">
-                    <CustomText font="Bold" style={{ opacity: 0.5 }}>
-                        listed by
-                    </CustomText>{" "}
-                    me
-                </CustomText>
-                <ChevronRight style={{ marginLeft: 7 }} />
-            </View>
-            <View
-                style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    marginTop: 10,
-                    alignItems: "center",
-                }}
-            >
-                <TicketIcon />
-                <CustomText accent font="Bold" style={{ marginLeft: 2 }}>
-                    5 orders total
-                </CustomText>
-                <ActiveIndicator />
-                {/*TODO: Add shadow!!*/}
-            </View>
-            <View style={{ marginTop: 20 }}>
-                <OfferButton title="view offers" onPress={() => null} />
-            </View>
+                        <CustomText font="Heavy" fontSize={22}>
+                            {scopeProductStore.fetchedActiveProduct.title}
+                        </CustomText>
+                        <TouchableOpacity
+                            onPress={() => {
+                                hapticFeedback();
+                                scopeProductStore.setProductOptionsPopup();
+                            }}
+                        >
+                            <RoundedMoreIcon />
+                        </TouchableOpacity>
+                        {scopeProductStore.productOptionsPopup && (
+                            <OptionsSelector
+                                visible={scopeProductStore.productOptionsPopup}
+                                data={PRODUCT_OPTIONS_DATA}
+                            />
+                        )}
+                    </View>
+                    <View
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            marginTop: 10,
+                            alignItems: "center",
+                        }}
+                    >
+                        <ProfileImage specificUser={seller} size={20} />
+                        <CustomText
+                            fontSize={16}
+                            style={{ marginLeft: 6 }}
+                            font="Bold"
+                        >
+                            <CustomText font="Bold" style={{ opacity: 0.5 }}>
+                                listed by
+                            </CustomText>{" "}
+                            {seller?.id === user.id
+                                ? "me"
+                                : seller?.displayName}
+                        </CustomText>
+                        <ChevronRight style={{ marginLeft: 7 }} />
+                    </View>
+                    <View
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            marginTop: 10,
+                            alignItems: "center",
+                        }}
+                    >
+                        <TicketIcon />
+                        <CustomText
+                            accent
+                            font="Bold"
+                            style={{ marginLeft: 2 }}
+                        >
+                            5 orders total
+                        </CustomText>
+                        <ActiveIndicator />
+                        {/*TODO: Add shadow!!*/}
+                    </View>
+                    <View style={{ marginTop: 20 }}>
+                        <OfferButton title="view offers" onPress={() => null} />
+                    </View>
+                </>
+            )}
         </>
     );
 };

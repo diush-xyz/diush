@@ -79,13 +79,12 @@ const ModalPopup = ({ visible, children }) => {
 };
 
 const ImageModal = () => {
-    const catalogStore = useCatalogStore();
-    const sellerViewProductStore = useSellerViewProductStore();
+    const scopeProductStore = useScopeProductStore();
     return (
         <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
-            <ModalPopup visible={sellerViewProductStore.imageModal}>
+            <ModalPopup visible={scopeProductStore.imageModal}>
                 <View style={{ alignItems: "center" }}></View>
                 <View style={{ alignItems: "center" }}>
                     <Image
@@ -96,7 +95,8 @@ const ImageModal = () => {
                             borderRadius: 20,
                         }}
                         source={{
-                            uri: catalogStore.activeProduct.imageURL,
+                            uri: scopeProductStore.fetchedActiveProduct
+                                .imageURL,
                         }}
                     />
                 </View>

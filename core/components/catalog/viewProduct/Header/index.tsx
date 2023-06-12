@@ -161,7 +161,7 @@ const Header = () => {
             >
                 <TicketIcon />
                 <CustomText accent font="Bold" style={{ marginLeft: 2 }}>
-                    5 orders total
+                    5 offers total
                 </CustomText>
                 <ActiveIndicator />
                 {/*TODO: Add shadow!!*/}
