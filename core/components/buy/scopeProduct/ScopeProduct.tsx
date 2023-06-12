@@ -1,56 +1,47 @@
 import React from "react";
 import { BottomSheetView } from "@gorhom/bottom-sheet";
 import { GLOBAL_STYLES } from "../../../@types/GlobalStyles";
-import FlowTemplate from "../../lib/FlowTemplate";
-import PopupHeader from "../../lib/PopupHeader";
 import { observer } from "mobx-react";
-import { useSignupStore } from "../../../state/auth/Signup.store";
-import {
-    CatalogStatus,
-    IUser,
-    SignupMethod,
-} from "../../../@types/GlobalTypes";
-import SignupOptionButton from "../../auth/SignupOptionbutton/SignupOptionButton";
-import { Button, Share, TouchableOpacity, View } from "react-native";
-import { useCreateProductStore } from "../../../state/auth/CreateProduct.store";
-import CustomTextInput from "../../lib/CustomTextInput";
-import LargeButton from "../../lib/LargeButton";
-import { useUtilStore } from "../../../state/Util.store";
+import { TouchableOpacity, View } from "react-native";
 import { useCatalogStore } from "../../../state/auth/Catalog.store";
-import ScrollWrapper from "../../auth/ScrollWrapper/ScrollWrapper";
-import CustomText from "../../lib/CustomText";
 import { Image } from "react-native";
 import ImageOverlay from "./ImageOverlay";
-import CarouselIcon from "../../../icons/catalog/Carousel";
-import ShareIcon from "../../../icons/catalog/Share";
-import { useAuthStore } from "../../../state/auth/Auth.store";
-import { fetchUserFromDb } from "../../../utils/user.utils";
-import { auth } from "../../../../config/firebase";
-import ChevronRight from "../../../icons/catalog/ChevronRight";
-import TicketIcon from "../../../icons/catalog/Ticket";
-import { useTheme } from "../../../utils/useTheme.util";
-import OfferButton from "./OfferButton";
-import RoundedMoreIcon from "../../../icons/common/RoundedMore";
-import ActiveIndicator from "./ActiveIndicator";
 import SnapshotBox from "./SnapshotBox";
 import ProductViewScrollWrapper from "./ProductViewScrollWrapper";
-import HorizontalLine from "../../lib/HorizontalLine";
-import { deriveProductConditionFromDb } from "../../../utils/productCondition.util";
 import WrittenInfoSection from "./WrittenInfoSection";
-import { triggerProductSharePopup } from "../../../utils/share.util";
 import Header from "./Header";
 import ImageModal from "./ImageModal";
 import { useSellerViewProductStore } from "../../../state/auth/SellerViewProductStore";
-import DeleteConfirmation from "../../lib/Modals/WarningConfirmation";
-import CustomDeleteConfirmation from "./CustomDeleteConfirmation";
-import styled from "styled-components/native";
-import { MAX_WIDTH } from "../../../utils/constants";
-import CopiedIndicator from "../../lib/MsgIndicator";
 import dayjs from "dayjs";
+import { useScopeProductStore } from "../../../state/auth/ScopeProduct.store";
+import { query, collection, where, onSnapshot } from "firebase/firestore";
+import { db, auth } from "../../../../config/firebase";
+import CustomText from "../../lib/CustomText";
 
-const ViewProduct = () => {
+const ScopeProduct = () => {
     const catalogStore = useCatalogStore();
-    const sellerViewProductStore = useSellerViewProductStore();
+    const scopeProductStore = useScopeProductStore();
+    const [loading, setLoading] = React.useState<boolean>(true);
+
+    React.useEffect(() => {
+        const q = query(
+            collection(db, "products"),
+            where("id", "==", "604191c1-da81-48a8-8bb7-d8ea9deb1edb") //TODO: Add dynamic link fetched one here later
+        );
+        onSnapshot(q, querySnapshot => {
+            const fetched = [];
+
+            querySnapshot.forEach(documentSnapshot => {
+                fetched.push({
+                    ...documentSnapshot.data(),
+                    key: documentSnapshot.id,
+                });
+            });
+
+            scopeProductStore.setFetchedActiveProduct(fetched[0]);
+            setLoading(false);
+        });
+    }, []);
 
     const [timeAgo, setTimeAgo] = React.useState<string>("");
 
@@ -62,6 +53,14 @@ const ViewProduct = () => {
         setTimeAgo("hiii");
     });
 
+    if (loading) {
+        return (
+            <BottomSheetView style={GLOBAL_STYLES.viewProductSheetViewStyle}>
+                <CustomText>Loading...</CustomText>
+            </BottomSheetView>
+        );
+    }
+
     return (
         <BottomSheetView style={GLOBAL_STYLES.viewProductSheetViewStyle}>
             <ProductViewScrollWrapper>
@@ -71,8 +70,8 @@ const ViewProduct = () => {
                     }}
                     activeOpacity={1}
                     onPress={() => {
-                        if (sellerViewProductStore.productOptionsPopup) {
-                            sellerViewProductStore.setProductOptionsPopup();
+                        if (scopeProductStore.productOptionsPopup) {
+                            scopeProductStore.setProductOptionsPopup();
                         } else {
                             null;
                         }
@@ -85,24 +84,25 @@ const ViewProduct = () => {
                             resizeMode: "cover",
                         }}
                         source={{
-                            uri: catalogStore.activeProduct.imageURL,
+                            uri: scopeProductStore.fetchedActiveProduct
+                                .imageURL,
                         }}
                     />
                     <ImageOverlay style={{ position: "absolute", top: 0 }} />
                     <View style={{ marginTop: -185, paddingHorizontal: 22 }}>
-                        {sellerViewProductStore.imageModal && <ImageModal />}
-                        {sellerViewProductStore.deleteConfirmation && (
+                        {scopeProductStore.imageModal && <ImageModal />}
+                        {/* {sellerViewProductStore.deleteConfirmation && (
                             <CustomDeleteConfirmation />
-                        )}
+                        )} */}
                         <Header />
-                        <SnapshotBox
+                        {/* <SnapshotBox
                             askingPrice={catalogStore.activeProduct.askingPrice}
                             highestOffer={
                                 sellerViewProductStore.highestOfferAmount ??
                                 null
                             } //TODO: Backend integration
                             posted={timeAgo} //TODO: Backend integration
-                        />
+                        /> */}
                         <WrittenInfoSection />
                         <View style={{ marginBottom: 60 }} />
                     </View>
@@ -112,4 +112,4 @@ const ViewProduct = () => {
     );
 };
 
-export default observer(ViewProduct);
+export default observer(ScopeProduct);
