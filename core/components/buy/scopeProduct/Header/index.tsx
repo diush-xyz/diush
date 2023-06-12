@@ -1,6 +1,6 @@
 import React from "react";
 import CustomText from "../../../lib/CustomText";
-import { View, TouchableOpacity, Image } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import CarouselIcon from "../../../../icons/catalog/Carousel";
 import ChevronRight from "../../../../icons/catalog/ChevronRight";
 import RoundedMoreIcon from "../../../../icons/common/RoundedMore";
@@ -9,27 +9,24 @@ import TicketIcon from "../../../../icons/catalog/Ticket";
 import { triggerProductSharePopup } from "../../../../utils/share.util";
 import ActiveIndicator from "../ActiveIndicator";
 import OfferButton from "../OfferButton";
-import { useCatalogStore } from "../../../../state/auth/Catalog.store";
-import { auth } from "../../../../../config/firebase";
-import { CatalogStatus, IUser } from "../../../../@types/GlobalTypes";
+import { BuyFlowStatus, IUser } from "../../../../@types/GlobalTypes";
 import { fetchUserFromDb } from "../../../../utils/user.utils";
 import { observer } from "mobx-react";
-import { useSellerViewProductStore } from "../../../../state/auth/SellerViewProductStore";
-import * as Haptics from "expo-haptics";
 import { hapticFeedback } from "../../../../utils/haptics.util";
 import { useAuthStore } from "../../../../state/auth/Auth.store";
 import ProfileImage from "../../../lib/ProfileImage";
 import CopyIcon from "../../../../icons/catalog/Copy";
 import EditIcon from "../../../../icons/catalog/Edit";
-import TrashIcon from "../../../../icons/catalog/Trash";
 import { copyToClipboard } from "../../../../utils/clipboard.util";
 import { useUtilStore } from "../../../../state/Util.store";
 import OptionsSelector, {
     IOptionsSelectorElement,
 } from "../../../lib/OptionsSelector";
-import { useScopeProductStore } from "../../../../state/auth/ScopeProduct.store";
+import { useScopeProductStore } from "../../../../state/buy/ScopeProduct.store";
+import { useBuyProductStore } from "../../../../state/buy/BuyProduct.store";
 
 const Header = () => {
+    const buyProductStore = useBuyProductStore();
     const { user } = useAuthStore();
     const utilStore = useUtilStore();
     const scopeProductStore = useScopeProductStore();
@@ -195,7 +192,14 @@ const Header = () => {
                         {/*TODO: Add shadow!!*/}
                     </View>
                     <View style={{ marginTop: 20 }}>
-                        <OfferButton title="view offers" onPress={() => null} />
+                        <OfferButton
+                            title="place offer"
+                            onPress={() =>
+                                buyProductStore.setStatus(
+                                    BuyFlowStatus.PLACE_OFFER
+                                )
+                            }
+                        />
                     </View>
                 </>
             )}

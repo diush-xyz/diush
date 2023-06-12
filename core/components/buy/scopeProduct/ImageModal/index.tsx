@@ -12,7 +12,7 @@ import {
 import InfoIcon from "../../../../icons/common/info";
 import { useCatalogStore } from "../../../../state/auth/Catalog.store";
 import { useSellerViewProductStore } from "../../../../state/auth/SellerViewProductStore";
-import { useScopeProductStore } from "../../../../state/auth/ScopeProduct.store";
+import { useScopeProductStore } from "../../../../state/buy/ScopeProduct.store";
 
 const ModalPopup = ({ visible, children }) => {
     const [showModal, setShowModal] = React.useState(visible);

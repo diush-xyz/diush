@@ -5,7 +5,7 @@ import HorizontalLine from "../../../lib/HorizontalLine";
 import { observer } from "mobx-react";
 import { View } from "react-native";
 import { useAuthStore } from "../../../../state/auth/Auth.store";
-import { useScopeProductStore } from "../../../../state/auth/ScopeProduct.store";
+import { useScopeProductStore } from "../../../../state/buy/ScopeProduct.store";
 
 const WrittenInfoSection = () => {
     const scopeProductStore = useScopeProductStore();

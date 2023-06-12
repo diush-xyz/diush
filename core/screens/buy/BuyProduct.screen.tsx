@@ -4,15 +4,36 @@ import CustomText from "../../components/lib/CustomText";
 import { observer } from "mobx-react";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { GLOBAL_STYLES } from "../../@types/GlobalStyles";
-import { CatalogStatus, LoggedInScreen } from "../../@types/GlobalTypes";
+import {
+    BuyFlowStatus,
+    CatalogStatus,
+    LoggedInScreen,
+} from "../../@types/GlobalTypes";
 import ViewProduct from "../../components/catalog/viewProduct/ViewProduct";
 import { PRODUCT_BOTTOM_SHEET_SNAP_POINTS } from "../../utils/constants";
 import { useUtilStore } from "../../state/Util.store";
 import ScopeProduct from "../../components/buy/scopeProduct/ScopeProduct";
+import { useBuyProductStore } from "../../state/buy/BuyProduct.store";
+import PlaceOffer from "../../components/buy/placeOffer/PlaceOffer";
+import { usePlaceOfferStore } from "../../state/buy/PlaceOffer.store";
+import BuySuccess from "../../components/buy/buySuccess/BuySuccess";
 
 const BuyProductScreen = () => {
     const sheetRef = React.useRef<BottomSheet>(null);
     const utilStore = useUtilStore();
+    const buyProductStore = useBuyProductStore();
+    const placeOfferStore = usePlaceOfferStore();
+
+    const populateScreen = () => {
+        switch (buyProductStore.status) {
+            case BuyFlowStatus.SCOPE:
+                return <ScopeProduct />;
+            case BuyFlowStatus.PLACE_OFFER:
+                return <PlaceOffer />;
+            case BuyFlowStatus.SUCCESS:
+                return <BuySuccess />;
+        }
+    };
 
     return (
         <>
@@ -29,7 +50,7 @@ const BuyProductScreen = () => {
                 }}
                 style={{ borderRadius: 35, overflow: "hidden" }}
             >
-                <ScopeProduct />
+                {populateScreen()}
             </BottomSheet>
         </>
     );

@@ -13,7 +13,7 @@ import Header from "./Header";
 import ImageModal from "./ImageModal";
 import { useSellerViewProductStore } from "../../../state/auth/SellerViewProductStore";
 import dayjs from "dayjs";
-import { useScopeProductStore } from "../../../state/auth/ScopeProduct.store";
+import { useScopeProductStore } from "../../../state/buy/ScopeProduct.store";
 import { query, collection, where, onSnapshot } from "firebase/firestore";
 import { db, auth } from "../../../../config/firebase";
 import CustomText from "../../lib/CustomText";

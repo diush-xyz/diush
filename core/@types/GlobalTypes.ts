@@ -68,6 +68,12 @@ export enum LoggedInScreen {
     BUY,
 }
 
+export enum BuyFlowStatus {
+    SCOPE,
+    PLACE_OFFER,
+    SUCCESS,
+}
+
 export enum SettingsStatus {
     HOME,
     MY_ACCOUNT,
