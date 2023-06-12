@@ -15,6 +15,12 @@ export default class BuyProductStore {
     setStatus(newStatus: BuyFlowStatus) {
         this.status = newStatus;
     }
+
+    seller: IUser = null;
+
+    setSeller(newSeller: IUser) {
+        this.seller = newSeller;
+    }
 }
 
 const StoreContext = React.createContext<BuyProductStore>(

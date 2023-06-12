@@ -9,7 +9,11 @@ import TicketIcon from "../../../../icons/catalog/Ticket";
 import { triggerProductSharePopup } from "../../../../utils/share.util";
 import ActiveIndicator from "../ActiveIndicator";
 import OfferButton from "../OfferButton";
-import { BuyFlowStatus, IUser } from "../../../../@types/GlobalTypes";
+import {
+    BuyFlowStatus,
+    CatalogStatus,
+    IUser,
+} from "../../../../@types/GlobalTypes";
 import { fetchUserFromDb } from "../../../../utils/user.utils";
 import { observer } from "mobx-react";
 import { hapticFeedback } from "../../../../utils/haptics.util";
@@ -24,20 +28,23 @@ import OptionsSelector, {
 } from "../../../lib/OptionsSelector";
 import { useScopeProductStore } from "../../../../state/buy/ScopeProduct.store";
 import { useBuyProductStore } from "../../../../state/buy/BuyProduct.store";
+import CompactIcon from "../../../catalog/viewProduct/CustomDeleteConfirmation/CompactIcon";
+import WarningConfirmation from "../../../lib/Modals/WarningConfirmation";
 
 const Header = () => {
     const buyProductStore = useBuyProductStore();
     const { user } = useAuthStore();
     const utilStore = useUtilStore();
     const scopeProductStore = useScopeProductStore();
-    const [seller, setSeller] = React.useState<IUser>(null);
     const [loading, setLoading] = React.useState<boolean>(true);
+    const [sameUserWarning, setSameUserWarning] =
+        React.useState<boolean>(false);
 
     const fetchSellerUser = () => {
         fetchUserFromDb({
             id: scopeProductStore.fetchedActiveProduct.linkedUID,
             setUser: (fUser: IUser) => {
-                setSeller(fUser);
+                buyProductStore.setSeller(fUser);
                 setLoading(false);
             },
         });
@@ -157,7 +164,10 @@ const Header = () => {
                             alignItems: "center",
                         }}
                     >
-                        <ProfileImage specificUser={seller} size={20} />
+                        <ProfileImage
+                            specificUser={buyProductStore.seller}
+                            size={20}
+                        />
                         <CustomText
                             fontSize={16}
                             style={{ marginLeft: 6 }}
@@ -166,9 +176,9 @@ const Header = () => {
                             <CustomText font="Bold" style={{ opacity: 0.5 }}>
                                 listed by
                             </CustomText>{" "}
-                            {seller?.id === user.id
+                            {buyProductStore.seller?.id === user.id
                                 ? "me"
-                                : seller?.displayName}
+                                : buyProductStore.seller?.displayName}
                         </CustomText>
                         <ChevronRight style={{ marginLeft: 7 }} />
                     </View>
@@ -194,13 +204,37 @@ const Header = () => {
                     <View style={{ marginTop: 20 }}>
                         <OfferButton
                             title="place offer"
-                            onPress={() =>
-                                buyProductStore.setStatus(
-                                    BuyFlowStatus.PLACE_OFFER
-                                )
-                            }
+                            onPress={() => {
+                                if (buyProductStore.seller.id !== user.id) {
+                                    hapticFeedback();
+                                    buyProductStore.setStatus(
+                                        BuyFlowStatus.PLACE_OFFER
+                                    );
+                                } else {
+                                    setSameUserWarning(true);
+                                }
+                            }}
                         />
                     </View>
+                    <WarningConfirmation
+                        icon={<CompactIcon />}
+                        title="oop... hold up!"
+                        desc={`you cannot make an offer for your\n own product! send people the link\n and have them do it instead!`}
+                        buttonText="copy link"
+                        buttonOnClick={() => {
+                            setSameUserWarning(false);
+                            copyToClipboard(`https://diush.xyz/hjdhj/hjdhj`);
+                            utilStore.setMsgIndicator("Link copied!");
+                            setTimeout(() => {
+                                utilStore.setMsgIndicator();
+                            }, 2500);
+                        }}
+                        footerText="got it, close"
+                        onFooterClick={() => {
+                            setSameUserWarning(false);
+                        }}
+                        visible={sameUserWarning}
+                    />
                 </>
             )}
         </>

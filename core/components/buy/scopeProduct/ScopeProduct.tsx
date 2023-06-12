@@ -26,7 +26,7 @@ const ScopeProduct = () => {
     React.useEffect(() => {
         const q = query(
             collection(db, "products"),
-            where("id", "==", "604191c1-da81-48a8-8bb7-d8ea9deb1edb") //TODO: Add dynamic link fetched one here later
+            where("id", "==", "728671c7-35fe-47a3-8996-bc12e0f5076f") //TODO: Add dynamic link fetched one here later
         );
         onSnapshot(q, querySnapshot => {
             const fetched = [];
