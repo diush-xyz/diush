@@ -79,8 +79,8 @@ const InfoBar = () => {
                                 justifyContent: "space-between",
                             }}
                         >
-                            <CustomText>{elem.text}</CustomText>
-                            <CustomText>{elem.value}</CustomText>
+                            <CustomText secondary>{elem.text}</CustomText>
+                            <CustomText secondary>{elem.value}</CustomText>
                         </View>
                         {idx !== INFO_SECTION_DATA.length - 1 && (
                             <HorizontalLine marginVertical={18} />

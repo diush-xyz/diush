@@ -66,6 +66,7 @@ const PlaceOffer = () => {
                                     alignItems: "center",
                                     justifyContent: "center",
                                     width: MAX_WIDTH,
+                                    marginBottom: 40,
                                 }}
                             >
                                 <View
@@ -135,7 +136,7 @@ const PlaceOffer = () => {
                             </View>
                             <PriceInput price={price} setPrice={setPrice} />
                             <LargeButton
-                                title="looks good!"
+                                title="place offer"
                                 onPress={() => {
                                     const parsedPrice = Number(price);
                                     if (parsedPrice > 0) {
