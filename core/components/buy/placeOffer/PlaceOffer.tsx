@@ -21,6 +21,7 @@ import ProductViewScrollWrapper from "../scopeProduct/ProductViewScrollWrapper";
 import { FlowTemplateWrapper } from "../../lib/FlowTemplate/styles";
 import styled from "styled-components/native";
 import { observer } from "mobx-react";
+import OfferInput from "./OfferInput";
 
 const PlaceOffer = () => {
     const scopeProductStore = useScopeProductStore();
@@ -30,6 +31,10 @@ const PlaceOffer = () => {
     const [price, setPrice] = React.useState<string>(
         scopeProductStore.fetchedActiveProduct.askingPrice.toString()
     );
+
+    React.useEffect(() => {
+        console.warn(price);
+    }, [price]);
 
     const Wrapper = styled.View`
         display: flex;
@@ -58,112 +63,88 @@ const PlaceOffer = () => {
                         marginTop: 50,
                     }}
                 >
-                    <ProductViewScrollWrapper>
-                        <Wrapper>
+                    <Wrapper>
+                        <View
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                width: MAX_WIDTH,
+                                marginBottom: 40,
+                            }}
+                        >
                             <View
                                 style={{
                                     display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    width: MAX_WIDTH,
-                                    marginBottom: 40,
+                                    width: "100%",
+                                    marginTop: 16,
                                 }}
                             >
                                 <View
                                     style={{
                                         display: "flex",
-                                        width: "100%",
-                                        marginTop: 16,
+                                        flexDirection: "row",
+                                        justifyContent: "space-between",
                                     }}
                                 >
-                                    <View
-                                        style={{
-                                            display: "flex",
-                                            flexDirection: "row",
-                                            justifyContent: "space-between",
-                                        }}
-                                    >
-                                        <View>
-                                            <CustomText
-                                                font="Heavy"
-                                                fontSize={22}
-                                            >
-                                                {
-                                                    scopeProductStore
-                                                        .fetchedActiveProduct
-                                                        .title
-                                                }
-                                            </CustomText>
-                                        </View>
-                                        {/* <View>
+                                    <View>
+                                        <CustomText font="Heavy" fontSize={22}>
+                                            {
+                                                scopeProductStore
+                                                    .fetchedActiveProduct.title
+                                            }
+                                        </CustomText>
+                                    </View>
+                                    {/* <View>
                                             <RoundedMoreIcon />
                                         </View> */}
-                                    </View>
-                                    <View
-                                        style={{
-                                            display: "flex",
-                                            flexDirection: "row",
-                                            marginTop: 10,
-                                            alignItems: "center",
-                                        }}
-                                    >
-                                        <ProfileImage
-                                            specificUser={
-                                                buyProductStore.seller
-                                            }
-                                            size={20}
-                                        />
-                                        <CustomText
-                                            fontSize={16}
-                                            style={{ marginLeft: 6 }}
-                                            font="Bold"
-                                        >
-                                            <CustomText
-                                                font="Bold"
-                                                style={{ opacity: 0.5 }}
-                                            >
-                                                listed by
-                                            </CustomText>{" "}
-                                            {buyProductStore.seller.displayName}
-                                        </CustomText>
-                                        {/*TODO: Come back to this*/}
-                                        <ChevronRight
-                                            style={{ marginLeft: 7 }}
-                                        />
-                                    </View>
-                                    <InfoBar />
                                 </View>
+                                <View
+                                    style={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        marginTop: 10,
+                                        alignItems: "center",
+                                    }}
+                                >
+                                    <ProfileImage
+                                        specificUser={buyProductStore.seller}
+                                        size={20}
+                                    />
+                                    <CustomText
+                                        fontSize={16}
+                                        style={{ marginLeft: 6 }}
+                                        font="Bold"
+                                    >
+                                        <CustomText
+                                            font="Bold"
+                                            style={{ opacity: 0.5 }}
+                                        >
+                                            listed by
+                                        </CustomText>{" "}
+                                        {buyProductStore.seller.displayName}
+                                    </CustomText>
+                                    {/*TODO: Come back to this*/}
+                                    <ChevronRight style={{ marginLeft: 7 }} />
+                                </View>
+                                <InfoBar />
                             </View>
-                            <PriceInput price={price} setPrice={setPrice} />
-                            <LargeButton
-                                title="place offer"
-                                onPress={() => {
-                                    const parsedPrice = Number(price);
-                                    if (parsedPrice > 0) {
-                                        placeOfferStore.setOfferAmount(
-                                            parsedPrice
-                                        );
-                                        buyProductStore.setStatus(
-                                            BuyFlowStatus.SUCCESS
-                                        );
-                                    }
-                                }}
-                                footer
-                                disabled={
-                                    Number(price) ==
-                                    scopeProductStore.fetchedActiveProduct
-                                        .askingPrice
-                                }
-                                // disabled={!allClear && !firstTime}
-                                footerButtonTitle="cancel"
-                                footerButtonOnPress={() => {
-                                    buyProductStore.setStatus(
-                                        BuyFlowStatus.SCOPE
-                                    );
-                                }}
-                            />
-                        </Wrapper>
-                    </ProductViewScrollWrapper>
+                        </View>
+                        <OfferInput />
+                        <LargeButton
+                            title="place offer"
+                            onPress={() => {
+                                buyProductStore.setStatus(
+                                    BuyFlowStatus.SUCCESS
+                                );
+                            }}
+                            footer
+                            footerButtonTitle="cancel"
+                            footerButtonOnPress={() => {
+                                buyProductStore.setStatus(BuyFlowStatus.SCOPE);
+                            }}
+                        />
+                    </Wrapper>
                 </View>
             </BottomSheetView>
         </>
