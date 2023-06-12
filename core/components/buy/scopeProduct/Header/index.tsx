@@ -30,6 +30,7 @@ import { useScopeProductStore } from "../../../../state/buy/ScopeProduct.store";
 import { useBuyProductStore } from "../../../../state/buy/BuyProduct.store";
 import CompactIcon from "../../../catalog/viewProduct/CustomDeleteConfirmation/CompactIcon";
 import WarningConfirmation from "../../../lib/Modals/WarningConfirmation";
+import WaitIcon from "../../../catalog/viewProduct/CustomDeleteConfirmation/WaitIcon";
 
 const Header = () => {
     const buyProductStore = useBuyProductStore();
@@ -217,7 +218,7 @@ const Header = () => {
                         />
                     </View>
                     <WarningConfirmation
-                        icon={<CompactIcon />}
+                        icon={<WaitIcon />}
                         title="oop... hold up!"
                         desc={`you cannot make an offer for your\n own product! send people the link\n and have them do it instead!`}
                         buttonText="copy link"
