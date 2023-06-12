@@ -57,7 +57,6 @@ const EmailSignup = () => {
         //TODO: Come back later (two-letter domain extensions do not work, neither does .ed.cr,)
         // setIsReady(validateEmail(signupStore.email));
 
-        console.log(signupStore.email + " === " + signupStore.prevEmail)
         if (signupStore.email === "" || !signupStore.email.includes("@")) {
             setAllClear(false);
             setErrMsg("oop! you need a valid email address to continue.");
@@ -67,9 +66,6 @@ const EmailSignup = () => {
         } else {
             setAllClear(true);
         }
-
-        console.log("the email: " + signupStore.email);
-        console.log(allClear);
     });
 
     return (
