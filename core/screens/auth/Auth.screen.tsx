@@ -81,8 +81,8 @@ const AuthScreen = () => {
                     textAlign="center"
                     style={{ marginBottom: 80 }}
                 >
-                    welcome to an easy way to sell
-                    {"\n"} items to your friends and network.
+                    welcome to the easy way for teenagers {"\n"} to sell items
+                    to their friends and network.
                 </CustomText>
                 <LargeButton
                     title="get started"
