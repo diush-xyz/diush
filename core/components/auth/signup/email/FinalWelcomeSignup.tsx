@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import React from "react";
 import { BottomSheetView } from "@gorhom/bottom-sheet";
 import { GLOBAL_STYLES } from "../../../../@types/GlobalStyles";
@@ -14,6 +14,7 @@ import { auth } from "../../../../../config/firebase";
 import { createUserInDb } from "../../../../utils/user.utils";
 import { useAuthStore } from "../../../../state/auth/Auth.store";
 import { AuthStatus } from "../../../../@types/GlobalTypes";
+import DiagramIcon from "../../../../icons/auth/Diagram";
 
 const FinalWelcomeSignup = () => {
     const signupStore = useSignupStore();
@@ -54,8 +55,16 @@ const FinalWelcomeSignup = () => {
     };
     return (
         <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
-            <WelcomeIcon />
-            <View style={{ width: "100%", marginBottom: 90 }}>
+            <WelcomeIcon style={{ marginTop: 45 }} />
+            <View
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "100%",
+                    marginBottom: 90,
+                }}
+            >
                 <CustomText
                     primary
                     font="Bold"
@@ -75,6 +84,14 @@ const FinalWelcomeSignup = () => {
                     we are thrilled to have you as the newest{"\n"} member of
                     our community.
                 </CustomText>
+                <Image
+                    source={{
+                        uri: "https://i.ibb.co/0mp5Y05/ddjk.png",
+                        height: 363,
+                        width: 315,
+                    }}
+                    style={{ marginBottom: 60 }}
+                />
                 <LargeButton title="cool, let's go" onPress={() => signUp()} />
             </View>
         </BottomSheetView>
