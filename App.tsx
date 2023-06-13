@@ -1,33 +1,22 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { Keyboard, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { DarkTheme } from "./core/style/colors.style";
-import Test from "./core/components/Test";
 import { ThemeProvider } from "styled-components";
-import AuthScreen from "./core/screens/auth/Auth.screen";
 import * as Font from "expo-font";
-import SplashScreen from "expo-splash-screen";
 import KeyboardListener from "react-native-keyboard-listener";
 import { useUtilStore } from "./core/state/Util.store";
 import { useAuthStore } from "./core/state/auth/Auth.store";
 import { AuthStatus, IUser } from "./core/@types/GlobalTypes";
-import HomeScreen from "./core/screens/home/HomeBase/HomeBase.screen";
 import { observer } from "mobx-react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/firebase";
 import { useSignupStore } from "./core/state/auth/Signup.store";
 import { fetchUserFromDb } from "./core/utils/user.utils";
-import ScreenHandler from "./core/screens/ScreenHandler";
-import {
-    TouchableOpacity,
-    TouchableWithoutFeedback,
-} from "react-native-gesture-handler";
-import CopiedIndicator from "./core/components/lib/MsgIndicator";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
 import ControlCenter from "./core/components/home/ControlCenter";
 import DefaultScreen from "./core/screens/Default.screen";
-import BuyProductScreen from "./core/screens/buy/BuyProduct.screen";
 import { useHomeStore } from "./core/state/auth/Home.store";
 
 const App = () => {
