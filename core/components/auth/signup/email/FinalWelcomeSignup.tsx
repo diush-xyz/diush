@@ -79,18 +79,18 @@ const FinalWelcomeSignup = () => {
                     font="Semibold"
                     fontSize={16}
                     textAlign="center"
-                    style={{ marginBottom: 40 }}
+                    style={{ marginBottom: 20 }}
                 >
                     we are thrilled to have you as the newest{"\n"} member of
                     our community.
                 </CustomText>
                 <Image
                     source={{
-                        uri: "https://i.ibb.co/0mp5Y05/ddjk.png",
-                        height: 363,
+                        uri: "https://i.ibb.co/L6HW4yy/ddhjhh.png",
+                        height: 430,
                         width: 315,
                     }}
-                    style={{ marginBottom: 60 }}
+                    style={{ marginBottom: 15 }}
                 />
                 <LargeButton title="cool, let's go" onPress={() => signUp()} />
             </View>
