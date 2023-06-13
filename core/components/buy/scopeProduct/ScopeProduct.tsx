@@ -51,8 +51,8 @@ const ScopeProduct = () => {
                 scopeProductStore.fetchedActiveProduct.createdAt.seconds
             );
             //@ts-ignore
-            const offerTimestamp = dayjs(parsed).fromNow(true);
-            setTimeAgo(offerTimestamp);
+            // const offerTimestamp = dayjs(parsed).fromNow(true);
+            setTimeAgo("hii");
         }
     }, [loading]);
 

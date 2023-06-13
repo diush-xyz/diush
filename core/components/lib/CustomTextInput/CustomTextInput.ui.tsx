@@ -33,6 +33,7 @@ interface ICustomTextInput {
     isSearch?: boolean;
     isLarge?: boolean;
     autoCorrect?: boolean;
+    customWidth?: number;
     onSubmitEditing?: (
         e: NativeSyntheticEvent<TextInputSubmitEditingEventData>
     ) => void;
@@ -68,7 +69,7 @@ const CustomTextInput = (props: ICustomTextInput) => {
                     backgroundColor: "rgba(255,255,255,0.05)",
                     height: props.isLarge ? 136 : 45,
                     width: "100%",
-                    maxWidth: MAX_WIDTH,
+                    maxWidth: props.customWidth ?? MAX_WIDTH,
                     marginBottom: props.isErr ? 7 : props.marginBottom || 0,
                     borderRadius: 12,
                     paddingHorizontal: 20,

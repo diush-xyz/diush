@@ -172,13 +172,14 @@ const HomeBaseScreen = () => {
             <CustomTextInput
                 placeholder="search chats"
                 onChangeText={() => null}
+                customWidth={350}
                 isSearch
             />
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 style={{
                     display: "flex",
-                    maxWidth: MAX_WIDTH,
+                    maxWidth: 350,
                     marginTop: 22,
                 }}
             >
