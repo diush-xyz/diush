@@ -1,4 +1,4 @@
-import { View, Image } from "react-native";
+import { View, Image, ScrollView } from "react-native";
 import React from "react";
 import { observer } from "mobx-react";
 import AuthStore, { useAuthStore } from "../../../state/auth/Auth.store";
@@ -35,8 +35,11 @@ import { CONVERSATION } from "../../../components/home/Conversation/Conversation
 import { createOfferInDb } from "../../../utils/offers.util";
 import { v4 as uuidv4 } from "uuid";
 import { useConversationStore } from "../../../state/auth/Conversation.store";
+import EmptyHomeView from "../../../components/home/EmptyHomeView";
+import GestureRecognizer from "react-native-swipe-detect";
 
 const HomeBaseScreen = () => {
+    const utilStore = useUtilStore();
     const authStore = useAuthStore();
     const conversationStore = useConversationStore();
     const homeStore = useHomeStore();
@@ -47,6 +50,13 @@ const HomeBaseScreen = () => {
     const [outboundConversations, setOutboundConversations] = React.useState(
         []
     );
+    const [count, setCount] = React.useState<number>(0);
+    const [swipeStarted, setSwipeStarted] = React.useState<boolean>(false);
+
+    const config = {
+        velocityThreshold: 0.3,
+        directionalOffsetThreshold: 80,
+    };
 
     const fetchIncomingConversations = () => {
         const q = query(
@@ -104,107 +114,143 @@ const HomeBaseScreen = () => {
     }
 
     return (
-        <>
-            <View
+        <View
+            style={{
+                alignItems: "center",
+                flex: 1,
+                marginTop: 55,
+                width: "100%",
+            }}
+        >
+            <ScreenHeader
+                pfp
+                photoURL={
+                    authStore.user.photoURL ??
+                    "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80"
+                }
+                onPfpPress={() => homeStore.setControlCenter(true)}
+                // backArrow
+                // backArrowOnPress={() =>
+                //     utilStore.setCurrentLoggedInScreen(LoggedInScreen.HOME)
+                // }
+                title="home base"
+            />
+            {/* <GestureRecognizer
+                onSwipeLeft={() => {
+                    if (count === 0) {
+                        setCount(count + 1);
+                        homeStore.setIsIncomingChatsActive(false);
+                        homeStore.setIsOutboundChatsActive(true);
+                    }
+                }}
+                onSwipeRight={() => {
+                    if (count === 1) {
+                        setCount(count - 1);
+                        homeStore.setIsIncomingChatsActive(true);
+                        homeStore.setIsOutboundChatsActive(false);
+                    }
+                }}
+                config={config}
                 style={{
-                    alignItems: "center",
+                    display: "flex",
                     flex: 1,
-                    marginTop: 55,
-                    width: "100%",
+                    alignItems: "center",
+                }}
+            > */}
+            <Switcher
+                text1="incoming"
+                text2="to others"
+                is1Active={homeStore.isIncomingChatsActive}
+                set1Active={(status: boolean) =>
+                    homeStore.setIsIncomingChatsActive(status)
+                }
+                is2Active={homeStore.isOutboundChatsActive}
+                set2Active={(status: boolean) =>
+                    homeStore.setIsOutboundChatsActive(status)
+                }
+            />
+            <CustomTextInput
+                placeholder="search chats"
+                onChangeText={() => null}
+                customWidth={350}
+                isSearch
+            />
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                style={{
+                    display: "flex",
+                    maxWidth: 350,
+                    marginTop: 22,
                 }}
             >
-                <ScreenHeader
-                    pfp
-                    photoURL={
-                        authStore.user.photoURL ??
-                        "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80"
-                    }
-                    onPfpPress={() => homeStore.setControlCenter(true)}
-                    // backArrow
-                    // backArrowOnPress={() =>
-                    //     utilStore.setCurrentLoggedInScreen(LoggedInScreen.HOME)
-                    // }
-                    title="home base"
-                />
-                <Switcher
-                    text1="incoming"
-                    text2="to others"
-                    is1Active={homeStore.isIncomingChatsActive}
-                    set1Active={(status: boolean) =>
-                        homeStore.setIsIncomingChatsActive(status)
-                    }
-                    is2Active={homeStore.isOutboundChatsActive}
-                    set2Active={(status: boolean) =>
-                        homeStore.setIsOutboundChatsActive(status)
-                    }
-                />
-                <CustomTextInput
-                    placeholder="search chats"
-                    onChangeText={() => null}
-                    isSearch
-                />
-                <View
-                    style={{
-                        display: "flex",
-                        maxWidth: MAX_WIDTH,
-                        marginTop: 22,
+                {homeStore.isIncomingChatsActive &&
+                    incomingConversations.length > 0 &&
+                    incomingConversations.map((elem, idx) => {
+                        return (
+                            <ConversationInstance
+                                key={idx}
+                                type={CONVERSATION.INCOMING}
+                                data={elem}
+                                canFetch={incomingConversations.length > 0}
+                                onPress={() =>
+                                    conversationStore.setActiveConversation(
+                                        elem
+                                    )
+                                }
+                            />
+                        );
+                    })}
+                {homeStore.isOutboundChatsActive &&
+                    outboundConversations.length > 0 &&
+                    outboundConversations.map((elem, idx) => {
+                        return (
+                            <ConversationInstance
+                                key={idx}
+                                type={CONVERSATION.TO_OTHERS}
+                                data={elem}
+                                canFetch={outboundConversations.length > 0}
+                                onPress={() =>
+                                    conversationStore.setActiveConversation(
+                                        elem
+                                    )
+                                }
+                            />
+                        );
+                    })}
+                {homeStore.isIncomingChatsActive &&
+                    incomingConversations.length === 0 && <EmptyHomeView />}
+                {homeStore.isOutboundChatsActive &&
+                    outboundConversations.length === 0 && <EmptyHomeView />}
+            </ScrollView>
+            {/* </GestureRecognizer> */}
+            {/* <View style={{ marginTop: 40, width: "100%" }}>
+                <LargeButton
+                    title="create offer"
+                    onPress={() => {
+                        createOfferInDb({
+                            id: uuidv4(),
+                            amount: 26,
+                            isReadByRecipient: false,
+                            linkedConversationID: "gOe51DwdMtg6lbcYoVoi",
+                            placedByUID: "1ekZfMGJtVedOgxW3XjD4vHIdt12",
+                            timestamp: new Date(),
+                            status: OfferStatus.PENDING,
+                            isCounterOffer: false,
+                            linkedProductID:
+                                "728671c7-35fe-47a3-8996-bc12e0f5076f",
+                        });
                     }}
-                >
-                    {homeStore.isIncomingChatsActive &&
-                        incomingConversations.length > 0 &&
-                        incomingConversations.map((elem, idx) => {
-                            return (
-                                <ConversationInstance
-                                    key={idx}
-                                    type={CONVERSATION.INCOMING}
-                                    data={elem}
-                                    canFetch={incomingConversations.length > 0}
-                                    onPress={() =>
-                                        conversationStore.setActiveConversation(
-                                            elem
-                                        )
-                                    }
-                                />
-                            );
-                        })}
-                    {homeStore.isOutboundChatsActive &&
-                        outboundConversations.length > 0 &&
-                        outboundConversations.map((elem, idx) => {
-                            return (
-                                <ConversationInstance
-                                    key={idx}
-                                    type={CONVERSATION.TO_OTHERS}
-                                    data={elem}
-                                    canFetch={outboundConversations.length > 0}
-                                    onPress={() =>
-                                        conversationStore.setActiveConversation(
-                                            elem
-                                        )
-                                    }
-                                />
-                            );
-                        })}
-                </View>
-                <View style={{ marginTop: 40, width: "100%" }}>
-                    <LargeButton
-                        title="create offer"
-                        onPress={() => {
-                            createOfferInDb({
-                                id: uuidv4(),
-                                amount: 731,
-                                isReadByRecipient: false,
-                                linkedConversationID: "7FEoNJoAGnsXNKT1iVzX",
-                                placedByUID: "4TWjjjjOTxw0TMvOxF9N",
-                                timestamp: new Date(),
-                                status: OfferStatus.PENDING,
-                                isCounterOffer: false,
-                            });
-                        }}
-                    />
-                </View>
+                />
+            </View> */}
+            <View style={{ marginTop: 40, marginBottom: 50, width: "100%" }}>
+                <LargeButton
+                    title="make a test offer"
+                    onPress={() => {
+                        utilStore.setCurrentLoggedInScreen(LoggedInScreen.BUY);
+                    }}
+                />
             </View>
-            <ControlCenter />
-        </>
+        </View>
     );
 };
 

@@ -26,6 +26,7 @@ import { observer } from "mobx-react";
 import EmptyCatalogIcon from "../../icons/catalog/Empty";
 import EmptyCatalogView from "./EmptyCatalogView";
 import ImageOverlay from "./viewProduct/ImageOverlay";
+import { MAX_WIDTH } from "../../utils/constants";
 
 const CatalogHome = () => {
     const catalogStore = useCatalogStore();
@@ -33,6 +34,8 @@ const CatalogHome = () => {
     const theme = useTheme();
     const [myProducts, setMyProducts] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
+    const [activeProducts, setActiveProducts] = React.useState([]);
+    const [soldProducts, setSoldProducts] = React.useState([]);
 
     // const MOCK_DATA: IProductCard[] = [
     //     {
@@ -105,6 +108,20 @@ const CatalogHome = () => {
         });
     }, []);
 
+    React.useEffect(() => {
+        if (myProducts.length > 0 && !loading) {
+            const active = myProducts.filter(
+                (product: any) =>
+                    product.dealReached === false || !product.dealReached
+            );
+            setActiveProducts(active);
+            const sold = myProducts.filter(
+                (product: any) => product.dealReached === true
+            );
+            setSoldProducts(sold);
+        }
+    }, [loading]);
+
     if (loading) {
         return <CustomText accent>Loading...</CustomText>;
     }
@@ -142,43 +159,63 @@ const CatalogHome = () => {
                 onChangeText={() => null}
                 isSearch
             />
-            <View
-                style={{
-                    flex: 1,
-                    marginTop: 22,
-                }}
-            >
-                {myProducts.length == 0 ? (
-                    <EmptyCatalogView />
-                ) : (
-                    <FlatList
-                        data={myProducts}
-                        numColumns={2}
-                        columnWrapperStyle={{
-                            justifyContent: "space-between",
-                            marginBottom: 15,
-                        }}
-                        renderItem={({ item, index }) => (
-                            <ProductCard
-                                productData={item}
-                                marginLeft={index % 2 === 0 ? 0 : 5}
-                                marginRight={index % 2 === 0 ? 5 : 0}
-                            />
-                        )}
-                    />
-                )}
-                {/* <FlatList
-                    data={myProducts}
-                    numColumns={2}
-                    columnWrapperStyle={{
-                        justifyContent: "space-between",
-                        marginBottom: 15,
+            {catalogStore.activeProductsDashboard ? (
+                <View
+                    style={{
+                        flex: 1,
+                        marginTop: 22,
+                        width: activeProducts.length == 1 ? MAX_WIDTH : null, //this is important due to the fact we need the ProductCard to align to the left of the screen if there is only one product in this section, diush :)
                     }}
-                    renderItem={({ item }) => {
-                        return <CustomText>{item.title}</CustomText>;
+                >
+                    {activeProducts.length == 0 ? (
+                        <EmptyCatalogView />
+                    ) : (
+                        <FlatList
+                            data={activeProducts}
+                            numColumns={2}
+                            columnWrapperStyle={{
+                                justifyContent: "space-between",
+                                marginBottom: 15,
+                            }}
+                            renderItem={({ item, index }) => (
+                                <ProductCard
+                                    productData={item}
+                                    marginLeft={index % 2 === 0 ? 0 : 5}
+                                    marginRight={index % 2 === 0 ? 5 : 0}
+                                />
+                            )}
+                        />
+                    )}
+                </View>
+            ) : (
+                <View
+                    style={{
+                        flex: 1,
+                        marginTop: 22,
+                        width: soldProducts.length == 1 ? MAX_WIDTH : null, //this is important due to the fact we need the ProductCard to align to the left of the screen if there is only one product in this section, diush :)
                     }}
-                /> */}
-            </View>
+                >
+                    {soldProducts.length == 0 ? (
+                        <EmptyCatalogView />
+                    ) : (
+                        <FlatList
+                            data={soldProducts}
+                            numColumns={2}
+                            columnWrapperStyle={{
+                                justifyContent: "space-between",
+                                marginBottom: 15,
+                            }}
+                            renderItem={({ item, index }) => (
+                                <ProductCard
+                                    productData={item}
+                                    marginLeft={index % 2 === 0 ? 0 : 5}
+                                    marginRight={index % 2 === 0 ? 5 : 0}
+                                />
+                            )}
+                        />
+                    )}
+                </View>
+            )}
             <CreateProductButton />
         </View>
     );

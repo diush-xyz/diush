@@ -11,20 +11,56 @@ import ActiveIndicator from "../ActiveIndicator";
 import OfferButton from "../OfferButton";
 import { useCatalogStore } from "../../../../state/auth/Catalog.store";
 import { auth } from "../../../../../config/firebase";
-import { IUser } from "../../../../@types/GlobalTypes";
+import { CatalogStatus, IUser } from "../../../../@types/GlobalTypes";
 import { fetchUserFromDb } from "../../../../utils/user.utils";
 import { observer } from "mobx-react";
 import { useSellerViewProductStore } from "../../../../state/auth/SellerViewProductStore";
-import ProductOptions from "../ProductOptions";
 import * as Haptics from "expo-haptics";
 import { hapticFeedback } from "../../../../utils/haptics.util";
 import { useAuthStore } from "../../../../state/auth/Auth.store";
 import ProfileImage from "../../../lib/ProfileImage";
+import CopyIcon from "../../../../icons/catalog/Copy";
+import EditIcon from "../../../../icons/catalog/Edit";
+import TrashIcon from "../../../../icons/catalog/Trash";
+import { copyToClipboard } from "../../../../utils/clipboard.util";
+import { useUtilStore } from "../../../../state/Util.store";
+import OptionsSelector, {
+    IOptionsSelectorElement,
+} from "../../../lib/OptionsSelector";
 
 const Header = () => {
     const catalogStore = useCatalogStore();
     const sellerViewProductStore = useSellerViewProductStore();
     const { user } = useAuthStore();
+    const utilStore = useUtilStore();
+
+    const PRODUCT_OPTIONS_DATA: IOptionsSelectorElement[] = [
+        {
+            text: "Copy link",
+            icon: <CopyIcon />,
+            onClick: () => {
+                copyToClipboard(`https://diush.xyz/hjdhj/hjdhj`);
+                sellerViewProductStore.setProductOptionsPopup();
+                utilStore.setMsgIndicator("Link copied!");
+                setTimeout(() => {
+                    utilStore.setMsgIndicator();
+                }, 2500);
+            },
+        }, //TODO: Properly make this url link to something once the buyer flow is built out
+        {
+            text: "Edit listing",
+            icon: <EditIcon />,
+            onClick: () => {
+                catalogStore.setStatus(CatalogStatus.EDIT);
+                sellerViewProductStore.setProductOptionsPopup();
+            },
+        },
+        {
+            text: "Delete listing",
+            icon: <TrashIcon />,
+            onClick: () => sellerViewProductStore.setDeleteConfirmation(),
+        },
+    ];
 
     return (
         <>
@@ -92,7 +128,10 @@ const Header = () => {
                     <RoundedMoreIcon />
                 </TouchableOpacity>
                 {sellerViewProductStore.productOptionsPopup && (
-                    <ProductOptions />
+                    <OptionsSelector
+                        visible={sellerViewProductStore.productOptionsPopup}
+                        data={PRODUCT_OPTIONS_DATA}
+                    />
                 )}
             </View>
             <View
@@ -122,7 +161,7 @@ const Header = () => {
             >
                 <TicketIcon />
                 <CustomText accent font="Bold" style={{ marginLeft: 2 }}>
-                    5 orders total
+                    5 offers total
                 </CustomText>
                 <ActiveIndicator />
                 {/*TODO: Add shadow!!*/}

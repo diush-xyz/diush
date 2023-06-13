@@ -16,6 +16,12 @@ export default class HomeStore {
         this.controlCenter = newStatus;
     }
 
+    controlCenterOptionsSelector: boolean = false;
+
+    setControlCenterOptionsSelector(newStatus: boolean) {
+        this.controlCenterOptionsSelector = newStatus;
+    }
+
     isIncomingChatsActive: boolean = true;
 
     setIsIncomingChatsActive(status: boolean) {

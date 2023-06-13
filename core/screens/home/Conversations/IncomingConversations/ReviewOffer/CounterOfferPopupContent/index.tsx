@@ -2,10 +2,17 @@ import React from "react";
 import CustomText from "../../../../../../components/lib/CustomText";
 import { View } from "react-native";
 import { observer } from "mobx-react";
-import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../../../../../../../config/firebase";
+import {
+    collection,
+    doc,
+    onSnapshot,
+    query,
+    updateDoc,
+    where,
+} from "firebase/firestore";
+import { auth, db } from "../../../../../../../config/firebase";
 import { useOfferStore } from "../../../../../../state/auth/Offer.store";
-import { OfferStatus } from "../../../../../../@types/GlobalTypes";
+import { IOffer, OfferStatus } from "../../../../../../@types/GlobalTypes";
 import { createOfferInDb } from "../../../../../../utils/offers.util";
 import { v4 as uuidv4 } from "uuid";
 import { useAuthStore } from "../../../../../../state/auth/Auth.store";
@@ -21,14 +28,21 @@ import HorizontalLine from "../../../../../../components/lib/HorizontalLine";
 import InfoIcon from "../../../../../../icons/common/info";
 import PriceInput from "../../../../../../components/lib/PriceInput";
 import LargeButton from "../../../../../../components/lib/LargeButton";
+import { useUtilStore } from "../../../../../../state/Util.store";
+import { hapticFeedback } from "../../../../../../utils/haptics.util";
+import { getHighestOffer } from "../../../../../../utils/getHighestOffer.util";
 
 const CounterOfferPopupContent = () => {
     const offerStore = useOfferStore();
     const conversationStore = useConversationStore();
+    const utilStore = useUtilStore();
     const { user } = useAuthStore();
     const [price, setPrice] = React.useState<string>(
-        conversationStore.activeConversationProduct?.askingPrice.toString()
+        offerStore.offerBeingReviewed?.amount?.toString()
     );
+    const [allProductOffers, setAllProductOffers] = React.useState([]);
+    const [loading, setLoading] = React.useState<boolean>(true);
+    const [highestOffer, setHighestOffer] = React.useState<IOffer>(null);
 
     const counterOffer = async () => {
         const offerRef = doc(db, "offers", offerStore.offerBeingReviewed.id);
@@ -42,19 +56,60 @@ const CounterOfferPopupContent = () => {
             id: uuidv4(),
             amount: Number(price),
             isReadByRecipient: false,
-            linkedConversationID: "7FEoNJoAGnsXNKT1iVzX",
+            linkedConversationID: conversationStore.activeConversation.id,
             placedByUID: user.id,
             timestamp: new Date(),
-            isCounterOffer: true,
+            isCounterOffer: !(
+                conversationStore.activeConversation.sellerUID !== user.id
+            ),
             status: OfferStatus.PENDING,
+            linkedProductID: conversationStore.activeConversationProduct.id,
         });
 
+        //actions:
         offerStore.setIsOfferBeingCountered(false);
+        offerStore.setOfferBeingReviewed(null);
+        hapticFeedback();
+        utilStore.setMsgIndicator("Counter sent!");
+        setTimeout(() => {
+            utilStore.setMsgIndicator();
+        }, 2500);
     };
 
     React.useEffect(() => {
-        console.log("price", price);
-    }, [price]);
+        const q = query(
+            collection(db, "offers"),
+            where(
+                "linkedProductID",
+                "==",
+                conversationStore.activeConversationProduct.id
+            )
+        );
+        onSnapshot(q, querySnapshot => {
+            const fetched = [];
+
+            querySnapshot.forEach(documentSnapshot => {
+                fetched.push({
+                    ...documentSnapshot.data(),
+                    key: documentSnapshot.id,
+                });
+            });
+
+            setAllProductOffers(fetched);
+            setLoading(false);
+        });
+    }, []);
+
+    React.useEffect(() => {
+        if (allProductOffers.length > 0 && !loading) {
+            const highest = getHighestOffer(allProductOffers);
+            setHighestOffer(highest);
+        }
+    }, [loading]);
+
+    if (loading) {
+        return <CustomText accent>loading...</CustomText>;
+    }
 
     return (
         <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
@@ -119,13 +174,17 @@ const CounterOfferPopupContent = () => {
                         <CustomText secondary>
                             asking price:{" "}
                             <CustomText secondary font="Heavy">
-                                $90
+                                $
+                                {
+                                    conversationStore.activeConversationProduct
+                                        .askingPrice
+                                }
                             </CustomText>
                         </CustomText>
                         <CustomText secondary style={{ marginTop: 8 }}>
-                            highest overall offer:
+                            highest overall offer (all conversations):{" "}
                             <CustomText secondary font="Heavy">
-                                $90
+                                ${highestOffer?.amount}
                             </CustomText>
                         </CustomText>
                     </View>
@@ -158,8 +217,8 @@ const CounterOfferPopupContent = () => {
                             title="place counter offer"
                             onPress={counterOffer}
                             disabled={
-                                conversationStore.activeConversationProduct
-                                    .askingPrice == Number(price)
+                                offerStore.offerBeingReviewed?.amount ==
+                                Number(price)
                             }
                         />
                     </View>

@@ -5,17 +5,49 @@ import { View } from "react-native";
 import CustomText from "../../../../lib/CustomText";
 import { observer } from "mobx-react";
 import HorizontalLine from "../../../../lib/HorizontalLine";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { db } from "../../../../../../config/firebase";
+import { getHighestOffer } from "../../../../../utils/getHighestOffer.util";
+import { IOffer } from "../../../../../@types/GlobalTypes";
 
 const InfoSection = () => {
     const offerStore = useOfferStore();
     const conversationStore = useConversationStore();
+    const [allProductOffers, setAllProductOffers] = React.useState([]);
+    const [loading, setLoading] = React.useState<boolean>(true);
+    const [highestOffer, setHighestOffer] = React.useState<IOffer>(null);
 
-    //get the highest offer from the conversation
-    const highestOffer = conversationStore.activeConversationOffers?.reduce(
-        (prev, current) => {
-            return prev.amount > current.amount ? prev : current;
+    //get the highest offer for the product (all conversations)
+    React.useEffect(() => {
+        const q = query(
+            collection(db, "offers"),
+            where(
+                "linkedProductID",
+                "==",
+                conversationStore.activeConversationProduct.id
+            )
+        );
+        onSnapshot(q, querySnapshot => {
+            const fetched = [];
+
+            querySnapshot.forEach(documentSnapshot => {
+                fetched.push({
+                    ...documentSnapshot.data(),
+                    key: documentSnapshot.id,
+                });
+            });
+
+            setAllProductOffers(fetched);
+            setLoading(false);
+        });
+    }, []);
+
+    React.useEffect(() => {
+        if (allProductOffers.length > 0 && !loading) {
+            const highest = getHighestOffer(allProductOffers);
+            setHighestOffer(highest);
         }
-    );
+    }, [loading]);
 
     const INFO_SECTION_DATA = [
         {
@@ -23,9 +55,9 @@ const InfoSection = () => {
             value: `$${conversationStore.activeConversationProduct?.askingPrice}`,
         },
         {
-            text: "highest overall offer",
+            text: "highest product offer (all conversations)",
             value: `$${highestOffer?.amount}`,
-        }, //TODO: get the highest offer from the entire product's offers, not just this conversation
+        },
         {
             text: "items",
             value: "1 unit",
@@ -35,6 +67,10 @@ const InfoSection = () => {
             value: `$${offerStore.offerBeingReviewed.amount}`,
         },
     ];
+
+    if (loading) {
+        return <CustomText accent>loading...</CustomText>;
+    }
 
     return (
         <View style={{ display: "flex", marginTop: 30 }}>

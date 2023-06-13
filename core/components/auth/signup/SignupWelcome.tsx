@@ -7,6 +7,7 @@ import SignupOptionButton from "../SignupOptionbutton/SignupOptionButton";
 import { observer } from "mobx-react";
 import { useSignupStore } from "../../../state/auth/Signup.store";
 import { SignupMethod } from "../../../@types/GlobalTypes";
+import { View } from "react-native";
 
 const SignupWelcome = () => {
     const signupStore = useSignupStore();
@@ -33,14 +34,17 @@ const SignupWelcome = () => {
                     }}
                     marginBottom={17}
                 />
-                {/* <SignupOptionButton
-                    text="continue with phone"
-                    icon="phone"
-                    onPress={() => {
-                        signupStore.setMethod(SignupMethod.PHONE);
-                        signupStore.setCurrentStep(1);
-                    }}
-                /> */}
+                <View style={{ opacity: 0.5 }}>
+                    <SignupOptionButton
+                        text="continue with phone"
+                        icon="phone"
+                        onPress={() => {
+                            // signupStore.setMethod(SignupMethod.PHONE);
+                            // signupStore.setCurrentStep(1);
+                            null;
+                        }}
+                    />
+                </View>
             </FlowTemplate>
         </BottomSheetView>
     );

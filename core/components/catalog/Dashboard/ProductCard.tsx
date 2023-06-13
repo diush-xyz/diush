@@ -3,8 +3,12 @@ import React from "react";
 import { truncate } from "../../../utils/truncate.util";
 import CustomText from "../../lib/CustomText";
 import { LinearGradient } from "expo-linear-gradient";
-import { CatalogStatus, IProduct } from "../../../@types/GlobalTypes";
+import { CatalogStatus, IOffer, IProduct } from "../../../@types/GlobalTypes";
 import { useCatalogStore } from "../../../state/auth/Catalog.store";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { db, auth } from "../../../../config/firebase";
+import { getHighestOffer } from "../../../utils/getHighestOffer.util";
+import { useSellerViewProductStore } from "../../../state/auth/SellerViewProductStore";
 
 export interface IProductCard {
     productData: IProduct;
@@ -16,11 +20,54 @@ export interface IProductCard {
 
 const ProductCard = (props: IProductCard) => {
     const catalogStore = useCatalogStore();
+    const sellerViewProductStore = useSellerViewProductStore();
+    const [offers, setOffers] = React.useState([]);
+
+    const [allProductOffers, setAllProductOffers] = React.useState([]);
+    const [offerLoading, setOfferLoading] = React.useState<boolean>(true);
+    const [highestOffer, setHighestOffer] = React.useState<IOffer>(null);
+
+    //get the highest offer for the product (all conversations)
+    React.useEffect(() => {
+        const q = query(
+            collection(db, "offers"),
+            where("linkedProductID", "==", props.productData.id)
+        );
+        onSnapshot(q, querySnapshot => {
+            const fetched = [];
+
+            querySnapshot.forEach(documentSnapshot => {
+                fetched.push({
+                    ...documentSnapshot.data(),
+                    key: documentSnapshot.id,
+                });
+            });
+
+            setAllProductOffers(fetched);
+            setOfferLoading(false);
+        });
+    }, []);
+
+    React.useEffect(() => {
+        if (allProductOffers.length > 0 && !offerLoading) {
+            const highest = getHighestOffer(allProductOffers);
+            setHighestOffer(highest);
+        }
+    }, [offerLoading]);
+
+    if (offerLoading) {
+        return <CustomText accent>loading...</CustomText>;
+    }
+
     return (
         <TouchableOpacity
             onPress={() => {
                 catalogStore.setStatus(CatalogStatus.VIEW);
                 catalogStore.setActiveProduct(props.productData);
+
+                sellerViewProductStore.setHighestOfferAmount(
+                    highestOffer?.amount ?? null
+                );
             }}
         >
             {/*@ts-ignore*/}
@@ -73,19 +120,21 @@ const ProductCard = (props: IProductCard) => {
                         </CustomText>
                     </View>
                     <View>
-                        <CustomText primary fontSize={10} font="Heavy">
-                            highest offer
-                        </CustomText>
-                        <CustomText
-                            accent
-                            font="Black"
-                            fontSize={18}
-                            textAlign="right"
-                        >
-                            {/* ${props.productData.highestOffer} */}
-                            {/*TODO: Calculate highest offer from the backend */}
-                            100
-                        </CustomText>
+                        {allProductOffers.length > 0 && !offerLoading && (
+                            <>
+                                <CustomText primary fontSize={10} font="Heavy">
+                                    highest offer
+                                </CustomText>
+                                <CustomText
+                                    accent
+                                    font="Black"
+                                    fontSize={18}
+                                    textAlign="right"
+                                >
+                                    ${highestOffer?.amount}
+                                </CustomText>
+                            </>
+                        )}
                     </View>
                 </View>
                 <View

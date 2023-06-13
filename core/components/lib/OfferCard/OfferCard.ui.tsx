@@ -24,6 +24,7 @@ import {
 } from "../../../@types/GlobalTypes";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../config/firebase";
+import { useAuthStore } from "../../../state/auth/Auth.store";
 
 //TODO: Must add proper gradient background to button (not working, blank for now)
 
@@ -84,6 +85,7 @@ interface IOfferCard {
  */
 const OfferCard = (props: IOfferCard) => {
     const theme = useTheme();
+    const { user } = useAuthStore();
 
     const getStatusTextColor = () => {
         switch (props.offer.status) {
@@ -238,7 +240,7 @@ const OfferCard = (props: IOfferCard) => {
                     </View>
                     <LargeButton
                         title={
-                            props.offer.isCounterOffer
+                            props.offer.placedByUID == user.id
                                 ? "view my offer"
                                 : getButtonText()
                         }

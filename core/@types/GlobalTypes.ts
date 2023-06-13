@@ -4,6 +4,7 @@ export interface IUser {
     email: string;
     photoURL: string;
     location?: string;
+    notifications?: boolean;
     // products?: IProduct[];
 }
 
@@ -18,7 +19,8 @@ export interface IProduct {
     categories?: ICategory[];
     condition: number;
     additionalInfo?: string;
-    //TODO: Add more
+    dealReached?: boolean;
+    //TODO: Add any more props if they are necessary/needed
 }
 
 export interface IConversation {
@@ -38,6 +40,7 @@ export interface IOffer {
     isCounterOffer?: boolean;
     isReadByRecipient: boolean;
     status: OfferStatus;
+    linkedProductID: string;
 }
 
 export interface ICategory {
@@ -61,6 +64,35 @@ export enum SignupMethod {
 export enum LoggedInScreen {
     HOME,
     CATALOG,
+    SETTINGS,
+    BUY,
+}
+
+export enum BuyFlowStatus {
+    SCOPE,
+    PLACE_OFFER,
+    SUCCESS,
+}
+
+export enum SettingsStatus {
+    HOME,
+    MY_ACCOUNT,
+    PRIVACY,
+    PAYMENTS,
+}
+
+export enum MyAccountSettingsStatus {
+    HOME,
+    ACCOUNT_DETAILS,
+    DEACTIVATE,
+}
+
+export enum AccountDetailsSettingsStatus {
+    HOME,
+    CHANGE_DISPLAY_NAME,
+    // CHANGE_EMAIL,
+    CHANGE_LOCATION,
+    CHANGE_PFP,
 }
 
 export enum ProductCondition {

@@ -16,10 +16,6 @@ interface ISwitcher {
 const Switcher = (props: ISwitcher) => {
     const theme = useTheme();
 
-    const alternateState = () => {
-        props.set1Active(!props.is1Active);
-        props.set2Active(!props.is2Active);
-    };
     return (
         <View
             style={{
@@ -42,7 +38,10 @@ const Switcher = (props: ISwitcher) => {
                         width: "100%",
                         paddingBottom: 12,
                     }}
-                    onPress={() => alternateState()}
+                    onPress={() => {
+                        props.set1Active(true);
+                        props.set2Active(false);
+                    }}
                 >
                     <CustomText
                         primary={props.is1Active && !props.is2Active}
@@ -73,7 +72,10 @@ const Switcher = (props: ISwitcher) => {
                         width: "100%",
                         paddingBottom: 12,
                     }}
-                    onPress={() => alternateState()}
+                    onPress={() => {
+                        props.set1Active(false);
+                        props.set2Active(true);
+                    }}
                 >
                     <CustomText
                         primary={props.is2Active && !props.is1Active}

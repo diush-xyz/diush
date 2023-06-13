@@ -1,4 +1,4 @@
-import { IProduct, IUser } from "../@types/GlobalTypes";
+import { IConversation, IProduct, IUser } from "../@types/GlobalTypes";
 import {
     collection,
     doc,
@@ -47,5 +47,16 @@ export const readMyIncomingConversationsFromDb = (
         //     props.setProduct(doc.data());
         // });
         props.setConversations(querySnapshot.docs.map(doc => doc.data()));
+    });
+};
+
+export const createConversationInDb = async (conversation: IConversation) => {
+    // Add a new document in collection "conversations"
+    await setDoc(doc(db, "conversations", conversation.id), {
+        id: conversation.id,
+        linkedProductID: conversation.linkedProductID,
+        sellerUID: conversation.sellerUID,
+        buyerUID: conversation.buyerUID,
+        dealReached: conversation.dealReached,
     });
 };

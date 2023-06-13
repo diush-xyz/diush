@@ -227,7 +227,16 @@ const ConversationInstance = (props: IConversationInstance) => {
                 Would you be willing to lower...
             </CustomText> */}
                     <CustomText secondary fontSize={16}>
-                        {linkedProduct?.title}
+                        {mostRecentOffer?.placedByUID == authStore.user.id
+                            ? "you sent an offer for "
+                            : "new offer for "}
+                        <CustomText
+                            secondary
+                            fontSize={16}
+                            style={{ fontStyle: "italic" }}
+                        >
+                            '{linkedProduct?.title}'
+                        </CustomText>
                     </CustomText>
                 </View>
             </View>

@@ -58,9 +58,11 @@ const CatalogScreen = () => {
                     ref={sheetRef}
                     snapPoints={PRODUCT_BOTTOM_SHEET_SNAP_POINTS}
                     enablePanDownToClose={true}
-                    onClose={() =>
-                        catalogStore.setStatus(CatalogStatus.ACTIVE_DASH)
-                    }
+                    onClose={() => {
+                        catalogStore.setStatus(CatalogStatus.ACTIVE_DASH);
+                        // //clear the state here (in case it's null in the next one, meaning there have been no offers yet)
+                        sellerViewProductStore.setHighestOfferAmount(null);
+                    }}
                     style={{ borderRadius: 35, overflow: "hidden" }}
                 >
                     <ViewProduct />

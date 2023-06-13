@@ -44,6 +44,10 @@ const ReviewOfferHome = () => {
     const [undoConfirmationModal, setUndoConfirmationModal] =
         React.useState<boolean>(false);
     const [count, setCount] = React.useState<number>(0);
+    const [isOfferMine, setIsOfferMine] = React.useState<boolean>(null);
+    const [isProductMine, setIsProductMine] = React.useState<boolean>(null);
+    const [buyOrSellText, setBuyOrSellText] = React.useState<string>("");
+    const [loading, setLoading] = React.useState<boolean>(false);
 
     const ChevronUpWrapper = styled(View)`
         box-shadow: 0px 0px 5px ${theme.primaryText};
@@ -86,6 +90,12 @@ const ReviewOfferHome = () => {
 
     const onAcceptOffer = async () => {
         const offerRef = doc(db, "offers", offerStore.offerBeingReviewed.id);
+        const productRef = doc(
+            db,
+            "products",
+            conversationStore.activeConversation.linkedProductID
+        );
+
         const conversationRef = doc(
             db,
             "conversations",
@@ -106,10 +116,19 @@ const ReviewOfferHome = () => {
                 dealReached: true,
             });
         });
+
+        await updateDoc(productRef, {
+            dealReached: true,
+        });
     };
 
-    const onUndoOffer = async () => {
+    const onUndoDeal = async () => {
         const offerRef = doc(db, "offers", offerStore.offerBeingReviewed.id);
+        const productRef = doc(
+            db,
+            "products",
+            conversationStore.activeConversation.linkedProductID
+        );
         const conversationRef = doc(
             db,
             "conversations",
@@ -130,6 +149,10 @@ const ReviewOfferHome = () => {
                 dealReached: false,
             });
         });
+
+        await updateDoc(productRef, {
+            dealReached: false,
+        });
     };
 
     React.useEffect(() => {
@@ -139,6 +162,31 @@ const ReviewOfferHome = () => {
                 : setOfferAcceptanceConfirmationModal(true);
         }
     }, [swipeStarted]);
+
+    React.useEffect(() => {
+        if (offerStore.offerBeingReviewed.placedByUID == user.id) {
+            setIsOfferMine(true);
+        } else {
+            setIsOfferMine(false);
+        }
+
+        if (conversationStore.activeConversation.sellerUID == user.id) {
+            setIsProductMine(true);
+        } else {
+            setIsProductMine(false);
+        }
+    }, []);
+
+    React.useEffect(() => {
+        if (isProductMine !== null && isOfferMine !== null) {
+            setBuyOrSellText(isProductMine ? "sell" : "buy");
+            setLoading(false);
+        }
+    }, [isProductMine, isOfferMine]);
+
+    if (loading) {
+        return <CustomText accent>loading...</CustomText>;
+    }
 
     return (
         <>
@@ -166,6 +214,9 @@ const ReviewOfferHome = () => {
                     }
                     title="offer review"
                     button={
+                        !(
+                            offerStore.offerBeingReviewed.placedByUID == user.id
+                        ) &&
                         !(
                             offerStore.offerBeingReviewed.status ==
                             OfferStatus.ACCEPTED
@@ -228,7 +279,11 @@ const ReviewOfferHome = () => {
                             <CustomText font="Bold" style={{ opacity: 0.5 }}>
                                 listed by
                             </CustomText>{" "}
-                            me
+                            {conversationStore.activeConversation.sellerUID ==
+                            user.id
+                                ? "me"
+                                : conversationStore.activeConvoOtherUser
+                                      .displayName}
                         </CustomText>
                         {/*TODO: Come back to this*/}
                         <ChevronRight style={{ marginLeft: 7 }} />
@@ -236,24 +291,39 @@ const ReviewOfferHome = () => {
                     <InfoSection />
                     <View style={{ marginTop: 45 }}>
                         <CustomText font="Heavy" fontSize={18}>
-                            offer summary
+                            offer summary & agreement
                         </CustomText>
-                        <CustomText secondary style={{ marginTop: 6 }}>
+                        <CustomText
+                            secondary
+                            style={{
+                                marginTop: 6,
+                                textDecorationLine:
+                                    offerStore.offerBeingReviewed.status ==
+                                    OfferStatus.DECLINED
+                                        ? "line-through"
+                                        : "none",
+                            }}
+                        >
                             {offerStore.offerBeingReviewed.status ==
                             OfferStatus.ACCEPTED
-                                ? "when you accepted this offer, you agreed to sell"
-                                : "by accepting this offer, you agree to sell"}{" "}
+                                ? `when you accepted this offer, you agreed to ${buyOrSellText}`
+                                : isOfferMine
+                                ? `if this offer you sent is accepted, you agree to ${buyOrSellText}`
+                                : `by accepting this offer, you agree to ${buyOrSellText}`}{" "}
                             <CustomText secondary font="Black">
                                 one
                             </CustomText>{" "}
-                            item’s worth of your product,{" "}
+                            item’s worth of {isProductMine ? "your" : "the"}{" "}
+                            product,{" "}
                             <CustomText secondary font="Black">
+                                '
                                 {
                                     conversationStore.activeConversationProduct
                                         ?.title
                                 }
+                                '
                             </CustomText>{" "}
-                            to{" "}
+                            {isProductMine ? "to" : "from"}{" "}
                             <CustomText secondary font="Black">
                                 {
                                     conversationStore.activeConvoOtherUser
@@ -266,12 +336,21 @@ const ReviewOfferHome = () => {
                             </CustomText>
                             .
                         </CustomText>
+                        {offerStore.offerBeingReviewed.status ==
+                            OfferStatus.DECLINED && (
+                            <CustomText secondary style={{ marginTop: 6 }}>
+                                Given the fact this offer has been declined, its
+                                terms{" "}
+                                <CustomText secondary font="Black">
+                                    no longer stand.
+                                </CustomText>
+                            </CustomText>
+                        )}
                     </View>
                 </View>
             </View>
             {/*TODO: Going to have to update this logic when dealing with outgoing conversations*/}
-            {!offerStore.isOfferBeingCountered &&
-                !offerStore.offerBeingReviewed.isCounterOffer &&
+            {!(offerStore.offerBeingReviewed.placedByUID == user.id) &&
                 !(
                     offerStore.offerBeingReviewed.status == OfferStatus.DECLINED
                 ) && (
@@ -348,7 +427,7 @@ const ReviewOfferHome = () => {
                 desc={`be careful! are you sure you want to\n reverse your previous acceptance of\n this offer by ${conversationStore.activeConvoOtherUser.displayName}?`}
                 buttonText="yes, i'm sure"
                 buttonOnClick={() => {
-                    onUndoOffer();
+                    onUndoDeal();
                 }}
                 footerText="my bad, cancel"
                 onFooterClick={() => {

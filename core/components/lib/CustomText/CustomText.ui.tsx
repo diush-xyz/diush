@@ -1,4 +1,10 @@
-import { View, Text, StyleProp, TextStyle } from "react-native";
+import {
+    View,
+    Text,
+    StyleProp,
+    TextStyle,
+    GestureResponderEvent,
+} from "react-native";
 import React from "react";
 import { useTheme } from "../../../utils/useTheme.util";
 
@@ -13,6 +19,7 @@ interface ICustomText {
     style?: TextStyle;
     font?: string;
     textAlign?: "auto" | "left" | "right" | "center" | "justify" | undefined;
+    onPress?: (event: GestureResponderEvent) => void;
 }
 
 /**
@@ -53,6 +60,7 @@ const CustomText = (props: ICustomText) => {
                 fontFamily: props.font ?? "Semibold",
                 textAlign: props.textAlign,
             }}
+            onPress={props.onPress}
         >
             {/*TODO: fix this later with TS rn children*/}
             {/*@ts-ignore*/}

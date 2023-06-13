@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { FlexAlignType, ScrollView, View } from "react-native";
 import ScreenHeader from "../../../../../components/lib/ScreenHeader";
 import { observer } from "mobx-react";
@@ -25,6 +25,8 @@ const DMScreen = () => {
     const [linkedProduct, setLinkedProduct] = React.useState(null);
 
     const [isOutbound, setIsOutbound] = React.useState<boolean>(false);
+
+    const scrollViewRef = useRef<any>();
 
     const fetchOffers = () => {
         const q = query(
@@ -97,8 +99,6 @@ const DMScreen = () => {
         }
     }, [conversationStore.activeConversationOffers]);
 
-    const handleOfferCardPositioning = (isCounterOffer: boolean) => {};
-
     return (
         <View
             style={{
@@ -119,15 +119,26 @@ const DMScreen = () => {
                         paddingVertical: 20,
                     }}
                 >
+                    {/* <CustomText>
+                        {conversationStore.activeConversation.sellerUID ==
+                        user.id
+                            ? "a deal has been reached! we will let you know when the buyer issues a payment and their preferred shipping method. you can always accept new offers during this time, which will cancel this one."
+                            : "a deal has been reached! follow the next steps to complete the transaction."}
+                    </CustomText> */}
                     <CustomText>
-                        a deal has been reached! we will let you know when the
-                        buyer issues a payment and their preferred shipping
-                        method. you can always accept new offers during this
-                        time, which will cancel this one.
+                        a deal has been reached! hang tight; this is as far as
+                        the sale functionality goes for the testflight. Payments
+                        and transactions to finalize deals are coming very soon!
+                        stay tuned.
                     </CustomText>
                 </View>
             )}
-            <ScrollView>
+            <ScrollView
+                ref={scrollViewRef}
+                onContentSizeChange={() =>
+                    scrollViewRef!.current?.scrollToEnd({ animated: true })
+                }
+            >
                 {conversationStore.activeConversationOffers?.map(
                     (elem, idx) => {
                         let offerCardPositioning: FlexAlignType = "flex-start";
@@ -165,6 +176,7 @@ const DMScreen = () => {
 
                         return (
                             <View
+                                key={idx}
                                 //@ts-ignore
                                 style={{
                                     display: "flex",
@@ -265,6 +277,7 @@ const DMScreen = () => {
                         );
                     }
                 )}
+                <View style={{ marginTop: 100 }} />
             </ScrollView>
         </View>
     );
