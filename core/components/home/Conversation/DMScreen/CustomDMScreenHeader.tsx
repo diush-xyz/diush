@@ -16,6 +16,7 @@ import { useCatalogStore } from "../../../../state/auth/Catalog.store";
 import { useConversationStore } from "../../../../state/auth/Conversation.store";
 import MoreIcon from "../../../../icons/common/more";
 import ProfileImage from "../../../lib/ProfileImage";
+import { truncate } from "../../../../utils/truncate.util";
 
 /**
  * Acts as a nav bar (header) of sorts.
@@ -49,7 +50,11 @@ const CustomDMScreenHeader = () => {
                 </TouchableOpacity>
             </View>
             <View
-                style={{ flex: 1, display: "flex", justifyContent: "center" }}
+                style={{
+                    flex: 1,
+                    display: "flex",
+                    justifyContent: "center",
+                }}
             >
                 <View
                     style={{
@@ -59,7 +64,12 @@ const CustomDMScreenHeader = () => {
                         justifyContent: "center",
                     }}
                 >
-                    <View style={{ display: "flex", flexDirection: "row" }}>
+                    <View
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                        }}
+                    >
                         <ProfileImage
                             specificUser={
                                 conversationStore.activeConvoOtherUser
@@ -75,11 +85,15 @@ const CustomDMScreenHeader = () => {
                         />
                         <CustomText
                             primary
-                            textAlign="center"
                             font="Bold"
                             fontSize={18}
+                            textAlign="center"
                         >
-                            {conversationStore.activeConvoOtherUser.displayName}
+                            {
+                                conversationStore.activeConvoOtherUser.displayName.split(
+                                    " "
+                                )[0]
+                            }
                         </CustomText>
                     </View>
                     {/* <CustomText secondary textAlign="center" fontSize={16}>
