@@ -22,6 +22,12 @@ export default class SignupStore {
         this.email = newEmail;
     }
 
+    prevEmail: string = "";
+    
+    setPrevEmail(newPrevEmail: string) {
+        this.prevEmail = newPrevEmail;
+    }
+
     password: string = "";
 
     setPassword(newPassword: string) {
