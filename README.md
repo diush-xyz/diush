@@ -1,5 +1,3 @@
-\*apple, please approve the dev account already :)
-
 <p align="center">
   <a href="#">
     
