@@ -1,4 +1,4 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, Animated, Easing } from "react-native";
 import React from "react";
 import { BottomSheetView } from "@gorhom/bottom-sheet";
 import { GLOBAL_STYLES } from "../../../../@types/GlobalStyles";
@@ -53,16 +53,61 @@ const FinalWelcomeSignup = () => {
                 console.log(errorCode, errorMessage);
             });
     };
+
+    const animatedValue = React.useRef(new Animated.Value(0)).current;
+    const [isTop, setIsTop] = React.useState(true);
+
+    const startAnimation = toValue => {
+        Animated.timing(animatedValue, {
+            toValue,
+            duration: 750,
+            easing: Easing.linear,
+            useNativeDriver: true,
+        }).start(() => {
+            setIsTop(!isTop);
+        });
+    };
+
+    React.useEffect(() => {
+        startAnimation(isTop ? 1 : 0);
+    }, [isTop]);
+
+    const translateY = animatedValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, 10],
+        extrapolate: "clamp",
+    });
+
+    const scale = animatedValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [1.02, 0.9],
+        extrapolate: "clamp",
+    });
     return (
         <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
-            <WelcomeIcon style={{ marginTop: 45 }} />
+            {/* <WelcomeIcon style={{ marginTop: 45 }} /> */}
+            <Animated.View
+                style={{
+                    transform: [{ translateY }, { scale }],
+                    marginBottom: 15,
+                }}
+            >
+                <Image
+                    source={{
+                        uri: "https://i.ibb.co/3Ty5ySw/heart.png",
+                        height: 67,
+                        width: 84,
+                    }}
+                    style={{ marginTop: 45 }}
+                />
+            </Animated.View>
             <View
                 style={{
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     width: "100%",
-                    marginBottom: 90,
+                    marginBottom: 60,
                 }}
             >
                 <CustomText
@@ -70,9 +115,9 @@ const FinalWelcomeSignup = () => {
                     font="Bold"
                     fontSize={24}
                     textAlign="center"
-                    style={{ marginTop: 24, marginBottom: 12 }}
+                    style={{ marginTop: 6, marginBottom: 12 }}
                 >
-                    welcome to diush, {signupStore.displayName}!
+                    welcome to diush, {signupStore.displayName.split(" ")[0]}!
                 </CustomText>
                 <CustomText
                     secondary
