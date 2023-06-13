@@ -25,7 +25,7 @@ const Deactivate = () => {
         await deleteDoc(doc(db, "users", user.id));
         //delete the user from auth
         deleteUser(authUser);
-        //delete the user's offers
+        //TODO: Delete the user's products, conversations, and offers
     };
 
     return (
