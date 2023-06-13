@@ -40,6 +40,15 @@ const ControlCenterContent = () => {
     const logInStore = useLoginStore();
     const signUpStore = useSignupStore();
 
+    //give the profile picture time to load up (while not affecting the UI)
+    const [loadingBuffer, setLoadingBuffer] = React.useState<boolean>(true);
+
+    React.useEffect(() => {
+        setTimeout(() => {
+            setLoadingBuffer(false);
+        }, 1000);
+    }, []);
+
     const CONTROL_CENTER_DATA: ICONTROL_CENTER_DATA[] = [
         {
             icon: <DealsIcon />,
@@ -116,6 +125,7 @@ const ControlCenterContent = () => {
                 >
                     <View style={{ display: "flex" }}>
                         <ProfileImage
+                            loading={loadingBuffer}
                             specificUser={authStore.user}
                             size={55}
                             style={{ marginBottom: 12 }}
