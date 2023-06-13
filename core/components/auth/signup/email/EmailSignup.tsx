@@ -35,19 +35,22 @@ const EmailSignup = () => {
     const [allClear, setAllClear] = React.useState(false);
     const [errMsg, setErrMsg] = React.useState<string>("");
 
-    const checkIfProceed = async() => {
+    const checkIfProceed = async () => {
         setFirstTime(false);
         if (allClear) {
-            signupStore.setPrevEmail(signupStore.email)
+            signupStore.setPrevEmail(signupStore.email);
             let exist = await checkIfEmailExist();
-            if(!exist) signupStore.setCurrentStep(signupStore.currentStep + 1);
+            if (!exist) signupStore.setCurrentStep(signupStore.currentStep + 1);
             setAllClear(false);
         }
     };
 
-    const checkIfEmailExist = async(): Promise<boolean> => {
-        let res = await fetchSignInMethodsForEmail(auth, signupStore.email).then(val => {
-            if(val.length === 0) return false;
+    const checkIfEmailExist = async (): Promise<boolean> => {
+        let res = await fetchSignInMethodsForEmail(
+            auth,
+            signupStore.email
+        ).then(val => {
+            if (val.length === 0) return false;
             return true;
         });
         return res;
@@ -60,9 +63,11 @@ const EmailSignup = () => {
         if (signupStore.email === "" || !signupStore.email.includes("@")) {
             setAllClear(false);
             setErrMsg("oop! you need a valid email address to continue.");
-        } else if(signupStore.email === signupStore.prevEmail) {
+        } else if (signupStore.email === signupStore.prevEmail) {
             setAllClear(false);
-            setErrMsg("oh no! another account already exist with provided email")
+            setErrMsg(
+                "oh no! another account already exists with this email. try again or log in."
+            );
         } else {
             setAllClear(true);
         }
