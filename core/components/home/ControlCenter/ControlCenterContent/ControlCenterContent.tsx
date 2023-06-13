@@ -240,6 +240,9 @@ const ControlCenterContent = () => {
                             homeStore.setIsIncomingChatsActive(true);
                             homeStore.setIsOutboundChatsActive(false);
                             homeStore.setControlCenter(false);
+                            utilStore.setCurrentLoggedInScreen(
+                                LoggedInScreen.HOME
+                            );
                         }}
                     >
                         <CustomText style={{ color: "#FF453A" }}>
