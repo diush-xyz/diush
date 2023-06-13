@@ -32,7 +32,6 @@ import {
 } from "firebase/storage";
 import * as ImagePicker from "expo-image-picker";
 import ProfileImage from "../../../../../components/lib/ProfileImage";
-import sharp from "sharp";
 
 const AccountDetailsPfp = () => {
     const settingsStore = useSettingsStore();

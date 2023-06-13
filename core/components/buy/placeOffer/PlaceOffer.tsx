@@ -3,38 +3,33 @@ import React from "react";
 import { GLOBAL_STYLES } from "../../../@types/GlobalStyles";
 import PopupHeader from "../../lib/PopupHeader";
 import { View } from "react-native";
-import FlowTemplate from "../../lib/FlowTemplate";
 import LargeButton from "../../lib/LargeButton";
-import PriceInput from "../../lib/PriceInput";
 import { useScopeProductStore } from "../../../state/buy/ScopeProduct.store";
 import { usePlaceOfferStore } from "../../../state/buy/PlaceOffer.store";
 import { useBuyProductStore } from "../../../state/buy/BuyProduct.store";
-import { BuyFlowStatus } from "../../../@types/GlobalTypes";
+import { BuyFlowStatus, OfferStatus } from "../../../@types/GlobalTypes";
 import InfoBar from "./InfoBar";
 import ChevronRight from "../../../icons/catalog/ChevronRight";
-import RoundedMoreIcon from "../../../icons/common/RoundedMore";
 import { MAX_WIDTH } from "../../../utils/constants";
 import CustomText from "../../lib/CustomText";
 import ProfileImage from "../../lib/ProfileImage";
-import { useAuthStore } from "../../../state/auth/Auth.store";
-import ProductViewScrollWrapper from "../scopeProduct/ProductViewScrollWrapper";
-import { FlowTemplateWrapper } from "../../lib/FlowTemplate/styles";
 import styled from "styled-components/native";
 import { observer } from "mobx-react";
 import OfferInput from "./OfferInput";
+import { createOfferInDb } from "../../../utils/offers.util";
+import { v4 as uuidv4 } from "uuid";
+import { useAuthStore } from "../../../state/auth/Auth.store";
+import { createConversationInDb } from "../../../utils/conversations.util";
 
 const PlaceOffer = () => {
     const scopeProductStore = useScopeProductStore();
     const placeOfferStore = usePlaceOfferStore();
     const buyProductStore = useBuyProductStore();
+    const { user } = useAuthStore();
 
     const [price, setPrice] = React.useState<string>(
         scopeProductStore.fetchedActiveProduct.askingPrice.toString()
     );
-
-    React.useEffect(() => {
-        console.warn(price);
-    }, [price]);
 
     const Wrapper = styled.View`
         display: flex;
@@ -132,8 +127,36 @@ const PlaceOffer = () => {
                         </View>
                         <OfferInput />
                         <LargeButton
-                            title="place offer"
+                            title="offer"
                             onPress={() => {
+                                const convoId = uuidv4();
+                                //create the conversation in the db
+                                createConversationInDb({
+                                    id: convoId,
+                                    buyerUID: user.id,
+                                    sellerUID:
+                                        scopeProductStore.fetchedActiveProduct
+                                            .linkedUID,
+                                    dealReached: false,
+                                    linkedProductID:
+                                        scopeProductStore.fetchedActiveProduct
+                                            .id,
+                                });
+                                //make the first offer in the conversation we just created
+                                createOfferInDb({
+                                    id: uuidv4(),
+                                    amount: placeOfferStore.offerAmount,
+                                    isReadByRecipient: false,
+                                    linkedConversationID: convoId,
+                                    placedByUID: user.id,
+                                    timestamp: new Date(),
+                                    status: OfferStatus.PENDING,
+                                    isCounterOffer: false,
+                                    linkedProductID:
+                                        scopeProductStore.fetchedActiveProduct
+                                            .id,
+                                });
+                                //take the user to the success screen
                                 buyProductStore.setStatus(
                                     BuyFlowStatus.SUCCESS
                                 );

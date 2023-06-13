@@ -45,8 +45,8 @@ const BuyProductScreen = () => {
                 enablePanDownToClose={true}
                 onClose={() => {
                     utilStore.setCurrentLoggedInScreen(LoggedInScreen.HOME);
-                    // //clear the state here (in case it's null in the next one, meaning there have been no offers yet)
-                    // sellerViewProductStore.setHighestOfferAmount(null);
+                    //clear the state here
+                    buyProductStore.setStatus(BuyFlowStatus.SCOPE);
                 }}
                 style={{ borderRadius: 35, overflow: "hidden" }}
             >
