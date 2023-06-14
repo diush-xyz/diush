@@ -21,6 +21,12 @@ export default class BuyProductStore {
     setSeller(newSeller: IUser) {
         this.seller = newSeller;
     }
+
+    loadingSeller: boolean = false;
+
+    setLoadingSeller(newLoadingSeller: boolean) {
+        this.loadingSeller = newLoadingSeller;
+    }
 }
 
 const StoreContext = React.createContext<BuyProductStore>(

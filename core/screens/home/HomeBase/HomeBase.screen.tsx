@@ -52,14 +52,6 @@ const HomeBaseScreen = () => {
     const conversationStore = useConversationStore();
     const homeStore = useHomeStore();
     const [loading, setLoading] = React.useState<boolean>(true);
-    const [incomingConversations, setIncomingConversations] = React.useState(
-        []
-    );
-    const [outboundConversations, setOutboundConversations] = React.useState(
-        []
-    );
-    const [count, setCount] = React.useState<number>(0);
-    const [swipeStarted, setSwipeStarted] = React.useState<boolean>(false);
 
     const [sortedIncomingConversations, setSortedIncomingConversations] =
         React.useState<any[]>([]);
@@ -126,29 +118,67 @@ const HomeBaseScreen = () => {
             setSortedIncomingConversations([...incomingConversations]);
             setLoading(false);
         } catch (error) {
-            console.warn("Error fetching conversations:", error);
+            console.warn("Error fetching incoming conversations:", error);
         }
     };
 
-    const fetchOutboundConversations = () => {
+    const fetchOutboundConversations = async () => {
         const q = query(
             collection(db, "conversations"),
             where("buyerUID", "==", auth.currentUser?.uid)
         );
 
-        onSnapshot(q, querySnapshot => {
-            const fetched = [];
+        let outboundConversations = [];
 
-            querySnapshot.forEach(documentSnapshot => {
-                fetched.push({
-                    ...documentSnapshot.data(),
-                    key: documentSnapshot.id,
-                });
+        try {
+            const querySnapshot = await getDocs(q);
+
+            for (const conversationDoc of querySnapshot.docs) {
+                const conversation = conversationDoc.data();
+
+                const offersRef = collection(db, "offers");
+                const offersQuery = query(
+                    offersRef,
+                    where("linkedConversationID", "==", conversationDoc.id),
+                    orderBy("timestamp", "desc"),
+                    limit(1)
+                );
+
+                const offersQuerySnapshot = await getDocs(offersQuery);
+
+                if (!offersQuerySnapshot.empty) {
+                    outboundConversations.push({
+                        conversation,
+                        offer: offersQuerySnapshot.docs[0].data(),
+                    });
+                } else {
+                    outboundConversations.push({
+                        conversation,
+                        offer: null,
+                    });
+                }
+            }
+
+            outboundConversations.sort((a, b) => {
+                const offerA = a.offer;
+                const offerB = b.offer;
+
+                if (offerA && offerB) {
+                    return offerB.timestamp - offerA.timestamp;
+                } else if (offerA) {
+                    return -1;
+                } else if (offerB) {
+                    return 1;
+                } else {
+                    return 0;
+                }
             });
 
-            setOutboundConversations(fetched);
+            setSortedOutboundConversations([...outboundConversations]);
             setLoading(false);
-        });
+        } catch (error) {
+            console.warn("Error fetching outbound conversations:", error);
+        }
     };
 
     React.useEffect(() => {
@@ -254,17 +284,19 @@ const HomeBaseScreen = () => {
                         );
                     })}
                 {homeStore.isOutboundChatsActive &&
-                    outboundConversations.length > 0 &&
-                    outboundConversations.map((elem, idx) => {
+                    sortedOutboundConversations.length > 0 &&
+                    sortedOutboundConversations.map((elem, idx) => {
                         return (
                             <ConversationInstance
                                 key={idx}
                                 type={CONVERSATION.TO_OTHERS}
-                                data={elem}
-                                canFetch={outboundConversations.length > 0}
+                                data={elem.conversation}
+                                canFetch={
+                                    sortedOutboundConversations.length > 0
+                                }
                                 onPress={() =>
                                     conversationStore.setActiveConversation(
-                                        elem
+                                        elem.conversation
                                     )
                                 }
                             />
@@ -275,7 +307,9 @@ const HomeBaseScreen = () => {
                         <EmptyHomeView />
                     )}
                 {homeStore.isOutboundChatsActive &&
-                    outboundConversations.length === 0 && <EmptyHomeView />}
+                    sortedOutboundConversations.length === 0 && (
+                        <EmptyHomeView />
+                    )}
             </ScrollView>
             {/* </GestureRecognizer> */}
             {/* <View style={{ marginTop: 40, width: "100%" }}>

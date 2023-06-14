@@ -12,6 +12,11 @@ const WrittenInfoSection = () => {
     const scopeProductStore = useScopeProductStore();
     const buyProductStore = useBuyProductStore();
 
+    React.useEffect(() => {
+        console.warn("diush");
+        console.warn(buyProductStore.seller);
+    }, []);
+
     return (
         <View
             style={{
@@ -40,9 +45,11 @@ const WrittenInfoSection = () => {
             <CustomText fontSize={18} font="Heavy" style={{ marginBottom: 14 }}>
                 seller location
             </CustomText>
-            <CustomText secondary fontSize={17}>
-                {buyProductStore.seller.location ?? "no location set."}
-            </CustomText>
+            {!buyProductStore.loadingSeller && (
+                <CustomText secondary fontSize={17}>
+                    {buyProductStore.seller.location ?? "no location set."}
+                </CustomText>
+            )}
             {scopeProductStore.fetchedActiveProduct.additionalInfo && (
                 <>
                     <HorizontalLine />

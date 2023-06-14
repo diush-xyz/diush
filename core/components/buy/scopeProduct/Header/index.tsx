@@ -37,7 +37,6 @@ const Header = () => {
     const { user } = useAuthStore();
     const utilStore = useUtilStore();
     const scopeProductStore = useScopeProductStore();
-    const [loading, setLoading] = React.useState<boolean>(true);
     const [sameUserWarning, setSameUserWarning] =
         React.useState<boolean>(false);
 
@@ -46,7 +45,7 @@ const Header = () => {
             id: scopeProductStore.fetchedActiveProduct.linkedUID,
             setUser: (fUser: IUser) => {
                 buyProductStore.setSeller(fUser);
-                setLoading(false);
+                buyProductStore.setLoadingSeller(false);
             },
         });
     };
@@ -85,7 +84,7 @@ const Header = () => {
 
     return (
         <>
-            {!loading && (
+            {!buyProductStore.loadingSeller && (
                 <>
                     <View
                         style={{
