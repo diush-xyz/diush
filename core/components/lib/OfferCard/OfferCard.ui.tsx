@@ -25,6 +25,7 @@ import {
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../config/firebase";
 import { useAuthStore } from "../../../state/auth/Auth.store";
+import { truncate } from "../../../utils/truncate.util";
 
 //TODO: Must add proper gradient background to button (not working, blank for now)
 
@@ -157,14 +158,31 @@ const OfferCard = (props: IOfferCard) => {
                         />
                         <View style={{ display: "flex", marginLeft: 11 }}>
                             <CustomText
-                                primary
                                 font="Heavy"
                                 fontSize={16}
                                 style={{
                                     alignSelf: "flex-start",
+                                    color:
+                                        props.offer.status ==
+                                        OfferStatus.ACCEPTED
+                                            ? theme.success
+                                            : theme.accent,
                                 }}
                             >
-                                {props.product?.title}
+                                ${props.offer?.amount}{" "}
+                                <CustomText fontSize={16}>for</CustomText>{" "}
+                                <CustomText
+                                    fontSize={16}
+                                    style={{
+                                        color:
+                                            props.offer.status ==
+                                            OfferStatus.ACCEPTED
+                                                ? theme.success
+                                                : theme.primaryText,
+                                    }}
+                                >
+                                    {truncate(props.product?.title, 19)}
+                                </CustomText>
                             </CustomText>
                             <View
                                 style={{
@@ -173,29 +191,11 @@ const OfferCard = (props: IOfferCard) => {
                                     marginTop: 5,
                                 }}
                             >
-                                <ProfileImage
-                                    specificUser={props.specificUser}
-                                    size={14}
-                                />
-                                <CustomText
-                                    font="Bold"
-                                    secondary
-                                    fontSize={14}
-                                    style={{ marginLeft: 5 }}
-                                >
-                                    {props.specificUser?.displayName} •{" "}
-                                    <CustomText
-                                        fontSize={14}
-                                        style={{
-                                            color:
-                                                props.offer.status ==
-                                                OfferStatus.ACCEPTED
-                                                    ? theme.success
-                                                    : theme.accent,
-                                        }}
-                                    >
-                                        ${props.offer?.amount}
-                                    </CustomText>
+                                <CustomText font="Bold" secondary fontSize={14}>
+                                    sent by{" "}
+                                    {props.offer.placedByUID == user.id
+                                        ? "you"
+                                        : props.specificUser?.displayName}
                                 </CustomText>
                             </View>
                         </View>

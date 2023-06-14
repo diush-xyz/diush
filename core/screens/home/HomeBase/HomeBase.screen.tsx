@@ -30,13 +30,22 @@ import ScreenHeader from "../../../components/lib/ScreenHeader";
 import Switcher from "../../../components/catalog/Dashboard/Switcher";
 import CustomTextInput from "../../../components/lib/CustomTextInput";
 import ConversationInstance from "../../../components/home/Conversation/ConversationInstance";
-import { query, collection, where, onSnapshot } from "firebase/firestore";
+import {
+    query,
+    collection,
+    where,
+    onSnapshot,
+    getDocs,
+    orderBy,
+    limit,
+} from "firebase/firestore";
 import { CONVERSATION } from "../../../components/home/Conversation/ConversationInstance/ConversationInstance";
 import { createOfferInDb } from "../../../utils/offers.util";
 import { v4 as uuidv4 } from "uuid";
 import { useConversationStore } from "../../../state/auth/Conversation.store";
 import EmptyHomeView from "../../../components/home/EmptyHomeView";
 import GestureRecognizer from "react-native-swipe-detect";
+import CustomLoader from "../../../components/lib/CustomLoader/CustomLoader";
 
 const HomeBaseScreen = () => {
     const utilStore = useUtilStore();
@@ -44,71 +53,150 @@ const HomeBaseScreen = () => {
     const conversationStore = useConversationStore();
     const homeStore = useHomeStore();
     const [loading, setLoading] = React.useState<boolean>(true);
-    const [incomingConversations, setIncomingConversations] = React.useState(
-        []
-    );
-    const [outboundConversations, setOutboundConversations] = React.useState(
-        []
-    );
-    const [count, setCount] = React.useState<number>(0);
-    const [swipeStarted, setSwipeStarted] = React.useState<boolean>(false);
+
+    const [sortedIncomingConversations, setSortedIncomingConversations] =
+        React.useState<any[]>([]);
+    const [sortedOutboundConversations, setSortedOutboundConversations] =
+        React.useState<any[]>([]);
 
     const config = {
         velocityThreshold: 0.3,
         directionalOffsetThreshold: 80,
     };
 
-    const fetchIncomingConversations = () => {
+    const fetchIncomingConversations = async () => {
         const q = query(
             collection(db, "conversations"),
             where("sellerUID", "==", auth.currentUser?.uid)
         );
 
-        onSnapshot(q, querySnapshot => {
-            const fetched = [];
+        let incomingConversations = [];
 
-            querySnapshot.forEach(documentSnapshot => {
-                fetched.push({
-                    ...documentSnapshot.data(),
-                    key: documentSnapshot.id,
-                });
+        try {
+            const querySnapshot = await getDocs(q);
+
+            for (const conversationDoc of querySnapshot.docs) {
+                const conversation = conversationDoc.data();
+
+                const offersRef = collection(db, "offers");
+                const offersQuery = query(
+                    offersRef,
+                    where("linkedConversationID", "==", conversationDoc.id),
+                    orderBy("timestamp", "desc"),
+                    limit(1)
+                );
+
+                const offersQuerySnapshot = await getDocs(offersQuery);
+
+                if (!offersQuerySnapshot.empty) {
+                    incomingConversations.push({
+                        conversation,
+                        offer: offersQuerySnapshot.docs[0].data(),
+                    });
+                } else {
+                    incomingConversations.push({
+                        conversation,
+                        offer: null,
+                    });
+                }
+            }
+
+            incomingConversations.sort((a, b) => {
+                const offerA = a.offer;
+                const offerB = b.offer;
+
+                if (offerA && offerB) {
+                    return offerB.timestamp - offerA.timestamp;
+                } else if (offerA) {
+                    return -1;
+                } else if (offerB) {
+                    return 1;
+                } else {
+                    return 0;
+                }
             });
 
-            setIncomingConversations(fetched);
+            setSortedIncomingConversations([...incomingConversations]);
             setLoading(false);
-        });
+        } catch (error) {
+            console.warn("Error fetching incoming conversations:", error);
+        }
     };
 
-    const fetchOutboundConversations = () => {
+    const fetchOutboundConversations = async () => {
         const q = query(
             collection(db, "conversations"),
             where("buyerUID", "==", auth.currentUser?.uid)
         );
 
-        onSnapshot(q, querySnapshot => {
-            const fetched = [];
+        let outboundConversations = [];
 
-            querySnapshot.forEach(documentSnapshot => {
-                fetched.push({
-                    ...documentSnapshot.data(),
-                    key: documentSnapshot.id,
-                });
+        try {
+            const querySnapshot = await getDocs(q);
+
+            for (const conversationDoc of querySnapshot.docs) {
+                const conversation = conversationDoc.data();
+
+                const offersRef = collection(db, "offers");
+                const offersQuery = query(
+                    offersRef,
+                    where("linkedConversationID", "==", conversationDoc.id),
+                    orderBy("timestamp", "desc"),
+                    limit(1)
+                );
+
+                const offersQuerySnapshot = await getDocs(offersQuery);
+
+                if (!offersQuerySnapshot.empty) {
+                    outboundConversations.push({
+                        conversation,
+                        offer: offersQuerySnapshot.docs[0].data(),
+                    });
+                } else {
+                    outboundConversations.push({
+                        conversation,
+                        offer: null,
+                    });
+                }
+            }
+
+            outboundConversations.sort((a, b) => {
+                const offerA = a.offer;
+                const offerB = b.offer;
+
+                if (offerA && offerB) {
+                    return offerB.timestamp - offerA.timestamp;
+                } else if (offerA) {
+                    return -1;
+                } else if (offerB) {
+                    return 1;
+                } else {
+                    return 0;
+                }
             });
 
-            setOutboundConversations(fetched);
+            setSortedOutboundConversations([...outboundConversations]);
             setLoading(false);
-        });
+        } catch (error) {
+            console.warn("Error fetching outbound conversations:", error);
+        }
     };
 
     React.useEffect(() => {
-        fetchIncomingConversations();
-        fetchOutboundConversations();
+        //important for the order of fetching - ensures the data the user needs to see first is fetched before the rest
+        if (homeStore.isIncomingChatsActive) {
+            fetchIncomingConversations();
+            fetchOutboundConversations();
+        } else {
+            fetchOutboundConversations();
+            fetchIncomingConversations();
+        }
     }, []);
 
     if (authStore.userFetchLoading || loading) {
         return (
             <>
-                <CustomText accent>Loading...</CustomText>
+                <CustomLoader />
             </>
         );
     }
@@ -129,10 +217,6 @@ const HomeBaseScreen = () => {
                     "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80"
                 }
                 onPfpPress={() => homeStore.setControlCenter(true)}
-                // backArrow
-                // backArrowOnPress={() =>
-                //     utilStore.setCurrentLoggedInScreen(LoggedInScreen.HOME)
-                // }
                 title="home base"
             />
             {/* <GestureRecognizer
@@ -161,13 +245,13 @@ const HomeBaseScreen = () => {
                 text1="incoming"
                 text2="to others"
                 is1Active={homeStore.isIncomingChatsActive}
-                set1Active={(status: boolean) =>
-                    homeStore.setIsIncomingChatsActive(status)
-                }
+                set1Active={(status: boolean) => {
+                    homeStore.setIsIncomingChatsActive(status);
+                }}
                 is2Active={homeStore.isOutboundChatsActive}
-                set2Active={(status: boolean) =>
-                    homeStore.setIsOutboundChatsActive(status)
-                }
+                set2Active={(status: boolean) => {
+                    homeStore.setIsOutboundChatsActive(status);
+                }}
             />
             <CustomTextInput
                 placeholder="search chats"
@@ -184,64 +268,53 @@ const HomeBaseScreen = () => {
                 }}
             >
                 {homeStore.isIncomingChatsActive &&
-                    incomingConversations.length > 0 &&
-                    incomingConversations.map((elem, idx) => {
+                    sortedIncomingConversations.length > 0 &&
+                    sortedIncomingConversations.map((elem, idx) => {
                         return (
                             <ConversationInstance
                                 key={idx}
                                 type={CONVERSATION.INCOMING}
-                                data={elem}
-                                canFetch={incomingConversations.length > 0}
+                                data={elem.conversation}
+                                canFetch={
+                                    sortedIncomingConversations.length > 0
+                                }
                                 onPress={() =>
                                     conversationStore.setActiveConversation(
-                                        elem
+                                        elem.conversation
                                     )
                                 }
                             />
                         );
                     })}
                 {homeStore.isOutboundChatsActive &&
-                    outboundConversations.length > 0 &&
-                    outboundConversations.map((elem, idx) => {
+                    sortedOutboundConversations.length > 0 &&
+                    sortedOutboundConversations.map((elem, idx) => {
                         return (
                             <ConversationInstance
                                 key={idx}
                                 type={CONVERSATION.TO_OTHERS}
-                                data={elem}
-                                canFetch={outboundConversations.length > 0}
+                                data={elem.conversation}
+                                canFetch={
+                                    sortedOutboundConversations.length > 0
+                                }
                                 onPress={() =>
                                     conversationStore.setActiveConversation(
-                                        elem
+                                        elem.conversation
                                     )
                                 }
                             />
                         );
                     })}
                 {homeStore.isIncomingChatsActive &&
-                    incomingConversations.length === 0 && <EmptyHomeView />}
+                    sortedIncomingConversations.length === 0 && (
+                        <EmptyHomeView />
+                    )}
                 {homeStore.isOutboundChatsActive &&
-                    outboundConversations.length === 0 && <EmptyHomeView />}
+                    sortedOutboundConversations.length === 0 && (
+                        <EmptyHomeView />
+                    )}
             </ScrollView>
             {/* </GestureRecognizer> */}
-            {/* <View style={{ marginTop: 40, width: "100%" }}>
-                <LargeButton
-                    title="create offer"
-                    onPress={() => {
-                        createOfferInDb({
-                            id: uuidv4(),
-                            amount: 26,
-                            isReadByRecipient: false,
-                            linkedConversationID: "gOe51DwdMtg6lbcYoVoi",
-                            placedByUID: "1ekZfMGJtVedOgxW3XjD4vHIdt12",
-                            timestamp: new Date(),
-                            status: OfferStatus.PENDING,
-                            isCounterOffer: false,
-                            linkedProductID:
-                                "728671c7-35fe-47a3-8996-bc12e0f5076f",
-                        });
-                    }}
-                />
-            </View> */}
             <View style={{ marginTop: 40, marginBottom: 50, width: "100%" }}>
                 <LargeButton
                     title="make a test offer"

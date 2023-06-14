@@ -57,7 +57,9 @@ const InfoBar = () => {
         },
         {
             text: "highest product offer (all conversations)",
-            value: `$${highestOffer?.amount}`,
+            value: `${
+                highestOffer?.amount ? "$" + highestOffer?.amount : "N/A"
+            }`,
         },
     ];
 

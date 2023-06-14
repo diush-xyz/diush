@@ -31,29 +31,16 @@ import { useBuyProductStore } from "../../../../state/buy/BuyProduct.store";
 import CompactIcon from "../../../catalog/viewProduct/CustomDeleteConfirmation/CompactIcon";
 import WarningConfirmation from "../../../lib/Modals/WarningConfirmation";
 import WaitIcon from "../../../catalog/viewProduct/CustomDeleteConfirmation/WaitIcon";
+import { getDocs, query, collection, where } from "firebase/firestore";
+import { db } from "../../../../../config/firebase";
 
 const Header = () => {
     const buyProductStore = useBuyProductStore();
     const { user } = useAuthStore();
     const utilStore = useUtilStore();
     const scopeProductStore = useScopeProductStore();
-    const [loading, setLoading] = React.useState<boolean>(true);
     const [sameUserWarning, setSameUserWarning] =
         React.useState<boolean>(false);
-
-    const fetchSellerUser = () => {
-        fetchUserFromDb({
-            id: scopeProductStore.fetchedActiveProduct.linkedUID,
-            setUser: (fUser: IUser) => {
-                buyProductStore.setSeller(fUser);
-                setLoading(false);
-            },
-        });
-    };
-
-    React.useEffect(() => {
-        fetchSellerUser();
-    }, []);
 
     const PRODUCT_OPTIONS_DATA: IOptionsSelectorElement[] = [
         {
@@ -85,7 +72,7 @@ const Header = () => {
 
     return (
         <>
-            {!loading && (
+            {!buyProductStore.loadingSeller && (
                 <>
                     <View
                         style={{
@@ -197,7 +184,7 @@ const Header = () => {
                             font="Bold"
                             style={{ marginLeft: 2 }}
                         >
-                            5 orders total
+                            5 offers total
                         </CustomText>
                         <ActiveIndicator />
                         {/*TODO: Add shadow!!*/}

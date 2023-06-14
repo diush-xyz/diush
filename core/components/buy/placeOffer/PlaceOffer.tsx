@@ -7,7 +7,11 @@ import LargeButton from "../../lib/LargeButton";
 import { useScopeProductStore } from "../../../state/buy/ScopeProduct.store";
 import { usePlaceOfferStore } from "../../../state/buy/PlaceOffer.store";
 import { useBuyProductStore } from "../../../state/buy/BuyProduct.store";
-import { BuyFlowStatus, OfferStatus } from "../../../@types/GlobalTypes";
+import {
+    BuyFlowStatus,
+    IConversation,
+    OfferStatus,
+} from "../../../@types/GlobalTypes";
 import InfoBar from "./InfoBar";
 import ChevronRight from "../../../icons/catalog/ChevronRight";
 import { MAX_WIDTH } from "../../../utils/constants";
@@ -20,6 +24,7 @@ import { createOfferInDb } from "../../../utils/offers.util";
 import { v4 as uuidv4 } from "uuid";
 import { useAuthStore } from "../../../state/auth/Auth.store";
 import { createConversationInDb } from "../../../utils/conversations.util";
+import { HAPTIC_OPTIONS, hapticFeedback } from "../../../utils/haptics.util";
 
 const PlaceOffer = () => {
     const scopeProductStore = useScopeProductStore();
@@ -130,8 +135,7 @@ const PlaceOffer = () => {
                             title="offer"
                             onPress={() => {
                                 const convoId = uuidv4();
-                                //create the conversation in the db
-                                createConversationInDb({
+                                const convo: IConversation = {
                                     id: convoId,
                                     buyerUID: user.id,
                                     sellerUID:
@@ -141,7 +145,17 @@ const PlaceOffer = () => {
                                     linkedProductID:
                                         scopeProductStore.fetchedActiveProduct
                                             .id,
+                                };
+                                //create the conversation in the db
+                                createConversationInDb(convo).catch(err => {
+                                    console.warn(
+                                        "something went wrong creating the conversation: ",
+                                        err
+                                    );
                                 });
+
+                                placeOfferStore.setConversationCreated(convo);
+
                                 //make the first offer in the conversation we just created
                                 createOfferInDb({
                                     id: uuidv4(),
@@ -155,11 +169,20 @@ const PlaceOffer = () => {
                                     linkedProductID:
                                         scopeProductStore.fetchedActiveProduct
                                             .id,
-                                });
+                                })
+                                    .then(() => {
+                                        hapticFeedback(HAPTIC_OPTIONS.SUCCESS);
+                                        buyProductStore.setStatus(
+                                            BuyFlowStatus.SUCCESS
+                                        );
+                                    })
+                                    .catch(err => {
+                                        console.warn(
+                                            "something went wrong creating the offer: ",
+                                            err
+                                        );
+                                    });
                                 //take the user to the success screen
-                                buyProductStore.setStatus(
-                                    BuyFlowStatus.SUCCESS
-                                );
                             }}
                             footer
                             footerButtonTitle="cancel"

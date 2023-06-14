@@ -259,7 +259,8 @@ const ReviewOfferHome = () => {
                             </CustomText>
                         </View>
                         <View>
-                            <RoundedMoreIcon />
+                            {/* <RoundedMoreIcon /> */}
+                            {/*TODO: Add this back later, maybe??*/}
                         </View>
                     </View>
                     <View

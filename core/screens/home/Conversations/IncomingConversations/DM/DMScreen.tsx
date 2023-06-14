@@ -15,6 +15,10 @@ import { useOfferStore } from "../../../../../state/auth/Offer.store";
 import { useTheme } from "../../../../../utils/useTheme.util";
 import { IUser, OfferStatus } from "../../../../../@types/GlobalTypes";
 import { useAuthStore } from "../../../../../state/auth/Auth.store";
+import {
+    HAPTIC_OPTIONS,
+    hapticFeedback,
+} from "../../../../../utils/haptics.util";
 
 const DMScreen = () => {
     const theme = useTheme();
@@ -227,11 +231,14 @@ const DMScreen = () => {
                                             product={
                                                 conversationStore.activeConversationProduct
                                             }
-                                            onReviewPress={() =>
+                                            onReviewPress={() => {
+                                                hapticFeedback(
+                                                    HAPTIC_OPTIONS.MEDIUM
+                                                );
                                                 offerStore.setOfferBeingReviewed(
                                                     elem
-                                                )
-                                            }
+                                                );
+                                            }}
                                         />
                                     </View>
                                     {elem.isCounterOffer && !isOutbound && (

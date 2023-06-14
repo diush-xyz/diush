@@ -6,14 +6,18 @@ import { observer } from "mobx-react";
 import { View } from "react-native";
 import { useAuthStore } from "../../../../state/auth/Auth.store";
 import { useScopeProductStore } from "../../../../state/buy/ScopeProduct.store";
+import { useBuyProductStore } from "../../../../state/buy/BuyProduct.store";
 
 const WrittenInfoSection = () => {
     const scopeProductStore = useScopeProductStore();
-    const authStore = useAuthStore();
+    const buyProductStore = useBuyProductStore();
+    const [location, setLocation] = React.useState<string>("no location set.");
 
     React.useEffect(() => {
-        console.log(authStore.user);
-    }, []);
+        if (!buyProductStore.loadingSeller) {
+            setLocation(buyProductStore.seller.location);
+        }
+    }, [buyProductStore.loadingSeller]);
 
     return (
         <View
@@ -43,9 +47,11 @@ const WrittenInfoSection = () => {
             <CustomText fontSize={18} font="Heavy" style={{ marginBottom: 14 }}>
                 seller location
             </CustomText>
-            <CustomText secondary fontSize={17}>
-                {authStore.user.location}
-            </CustomText>
+            {!buyProductStore.loadingSeller && (
+                <CustomText secondary fontSize={17}>
+                    {location}
+                </CustomText>
+            )}
             {scopeProductStore.fetchedActiveProduct.additionalInfo && (
                 <>
                     <HorizontalLine />

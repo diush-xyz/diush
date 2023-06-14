@@ -41,10 +41,10 @@ const WrittenInfoSection = () => {
             </CustomText>
             <HorizontalLine />
             <CustomText fontSize={18} font="Heavy" style={{ marginBottom: 14 }}>
-                seller location
+                your location
             </CustomText>
             <CustomText secondary fontSize={17}>
-                {authStore.user.location}
+                {authStore.user.location ?? "no location set."}
             </CustomText>
             {catalogStore.activeProduct.additionalInfo && (
                 <>

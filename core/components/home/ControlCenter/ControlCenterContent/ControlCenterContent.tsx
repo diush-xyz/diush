@@ -1,7 +1,7 @@
 import React from "react";
 import { useTheme } from "../../../../utils/useTheme.util";
 import CustomText from "../../../lib/CustomText";
-import { View, Image, TouchableOpacity } from "react-native";
+import { View, Image, TouchableOpacity, Linking } from "react-native";
 import { useAuthStore } from "../../../../state/auth/Auth.store";
 import RoundedMoreIcon from "../../../../icons/common/RoundedMore";
 import DealsIcon from "../../../../icons/home/controlCenter/deals";
@@ -218,7 +218,11 @@ const ControlCenterContent = () => {
                         <CustomText font="Bold">help center</CustomText>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => null}
+                        onPress={() =>
+                            Linking.openURL(
+                                "mailto:filifonsecacagnazzo@gmail.com"
+                            )
+                        }
                         style={{ marginBottom: 30 }}
                     >
                         <CustomText font="Bold">give feedback ❤️</CustomText>
@@ -240,6 +244,10 @@ const ControlCenterContent = () => {
                             homeStore.setIsIncomingChatsActive(true);
                             homeStore.setIsOutboundChatsActive(false);
                             homeStore.setControlCenter(false);
+                            utilStore.setCurrentLoggedInScreen(
+                                LoggedInScreen.HOME
+                            );
+                            authStore.setIsSheetOpen(false);
                         }}
                     >
                         <CustomText style={{ color: "#FF453A" }}>

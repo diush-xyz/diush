@@ -1,6 +1,11 @@
 import { makeAutoObservable } from "mobx";
 import React from "react";
-import { AuthStatus, BuyFlowStatus, IUser } from "../../@types/GlobalTypes";
+import {
+    AuthStatus,
+    BuyFlowStatus,
+    IConversation,
+    IUser,
+} from "../../@types/GlobalTypes";
 
 /**
  * A store to handle anything auth-related.
@@ -14,6 +19,12 @@ export default class PlaceOfferStore {
 
     setOfferAmount(newOfferAmount: number) {
         this.offerAmount = newOfferAmount;
+    }
+
+    conversationCreated: IConversation = null;
+
+    setConversationCreated(newConversation: IConversation) {
+        this.conversationCreated = newConversation;
     }
 }
 

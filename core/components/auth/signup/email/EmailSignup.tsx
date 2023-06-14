@@ -23,6 +23,8 @@ import CustomText from "../../../lib/CustomText";
 import KeyboardListener from "react-native-keyboard-listener";
 import { useUtilStore } from "../../../../state/Util.store";
 import ScrollWrapper from "../../ScrollWrapper/ScrollWrapper";
+import { fetchSignInMethodsForEmail } from "firebase/auth";
+import { auth } from "../../../../../config/firebase";
 
 //TODO: Proper check in the backend for existing user email
 
@@ -33,11 +35,25 @@ const EmailSignup = () => {
     const [allClear, setAllClear] = React.useState(false);
     const [errMsg, setErrMsg] = React.useState<string>("");
 
-    const checkIfProceed = () => {
+    const checkIfProceed = async () => {
         setFirstTime(false);
         if (allClear) {
-            signupStore.setCurrentStep(signupStore.currentStep + 1);
+            signupStore.setPrevEmail(signupStore.email);
+            let exist = await checkIfEmailExist();
+            if (!exist) signupStore.setCurrentStep(signupStore.currentStep + 1);
+            setAllClear(false);
         }
+    };
+
+    const checkIfEmailExist = async (): Promise<boolean> => {
+        let res = await fetchSignInMethodsForEmail(
+            auth,
+            signupStore.email
+        ).then(val => {
+            if (val.length === 0) return false;
+            return true;
+        });
+        return res;
     };
 
     React.useEffect(() => {
@@ -47,12 +63,14 @@ const EmailSignup = () => {
         if (signupStore.email === "" || !signupStore.email.includes("@")) {
             setAllClear(false);
             setErrMsg("oop! you need a valid email address to continue.");
+        } else if (signupStore.email === signupStore.prevEmail) {
+            setAllClear(false);
+            setErrMsg(
+                "oh no! another account already exists with this email. try again or log in."
+            );
         } else {
             setAllClear(true);
         }
-
-        console.log("the email: " + signupStore.email);
-        console.log(allClear);
     });
 
     return (

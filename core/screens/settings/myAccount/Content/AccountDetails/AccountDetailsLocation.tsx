@@ -95,7 +95,7 @@ const AccountDetailsLocation = () => {
                             current
                         </CustomText>
                         <CustomText font="Bold" secondary>
-                            {user.location}
+                            {user.location ?? "no location set."}
                         </CustomText>
                     </View>
                     <View style={{ marginTop: 22 }}>
@@ -106,7 +106,7 @@ const AccountDetailsLocation = () => {
                 </View>
                 {/*this must be out here for the error bar's width to cover 100% of the screen*/}
                 <CustomTextInput
-                    placeholder="new name"
+                    placeholder="new location"
                     onChangeText={text => setNewLocation(text)}
                     isValid={allClear}
                     isErr={!allClear && !firstTime}

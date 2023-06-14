@@ -12,10 +12,11 @@ import { useLoginStore } from "../../../state/auth/Login.store";
 import { useSignupStore } from "../../../state/auth/Signup.store";
 import { MAX_WIDTH } from "../../../utils/constants";
 import { useSettingsStore } from "../../../state/auth/Settings.store";
-import { SettingsStatus } from "../../../@types/GlobalTypes";
+import { LoggedInScreen, SettingsStatus } from "../../../@types/GlobalTypes";
 import { observer } from "mobx-react";
 import MenuElem from "../../../components/settings/MenuElem";
 import { doc, updateDoc } from "firebase/firestore";
+import { useUtilStore } from "../../../state/Util.store";
 
 export interface ISettingsData {
     text: string;
@@ -36,6 +37,7 @@ const SettingsHome = () => {
     const logInStore = useLoginStore();
     const signUpStore = useSignupStore();
     const settingsStore = useSettingsStore();
+    const utilStore = useUtilStore();
 
     const updateNotificationSettings = async (value: boolean) => {
         const userRef = doc(db, "users", authStore.user.id);
@@ -182,6 +184,9 @@ const SettingsHome = () => {
                     )}
                     <TouchableOpacity
                         onPress={() => {
+                            utilStore.setCurrentLoggedInScreen(
+                                LoggedInScreen.HOME
+                            );
                             auth.signOut();
                             //TODO: still must fix blank popup that comes up after the user signs out of their acc
                             //reset stuff
@@ -191,6 +196,7 @@ const SettingsHome = () => {
                             homeStore.setIsIncomingChatsActive(true);
                             homeStore.setIsOutboundChatsActive(false);
                             homeStore.setControlCenter(false);
+                            authStore.setIsSheetOpen(false);
                         }}
                     >
                         <CustomText accent>log out</CustomText>

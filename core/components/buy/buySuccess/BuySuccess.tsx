@@ -12,16 +12,29 @@ import { observer } from "mobx-react";
 import ConfettiCannon from "react-native-confetti-cannon";
 import PopupHeader from "../../lib/PopupHeader";
 import { View } from "react-native";
+import { useConversationStore } from "../../../state/auth/Conversation.store";
+import { useHomeStore } from "../../../state/auth/Home.store";
+import { hapticFeedback, HAPTIC_OPTIONS } from "../../../utils/haptics.util";
 
 const BuySuccess = () => {
     const scopeProductStore = useScopeProductStore();
     const placeOfferStore = usePlaceOfferStore();
     const buyProductStore = useBuyProductStore();
     const utilStore = useUtilStore();
+    const homeStore = useHomeStore();
+    const conversationStore = useConversationStore();
 
     const [price, setPrice] = React.useState<string>(
         scopeProductStore.fetchedActiveProduct.askingPrice.toString()
     );
+
+    const close = () => {
+        hapticFeedback(HAPTIC_OPTIONS.MEDIUM);
+        utilStore.setCurrentLoggedInScreen(LoggedInScreen.HOME);
+        //clear stuff:
+        placeOfferStore.setOfferAmount(0);
+        buyProductStore.setStatus(BuyFlowStatus.SCOPE);
+    };
 
     return (
         <>
@@ -71,21 +84,27 @@ const BuySuccess = () => {
                         secondary
                         style={{ marginTop: 32 }}
                     >
-                        {`now it’s simply about waiting. you\n will be notified when Lucas has\n decided to accept, decline, or\n negotiate your offer.`}
+                        {`now it’s simply about waiting. you\n will be notified when ${
+                            buyProductStore.seller.displayName.split(" ")[0]
+                        } has decided\n to accept or counter your offer.`}
                     </CustomText>
                     <View style={{ marginTop: 225 }} />
                     <LargeButton
-                        title="close"
+                        title="view conversation"
                         onPress={() => {
-                            utilStore.setCurrentLoggedInScreen(
-                                LoggedInScreen.HOME
+                            close();
+                            homeStore.setIsIncomingChatsActive(false);
+                            homeStore.setIsOutboundChatsActive(true);
+                            conversationStore.setActiveConvoOtherUser(
+                                buyProductStore.seller
                             );
-                            //clear stuff:
-                            placeOfferStore.setOfferAmount(0);
-                            buyProductStore.setStatus(BuyFlowStatus.SCOPE);
+                            conversationStore.setActiveConversation(
+                                placeOfferStore.conversationCreated
+                            );
                         }}
                         footer
-                        footerButtonTitle="view conversation"
+                        footerButtonTitle="close"
+                        footerButtonOnPress={() => close()}
                     />
                 </View>
             </BottomSheetView>
