@@ -210,10 +210,6 @@ const HomeBaseScreen = () => {
                     "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80"
                 }
                 onPfpPress={() => homeStore.setControlCenter(true)}
-                // backArrow
-                // backArrowOnPress={() =>
-                //     utilStore.setCurrentLoggedInScreen(LoggedInScreen.HOME)
-                // }
                 title="home base"
             />
             {/* <GestureRecognizer
@@ -312,25 +308,6 @@ const HomeBaseScreen = () => {
                     )}
             </ScrollView>
             {/* </GestureRecognizer> */}
-            {/* <View style={{ marginTop: 40, width: "100%" }}>
-                <LargeButton
-                    title="create offer"
-                    onPress={() => {
-                        createOfferInDb({
-                            id: uuidv4(),
-                            amount: 26,
-                            isReadByRecipient: false,
-                            linkedConversationID: "gOe51DwdMtg6lbcYoVoi",
-                            placedByUID: "1ekZfMGJtVedOgxW3XjD4vHIdt12",
-                            timestamp: new Date(),
-                            status: OfferStatus.PENDING,
-                            isCounterOffer: false,
-                            linkedProductID:
-                                "728671c7-35fe-47a3-8996-bc12e0f5076f",
-                        });
-                    }}
-                />
-            </View> */}
             <View style={{ marginTop: 40, marginBottom: 50, width: "100%" }}>
                 <LargeButton
                     title="make a test offer"
