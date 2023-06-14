@@ -1,42 +1,34 @@
 import React from "react";
-import { View, Text, Animated, Easing } from "react-native";
-import { WebView } from "react-native-webview";
+import { Animated, Easing } from "react-native";
 import NoBackgroundLogo from "../../../icons/auth/NoBackgroundLogo";
 
 export const CustomLoeader = () => {
-    const animatedValue = React.useRef(new Animated.Value(0)).current;
-    const [isTop, setIsTop] = React.useState(true);
+    const spinValue: Animated.Value = new Animated.Value(0);
 
-    const startAnimation = toValue => {
-        Animated.timing(animatedValue, {
-            toValue,
-            duration: 2000,
-            easing: Easing.linear,
-            useNativeDriver: true,
-        }).start(() => {
-            setIsTop(!isTop);
-        });
+    const startAnimation = () => {
+        Animated.loop(
+            Animated.timing(spinValue, {
+                toValue: 1,
+                duration: 650,
+                easing: Easing.linear,
+                useNativeDriver: true,
+            })
+        ).start();
     };
 
     React.useEffect(() => {
-        startAnimation(isTop ? 1 : 0);
-    }, [isTop]);
+        startAnimation();
+    }, []);
 
-    const translateY = animatedValue.interpolate({
+    const spin = spinValue.interpolate({
         inputRange: [0, 1],
-        outputRange: [0, 10],
-        extrapolate: "clamp",
+        outputRange: ["0deg", "360deg"],
     });
 
-    const scale = animatedValue.interpolate({
-        inputRange: [0, 1],
-        outputRange: [1.15, 0.9],
-        extrapolate: "clamp",
-    });
     return (
         <Animated.View
             style={{
-                transform: [{ translateY }, { scale }],
+                transform: [{ rotate: spin }],
             }}
         >
             <NoBackgroundLogo fill="#ffffff" />
