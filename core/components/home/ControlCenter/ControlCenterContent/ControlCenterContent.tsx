@@ -247,6 +247,7 @@ const ControlCenterContent = () => {
                             utilStore.setCurrentLoggedInScreen(
                                 LoggedInScreen.HOME
                             );
+                            authStore.setIsSheetOpen(false);
                         }}
                     >
                         <CustomText style={{ color: "#FF453A" }}>

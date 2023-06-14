@@ -6,14 +6,11 @@ import { observer } from "mobx-react";
 import { View } from "react-native";
 import { useAuthStore } from "../../../../state/auth/Auth.store";
 import { useScopeProductStore } from "../../../../state/buy/ScopeProduct.store";
+import { useBuyProductStore } from "../../../../state/buy/BuyProduct.store";
 
 const WrittenInfoSection = () => {
     const scopeProductStore = useScopeProductStore();
-    const authStore = useAuthStore();
-
-    React.useEffect(() => {
-        console.log(authStore.user);
-    }, []);
+    const buyProductStore = useBuyProductStore();
 
     return (
         <View
@@ -44,7 +41,7 @@ const WrittenInfoSection = () => {
                 seller location
             </CustomText>
             <CustomText secondary fontSize={17}>
-                {authStore.user.location}
+                {buyProductStore.seller.location ?? "no location set."}
             </CustomText>
             {scopeProductStore.fetchedActiveProduct.additionalInfo && (
                 <>

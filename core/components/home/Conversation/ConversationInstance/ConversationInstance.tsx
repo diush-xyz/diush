@@ -25,6 +25,7 @@ import { useConversationStore } from "../../../../state/auth/Conversation.store"
 import { getInitials } from "../../../../utils/initials.util";
 import ProfileImage from "../../../lib/ProfileImage";
 import dayjs from "dayjs";
+import { truncate } from "../../../../utils/truncate.util";
 
 export enum CONVERSATION {
     INCOMING,
@@ -228,14 +229,16 @@ const ConversationInstance = (props: IConversationInstance) => {
             </CustomText> */}
                     <CustomText secondary fontSize={16}>
                         {mostRecentOffer?.placedByUID == authStore.user.id
-                            ? "you sent an offer for "
+                            ? props.type == CONVERSATION.INCOMING
+                                ? "you sent a counter for "
+                                : "you sent an offer for "
                             : "new offer for "}
                         <CustomText
                             secondary
                             fontSize={16}
                             style={{ fontStyle: "italic" }}
                         >
-                            '{linkedProduct?.title}'
+                            '{truncate(linkedProduct?.title ?? "", 10)}'
                         </CustomText>
                     </CustomText>
                 </View>

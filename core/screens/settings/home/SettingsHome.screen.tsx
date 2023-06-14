@@ -196,6 +196,7 @@ const SettingsHome = () => {
                             homeStore.setIsIncomingChatsActive(true);
                             homeStore.setIsOutboundChatsActive(false);
                             homeStore.setControlCenter(false);
+                            authStore.setIsSheetOpen(false);
                         }}
                     >
                         <CustomText accent>log out</CustomText>

@@ -30,7 +30,15 @@ import ScreenHeader from "../../../components/lib/ScreenHeader";
 import Switcher from "../../../components/catalog/Dashboard/Switcher";
 import CustomTextInput from "../../../components/lib/CustomTextInput";
 import ConversationInstance from "../../../components/home/Conversation/ConversationInstance";
-import { query, collection, where, onSnapshot } from "firebase/firestore";
+import {
+    query,
+    collection,
+    where,
+    onSnapshot,
+    getDocs,
+    orderBy,
+    limit,
+} from "firebase/firestore";
 import { CONVERSATION } from "../../../components/home/Conversation/ConversationInstance/ConversationInstance";
 import { createOfferInDb } from "../../../utils/offers.util";
 import { v4 as uuidv4 } from "uuid";
@@ -53,30 +61,73 @@ const HomeBaseScreen = () => {
     const [count, setCount] = React.useState<number>(0);
     const [swipeStarted, setSwipeStarted] = React.useState<boolean>(false);
 
+    const [sortedIncomingConversations, setSortedIncomingConversations] =
+        React.useState<any[]>([]);
+    const [sortedOutboundConversations, setSortedOutboundConversations] =
+        React.useState<any[]>([]);
+
     const config = {
         velocityThreshold: 0.3,
         directionalOffsetThreshold: 80,
     };
 
-    const fetchIncomingConversations = () => {
+    const fetchIncomingConversations = async () => {
         const q = query(
             collection(db, "conversations"),
             where("sellerUID", "==", auth.currentUser?.uid)
         );
 
-        onSnapshot(q, querySnapshot => {
-            const fetched = [];
+        let incomingConversations = [];
 
-            querySnapshot.forEach(documentSnapshot => {
-                fetched.push({
-                    ...documentSnapshot.data(),
-                    key: documentSnapshot.id,
-                });
+        try {
+            const querySnapshot = await getDocs(q);
+
+            for (const conversationDoc of querySnapshot.docs) {
+                const conversation = conversationDoc.data();
+
+                const offersRef = collection(db, "offers");
+                const offersQuery = query(
+                    offersRef,
+                    where("linkedConversationID", "==", conversationDoc.id),
+                    orderBy("timestamp", "desc"),
+                    limit(1)
+                );
+
+                const offersQuerySnapshot = await getDocs(offersQuery);
+
+                if (!offersQuerySnapshot.empty) {
+                    incomingConversations.push({
+                        conversation,
+                        offer: offersQuerySnapshot.docs[0].data(),
+                    });
+                } else {
+                    incomingConversations.push({
+                        conversation,
+                        offer: null,
+                    });
+                }
+            }
+
+            incomingConversations.sort((a, b) => {
+                const offerA = a.offer;
+                const offerB = b.offer;
+
+                if (offerA && offerB) {
+                    return offerB.timestamp - offerA.timestamp;
+                } else if (offerA) {
+                    return -1;
+                } else if (offerB) {
+                    return 1;
+                } else {
+                    return 0;
+                }
             });
 
-            setIncomingConversations(fetched);
+            setSortedIncomingConversations([...incomingConversations]);
             setLoading(false);
-        });
+        } catch (error) {
+            console.log("Error fetching conversations:", error);
+        }
     };
 
     const fetchOutboundConversations = () => {
@@ -184,17 +235,19 @@ const HomeBaseScreen = () => {
                 }}
             >
                 {homeStore.isIncomingChatsActive &&
-                    incomingConversations.length > 0 &&
-                    incomingConversations.map((elem, idx) => {
+                    sortedIncomingConversations.length > 0 &&
+                    sortedIncomingConversations.map((elem, idx) => {
                         return (
                             <ConversationInstance
                                 key={idx}
                                 type={CONVERSATION.INCOMING}
-                                data={elem}
-                                canFetch={incomingConversations.length > 0}
+                                data={elem.conversation}
+                                canFetch={
+                                    sortedIncomingConversations.length > 0
+                                }
                                 onPress={() =>
                                     conversationStore.setActiveConversation(
-                                        elem
+                                        elem.conversation
                                     )
                                 }
                             />
@@ -218,7 +271,9 @@ const HomeBaseScreen = () => {
                         );
                     })}
                 {homeStore.isIncomingChatsActive &&
-                    incomingConversations.length === 0 && <EmptyHomeView />}
+                    sortedIncomingConversations.length === 0 && (
+                        <EmptyHomeView />
+                    )}
                 {homeStore.isOutboundChatsActive &&
                     outboundConversations.length === 0 && <EmptyHomeView />}
             </ScrollView>
