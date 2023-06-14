@@ -183,8 +183,14 @@ const HomeBaseScreen = () => {
     };
 
     React.useEffect(() => {
-        fetchIncomingConversations();
-        fetchOutboundConversations();
+        //important for the order of fetching - ensures the data the user needs to see first is fetched before the rest
+        if (homeStore.isIncomingChatsActive) {
+            fetchIncomingConversations();
+            fetchOutboundConversations();
+        } else {
+            fetchOutboundConversations();
+            fetchIncomingConversations();
+        }
     }, []);
 
     if (authStore.userFetchLoading || loading) {
