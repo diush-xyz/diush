@@ -11,11 +11,13 @@ import { useBuyProductStore } from "../../../../state/buy/BuyProduct.store";
 const WrittenInfoSection = () => {
     const scopeProductStore = useScopeProductStore();
     const buyProductStore = useBuyProductStore();
+    const [location, setLocation] = React.useState<string>("no location set.");
 
     React.useEffect(() => {
-        console.warn("diush");
-        console.warn(buyProductStore.seller);
-    }, []);
+        if (!buyProductStore.loadingSeller) {
+            setLocation(buyProductStore.seller.location);
+        }
+    }, [buyProductStore.loadingSeller]);
 
     return (
         <View
@@ -47,7 +49,7 @@ const WrittenInfoSection = () => {
             </CustomText>
             {!buyProductStore.loadingSeller && (
                 <CustomText secondary fontSize={17}>
-                    {buyProductStore.seller.location ?? "no location set."}
+                    {location}
                 </CustomText>
             )}
             {scopeProductStore.fetchedActiveProduct.additionalInfo && (

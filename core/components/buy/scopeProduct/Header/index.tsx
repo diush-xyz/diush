@@ -40,8 +40,8 @@ const Header = () => {
     const [sameUserWarning, setSameUserWarning] =
         React.useState<boolean>(false);
 
-    const fetchSellerUser = () => {
-        fetchUserFromDb({
+    const fetchSellerUser = async () => {
+        await fetchUserFromDb({
             id: scopeProductStore.fetchedActiveProduct.linkedUID,
             setUser: (fUser: IUser) => {
                 buyProductStore.setSeller(fUser);
@@ -196,7 +196,7 @@ const Header = () => {
                             font="Bold"
                             style={{ marginLeft: 2 }}
                         >
-                            5 orders total
+                            5 offers total
                         </CustomText>
                         <ActiveIndicator />
                         {/*TODO: Add shadow!!*/}

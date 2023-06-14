@@ -17,6 +17,7 @@ import { useScopeProductStore } from "../../../state/buy/ScopeProduct.store";
 import { query, collection, where, onSnapshot } from "firebase/firestore";
 import { db, auth } from "../../../../config/firebase";
 import CustomText from "../../lib/CustomText";
+import CustomLoader from "../../lib/CustomLoader";
 
 const ScopeProduct = () => {
     const catalogStore = useCatalogStore();
@@ -60,7 +61,7 @@ const ScopeProduct = () => {
     if (loading) {
         return (
             <BottomSheetView style={GLOBAL_STYLES.viewProductSheetViewStyle}>
-                <CustomText>Loading...</CustomText>
+                <CustomLoader />
             </BottomSheetView>
         );
     }
