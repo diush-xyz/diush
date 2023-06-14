@@ -89,11 +89,11 @@ const CustomDMScreenHeader = () => {
                             fontSize={18}
                             textAlign="center"
                         >
-                            {
-                                conversationStore.activeConvoOtherUser.displayName.split(
-                                    " "
-                                )[0]
-                            }
+                            {truncate(
+                                conversationStore.activeConvoOtherUser
+                                    .displayName,
+                                11
+                            )}
                         </CustomText>
                     </View>
                     {/* <CustomText secondary textAlign="center" fontSize={16}>
