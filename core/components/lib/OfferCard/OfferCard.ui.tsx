@@ -191,17 +191,11 @@ const OfferCard = (props: IOfferCard) => {
                                     marginTop: 5,
                                 }}
                             >
-                                <ProfileImage
-                                    specificUser={props.specificUser}
-                                    size={14}
-                                />
-                                <CustomText
-                                    font="Bold"
-                                    secondary
-                                    fontSize={14}
-                                    style={{ marginLeft: 5 }}
-                                >
-                                    sent by {props.specificUser?.displayName}
+                                <CustomText font="Bold" secondary fontSize={14}>
+                                    sent by{" "}
+                                    {props.offer.placedByUID == user.id
+                                        ? "you"
+                                        : props.specificUser?.displayName}
                                 </CustomText>
                             </View>
                         </View>
