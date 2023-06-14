@@ -45,6 +45,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useConversationStore } from "../../../state/auth/Conversation.store";
 import EmptyHomeView from "../../../components/home/EmptyHomeView";
 import GestureRecognizer from "react-native-swipe-detect";
+import CustomLoader from "../../../components/lib/CustomLoader/CustomLoader";
 
 const HomeBaseScreen = () => {
     const utilStore = useUtilStore();
@@ -189,7 +190,7 @@ const HomeBaseScreen = () => {
     if (authStore.userFetchLoading || loading) {
         return (
             <>
-                <CustomText accent>Loading...</CustomText>
+                <CustomLoader />
             </>
         );
     }
@@ -238,13 +239,13 @@ const HomeBaseScreen = () => {
                 text1="incoming"
                 text2="to others"
                 is1Active={homeStore.isIncomingChatsActive}
-                set1Active={(status: boolean) =>
-                    homeStore.setIsIncomingChatsActive(status)
-                }
+                set1Active={(status: boolean) => {
+                    homeStore.setIsIncomingChatsActive(status);
+                }}
                 is2Active={homeStore.isOutboundChatsActive}
-                set2Active={(status: boolean) =>
-                    homeStore.setIsOutboundChatsActive(status)
-                }
+                set2Active={(status: boolean) => {
+                    homeStore.setIsOutboundChatsActive(status);
+                }}
             />
             <CustomTextInput
                 placeholder="search chats"
