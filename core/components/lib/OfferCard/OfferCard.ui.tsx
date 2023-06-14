@@ -25,6 +25,7 @@ import {
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../config/firebase";
 import { useAuthStore } from "../../../state/auth/Auth.store";
+import { truncate } from "../../../utils/truncate.util";
 
 //TODO: Must add proper gradient background to button (not working, blank for now)
 
@@ -157,14 +158,18 @@ const OfferCard = (props: IOfferCard) => {
                         />
                         <View style={{ display: "flex", marginLeft: 11 }}>
                             <CustomText
-                                primary
                                 font="Heavy"
                                 fontSize={16}
                                 style={{
                                     alignSelf: "flex-start",
+                                    color:
+                                        props.offer.status ==
+                                        OfferStatus.ACCEPTED
+                                            ? theme.success
+                                            : theme.primaryText,
                                 }}
                             >
-                                {props.product?.title}
+                                ${props.offer?.amount}
                             </CustomText>
                             <View
                                 style={{
@@ -194,7 +199,7 @@ const OfferCard = (props: IOfferCard) => {
                                                     : theme.accent,
                                         }}
                                     >
-                                        ${props.offer?.amount}
+                                        {truncate(props.product?.title, 19)}
                                     </CustomText>
                                 </CustomText>
                             </View>
