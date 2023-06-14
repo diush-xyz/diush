@@ -87,15 +87,14 @@ const ScopeProduct = () => {
     const [timeAgo, setTimeAgo] = React.useState<string>("");
 
     React.useEffect(() => {
-        if (!loading) {
-            const parsed = dayjs.unix(
-                scopeProductStore.fetchedActiveProduct.createdAt.seconds
-            );
-            //@ts-ignore
-            // const offerTimestamp = dayjs(parsed).fromNow(true);
-            setTimeAgo("hii");
-        }
-    }, [loading]);
+        // @ts-ignore
+        const parsed = dayjs.unix(
+            scopeProductStore.fetchedActiveProduct.createdAt.seconds
+        );
+        //@ts-ignore
+        const offerTimestamp = dayjs(parsed).fromNow(true);
+        setTimeAgo(offerTimestamp);
+    });
 
     if (loading || sellerUserLoading) {
         return (
