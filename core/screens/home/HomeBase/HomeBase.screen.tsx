@@ -126,7 +126,7 @@ const HomeBaseScreen = () => {
             setSortedIncomingConversations([...incomingConversations]);
             setLoading(false);
         } catch (error) {
-            console.log("Error fetching conversations:", error);
+            console.warn("Error fetching conversations:", error);
         }
     };
 
