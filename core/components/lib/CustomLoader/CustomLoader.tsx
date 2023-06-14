@@ -1,7 +1,6 @@
 import React from "react";
 import { Animated, Easing, View } from "react-native";
 import NoBackgroundLogo from "../../../icons/auth/NoBackgroundLogo";
-import CustomText from "../CustomText";
 
 export const CustomLoeader = () => {
     const spinValue: Animated.Value = new Animated.Value(0);

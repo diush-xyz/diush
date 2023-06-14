@@ -1,31 +1,18 @@
-import { View, Text, ImageBackground, FlatList } from "react-native";
+import { View, FlatList } from "react-native";
 import React from "react";
-import CustomText from "../../components/lib/CustomText";
-import PopupHeader from "../../components/lib/PopupHeader";
 import ScreenHeader from "../../components/lib/ScreenHeader";
 import { useUtilStore } from "../../state/Util.store";
-import { CatalogStatus, LoggedInScreen } from "../../@types/GlobalTypes";
+import { LoggedInScreen } from "../../@types/GlobalTypes";
 import { useTheme } from "../../utils/useTheme.util";
 import CustomTextInput from "../../components/lib/CustomTextInput";
-import SearchIcon from "../../icons/catalog/Search";
 import Switcher from "./Dashboard/Switcher";
-import { truncate } from "../../utils/truncate.util";
-import ProductCard, { IProductCard } from "./Dashboard/ProductCard";
-import { v4 as uuid } from "uuid";
-import WandIcon from "../../icons/catalog/Wand";
+import ProductCard from "./Dashboard/ProductCard";
 import CreateProductButton from "./Dashboard/CreateProductButton";
-import LargeButton from "../../components/lib/LargeButton";
-import {
-    createProductInDb,
-    readMyProductsFromDb,
-} from "../../utils/products.util";
 import { auth, db } from "../../../config/firebase";
 import { query, collection, onSnapshot, where } from "firebase/firestore";
 import { useCatalogStore } from "../../state/auth/Catalog.store";
 import { observer } from "mobx-react";
-import EmptyCatalogIcon from "../../icons/catalog/Empty";
 import EmptyCatalogView from "./EmptyCatalogView";
-import ImageOverlay from "./viewProduct/ImageOverlay";
 import { MAX_WIDTH } from "../../utils/constants";
 import CustomLoader from "../lib/CustomLoader";
 
