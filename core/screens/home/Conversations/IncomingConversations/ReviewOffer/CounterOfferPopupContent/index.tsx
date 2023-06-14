@@ -145,7 +145,8 @@ const CounterOfferPopupContent = () => {
                             </CustomText>
                         </View>
                         <View>
-                            <RoundedMoreIcon />
+                            {/* <RoundedMoreIcon /> */}
+                            {/*TODO: Add this back eventually, maybe??*/}
                         </View>
                     </View>
                     <View
