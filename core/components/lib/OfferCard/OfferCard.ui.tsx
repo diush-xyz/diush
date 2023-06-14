@@ -166,10 +166,23 @@ const OfferCard = (props: IOfferCard) => {
                                         props.offer.status ==
                                         OfferStatus.ACCEPTED
                                             ? theme.success
-                                            : theme.primaryText,
+                                            : theme.accent,
                                 }}
                             >
-                                ${props.offer?.amount}
+                                ${props.offer?.amount}{" "}
+                                <CustomText fontSize={16}>for</CustomText>{" "}
+                                <CustomText
+                                    fontSize={16}
+                                    style={{
+                                        color:
+                                            props.offer.status ==
+                                            OfferStatus.ACCEPTED
+                                                ? theme.success
+                                                : theme.primaryText,
+                                    }}
+                                >
+                                    {truncate(props.product?.title, 19)}
+                                </CustomText>
                             </CustomText>
                             <View
                                 style={{
@@ -188,19 +201,7 @@ const OfferCard = (props: IOfferCard) => {
                                     fontSize={14}
                                     style={{ marginLeft: 5 }}
                                 >
-                                    {props.specificUser?.displayName} •{" "}
-                                    <CustomText
-                                        fontSize={14}
-                                        style={{
-                                            color:
-                                                props.offer.status ==
-                                                OfferStatus.ACCEPTED
-                                                    ? theme.success
-                                                    : theme.accent,
-                                        }}
-                                    >
-                                        {truncate(props.product?.title, 19)}
-                                    </CustomText>
+                                    sent by {props.specificUser?.displayName}
                                 </CustomText>
                             </View>
                         </View>
