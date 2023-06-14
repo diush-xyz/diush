@@ -71,7 +71,9 @@ const BuySuccess = () => {
                         secondary
                         style={{ marginTop: 32 }}
                     >
-                        {`now it’s simply about waiting. you\n will be notified when Lucas has\n decided to accept, decline, or\n negotiate your offer.`}
+                        {`now it’s simply about waiting. you\n will be notified when ${
+                            buyProductStore.seller.displayName.split(" ")[0]
+                        } has\n decided to accept, decline, or\n negotiate your offer.`}
                     </CustomText>
                     <View style={{ marginTop: 225 }} />
                     <LargeButton
