@@ -29,7 +29,7 @@ const BuySuccess = () => {
     );
 
     const close = () => {
-        hapticFeedback(HAPTIC_OPTIONS.LIGHT);
+        hapticFeedback(HAPTIC_OPTIONS.MEDIUM);
         utilStore.setCurrentLoggedInScreen(LoggedInScreen.HOME);
         //clear stuff:
         placeOfferStore.setOfferAmount(0);
