@@ -100,7 +100,16 @@ const ScopeProduct = () => {
     if (loading || sellerUserLoading) {
         return (
             <BottomSheetView style={GLOBAL_STYLES.viewProductSheetViewStyle}>
-                <CustomLoader />
+                <View
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flex: 1,
+                    }}
+                >
+                    <CustomLoader />
+                </View>
             </BottomSheetView>
         );
     }
