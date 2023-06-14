@@ -31,6 +31,8 @@ import { useBuyProductStore } from "../../../../state/buy/BuyProduct.store";
 import CompactIcon from "../../../catalog/viewProduct/CustomDeleteConfirmation/CompactIcon";
 import WarningConfirmation from "../../../lib/Modals/WarningConfirmation";
 import WaitIcon from "../../../catalog/viewProduct/CustomDeleteConfirmation/WaitIcon";
+import { getDocs, query, collection, where } from "firebase/firestore";
+import { db } from "../../../../../config/firebase";
 
 const Header = () => {
     const buyProductStore = useBuyProductStore();
@@ -39,20 +41,6 @@ const Header = () => {
     const scopeProductStore = useScopeProductStore();
     const [sameUserWarning, setSameUserWarning] =
         React.useState<boolean>(false);
-
-    const fetchSellerUser = async () => {
-        await fetchUserFromDb({
-            id: scopeProductStore.fetchedActiveProduct.linkedUID,
-            setUser: (fUser: IUser) => {
-                buyProductStore.setSeller(fUser);
-                buyProductStore.setLoadingSeller(false);
-            },
-        });
-    };
-
-    React.useEffect(() => {
-        fetchSellerUser();
-    }, []);
 
     const PRODUCT_OPTIONS_DATA: IOptionsSelectorElement[] = [
         {

@@ -14,15 +14,25 @@ import ImageModal from "./ImageModal";
 import { useSellerViewProductStore } from "../../../state/auth/SellerViewProductStore";
 import dayjs from "dayjs";
 import { useScopeProductStore } from "../../../state/buy/ScopeProduct.store";
-import { query, collection, where, onSnapshot } from "firebase/firestore";
+import {
+    query,
+    collection,
+    where,
+    onSnapshot,
+    getDocs,
+} from "firebase/firestore";
 import { db, auth } from "../../../../config/firebase";
 import CustomText from "../../lib/CustomText";
 import CustomLoader from "../../lib/CustomLoader";
+import { useBuyProductStore } from "../../../state/buy/BuyProduct.store";
 
 const ScopeProduct = () => {
     const catalogStore = useCatalogStore();
     const scopeProductStore = useScopeProductStore();
     const [loading, setLoading] = React.useState<boolean>(true);
+    const [sellerUserLoading, setSellerUserLoading] =
+        React.useState<boolean>(true);
+    const buyProductStore = useBuyProductStore();
 
     React.useEffect(() => {
         const q = query(
@@ -45,6 +55,35 @@ const ScopeProduct = () => {
         });
     }, []);
 
+    const fetchSellerUser = async () => {
+        try {
+            const querySnapshot = await getDocs(
+                query(
+                    collection(db, "users"),
+                    where(
+                        "id",
+                        "==",
+                        scopeProductStore.fetchedActiveProduct.linkedUID
+                    )
+                )
+            );
+            querySnapshot.forEach(doc => {
+                //@ts-ignore
+                buyProductStore.setSeller(doc.data());
+            });
+        } catch (error) {
+            console.error("Error fetching seller user:", error);
+        }
+
+        setSellerUserLoading(false);
+    };
+
+    React.useEffect(() => {
+        if (!loading) {
+            fetchSellerUser();
+        }
+    }, [loading]);
+
     const [timeAgo, setTimeAgo] = React.useState<string>("");
 
     React.useEffect(() => {
@@ -58,7 +97,7 @@ const ScopeProduct = () => {
         }
     }, [loading]);
 
-    if (loading) {
+    if (loading || sellerUserLoading) {
         return (
             <BottomSheetView style={GLOBAL_STYLES.viewProductSheetViewStyle}>
                 <CustomLoader />
