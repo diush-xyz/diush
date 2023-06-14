@@ -27,6 +27,7 @@ import EmptyCatalogIcon from "../../icons/catalog/Empty";
 import EmptyCatalogView from "./EmptyCatalogView";
 import ImageOverlay from "./viewProduct/ImageOverlay";
 import { MAX_WIDTH } from "../../utils/constants";
+import CustomLoader from "../lib/CustomLoader";
 
 const CatalogHome = () => {
     const catalogStore = useCatalogStore();
@@ -123,7 +124,7 @@ const CatalogHome = () => {
     }, [loading]);
 
     if (loading) {
-        return <CustomText accent>Loading...</CustomText>;
+        return <CustomLoader />;
     }
 
     return (
