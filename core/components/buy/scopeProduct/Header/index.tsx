@@ -31,7 +31,13 @@ import { useBuyProductStore } from "../../../../state/buy/BuyProduct.store";
 import CompactIcon from "../../../catalog/viewProduct/CustomDeleteConfirmation/CompactIcon";
 import WarningConfirmation from "../../../lib/Modals/WarningConfirmation";
 import WaitIcon from "../../../catalog/viewProduct/CustomDeleteConfirmation/WaitIcon";
-import { getDocs, query, collection, where } from "firebase/firestore";
+import {
+    getDocs,
+    query,
+    collection,
+    where,
+    onSnapshot,
+} from "firebase/firestore";
 import { db } from "../../../../../config/firebase";
 
 const Header = () => {
@@ -41,6 +47,7 @@ const Header = () => {
     const scopeProductStore = useScopeProductStore();
     const [sameUserWarning, setSameUserWarning] =
         React.useState<boolean>(false);
+    const [totalOffers, setTotalOffers] = React.useState<number>(null);
 
     const PRODUCT_OPTIONS_DATA: IOptionsSelectorElement[] = [
         {
@@ -69,6 +76,30 @@ const Header = () => {
         //     onClick: () => scopeProductStore.setDeleteConfirmation(),
         // },
     ];
+
+    //get the total amount of offers for the product
+    React.useEffect(() => {
+        const q = query(
+            collection(db, "offers"),
+            where(
+                "linkedProductID",
+                "==",
+                scopeProductStore.fetchedActiveProduct.id
+            )
+        );
+        onSnapshot(q, querySnapshot => {
+            const fetched = [];
+
+            querySnapshot.forEach(documentSnapshot => {
+                fetched.push({
+                    ...documentSnapshot.data(),
+                    key: documentSnapshot.id,
+                });
+            });
+
+            setTotalOffers(fetched.length);
+        });
+    }, []);
 
     return (
         <>
@@ -184,7 +215,9 @@ const Header = () => {
                             font="Bold"
                             style={{ marginLeft: 2 }}
                         >
-                            5 offers total
+                            {totalOffers
+                                ? `${totalOffers} offers total`
+                                : "no offers yet"}
                         </CustomText>
                         <ActiveIndicator />
                         {/*TODO: Add shadow!!*/}

@@ -88,13 +88,16 @@ const ScopeProduct = () => {
 
     React.useEffect(() => {
         // @ts-ignore
-        const parsed = dayjs.unix(
-            scopeProductStore.fetchedActiveProduct.createdAt.seconds
-        );
-        //@ts-ignore
-        const offerTimestamp = dayjs(parsed).fromNow(true);
-        setTimeAgo(offerTimestamp);
-    });
+
+        if (!loading) {
+            const parsed = dayjs.unix(
+                scopeProductStore.fetchedActiveProduct.createdAt.seconds
+            );
+            //@ts-ignore
+            const offerTimestamp = dayjs(parsed).fromNow(true);
+            setTimeAgo(offerTimestamp);
+        }
+    }, [loading]);
 
     if (loading || sellerUserLoading) {
         return (

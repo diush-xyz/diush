@@ -65,7 +65,7 @@ const Header = () => {
         },
     ];
 
-    //get the highest offer for the product (all conversations)
+    //get the total amount of offers for the product
     React.useEffect(() => {
         const q = query(
             collection(db, "offers"),
