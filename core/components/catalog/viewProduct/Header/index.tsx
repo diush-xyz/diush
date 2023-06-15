@@ -10,7 +10,7 @@ import { triggerProductSharePopup } from "../../../../utils/share.util";
 import ActiveIndicator from "../ActiveIndicator";
 import OfferButton from "../OfferButton";
 import { useCatalogStore } from "../../../../state/auth/Catalog.store";
-import { auth } from "../../../../../config/firebase";
+import { auth, db } from "../../../../../config/firebase";
 import { CatalogStatus, IUser } from "../../../../@types/GlobalTypes";
 import { fetchUserFromDb } from "../../../../utils/user.utils";
 import { observer } from "mobx-react";
@@ -27,12 +27,15 @@ import { useUtilStore } from "../../../../state/Util.store";
 import OptionsSelector, {
     IOptionsSelectorElement,
 } from "../../../lib/OptionsSelector";
+import { query, collection, where, onSnapshot } from "firebase/firestore";
+import { getHighestOffer } from "../../../../utils/getHighestOffer.util";
 
 const Header = () => {
     const catalogStore = useCatalogStore();
     const sellerViewProductStore = useSellerViewProductStore();
     const { user } = useAuthStore();
     const utilStore = useUtilStore();
+    const [totalOffers, setTotalOffers] = React.useState<number>(null);
 
     const PRODUCT_OPTIONS_DATA: IOptionsSelectorElement[] = [
         {
@@ -61,6 +64,26 @@ const Header = () => {
             onClick: () => sellerViewProductStore.setDeleteConfirmation(),
         },
     ];
+
+    //get the highest offer for the product (all conversations)
+    React.useEffect(() => {
+        const q = query(
+            collection(db, "offers"),
+            where("linkedProductID", "==", catalogStore.activeProduct.id)
+        );
+        onSnapshot(q, querySnapshot => {
+            const fetched = [];
+
+            querySnapshot.forEach(documentSnapshot => {
+                fetched.push({
+                    ...documentSnapshot.data(),
+                    key: documentSnapshot.id,
+                });
+            });
+
+            setTotalOffers(fetched.length);
+        });
+    }, []);
 
     return (
         <>
@@ -161,7 +184,9 @@ const Header = () => {
             >
                 <TicketIcon />
                 <CustomText accent font="Bold" style={{ marginLeft: 2 }}>
-                    5 offers total
+                    {totalOffers
+                        ? `${totalOffers} offers total`
+                        : "no offers yet"}
                 </CustomText>
                 <ActiveIndicator />
                 {/*TODO: Add shadow!!*/}
