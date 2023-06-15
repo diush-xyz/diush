@@ -6,6 +6,7 @@ interface IScrollWrapper {
     children: React.ReactNode;
     isTextArea?: boolean;
     height?: number;
+    opacity?: string;
 }
 
 const ScrollWrapper = (props: IScrollWrapper) => {

@@ -164,6 +164,7 @@ const ProductReview = () => {
                                         catalogStore.setStatus(
                                             CatalogStatus.ACTIVE_DASH
                                         );
+                                        catalogStore.setTriggerRefresh(true);
                                     })
                                     .catch(err =>
                                         console.error(

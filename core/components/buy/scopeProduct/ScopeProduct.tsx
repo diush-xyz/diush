@@ -37,8 +37,8 @@ const ScopeProduct = () => {
     React.useEffect(() => {
         const q = query(
             collection(db, "products"),
-            // where("id", "==", "81d4331d-2749-4234-85e6-e80239f94568") //TODO: Add dynamic link fetched one here later
-            where("id", "==", "34fa7fe8-d798-430e-81f6-67c0e7dc574a")
+            where("id", "==", "81d4331d-2749-4234-85e6-e80239f94568") //TODO: Add dynamic link fetched one here later
+            // where("id", "==", "34fa7fe8-d798-430e-81f6-67c0e7dc574a")
         );
         onSnapshot(q, querySnapshot => {
             const fetched = [];
@@ -88,13 +88,16 @@ const ScopeProduct = () => {
 
     React.useEffect(() => {
         // @ts-ignore
-        const parsed = dayjs.unix(
-            scopeProductStore.fetchedActiveProduct.createdAt.seconds
-        );
-        //@ts-ignore
-        const offerTimestamp = dayjs(parsed).fromNow(true);
-        setTimeAgo(offerTimestamp);
-    });
+
+        if (!loading) {
+            const parsed = dayjs.unix(
+                scopeProductStore.fetchedActiveProduct.createdAt.seconds
+            );
+            //@ts-ignore
+            const offerTimestamp = dayjs(parsed).fromNow(true);
+            setTimeAgo(offerTimestamp);
+        }
+    }, [loading]);
 
     if (loading || sellerUserLoading) {
         return (

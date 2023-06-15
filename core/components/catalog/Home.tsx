@@ -9,7 +9,14 @@ import Switcher from "./Dashboard/Switcher";
 import ProductCard from "./Dashboard/ProductCard";
 import CreateProductButton from "./Dashboard/CreateProductButton";
 import { auth, db } from "../../../config/firebase";
-import { query, collection, onSnapshot, where } from "firebase/firestore";
+import {
+    query,
+    collection,
+    onSnapshot,
+    where,
+    getDocs,
+    orderBy,
+} from "firebase/firestore";
 import { useCatalogStore } from "../../state/auth/Catalog.store";
 import { observer } from "mobx-react";
 import EmptyCatalogView from "./EmptyCatalogView";
@@ -76,12 +83,15 @@ const CatalogHome = () => {
     //     },
     // ];
 
-    React.useEffect(() => {
-        const q = query(
-            collection(db, "products"),
-            where("linkedUID", "==", auth.currentUser?.uid)
-        );
-        onSnapshot(q, querySnapshot => {
+    const fetchProducts = async () => {
+        try {
+            const q = query(
+                collection(db, "products"),
+                where("linkedUID", "==", auth.currentUser?.uid),
+                orderBy("createdAt") // Add orderBy to sort by createdAt in descending order
+            );
+
+            const querySnapshot = await getDocs(q);
             const fetched = [];
 
             querySnapshot.forEach(documentSnapshot => {
@@ -91,10 +101,28 @@ const CatalogHome = () => {
                 });
             });
 
+            // Sort the fetched array in descending order based on createdAt
+            fetched.sort((a, b) => b.createdAt - a.createdAt);
+
             setMyProducts(fetched);
             setLoading(false);
-        });
+        } catch (error) {
+            console.error("An error occurred fetching products:", error);
+        }
+    };
+
+    React.useEffect(() => {
+        fetchProducts();
     }, []);
+
+    React.useEffect(() => {
+        if (catalogStore.triggerRefresh) {
+            setLoading(true);
+            console.log("I triggered");
+            fetchProducts();
+            catalogStore.setTriggerRefresh(false);
+        }
+    }, [catalogStore.triggerRefresh]);
 
     React.useEffect(() => {
         if (myProducts.length > 0 && !loading) {
@@ -156,7 +184,7 @@ const CatalogHome = () => {
                     }}
                 >
                     {activeProducts.length == 0 ? (
-                        <EmptyCatalogView />
+                        <EmptyCatalogView isSoldDash={false} />
                     ) : (
                         <FlatList
                             data={activeProducts}
@@ -184,7 +212,7 @@ const CatalogHome = () => {
                     }}
                 >
                     {soldProducts.length == 0 ? (
-                        <EmptyCatalogView />
+                        <EmptyCatalogView isSoldDash />
                     ) : (
                         <FlatList
                             data={soldProducts}
