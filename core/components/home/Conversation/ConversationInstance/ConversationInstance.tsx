@@ -26,6 +26,7 @@ import { getInitials } from "../../../../utils/initials.util";
 import ProfileImage from "../../../lib/ProfileImage";
 import dayjs from "dayjs";
 import { truncate } from "../../../../utils/truncate.util";
+import { useHomeStore } from "../../../../state/auth/Home.store";
 
 export enum CONVERSATION {
     INCOMING,
@@ -41,6 +42,7 @@ interface IConversationInstance {
 
 const ConversationInstance = (props: IConversationInstance) => {
     const conversationStore = useConversationStore();
+    const homeStore = useHomeStore();
     const theme = useTheme();
     const authStore = useAuthStore();
     const [otherUser, setOtherUser] = React.useState<IUser>(null);
@@ -265,7 +267,11 @@ const ConversationInstance = (props: IConversationInstance) => {
                         justifyContent: "center",
                         borderRadius: 12,
                         marginTop: 4,
-                        opacity: unreadOffersCount == 0 ? 0 : 1,
+                        opacity:
+                            unreadOffersCount == 0 ||
+                            homeStore.isOutboundChatsActive
+                                ? 0
+                                : 1,
                     }}
                 >
                     <CustomText fontSize={12} font="Semibold">
