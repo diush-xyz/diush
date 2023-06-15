@@ -75,6 +75,13 @@ export default class CatalogStore {
     setActiveProductAdditionalInfo(text: string) {
         this.activeProduct.additionalInfo = text;
     }
+
+    //necessary when one creates a product, as it's on the same page (as a popup) as the Catalog home screen and does not trigger a re-fetch
+    triggerRefresh: boolean = false;
+
+    setTriggerRefresh(newStatus: boolean) {
+        this.triggerRefresh = newStatus;
+    }
 }
 
 const StoreContext = React.createContext<CatalogStore>(new CatalogStore());

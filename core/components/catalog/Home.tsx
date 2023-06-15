@@ -76,7 +76,7 @@ const CatalogHome = () => {
     //     },
     // ];
 
-    React.useEffect(() => {
+    const fetchProducts = () => {
         const q = query(
             collection(db, "products"),
             where("linkedUID", "==", auth.currentUser?.uid)
@@ -94,7 +94,20 @@ const CatalogHome = () => {
             setMyProducts(fetched);
             setLoading(false);
         });
+    };
+
+    React.useEffect(() => {
+        fetchProducts();
     }, []);
+
+    React.useEffect(() => {
+        if (catalogStore.triggerRefresh) {
+            setLoading(true);
+            console.log("I triggered");
+            fetchProducts();
+            catalogStore.setTriggerRefresh(false);
+        }
+    }, [catalogStore.triggerRefresh]);
 
     React.useEffect(() => {
         if (myProducts.length > 0 && !loading) {
