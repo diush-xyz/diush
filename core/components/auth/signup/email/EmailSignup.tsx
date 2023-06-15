@@ -25,6 +25,7 @@ import { useUtilStore } from "../../../../state/Util.store";
 import ScrollWrapper from "../../ScrollWrapper/ScrollWrapper";
 import { fetchSignInMethodsForEmail } from "firebase/auth";
 import { auth } from "../../../../../config/firebase";
+import CustomLoader from "../../../lib/CustomLoader";
 
 //TODO: Proper check in the backend for existing user email
 
@@ -34,14 +35,21 @@ const EmailSignup = () => {
     const [firstTime, setFirstTime] = React.useState<boolean>(true);
     const [allClear, setAllClear] = React.useState(false);
     const [errMsg, setErrMsg] = React.useState<string>("");
+    const [emailExists, setEmailExists] = React.useState<boolean>(false);
+    const [loading, setLoading] = React.useState<boolean>(false);
 
     const checkIfProceed = async () => {
+        setLoading(true);
         setFirstTime(false);
-        if (allClear) {
-            signupStore.setPrevEmail(signupStore.email);
-            let exist = await checkIfEmailExist();
-            if (!exist) signupStore.setCurrentStep(signupStore.currentStep + 1);
+
+        signupStore.setPrevEmail(signupStore.email);
+        let exist = await checkIfEmailExist();
+        setEmailExists(exist);
+        if (!exist) {
+            signupStore.setCurrentStep(signupStore.currentStep + 1);
+        } else {
             setAllClear(false);
+            setLoading(false);
         }
     };
 
@@ -50,6 +58,7 @@ const EmailSignup = () => {
             auth,
             signupStore.email
         ).then(val => {
+            setLoading(false);
             if (val.length === 0) return false;
             return true;
         });
@@ -63,7 +72,7 @@ const EmailSignup = () => {
         if (signupStore.email === "" || !signupStore.email.includes("@")) {
             setAllClear(false);
             setErrMsg("oop! you need a valid email address to continue.");
-        } else if (signupStore.email === signupStore.prevEmail) {
+        } else if (emailExists && signupStore.prevEmail == signupStore.email) {
             setAllClear(false);
             setErrMsg(
                 "oh no! another account already exists with this email. try again or log in."
@@ -86,36 +95,40 @@ const EmailSignup = () => {
                 currentStep={2}
                 totalSteps={6}
             />
-            <ScrollWrapper>
-                <FlowTemplate
-                    circleEmoji="✉️"
-                    title="email"
-                    desc={"please enter your email address below."}
-                    marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
-                >
-                    <CustomTextInput
-                        placeholder="my email"
-                        onChangeText={text => signupStore.setEmail(text)}
-                        marginBottom={32}
-                        defaultValue={signupStore.email}
-                        keyboardType="email-address"
-                        isValid={allClear}
-                        isErr={!allClear && !firstTime}
-                        errMsg={errMsg}
-                        returnKeyType="done"
-                        autoCorrect={false}
-                        onSubmitEditing={() => checkIfProceed()}
-                    />
-                    <LargeButton
-                        title="continue"
-                        onPress={() => checkIfProceed()}
-                        footer
-                        disabled={!allClear && !firstTime}
-                        footerButtonTitle="cancel"
-                        footerButtonOnPress={() => signupStore.cancel()}
-                    />
-                </FlowTemplate>
-            </ScrollWrapper>
+            {loading ? (
+                <CustomLoader />
+            ) : (
+                <ScrollWrapper>
+                    <FlowTemplate
+                        circleEmoji="✉️"
+                        title="email"
+                        desc={"please enter your email address below."}
+                        marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
+                    >
+                        <CustomTextInput
+                            placeholder="my email"
+                            onChangeText={text => signupStore.setEmail(text)}
+                            marginBottom={32}
+                            defaultValue={signupStore.email}
+                            keyboardType="email-address"
+                            isValid={allClear}
+                            isErr={!allClear && !firstTime}
+                            errMsg={errMsg}
+                            returnKeyType="done"
+                            autoCorrect={false}
+                            onSubmitEditing={() => checkIfProceed()}
+                        />
+                        <LargeButton
+                            title="continue"
+                            onPress={() => checkIfProceed()}
+                            footer
+                            disabled={!allClear && !firstTime}
+                            footerButtonTitle="cancel"
+                            footerButtonOnPress={() => signupStore.cancel()}
+                        />
+                    </FlowTemplate>
+                </ScrollWrapper>
+            )}
         </BottomSheetView>
     );
 };
