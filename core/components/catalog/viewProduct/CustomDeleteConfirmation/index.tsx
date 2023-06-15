@@ -17,6 +17,7 @@ const CustomDeleteConfirmation = () => {
             doc(db, "products", catalogStore.activeProduct.id)
         ).then(() => {
             catalogStore.setStatus(CatalogStatus.ACTIVE_DASH);
+            catalogStore.setTriggerRefresh(true);
         });
     };
 
