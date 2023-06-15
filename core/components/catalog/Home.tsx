@@ -184,7 +184,7 @@ const CatalogHome = () => {
                     }}
                 >
                     {activeProducts.length == 0 ? (
-                        <EmptyCatalogView />
+                        <EmptyCatalogView isSoldDash={false} />
                     ) : (
                         <FlatList
                             data={activeProducts}
@@ -212,7 +212,7 @@ const CatalogHome = () => {
                     }}
                 >
                     {soldProducts.length == 0 ? (
-                        <EmptyCatalogView />
+                        <EmptyCatalogView isSoldDash />
                     ) : (
                         <FlatList
                             data={soldProducts}
