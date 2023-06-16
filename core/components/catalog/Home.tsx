@@ -118,7 +118,6 @@ const CatalogHome = () => {
     React.useEffect(() => {
         if (catalogStore.triggerRefresh) {
             setLoading(true);
-            console.log("I triggered");
             fetchProducts();
             catalogStore.setTriggerRefresh(false);
         }

@@ -19,8 +19,16 @@ import GestureRecognizer from "react-native-swipe-detect";
 import WarningConfirmation from "../../../../../../components/lib/Modals/WarningConfirmation";
 import CompactIcon from "../../../../../../components/catalog/viewProduct/CustomDeleteConfirmation/CompactIcon";
 import MoneyCompactIcon from "../../../../../../icons/home/conversation/MoneyCompactIcon";
-import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../../../../../../../config/firebase";
+import {
+    collection,
+    doc,
+    getDocs,
+    orderBy,
+    query,
+    updateDoc,
+    where,
+} from "firebase/firestore";
+import { auth, db } from "../../../../../../../config/firebase";
 import {
     CatalogStatus,
     OfferStatus,
@@ -30,6 +38,11 @@ import { deriveProductConditionFromDb } from "../../../../../../utils/productCon
 import WarningIcon from "../../../../../../icons/common/warning";
 import { createOfferInDb } from "../../../../../../utils/offers.util";
 import { v4 as uuidv4 } from "uuid";
+import {
+    HAPTIC_OPTIONS,
+    hapticFeedback,
+} from "../../../../../../utils/haptics.util";
+import WaitIcon from "../../../../../../components/catalog/viewProduct/CustomDeleteConfirmation/WaitIcon";
 
 const ReviewOfferHome = () => {
     const offerStore = useOfferStore();
@@ -48,10 +61,10 @@ const ReviewOfferHome = () => {
     const [isProductMine, setIsProductMine] = React.useState<boolean>(null);
     const [buyOrSellText, setBuyOrSellText] = React.useState<string>("");
     const [loading, setLoading] = React.useState<boolean>(false);
-
-    const ChevronUpWrapper = styled(View)`
-        box-shadow: 0px 0px 5px ${theme.primaryText};
-    `;
+    const [sellerConversations, setSellerConversations] = React.useState([]);
+    const [tapped, setTapped] = React.useState<boolean>(false);
+    const [alreadyAcceptedWarningModal, setAlreadyAcceptedWarningModal] =
+        React.useState<boolean>(false);
 
     const animatedValue = React.useRef(new Animated.Value(0)).current;
     const [isTop, setIsTop] = React.useState(true);
@@ -86,6 +99,36 @@ const ReviewOfferHome = () => {
     const config = {
         velocityThreshold: 0.3,
         directionalOffsetThreshold: 80,
+    };
+
+    const fetchSellerConversations = async () => {
+        try {
+            const q = query(
+                collection(db, "conversations"),
+                where(
+                    "linkedProductID",
+                    "==",
+                    conversationStore.activeConversationProduct.id
+                )
+            );
+
+            const querySnapshot = await getDocs(q);
+            const fetched = [];
+
+            querySnapshot.forEach(documentSnapshot => {
+                fetched.push({
+                    ...documentSnapshot.data(),
+                    key: documentSnapshot.id,
+                });
+            });
+
+            setSellerConversations(fetched);
+        } catch (error) {
+            console.error(
+                "An error occurred fetching all of the seller's conversations:",
+                error
+            );
+        }
     };
 
     const onAcceptOffer = async () => {
@@ -183,6 +226,27 @@ const ReviewOfferHome = () => {
             setLoading(false);
         }
     }, [isProductMine, isOfferMine]);
+
+    React.useEffect(() => {
+        const hasDealReached = sellerConversations.some(
+            conversation => conversation.dealReached
+        );
+
+        if (tapped) {
+            if (!hasDealReached) {
+                onAcceptOffer();
+            } else {
+                hapticFeedback(HAPTIC_OPTIONS.ERROR);
+                setSwipeStarted(false);
+                //necessary
+                setCount(0);
+                setSwipeStarted(false);
+                setOfferAcceptanceConfirmationModal(false);
+                //warn the user
+                setAlreadyAcceptedWarningModal(true);
+            }
+        }
+    }, [sellerConversations]);
 
     if (loading) {
         return <CustomText accent>loading...</CustomText>;
@@ -404,23 +468,54 @@ const ReviewOfferHome = () => {
                         </View>
                     </GestureRecognizer>
                 )}
-
             <WarningConfirmation
-                icon={<MoneyCompactIcon />}
-                title="accept offer"
-                desc={`once you agree to sell to ${conversationStore.activeConvoOtherUser.displayName}, you agree to our Seller Terms.`}
-                buttonText="let's do it"
+                icon={
+                    alreadyAcceptedWarningModal ? (
+                        <WaitIcon />
+                    ) : (
+                        <MoneyCompactIcon />
+                    )
+                }
+                title={
+                    alreadyAcceptedWarningModal
+                        ? "anddd... you can't accept it!"
+                        : "accept offer"
+                }
+                desc={
+                    alreadyAcceptedWarningModal
+                        ? `a deal has already been reached in another\n conversation involving this product.`
+                        : `once you agree to sell to ${conversationStore.activeConvoOtherUser.displayName}, you agree to our Seller Terms.`
+                }
+                buttonText={
+                    alreadyAcceptedWarningModal ? "back to home" : "let's do it"
+                }
                 buttonOnClick={() => {
-                    onAcceptOffer();
+                    if (alreadyAcceptedWarningModal) {
+                        offerStore.setOfferBeingReviewed(null);
+                        conversationStore.setActiveConversation(null);
+                    } else {
+                        setTapped(true);
+                        fetchSellerConversations();
+                    }
                 }}
-                footerText="nope, cancel"
+                footerText={
+                    alreadyAcceptedWarningModal ? "close" : "nope, cancel"
+                }
                 onFooterClick={() => {
-                    setCount(0);
-                    setSwipeStarted(false);
-                    setOfferAcceptanceConfirmationModal(false);
+                    if (alreadyAcceptedWarningModal) {
+                        offerStore.setOfferBeingReviewed(null);
+                    } else {
+                        setCount(0);
+                        setSwipeStarted(false);
+                        setOfferAcceptanceConfirmationModal(false);
+                    }
                 }}
-                visible={offerAcceptanceConfirmationModal}
-                isSuccessButton
+                visible={
+                    alreadyAcceptedWarningModal
+                        ? alreadyAcceptedWarningModal
+                        : offerAcceptanceConfirmationModal
+                }
+                isSuccessButton={!alreadyAcceptedWarningModal}
             />
             <WarningConfirmation
                 icon={<CompactIcon />}

@@ -9,7 +9,7 @@
   </p>
   <h1 align="center"><b>diush</b></h1>
   <p align="center">
-a secure funnel for selling items to your friends and network.
+a secure funnel for teenagers to sell items to their friends and network.
     <br />
   <br />
     <a href="https://joinsafe.me"><strong>learn more at diush.xyz »</strong></a>
@@ -17,7 +17,7 @@ a secure funnel for selling items to your friends and network.
     <br />
   </p>
 </p>
-<p align="center">diush is an open-source mobile platform that acts as a funnel to securely and easily finalize sales for items that would have otherwise undergone a tedious, disorganized process via text/DM. It is not a marketplace, simply a platform that utilizes a link-sharing system for each product/item one is selling - it takes advantage of existing communication methods to establish "first-contact".
+<p align="center">diush is an open-source, genz-focused mobile platform that acts as a funnel to securely and easily finalize sales for items that would have otherwise undergone a tedious, disorganized process via text/DM. It is not a marketplace, simply a platform that utilizes a link-sharing system for each product/item one is selling - it takes advantage of existing communication methods to establish "first-contact".
 <br/>
 <br/>
 <img src="https://i.ibb.co/F5YZdhB/mockups.png">
