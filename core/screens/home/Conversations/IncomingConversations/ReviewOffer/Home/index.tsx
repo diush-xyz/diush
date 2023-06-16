@@ -42,6 +42,7 @@ import {
     HAPTIC_OPTIONS,
     hapticFeedback,
 } from "../../../../../../utils/haptics.util";
+import WaitIcon from "../../../../../../components/catalog/viewProduct/CustomDeleteConfirmation/WaitIcon";
 
 const ReviewOfferHome = () => {
     const offerStore = useOfferStore();
@@ -472,7 +473,13 @@ const ReviewOfferHome = () => {
                     </GestureRecognizer>
                 )}
             <WarningConfirmation
-                icon={<MoneyCompactIcon />}
+                icon={
+                    alreadyAcceptedWarningModal ? (
+                        <WaitIcon />
+                    ) : (
+                        <MoneyCompactIcon />
+                    )
+                }
                 title={
                     alreadyAcceptedWarningModal
                         ? "anddd... you can't accept it!"
@@ -480,7 +487,7 @@ const ReviewOfferHome = () => {
                 }
                 desc={
                     alreadyAcceptedWarningModal
-                        ? `this product has already reached a deal in another conversation.`
+                        ? `a deal has already been reached in another\n conversation involving this product.`
                         : `once you agree to sell to ${conversationStore.activeConvoOtherUser.displayName}, you agree to our Seller Terms.`
                 }
                 buttonText={
