@@ -232,11 +232,8 @@ const ReviewOfferHome = () => {
             conversation => conversation.dealReached
         );
 
-        console.warn(sellerConversations);
-
         if (tapped) {
             if (!hasDealReached) {
-                console.log("something went very wrong...");
                 onAcceptOffer();
             } else {
                 hapticFeedback(HAPTIC_OPTIONS.ERROR);
@@ -247,7 +244,6 @@ const ReviewOfferHome = () => {
                 setOfferAcceptanceConfirmationModal(false);
                 //warn the user
                 setAlreadyAcceptedWarningModal(true);
-                console.log("ARNOOOOO: " + alreadyAcceptedWarningModal);
             }
         }
     }, [sellerConversations]);
