@@ -29,7 +29,7 @@
     "expo-notifications": "~0.17.0",
     "expo-permissions": "~14.0.0",
     "expo-splash-screen": "~0.18.2",
-    "expo-status-bar": "~1.4.2",
+    "expo-status-bar": "^1.6.0",
     "firebase": "9.6.11",
     "javascript-time-ago": "^2.5.9",
     "mobx": "6.5.0",

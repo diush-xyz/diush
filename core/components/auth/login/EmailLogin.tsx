@@ -11,10 +11,13 @@ import LargeButton from "../../lib/LargeButton";
 import PopupHeader from "../../lib/PopupHeader";
 import { useLoginStore } from "../../../state/auth/Login.store";
 import ScrollWrapper from "../ScrollWrapper/ScrollWrapper";
+import { useAuthStore } from "../../../state/auth/Auth.store";
+import { AuthStatus } from "../../../@types/GlobalTypes";
 
 //TODO: Animation for keyboardShow FlowTemplate margin-bottom
 
 const EmailLogin = () => {
+    const authStore = useAuthStore();
     const loginStore = useLoginStore();
     const utilStore = useUtilStore();
     const [firstTime, setFirstTime] = React.useState<boolean>(true);
@@ -44,19 +47,25 @@ const EmailLogin = () => {
     });
 
     return (
-        <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
+        <View style={GLOBAL_STYLES.bottomSheetViewStyle}>
             <PopupHeader
                 title="email"
                 subtitle="login"
                 progressIndicator
                 currentStep={1}
                 totalSteps={2}
+                backArrow
+                backArrowOnPress={() => {
+                    authStore.setAuthStatus(AuthStatus.SQUARE_ONE);
+                    loginStore.cancel();
+                }}
+                marginTop={50}
             />
             <ScrollWrapper>
                 <FlowTemplate
                     circleEmoji="👋"
                     title="welcome back!"
-                    desc={"we're trhilled you're here. you've been missed."}
+                    desc={"we're thrilled you're here. you've been missed."}
                     marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
                 >
                     <CustomTextInput
@@ -78,11 +87,14 @@ const EmailLogin = () => {
                         footer
                         disabled={!allClear && !firstTime}
                         footerButtonTitle="cancel"
-                        footerButtonOnPress={() => loginStore.cancel()}
+                        footerButtonOnPress={() => {
+                            authStore.setAuthStatus(AuthStatus.SQUARE_ONE);
+                            loginStore.cancel();
+                        }}
                     />
                 </FlowTemplate>
             </ScrollWrapper>
-        </BottomSheetView>
+        </View>
     );
 };
 

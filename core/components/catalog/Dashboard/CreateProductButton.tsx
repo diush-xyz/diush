@@ -24,7 +24,7 @@ const CreateProductButton = () => {
 
     return (
         <Wrapper
-            style={{ borderRadius: "50%" }}
+            style={{ borderRadius: 28 }}
             onPress={() => {
                 //     createProductInDb({
                 //         id: "yuyu",

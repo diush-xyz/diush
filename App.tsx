@@ -34,29 +34,29 @@ const App = () => {
 
     React.useEffect(() => {
         TimeAgo.addDefaultLocale(en);
-        async function prepare() {
-            try {
-                //TODO: come back later (reference: https://github.com/expo/expo/issues/8067)
-                // await SplashScreen.preventAutoHideAsync();
-                await Font.loadAsync({
-                    Black: require("./assets/fonts/SF-Pro-Rounded-Black.otf"),
-                    Bold: require("./assets/fonts/SF-Pro-Rounded-Bold.otf"),
-                    Heavy: require("./assets/fonts/SF-Pro-Rounded-Heavy.otf"),
-                    Light: require("./assets/fonts/SF-Pro-Rounded-Light.otf"),
-                    Medium: require("./assets/fonts/SF-Pro-Rounded-Medium.otf"),
-                    Regular: require("./assets/fonts/SF-Pro-Rounded-Regular.otf"),
-                    Semibold: require("./assets/fonts/SF-Pro-Rounded-Semibold.otf"),
-                    Thin: require("./assets/fonts/SF-Pro-Rounded-Thin.otf"),
-                    Ultralight: require("./assets/fonts/SF-Pro-Rounded-Ultralight.otf"),
-                });
-            } catch (e) {
-                console.warn(e);
-            } finally {
-                setIsAppReady(true);
-            }
-        }
+        // async function prepare() {
+        //     try {
+        //         //TODO: come back later (reference: https://github.com/expo/expo/issues/8067)
+        //         // await SplashScreen.preventAutoHideAsync();
+        //         await Font.loadAsync({
+        //             Black: require("./assets/fonts/SF-Pro-Rounded-Black.otf"),
+        //             Bold: require("./assets/fonts/SF-Pro-Rounded-Bold.otf"),
+        //             Heavy: require("./assets/fonts/SF-Pro-Rounded-Heavy.otf"),
+        //             Light: require("./assets/fonts/SF-Pro-Rounded-Light.otf"),
+        //             Medium: require("./assets/fonts/SF-Pro-Rounded-Medium.otf"),
+        //             Regular: require("./assets/fonts/SF-Pro-Rounded-Regular.otf"),
+        //             Semibold: require("./assets/fonts/SF-Pro-Rounded-Semibold.otf"),
+        //             Thin: require("./assets/fonts/SF-Pro-Rounded-Thin.otf"),
+        //             Ultralight: require("./assets/fonts/SF-Pro-Rounded-Ultralight.otf"),
+        //         });
+        //     } catch (e) {
+        //         console.warn(e);
+        //     } finally {
+        //         setIsAppReady(true);
+        //     }
+        // }
 
-        prepare();
+        // prepare();
 
         //HANDLE AUTH:
         const unsubscribe = onAuthStateChanged(auth, user => {
@@ -119,7 +119,7 @@ const App = () => {
                 <ControlCenter />
                 {/* </TouchableOpacity> */}
                 {/* <Test /> */}
-                <StatusBar style="auto" />
+                <StatusBar style="light" />
             </View>
         </ThemeProvider>
     );
