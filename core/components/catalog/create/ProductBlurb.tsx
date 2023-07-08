@@ -77,7 +77,7 @@ const ProductBlurb = () => {
                     circleEmoji="📦"
                     title="let's create a blurb."
                     desc={
-                        "think of this as a Tweet describing what you’re selling."
+                        "think of this as a Tweet\ndescribing what you’re selling."
                     }
                     marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
                 >
