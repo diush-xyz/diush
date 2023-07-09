@@ -18,6 +18,10 @@ import en from "javascript-time-ago/locale/en";
 import ControlCenter from "./core/components/home/ControlCenter";
 import DefaultScreen from "./core/screens/Default.screen";
 import { useHomeStore } from "./core/state/auth/Home.store";
+import * as SplashScreen from "expo-splash-screen";
+import { useFonts } from "expo-font";
+
+SplashScreen.preventAutoHideAsync();
 
 const App = () => {
     const [isAppReady, setIsAppReady] = React.useState<boolean>(false);
@@ -93,6 +97,37 @@ const App = () => {
 
         return () => unsubscribe();
     }, []);
+
+    const [fontsLoaded] = useFonts({
+        // prettier-ignore
+        "Black": require("./assets/fonts/SF-Pro-Rounded-Black.otf"),
+        // prettier-ignore
+        "Bold": require("./assets/fonts/SF-Pro-Rounded-Bold.otf"),
+        // prettier-ignore
+        "Heavy": require("./assets/fonts/SF-Pro-Rounded-Heavy.otf"),
+        // prettier-ignore
+        "Light": require("./assets/fonts/SF-Pro-Rounded-Light.otf"),
+        // prettier-ignore
+        "Medium": require("./assets/fonts/SF-Pro-Rounded-Medium.otf"),
+        // prettier-ignore
+        "Regular": require("./assets/fonts/SF-Pro-Rounded-Regular.otf"),
+        // prettier-ignore
+        "Semibold": require("./assets/fonts/SF-Pro-Rounded-Semibold.otf"),
+        // prettier-ignore
+        "Thin": require("./assets/fonts/SF-Pro-Rounded-Thin.otf"),
+        // prettier-ignore
+        "Ultralight": require("./assets/fonts/SF-Pro-Rounded-Ultralight.otf"),
+    });
+
+    const onLayoutRootView = React.useCallback(async () => {
+        if (fontsLoaded) {
+            await SplashScreen.hideAsync();
+        }
+    }, [fontsLoaded]);
+
+    if (!fontsLoaded) {
+        return null;
+    }
 
     return (
         // @ts-ignore
