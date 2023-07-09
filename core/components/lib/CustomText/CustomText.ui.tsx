@@ -57,7 +57,8 @@ const CustomText = (props: ICustomText) => {
                 color: populateColorStyle(),
                 fontSize: props.fontSize ?? 16,
                 ...props.style,
-                fontFamily: props.font ?? "Semibold",
+                // fontFamily: props.font ?? "Semibold",
+                // fontFamily: "Semibold",
                 textAlign: props.textAlign,
             }}
             onPress={props.onPress}

@@ -7,6 +7,7 @@ import LargeButton from "../../../components/lib/LargeButton";
 import NoBackgroundLogo from "../../../icons/auth/NoBackgroundLogo";
 import { useAuthStore } from "../../../state/auth/Auth.store";
 import { observer } from "mobx-react";
+import { HAPTIC_OPTIONS, hapticFeedback } from "../../../utils/haptics.util";
 
 const SquareOne = () => {
     const authStore = useAuthStore();
@@ -78,6 +79,7 @@ const SquareOne = () => {
                     title="get started"
                     onPress={() => {
                         authStore.setAuthStatus(AuthStatus.SIGNUP);
+                        hapticFeedback(HAPTIC_OPTIONS.HEAVY);
                         // handleSnapPress(0);
                     }}
                     footer
@@ -85,6 +87,7 @@ const SquareOne = () => {
                     footerButtonTitle="i already have an account"
                     footerButtonOnPress={() => {
                         authStore.setAuthStatus(AuthStatus.LOGIN);
+                        hapticFeedback(HAPTIC_OPTIONS.HEAVY);
                         // handleSnapPress(0);
                     }}
                 />

@@ -20,8 +20,10 @@ import DefaultScreen from "./core/screens/Default.screen";
 import { useHomeStore } from "./core/state/auth/Home.store";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
+import CustomText from "./core/components/lib/CustomText";
+import { NotoSans_700Bold } from "@expo-google-fonts/noto-sans";
 
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 const App = () => {
     const [isAppReady, setIsAppReady] = React.useState<boolean>(false);
@@ -98,36 +100,38 @@ const App = () => {
         return () => unsubscribe();
     }, []);
 
-    const [fontsLoaded] = useFonts({
-        // prettier-ignore
-        "Black": require("./assets/fonts/SF-Pro-Rounded-Black.otf"),
-        // prettier-ignore
-        "Bold": require("./assets/fonts/SF-Pro-Rounded-Bold.otf"),
-        // prettier-ignore
-        "Heavy": require("./assets/fonts/SF-Pro-Rounded-Heavy.otf"),
-        // prettier-ignore
-        "Light": require("./assets/fonts/SF-Pro-Rounded-Light.otf"),
-        // prettier-ignore
-        "Medium": require("./assets/fonts/SF-Pro-Rounded-Medium.otf"),
-        // prettier-ignore
-        "Regular": require("./assets/fonts/SF-Pro-Rounded-Regular.otf"),
-        // prettier-ignore
-        "Semibold": require("./assets/fonts/SF-Pro-Rounded-Semibold.otf"),
-        // prettier-ignore
-        "Thin": require("./assets/fonts/SF-Pro-Rounded-Thin.otf"),
-        // prettier-ignore
-        "Ultralight": require("./assets/fonts/SF-Pro-Rounded-Ultralight.otf"),
-    });
+    // const [loaded, error] = useFonts({
+    //     // prettier-ignore
+    //     "Black": require("./assets/fonts/SF-Pro-Rounded-Black.otf"),
+    //     // prettier-ignore
+    //     "Bold": require("./assets/fonts/SF-Pro-Rounded-Bold.otf"),
+    //     // prettier-ignore
+    //     "Heavy": require("./assets/fonts/SF-Pro-Rounded-Heavy.otf"),
+    //     // prettier-ignore
+    //     "Light": require("./assets/fonts/SF-Pro-Rounded-Light.otf"),
+    //     // prettier-ignore
+    //     "Medium": require("./assets/fonts/SF-Pro-Rounded-Medium.otf"),
+    //     // prettier-ignore
+    //     "Regular": require("./assets/fonts/SF-Pro-Rounded-Regular.otf"),
+    //     // prettier-ignore
+    //     "Semibold": require("./assets/fonts/SF-Pro-Rounded-Semibold.otf"),
+    //     // prettier-ignore
+    //     "Thin": require("./assets/fonts/SF-Pro-Rounded-Thin.otf"),
+    //     // prettier-ignore
+    //     "Ultralight": require("./assets/fonts/SF-Pro-Rounded-Ultralight.otf"),
+    //     //prettier-ignore
+    //     // "Semibold": NotoSans_700Bold,
+    // });
 
-    const onLayoutRootView = React.useCallback(async () => {
-        if (fontsLoaded) {
-            await SplashScreen.hideAsync();
-        }
-    }, [fontsLoaded]);
+    // if (!loaded) {
+    //     return <CustomText>We are loading up for you...</CustomText>;
+    // }
 
-    if (!fontsLoaded) {
-        return null;
-    }
+    // React.useEffect(() => {
+    //     if (error) {
+    //         console.log("font issue: " + error);
+    //     }
+    // }, [error]);
 
     return (
         // @ts-ignore
