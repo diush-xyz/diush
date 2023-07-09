@@ -92,7 +92,7 @@ const FinalWelcomeSignup = () => {
         extrapolate: "clamp",
     });
     return (
-        <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
+        <View style={GLOBAL_STYLES.bottomSheetViewStyle}>
             {/* <WelcomeIcon style={{ marginTop: 45 }} /> */}
             <Animated.View
                 style={{
@@ -177,7 +177,7 @@ const FinalWelcomeSignup = () => {
                     </TouchableOpacity>
                 </View>
             </View>
-        </BottomSheetView>
+        </View>
     );
 };
 

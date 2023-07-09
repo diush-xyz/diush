@@ -107,7 +107,7 @@ const PermissionsSignup = () => {
     };
 
     return (
-        <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
+        <View style={GLOBAL_STYLES.bottomSheetViewStyle}>
             <PopupHeader
                 backArrow
                 backArrowOnPress={() =>
@@ -118,6 +118,7 @@ const PermissionsSignup = () => {
                 progressIndicator
                 currentStep={4}
                 totalSteps={6}
+                marginTop={50}
             />
             <FlowTemplate
                 circleEmoji="🔑"
@@ -164,7 +165,7 @@ const PermissionsSignup = () => {
                     />
                 </View> */}
             </FlowTemplate>
-        </BottomSheetView>
+        </View>
     );
 };
 
