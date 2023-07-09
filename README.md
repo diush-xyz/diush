@@ -1,4 +1,4 @@
-\*putting on the finishing touches.
+\*putting on the finishing touches. stay tuned.
 
 <p align="center">
   <a href="#">
