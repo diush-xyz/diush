@@ -31,7 +31,7 @@ const LocationSignup = () => {
                 progressIndicator
                 currentStep={6}
                 totalSteps={6}
-                marginTop={50}
+                marginTop={60}
             />
             <ScrollWrapper>
                 <FlowTemplate

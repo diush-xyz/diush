@@ -94,7 +94,7 @@ const EmailSignup = () => {
                 progressIndicator
                 currentStep={2}
                 totalSteps={6}
-                marginTop={50}
+                marginTop={60}
             />
             {loading ? (
                 <CustomLoader />

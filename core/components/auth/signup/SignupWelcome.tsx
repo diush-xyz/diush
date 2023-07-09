@@ -26,7 +26,7 @@ const SignupWelcome = () => {
                     authStore.setAuthStatus(AuthStatus.SQUARE_ONE);
                     signupStore.cancel();
                 }}
-                marginTop={50}
+                marginTop={60}
             />
             <FlowTemplate
                 circleEmoji="🪴"

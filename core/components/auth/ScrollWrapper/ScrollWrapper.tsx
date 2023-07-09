@@ -17,7 +17,7 @@ const ScrollWrapper = (props: IScrollWrapper) => {
             style={{
                 width: "100%",
                 position: utilStore.isKeyboardOpen ? "absolute" : null,
-                top: utilStore.isKeyboardOpen ? 110 : null,
+                top: utilStore.isKeyboardOpen ? 170 : null,
             }}
         >
             <ScrollView

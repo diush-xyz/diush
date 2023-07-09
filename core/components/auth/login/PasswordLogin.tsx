@@ -66,7 +66,7 @@ const PasswordSignup = () => {
                 progressIndicator
                 currentStep={2}
                 totalSteps={2}
-                marginTop={50}
+                marginTop={60}
             />
             <ScrollWrapper>
                 <FlowTemplate

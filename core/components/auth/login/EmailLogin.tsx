@@ -59,7 +59,7 @@ const EmailLogin = () => {
                     authStore.setAuthStatus(AuthStatus.SQUARE_ONE);
                     loginStore.cancel();
                 }}
-                marginTop={50}
+                marginTop={60}
             />
             <ScrollWrapper>
                 <FlowTemplate

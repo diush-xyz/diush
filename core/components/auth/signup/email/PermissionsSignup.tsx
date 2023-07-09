@@ -118,7 +118,7 @@ const PermissionsSignup = () => {
                 progressIndicator
                 currentStep={4}
                 totalSteps={6}
-                marginTop={50}
+                marginTop={60}
             />
             <FlowTemplate
                 circleEmoji="🔑"
