@@ -66,7 +66,7 @@ const SquareOne = () => {
                 </CustomText>
                 <CustomText
                     secondary
-                    font="Semibold"
+                    font="Bold"
                     fontSize={16}
                     textAlign="center"
                     style={{ marginBottom: 80 }}
