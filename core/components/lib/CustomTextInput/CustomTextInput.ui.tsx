@@ -101,6 +101,7 @@ const CustomTextInput = (props: ICustomTextInput) => {
                     secureTextEntry={secure}
                     autoCorrect={props.autoCorrect}
                     onSubmitEditing={props.onSubmitEditing}
+                    keyboardAppearance="dark"
                 />
                 {props.isValid && <SuccessIcon />}
                 {props.isErr && <WarningIcon />}
