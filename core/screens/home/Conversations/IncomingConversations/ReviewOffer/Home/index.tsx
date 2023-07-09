@@ -371,7 +371,9 @@ const ReviewOfferHome = () => {
                         >
                             {offerStore.offerBeingReviewed.status ==
                             OfferStatus.ACCEPTED
-                                ? `when you accepted this offer, you agreed to ${buyOrSellText}`
+                                ? `when you ${
+                                      isProductMine ? "accepted" : "sent"
+                                  } this offer, you agreed to ${buyOrSellText}`
                                 : isOfferMine
                                 ? `if this offer you sent is accepted, you agree to ${buyOrSellText}`
                                 : `by accepting this offer, you agree to ${buyOrSellText}`}{" "}
