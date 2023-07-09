@@ -335,7 +335,14 @@ const ReviewOfferHome = () => {
                             alignItems: "center",
                         }}
                     >
-                        <ProfileImage specificUser={user} size={20} />
+                        <ProfileImage
+                            specificUser={
+                                isProductMine
+                                    ? user
+                                    : conversationStore.activeConvoOtherUser
+                            }
+                            size={20}
+                        />
                         <CustomText
                             fontSize={16}
                             style={{ marginLeft: 6 }}
