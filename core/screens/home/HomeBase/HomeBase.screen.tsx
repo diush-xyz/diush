@@ -315,14 +315,14 @@ const HomeBaseScreen = () => {
                     )}
             </ScrollView>
             {/* </GestureRecognizer> */}
-            <View style={{ marginTop: 40, marginBottom: 50, width: "100%" }}>
+            {/* <View style={{ marginTop: 40, marginBottom: 50, width: "100%" }}>
                 <LargeButton
                     title="make a test offer"
                     onPress={() => {
                         utilStore.setCurrentLoggedInScreen(LoggedInScreen.BUY);
                     }}
                 />
-            </View>
+            </View> */}
         </View>
     );
 };
