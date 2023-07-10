@@ -10,13 +10,15 @@ import { triggerProductSharePopup } from "../../../../utils/share.util";
 import ActiveIndicator from "../ActiveIndicator";
 import OfferButton from "../OfferButton";
 import {
+    AuthStatus,
     BuyFlowStatus,
     CatalogStatus,
     IUser,
+    LoggedInScreen,
 } from "../../../../@types/GlobalTypes";
 import { fetchUserFromDb } from "../../../../utils/user.utils";
 import { observer } from "mobx-react";
-import { hapticFeedback } from "../../../../utils/haptics.util";
+import { HAPTIC_OPTIONS, hapticFeedback } from "../../../../utils/haptics.util";
 import { useAuthStore } from "../../../../state/auth/Auth.store";
 import ProfileImage from "../../../lib/ProfileImage";
 import CopyIcon from "../../../../icons/catalog/Copy";
@@ -41,6 +43,7 @@ import {
 import { db } from "../../../../../config/firebase";
 
 const Header = () => {
+    const authStore = useAuthStore();
     const buyProductStore = useBuyProductStore();
     const { user } = useAuthStore();
     const utilStore = useUtilStore();
@@ -195,7 +198,7 @@ const Header = () => {
                             <CustomText font="Bold" style={{ opacity: 0.5 }}>
                                 listed by
                             </CustomText>{" "}
-                            {buyProductStore.seller?.id === user.id
+                            {buyProductStore.seller?.id === user?.id
                                 ? "me"
                                 : buyProductStore.seller?.displayName}
                         </CustomText>
@@ -226,13 +229,24 @@ const Header = () => {
                         <OfferButton
                             title="place offer"
                             onPress={() => {
-                                if (buyProductStore.seller.id !== user.id) {
-                                    hapticFeedback();
-                                    buyProductStore.setStatus(
-                                        BuyFlowStatus.PLACE_OFFER
+                                if (!user) {
+                                    //TODO: ADD WARNING THAT THEY NEED TO BE LOGGED IN TO PLACE AN OFFER
+                                    hapticFeedback(HAPTIC_OPTIONS.ERROR);
+                                    utilStore.setCurrentLoggedInScreen(
+                                        LoggedInScreen.HOME
                                     );
+                                    // authStore.setAuthStatus(
+                                    //     AuthStatus.SQUARE_ONE
+                                    // );
                                 } else {
-                                    setSameUserWarning(true);
+                                    if (buyProductStore.seller.id !== user.id) {
+                                        hapticFeedback();
+                                        buyProductStore.setStatus(
+                                            BuyFlowStatus.PLACE_OFFER
+                                        );
+                                    } else {
+                                        setSameUserWarning(true);
+                                    }
                                 }
                             }}
                         />

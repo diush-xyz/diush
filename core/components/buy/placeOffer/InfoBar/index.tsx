@@ -56,7 +56,7 @@ const InfoBar = () => {
             value: `$${scopeProductStore.fetchedActiveProduct.askingPrice}`,
         },
         {
-            text: "highest product offer (all conversations)",
+            text: "highest product offer",
             value: `${
                 highestOffer?.amount ? "$" + highestOffer?.amount : "N/A"
             }`,

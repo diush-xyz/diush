@@ -25,8 +25,11 @@ import { db, auth } from "../../../../config/firebase";
 import CustomText from "../../lib/CustomText";
 import CustomLoader from "../../lib/CustomLoader";
 import { useBuyProductStore } from "../../../state/buy/BuyProduct.store";
+import { useUtilStore } from "../../../state/Util.store";
+import { LoggedInScreen } from "../../../@types/GlobalTypes";
 
 const ScopeProduct = () => {
+    const utilStore = useUtilStore();
     const catalogStore = useCatalogStore();
     const scopeProductStore = useScopeProductStore();
     const [loading, setLoading] = React.useState<boolean>(true);
@@ -35,25 +38,28 @@ const ScopeProduct = () => {
     const buyProductStore = useBuyProductStore();
 
     React.useEffect(() => {
-        const q = query(
-            collection(db, "products"),
-            where("id", "==", "81d4331d-2749-4234-85e6-e80239f94568") //TODO: Add dynamic link fetched one here later
-            // where("id", "==", "34fa7fe8-d798-430e-81f6-67c0e7dc574a")
-        );
-        onSnapshot(q, querySnapshot => {
-            const fetched = [];
+        if (buyProductStore.idFromLink !== "") {
+            console.log("the one: " + buyProductStore.idFromLink);
+            const q = query(
+                collection(db, "products"),
+                where("id", "==", "34fa7fe8-d798-430e-81f6-67c0e7dc574a") //TODO: Add dynamic link fetched one here later
+                // where("id", "==", "34fa7fe8-d798-430e-81f6-67c0e7dc574a")
+            );
+            onSnapshot(q, querySnapshot => {
+                const fetched = [];
 
-            querySnapshot.forEach(documentSnapshot => {
-                fetched.push({
-                    ...documentSnapshot.data(),
-                    key: documentSnapshot.id,
+                querySnapshot.forEach(documentSnapshot => {
+                    fetched.push({
+                        ...documentSnapshot.data(),
+                        key: documentSnapshot.id,
+                    });
                 });
-            });
 
-            scopeProductStore.setFetchedActiveProduct(fetched[0]);
-            setLoading(false);
-        });
-    }, []);
+                scopeProductStore.setFetchedActiveProduct(fetched[0]);
+                setLoading(false);
+            });
+        }
+    }, [buyProductStore.idFromLink]);
 
     const fetchSellerUser = async () => {
         try {
@@ -94,8 +100,9 @@ const ScopeProduct = () => {
                 scopeProductStore.fetchedActiveProduct.createdAt.seconds
             );
             //@ts-ignore
-            const offerTimestamp = dayjs(parsed).fromNow(true);
-            setTimeAgo(offerTimestamp);
+            // const offerTimestamp = dayjs(parsed).fromNow(true); //TODO: Make this await or something or be after the fetch or delay it
+            // setTimeAgo(offerTimestamp);
+            setTimeAgo("hi");
         }
     }, [loading]);
 

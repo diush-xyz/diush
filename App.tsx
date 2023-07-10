@@ -7,7 +7,7 @@ import * as Font from "expo-font";
 import KeyboardListener from "react-native-keyboard-listener";
 import { useUtilStore } from "./core/state/Util.store";
 import { useAuthStore } from "./core/state/auth/Auth.store";
-import { AuthStatus, IUser } from "./core/@types/GlobalTypes";
+import { AuthStatus, IUser, LoggedInScreen } from "./core/@types/GlobalTypes";
 import { observer } from "mobx-react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/firebase";
@@ -22,15 +22,20 @@ import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import CustomText from "./core/components/lib/CustomText";
 import { NotoSans_700Bold } from "@expo-google-fonts/noto-sans";
+import * as Linking from "expo-linking";
+import { useBuyProductStore } from "./core/state/buy/BuyProduct.store";
+import BuyProductScreen from "./core/screens/buy/BuyProduct.screen";
 
 // SplashScreen.preventAutoHideAsync();
 
 const App = () => {
+    const buyProductStore = useBuyProductStore();
     const [isAppReady, setIsAppReady] = React.useState<boolean>(false);
     const utilStore = useUtilStore();
     const authStore = useAuthStore();
     const signupStore = useSignupStore();
     const homeStore = useHomeStore();
+    const [data, setData] = React.useState(null);
     // const [fetchedUser, setFetchedUser] = React.useState<IUser>();
 
     //TODO: Add this back later (and prepare() function - view Font and SplashScreen docs from Expo)
@@ -38,7 +43,46 @@ const App = () => {
     //   return SplashScreen.preventAutoHideAsync();
     // }
 
+    const getInitialURL = async () => {
+        const initialURL = await Linking.getInitialURL();
+        if (initialURL) setData(Linking.parse(initialURL));
+    };
+
+    const handleDeepLink = event => {
+        let temp = Linking.parse(event.url);
+        setData(temp);
+    };
+
     React.useEffect(() => {
+        if (data) {
+            if (data.queryParams.id) {
+                buyProductStore.setIdFromLink(data.queryParams.id);
+            } else {
+                buyProductStore.setIdFromLink("");
+            }
+
+            if (data) {
+                utilStore.setCurrentLoggedInScreen(LoggedInScreen.BUY);
+            } else {
+                utilStore.setCurrentLoggedInScreen(LoggedInScreen.HOME);
+            }
+        }
+    }, [data]);
+
+    const generalRenderer = () => {
+        switch (utilStore.currentLoggedInScreen) {
+            case LoggedInScreen.HOME:
+                return <DefaultScreen />;
+            case LoggedInScreen.BUY:
+                return <BuyProductScreen />;
+        }
+    };
+
+    React.useEffect(() => {
+        Linking.addEventListener("url", handleDeepLink);
+        if (!data) {
+            getInitialURL();
+        }
         TimeAgo.addDefaultLocale(en);
         // async function prepare() {
         //     try {
@@ -97,7 +141,9 @@ const App = () => {
             }
         });
 
-        return () => unsubscribe();
+        return () => {
+            unsubscribe();
+        };
     }, []);
 
     // const [loaded, error] = useFonts({
@@ -153,7 +199,8 @@ const App = () => {
                     onWillShow={() => utilStore.setIsKeyboardOpen(true)}
                     onWillHide={() => utilStore.setIsKeyboardOpen(false)}
                 />
-                <DefaultScreen />
+                {/* <DefaultScreen /> */}
+                {generalRenderer()}
                 {/* <BuyProductScreen /> */}
                 <ControlCenter />
                 {/* </TouchableOpacity> */}
