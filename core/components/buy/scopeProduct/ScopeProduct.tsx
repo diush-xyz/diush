@@ -42,7 +42,7 @@ const ScopeProduct = () => {
             const id = buyProductStore.idFromLink;
             const q = query(
                 collection(db, "products"),
-                where("id", "==", id) //TODO: Add dynamic link fetched one here later
+                where("id", "==", id)
                 // where("id", "==", "34fa7fe8-d798-430e-81f6-67c0e7dc574a")
             );
             onSnapshot(q, querySnapshot => {
