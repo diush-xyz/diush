@@ -39,10 +39,10 @@ const ScopeProduct = () => {
 
     React.useEffect(() => {
         if (buyProductStore.idFromLink !== "") {
-            console.log("the one: " + buyProductStore.idFromLink);
+            const id = buyProductStore.idFromLink;
             const q = query(
                 collection(db, "products"),
-                where("id", "==", "34fa7fe8-d798-430e-81f6-67c0e7dc574a") //TODO: Add dynamic link fetched one here later
+                where("id", "==", id) //TODO: Add dynamic link fetched one here later
                 // where("id", "==", "34fa7fe8-d798-430e-81f6-67c0e7dc574a")
             );
             onSnapshot(q, querySnapshot => {
