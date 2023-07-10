@@ -200,7 +200,8 @@ const App = () => {
                     onWillHide={() => utilStore.setIsKeyboardOpen(false)}
                 />
                 {/* <DefaultScreen /> */}
-                {generalRenderer()}
+                {/* {generalRenderer()} */}
+                <DefaultScreen />
                 {/* <BuyProductScreen /> */}
                 <ControlCenter />
                 {/* </TouchableOpacity> */}

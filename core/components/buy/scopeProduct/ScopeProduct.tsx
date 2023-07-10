@@ -38,27 +38,27 @@ const ScopeProduct = () => {
     const buyProductStore = useBuyProductStore();
 
     React.useEffect(() => {
-        if (buyProductStore.idFromLink !== "") {
-            const id = buyProductStore.idFromLink;
-            const q = query(
-                collection(db, "products"),
-                where("id", "==", id)
-                // where("id", "==", "34fa7fe8-d798-430e-81f6-67c0e7dc574a")
-            );
-            onSnapshot(q, querySnapshot => {
-                const fetched = [];
+        // if (buyProductStore.idFromLink !== "") {
+        const id = buyProductStore.idFromLink;
+        const q = query(
+            collection(db, "products"),
+            where("id", "==", "34fa7fe8-d798-430e-81f6-67c0e7dc574a")
+            // where("id", "==", "34fa7fe8-d798-430e-81f6-67c0e7dc574a")
+        );
+        onSnapshot(q, querySnapshot => {
+            const fetched = [];
 
-                querySnapshot.forEach(documentSnapshot => {
-                    fetched.push({
-                        ...documentSnapshot.data(),
-                        key: documentSnapshot.id,
-                    });
+            querySnapshot.forEach(documentSnapshot => {
+                fetched.push({
+                    ...documentSnapshot.data(),
+                    key: documentSnapshot.id,
                 });
-
-                scopeProductStore.setFetchedActiveProduct(fetched[0]);
-                setLoading(false);
             });
-        }
+
+            scopeProductStore.setFetchedActiveProduct(fetched[0]);
+            setLoading(false);
+        });
+        // }
     }, [buyProductStore.idFromLink]);
 
     const fetchSellerUser = async () => {
@@ -94,15 +94,15 @@ const ScopeProduct = () => {
 
     React.useEffect(() => {
         // @ts-ignore
-
         if (!loading) {
-            const parsed = dayjs.unix(
-                scopeProductStore.fetchedActiveProduct.createdAt.seconds
-            );
-            //@ts-ignore
-            // const offerTimestamp = dayjs(parsed).fromNow(true); //TODO: Make this await or something or be after the fetch or delay it
-            // setTimeAgo(offerTimestamp);
             setTimeAgo("hi");
+            // const parsed = dayjs.unix(
+            //     //@ts-ignore
+            //     scopeProductStore.fetchedActiveProduct.createdAt?.seconds
+            // );
+            // //@ts-ignore
+            // const offerTimestamp = dayjs(parsed).fromNow(true);
+            // setTimeAgo(offerTimestamp);
         }
     }, [loading]);
 
