@@ -24,6 +24,7 @@ import OptionsSelector, {
     IOptionsSelectorElement,
 } from "../../../lib/OptionsSelector";
 import NoBackgroundLogo from "../../../../icons/auth/NoBackgroundLogo";
+import SearchIcon from "../../../../icons/catalog/Search";
 
 export interface ICONTROL_CENTER_DATA {
     icon: React.ReactNode;
@@ -50,6 +51,12 @@ const ControlCenterContent = () => {
         {
             icon: <CatalogIcon />,
             text: "my catalog",
+            onClick: () =>
+                utilStore.setCurrentLoggedInScreen(LoggedInScreen.CATALOG),
+        },
+        {
+            icon: <SearchIcon height={20} width={20} />,
+            text: "search",
             onClick: () =>
                 utilStore.setCurrentLoggedInScreen(LoggedInScreen.CATALOG),
         },
