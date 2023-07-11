@@ -7,6 +7,7 @@ import CatalogScreen from "./catalog/Catalog.screen";
 import HomeScreen from "./home/Home.screen";
 import SettingsScreen from "./settings/Settings.screen";
 import BuyProductScreen from "./buy/BuyProduct.screen";
+import SearchScreen from "./search/Search.screen";
 
 const ScreenHandler = () => {
     const utilStore = useUtilStore();
@@ -17,6 +18,8 @@ const ScreenHandler = () => {
                 return <HomeScreen />;
             case LoggedInScreen.CATALOG:
                 return <CatalogScreen />;
+            case LoggedInScreen.SEARCH:
+                return <SearchScreen />;
             case LoggedInScreen.SETTINGS:
                 return <SettingsScreen />;
             case LoggedInScreen.BUY:

@@ -64,6 +64,7 @@ export enum SignupMethod {
 export enum LoggedInScreen {
     HOME,
     CATALOG,
+    SEARCH,
     SETTINGS,
     BUY,
 }

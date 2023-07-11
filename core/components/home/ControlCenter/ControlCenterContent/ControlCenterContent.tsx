@@ -58,7 +58,7 @@ const ControlCenterContent = () => {
             icon: <SearchIcon height={20} width={20} />,
             text: "search",
             onClick: () =>
-                utilStore.setCurrentLoggedInScreen(LoggedInScreen.CATALOG),
+                utilStore.setCurrentLoggedInScreen(LoggedInScreen.SEARCH),
         },
         {
             icon: <MetricsIcon />,
@@ -128,7 +128,7 @@ const ControlCenterContent = () => {
                             style={{ marginBottom: 12 }}
                         />
                         <CustomText font="Bold" fontSize={19}>
-                            {authStore.user.displayName}
+                            {authStore.user?.displayName}
                         </CustomText>
                     </View>
                     <TouchableOpacity
