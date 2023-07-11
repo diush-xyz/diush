@@ -7,6 +7,8 @@ import {
     TextInputSubmitEditingEventData,
     NativeSyntheticEvent,
     TouchableOpacity,
+    StyleProp,
+    ViewStyle,
 } from "react-native";
 import React, { useRef } from "react";
 import { observer } from "mobx-react";
@@ -34,6 +36,7 @@ interface ICustomTextInput {
     isLarge?: boolean;
     autoCorrect?: boolean;
     customWidth?: number;
+    marginTop?: number;
     onSubmitEditing?: (
         e: NativeSyntheticEvent<TextInputSubmitEditingEventData>
     ) => void;
@@ -74,6 +77,7 @@ const CustomTextInput = (props: ICustomTextInput) => {
                     borderRadius: 12,
                     paddingHorizontal: 20,
                     paddingTop: props.isLarge && 14,
+                    marginTop: props.marginTop,
                 }}
                 activeOpacity={1}
             >
