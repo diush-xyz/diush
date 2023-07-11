@@ -7,10 +7,51 @@ import { observer } from "mobx-react";
 import { useTheme } from "../../utils/useTheme.util";
 import CustomText from "../../components/lib/CustomText";
 import CustomTextInput from "../../components/lib/CustomTextInput";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { db } from "../../../config/firebase";
+import CustomLoader from "../../components/lib/CustomLoader";
 
 const SearchScreen = () => {
     const utilStore = useUtilStore();
     const theme = useTheme();
+
+    const [allProducts, setAllProducts] = React.useState([]);
+    const [loading, setLoading] = React.useState(true);
+
+    const fetchProducts = async () => {
+        try {
+            const q = query(
+                collection(db, "products"),
+                orderBy("createdAt") // Add orderBy to sort by createdAt in descending order
+            );
+
+            const querySnapshot = await getDocs(q);
+            const fetched = [];
+
+            querySnapshot.forEach(documentSnapshot => {
+                fetched.push({
+                    ...documentSnapshot.data(),
+                    key: documentSnapshot.id,
+                });
+            });
+
+            // Sort the fetched array in descending order based on createdAt
+            fetched.sort((a, b) => b.createdAt - a.createdAt);
+
+            setAllProducts(fetched);
+            setLoading(false);
+        } catch (error) {
+            console.error("An error occurred fetching products:", error);
+        }
+    };
+
+    React.useEffect(() => {
+        fetchProducts();
+    }, []);
+
+    if (loading) {
+        return <CustomLoader />;
+    }
 
     return (
         <View
@@ -57,6 +98,9 @@ const SearchScreen = () => {
                 onChangeText={text => console.log(text)}
                 marginTop={20}
             />
+            {allProducts.map((elem, idx) => {
+                return <CustomText>{elem.title}</CustomText>;
+            })}
         </View>
     );
 };
