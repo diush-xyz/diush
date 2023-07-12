@@ -11,6 +11,7 @@ import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 import CustomLoader from "../../components/lib/CustomLoader";
 import SearchFilter from "../../components/search/SearchFilter/SearchFilter";
+import { MAX_WIDTH } from "../../utils/constants";
 
 const SearchScreen = () => {
     const utilStore = useUtilStore();
@@ -101,7 +102,7 @@ const SearchScreen = () => {
             />
             <ScrollView
                 showsVerticalScrollIndicator
-                style={{ overflow: "scroll", width: "100%", height: 300 }}
+                style={{ overflow: "scroll", width: MAX_WIDTH, height: 300 }}
             >
                 <SearchFilter data={allProducts} />
             </ScrollView>
