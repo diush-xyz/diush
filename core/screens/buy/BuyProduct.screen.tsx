@@ -44,7 +44,7 @@ const BuyProductScreen = () => {
                 snapPoints={PRODUCT_BOTTOM_SHEET_SNAP_POINTS}
                 enablePanDownToClose={true}
                 onClose={() => {
-                    utilStore.setCurrentLoggedInScreen(LoggedInScreen.HOME);
+                    utilStore.setCurrentLoggedInScreen(LoggedInScreen.SEARCH);
                     //clear the state here
                     buyProductStore.setStatus(BuyFlowStatus.SCOPE);
                 }}
