@@ -15,6 +15,7 @@ const SearchFilter = (props: ISearchFilter) => {
                 numColumns={2}
                 columnWrapperStyle={{
                     justifyContent: "space-between",
+                    marginTop: 22,
                     marginBottom: 15,
                 }}
                 renderItem={({ item, index }) => (
