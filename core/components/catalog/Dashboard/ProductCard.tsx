@@ -128,17 +128,17 @@ const ProductCard = (props: IProductCard) => {
                 >
                     <View>
                         <CustomText primary fontSize={10} font="Heavy">
-                            asking price
+                            asking
                         </CustomText>
                         <CustomText accent font="Black" fontSize={18}>
                             ${props.productData?.askingPrice}
                         </CustomText>
                     </View>
-                    <View>
+                    <View style={{ marginRight: 5 }}>
                         {allProductOffers.length > 0 && !offerLoading && (
                             <>
                                 <CustomText primary fontSize={10} font="Heavy">
-                                    highest offer
+                                    highest
                                 </CustomText>
                                 <CustomText
                                     accent

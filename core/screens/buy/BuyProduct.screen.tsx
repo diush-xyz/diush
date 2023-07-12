@@ -17,12 +17,14 @@ import { useBuyProductStore } from "../../state/buy/BuyProduct.store";
 import PlaceOffer from "../../components/buy/placeOffer/PlaceOffer";
 import { usePlaceOfferStore } from "../../state/buy/PlaceOffer.store";
 import BuySuccess from "../../components/buy/buySuccess/BuySuccess";
+import { useScopeProductStore } from "../../state/buy/ScopeProduct.store";
 
 const BuyProductScreen = () => {
     const sheetRef = React.useRef<BottomSheet>(null);
     const utilStore = useUtilStore();
     const buyProductStore = useBuyProductStore();
     const placeOfferStore = usePlaceOfferStore();
+    const scopeProductStore = useScopeProductStore();
 
     const populateScreen = () => {
         switch (buyProductStore.status) {
@@ -47,6 +49,7 @@ const BuyProductScreen = () => {
                     utilStore.setCurrentLoggedInScreen(LoggedInScreen.SEARCH);
                     //clear the state here
                     buyProductStore.setStatus(BuyFlowStatus.SCOPE);
+                    scopeProductStore.setFetchedActiveProduct(null);
                 }}
                 style={{ borderRadius: 35, overflow: "hidden" }}
             >

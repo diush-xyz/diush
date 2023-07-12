@@ -26,7 +26,8 @@ import CustomText from "../../lib/CustomText";
 import CustomLoader from "../../lib/CustomLoader";
 import { useBuyProductStore } from "../../../state/buy/BuyProduct.store";
 import { useUtilStore } from "../../../state/Util.store";
-import { LoggedInScreen } from "../../../@types/GlobalTypes";
+import { IOffer, LoggedInScreen } from "../../../@types/GlobalTypes";
+import { getHighestOffer } from "../../../utils/getHighestOffer.util";
 
 const ScopeProduct = () => {
     const utilStore = useUtilStore();
@@ -36,6 +37,8 @@ const ScopeProduct = () => {
     const [sellerUserLoading, setSellerUserLoading] =
         React.useState<boolean>(true);
     const buyProductStore = useBuyProductStore();
+    const [allProductOffers, setAllProductOffers] = React.useState<any[]>([]);
+    const [highestOffer, setHighestOffer] = React.useState<IOffer>(null);
 
     React.useEffect(() => {
         // if (buyProductStore.idFromLink !== "") {
@@ -84,9 +87,40 @@ const ScopeProduct = () => {
         setSellerUserLoading(false);
     };
 
+    const fetchOffers = () => {
+        const q = query(
+            collection(db, "offers"),
+            where(
+                "linkedProductID",
+                "==",
+                scopeProductStore.fetchedActiveProduct.id
+            )
+        );
+        onSnapshot(q, querySnapshot => {
+            const fetched = [];
+
+            querySnapshot.forEach(documentSnapshot => {
+                fetched.push({
+                    ...documentSnapshot.data(),
+                    key: documentSnapshot.id,
+                });
+            });
+
+            setAllProductOffers(fetched);
+        });
+    };
+
+    React.useEffect(() => {
+        if (allProductOffers.length > 0) {
+            const highest = getHighestOffer(allProductOffers);
+            setHighestOffer(highest);
+        }
+    }, [allProductOffers]);
+
     React.useEffect(() => {
         if (!loading) {
             fetchSellerUser();
+            fetchOffers();
         }
     }, [loading]);
 
@@ -160,7 +194,11 @@ const ScopeProduct = () => {
                                 scopeProductStore.fetchedActiveProduct
                                     .askingPrice
                             }
-                            highestOffer={89} //TODO: Backend integration
+                            highestOffer={
+                                highestOffer?.amount
+                                    ? "$" + highestOffer?.amount
+                                    : "N/A"
+                            }
                             posted={timeAgo} //TODO: Backend integration
                         />
                         <WrittenInfoSection />
