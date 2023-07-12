@@ -53,21 +53,21 @@ const App = () => {
         setData(temp);
     };
 
-    React.useEffect(() => {
-        if (data) {
-            if (data.queryParams.id) {
-                buyProductStore.setIdFromLink(data.queryParams.id);
-            } else {
-                buyProductStore.setIdFromLink("");
-            }
+    // React.useEffect(() => {
+    //     if (data) {
+    //         if (data.queryParams.id) {
+    //             buyProductStore.setIdFromLink(data.queryParams.id);
+    //         } else {
+    //             buyProductStore.setIdFromLink("");
+    //         }
 
-            if (data) {
-                utilStore.setCurrentLoggedInScreen(LoggedInScreen.BUY);
-            } else {
-                utilStore.setCurrentLoggedInScreen(LoggedInScreen.HOME);
-            }
-        }
-    }, [data]);
+    //         if (data) {
+    //             utilStore.setCurrentLoggedInScreen(LoggedInScreen.BUY);
+    //         } else {
+    //             utilStore.setCurrentLoggedInScreen(LoggedInScreen.HOME);
+    //         }
+    //     }
+    // }, [data]);
 
     const generalRenderer = () => {
         switch (utilStore.currentLoggedInScreen) {

@@ -3,12 +3,19 @@ import React from "react";
 import { truncate } from "../../../utils/truncate.util";
 import CustomText from "../../lib/CustomText";
 import { LinearGradient } from "expo-linear-gradient";
-import { CatalogStatus, IOffer, IProduct } from "../../../@types/GlobalTypes";
+import {
+    CatalogStatus,
+    IOffer,
+    IProduct,
+    LoggedInScreen,
+} from "../../../@types/GlobalTypes";
 import { useCatalogStore } from "../../../state/auth/Catalog.store";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db, auth } from "../../../../config/firebase";
 import { getHighestOffer } from "../../../utils/getHighestOffer.util";
 import { useSellerViewProductStore } from "../../../state/auth/SellerViewProductStore";
+import { useBuyProductStore } from "../../../state/buy/BuyProduct.store";
+import { useUtilStore } from "../../../state/Util.store";
 
 export interface IProductCard {
     productData: IProduct;
@@ -16,9 +23,12 @@ export interface IProductCard {
     marginRight?: number;
     marginTop?: number;
     marginBottom?: number;
+    isToMakeOffer?: boolean;
 }
 
 const ProductCard = (props: IProductCard) => {
+    const utilStore = useUtilStore();
+    const buyProductStore = useBuyProductStore();
     const catalogStore = useCatalogStore();
     const sellerViewProductStore = useSellerViewProductStore();
     const [offers, setOffers] = React.useState([]);
@@ -62,12 +72,17 @@ const ProductCard = (props: IProductCard) => {
     return (
         <TouchableOpacity
             onPress={() => {
-                catalogStore.setStatus(CatalogStatus.VIEW);
-                catalogStore.setActiveProduct(props.productData);
+                if (props.isToMakeOffer) {
+                    buyProductStore.setIdFromSearch(props.productData.id);
+                    utilStore.setCurrentLoggedInScreen(LoggedInScreen.BUY);
+                } else {
+                    catalogStore.setStatus(CatalogStatus.VIEW);
+                    catalogStore.setActiveProduct(props.productData);
 
-                sellerViewProductStore.setHighestOfferAmount(
-                    highestOffer?.amount ?? null
-                );
+                    sellerViewProductStore.setHighestOfferAmount(
+                        highestOffer?.amount ?? null
+                    );
+                }
             }}
         >
             {/*@ts-ignore*/}

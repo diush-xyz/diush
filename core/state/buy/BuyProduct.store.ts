@@ -28,10 +28,10 @@ export default class BuyProductStore {
         this.loadingSeller = newLoadingSeller;
     }
 
-    idFromLink: string = "";
+    idFromSearch: string = "";
 
-    setIdFromLink(newIdFromLink: string) {
-        this.idFromLink = newIdFromLink;
+    setIdFromSearch(newId: string) {
+        this.idFromSearch = newId;
     }
 }
 
