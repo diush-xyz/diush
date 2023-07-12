@@ -23,7 +23,6 @@ export interface IProductCard {
     marginRight?: number;
     marginTop?: number;
     marginBottom?: number;
-    isToMakeOffer?: boolean;
 }
 
 const ProductCard = (props: IProductCard) => {
@@ -72,17 +71,12 @@ const ProductCard = (props: IProductCard) => {
     return (
         <TouchableOpacity
             onPress={() => {
-                if (props.isToMakeOffer) {
-                    buyProductStore.setIdFromSearch(props.productData.id);
-                    utilStore.setCurrentLoggedInScreen(LoggedInScreen.BUY);
-                } else {
-                    catalogStore.setStatus(CatalogStatus.VIEW);
-                    catalogStore.setActiveProduct(props.productData);
+                catalogStore.setStatus(CatalogStatus.VIEW);
+                catalogStore.setActiveProduct(props.productData);
 
-                    sellerViewProductStore.setHighestOfferAmount(
-                        highestOffer?.amount ?? null
-                    );
-                }
+                sellerViewProductStore.setHighestOfferAmount(
+                    highestOffer?.amount ?? null
+                );
             }}
         >
             {/*@ts-ignore*/}

@@ -19,6 +19,7 @@ const SearchScreen = () => {
 
     const [allProducts, setAllProducts] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
+    const [value, setValue] = React.useState<string>("");
 
     const fetchProducts = async () => {
         try {
@@ -97,14 +98,19 @@ const SearchScreen = () => {
             <CustomTextInput
                 placeholder="angry birds plushie"
                 isSearch
-                onChangeText={text => console.log(text)}
+                onChangeText={text => setValue(text)}
                 marginTop={20}
             />
             <ScrollView
                 showsVerticalScrollIndicator
-                style={{ overflow: "scroll", width: MAX_WIDTH, height: 300 }}
+                style={{
+                    overflow: "scroll",
+                    width: MAX_WIDTH,
+                    height: 300,
+                    marginTop: 20,
+                }}
             >
-                <SearchFilter data={allProducts} />
+                <SearchFilter searchText={value} data={allProducts} />
             </ScrollView>
         </View>
     );
