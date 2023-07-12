@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { LoggedInScreen } from "../../@types/GlobalTypes";
 import ScreenHeader from "../../components/lib/ScreenHeader";
 import { useUtilStore } from "../../state/Util.store";
@@ -10,6 +10,7 @@ import CustomTextInput from "../../components/lib/CustomTextInput";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 import CustomLoader from "../../components/lib/CustomLoader";
+import SearchFilter from "../../components/search/SearchFilter/SearchFilter";
 
 const SearchScreen = () => {
     const utilStore = useUtilStore();
@@ -98,9 +99,12 @@ const SearchScreen = () => {
                 onChangeText={text => console.log(text)}
                 marginTop={20}
             />
-            {allProducts.map((elem, idx) => {
-                return <CustomText>{elem.title}</CustomText>;
-            })}
+            <ScrollView
+                showsVerticalScrollIndicator
+                style={{ overflow: "scroll", width: "100%", height: 300 }}
+            >
+                <SearchFilter data={allProducts} />
+            </ScrollView>
         </View>
     );
 };
