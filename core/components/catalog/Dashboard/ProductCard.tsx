@@ -137,7 +137,12 @@ const ProductCard = (props: IProductCard) => {
                     <View style={{ marginRight: 5 }}>
                         {allProductOffers.length > 0 && !offerLoading && (
                             <>
-                                <CustomText primary fontSize={10} font="Heavy">
+                                <CustomText
+                                    primary
+                                    fontSize={10}
+                                    font="Heavy"
+                                    textAlign="right"
+                                >
                                     highest
                                 </CustomText>
                                 <CustomText
