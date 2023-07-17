@@ -1,4 +1,4 @@
-import { View, Image, ScrollView } from "react-native";
+import { View, Image, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
 import { observer } from "mobx-react";
 import AuthStore, { useAuthStore } from "../../../state/auth/Auth.store";
@@ -258,6 +258,7 @@ const HomeBaseScreen = () => {
                 onChangeText={() => null}
                 customWidth={350}
                 isSearch
+                isComingSoon
             />
             <ScrollView
                 showsVerticalScrollIndicator={false}

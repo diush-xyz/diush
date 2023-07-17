@@ -40,6 +40,7 @@ interface ICustomTextInput {
     onSubmitEditing?: (
         e: NativeSyntheticEvent<TextInputSubmitEditingEventData>
     ) => void;
+    isComingSoon?: boolean;
 }
 
 const CustomTextInput = (props: ICustomTextInput) => {
@@ -109,6 +110,18 @@ const CustomTextInput = (props: ICustomTextInput) => {
                 />
                 {props.isValid && <SuccessIcon />}
                 {props.isErr && <WarningIcon />}
+                {props.isComingSoon && (
+                    <View
+                        style={{
+                            backgroundColor: "#ffffff0d",
+                            padding: 5,
+                            borderRadius: 6,
+                            opacity: 0.5,
+                        }}
+                    >
+                        <CustomText fontSize={14}>SOON</CustomText>
+                    </View>
+                )}
             </TouchableOpacity>
             {props.isErr && (
                 <View
