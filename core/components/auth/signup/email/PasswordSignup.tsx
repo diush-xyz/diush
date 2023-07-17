@@ -47,7 +47,7 @@ const PasswordSignup = () => {
                 subtitle="signup"
                 progressIndicator
                 currentStep={3}
-                totalSteps={6}
+                totalSteps={5}
                 marginTop={60}
             />
             <ScrollWrapper>

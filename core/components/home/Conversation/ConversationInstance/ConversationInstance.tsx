@@ -252,7 +252,11 @@ const ConversationInstance = (props: IConversationInstance) => {
                     alignItems: "flex-end",
                 }}
             >
-                <CustomText secondary>{mostRecentOfferTimeAgo}</CustomText>
+                <CustomText secondary>
+                    {mostRecentOfferTimeAgo == "a few seconds"
+                        ? "just now"
+                        : mostRecentOfferTimeAgo}
+                </CustomText>
                 <View
                     style={{
                         paddingVertical: 2,

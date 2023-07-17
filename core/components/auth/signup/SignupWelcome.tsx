@@ -20,7 +20,7 @@ const SignupWelcome = () => {
                 subtitle="signup"
                 progressIndicator
                 currentStep={1}
-                totalSteps={6}
+                totalSteps={5}
                 backArrow
                 backArrowOnPress={() => {
                     authStore.setAuthStatus(AuthStatus.SQUARE_ONE);

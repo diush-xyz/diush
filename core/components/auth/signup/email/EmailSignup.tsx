@@ -93,7 +93,7 @@ const EmailSignup = () => {
                 subtitle="signup"
                 progressIndicator
                 currentStep={2}
-                totalSteps={6}
+                totalSteps={5}
                 marginTop={60}
             />
             {loading ? (

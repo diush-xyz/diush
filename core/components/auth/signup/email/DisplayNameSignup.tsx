@@ -56,8 +56,8 @@ const DisplayNameSignup = () => {
                 title="name"
                 subtitle="signup"
                 progressIndicator
-                currentStep={5}
-                totalSteps={6}
+                currentStep={4}
+                totalSteps={5}
                 marginTop={60}
             />
             <ScrollWrapper>

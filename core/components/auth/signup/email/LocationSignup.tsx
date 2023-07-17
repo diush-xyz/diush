@@ -29,8 +29,8 @@ const LocationSignup = () => {
                 title="name"
                 subtitle="signup"
                 progressIndicator
-                currentStep={6}
-                totalSteps={6}
+                currentStep={5}
+                totalSteps={5}
                 marginTop={60}
             />
             <ScrollWrapper>
