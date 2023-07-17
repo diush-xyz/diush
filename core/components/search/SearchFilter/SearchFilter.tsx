@@ -17,6 +17,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../../../config/firebase";
 import { useTheme } from "../../../utils/useTheme.util";
+import ResultElem from "./ResultElem/ResultElem";
 
 interface ISearchFilter {
     searchText: string;
@@ -24,9 +25,6 @@ interface ISearchFilter {
 }
 
 const SearchFilter = (props: ISearchFilter) => {
-    const theme = useTheme();
-    const buyProductStore = useBuyProductStore();
-    const utilStore = useUtilStore();
     const [sellers, setSellers] = React.useState<any[]>([]);
 
     const [loading, setLoading] = React.useState<boolean>(true);
@@ -99,87 +97,20 @@ const SearchFilter = (props: ISearchFilter) => {
     //     fetchSellerUsers();
     // }, []);
 
+    //TODO: Clean this up later, it's inefficient (but works) xD
     return (
         <>
-            {props.data.map((elem, idx) => {
+            {props.data.map((elem: IProduct, idx: number) => {
                 // fetchSellerUser(elem.linkedUID);
                 if (props.searchText === "") {
-                    return (
-                        <TouchableOpacity
-                            onPress={() => {
-                                buyProductStore.setIdFromSearch(elem.id);
-                                utilStore.setCurrentLoggedInScreen(
-                                    LoggedInScreen.BUY
-                                );
-                            }}
-                            style={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                                flexDirection: "row",
-                                width: "100%",
-                                marginBottom: 20,
-                                borderBottomWidth: 1,
-                                borderBottomColor: theme.secondary,
-                                paddingBottom: 20,
-                            }}
-                        >
-                            <View
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                }}
-                            >
-                                <Image
-                                    style={{
-                                        height: 80,
-                                        width: 80,
-                                        borderRadius: 10,
-                                        resizeMode: "cover",
-                                    }}
-                                    source={{ uri: elem.imageURL }}
-                                />
-                                <View
-                                    style={{
-                                        display: "flex",
-                                        justifyContent: "space-between",
-                                        marginLeft: 8,
-                                    }}
-                                >
-                                    <View>
-                                        <CustomText font="Bold">
-                                            {truncate(elem.title, 25)}
-                                        </CustomText>
-                                        <CustomText fontSize={14} secondary>
-                                            {truncate(elem.blurb, 25)}
-                                        </CustomText>
-                                    </View>
-                                    <View>
-                                        <CustomText accent font="Bold">
-                                            {sellers[idx]
-                                                ? sellers[idx].displayName
-                                                : ""}{" "}
-                                            ${elem.askingPrice}
-                                        </CustomText>
-                                    </View>
-                                </View>
-                            </View>
-                            <ChevronRight />
-                        </TouchableOpacity>
-                    );
+                    return <ResultElem elem={elem} idx={idx} />;
                 }
                 if (
                     elem.title
                         .toLowerCase()
                         .includes(props.searchText.toLowerCase())
                 ) {
-                    return (
-                        <ProductCard
-                            productData={elem}
-                            marginLeft={idx % 2 === 0 ? 0 : 5}
-                            marginRight={idx % 2 === 0 ? 5 : 0}
-                        />
-                    );
+                    return <ResultElem elem={elem} idx={idx} />;
                 }
             })}
         </>
