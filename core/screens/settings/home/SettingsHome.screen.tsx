@@ -66,10 +66,11 @@ const SettingsHome = () => {
         {
             text: "notifications",
             onClick: () => null,
-            isToggle: true,
-            toggleValue: authStore.user.notifications,
-            onToggleChange: value => updateNotificationSettings(value),
-            isNotPressable: true,
+            isComingSoon: true,
+            // isToggle: true,
+            // toggleValue: authStore.user.notifications,
+            // onToggleChange: value => updateNotificationSettings(value),
+            // isNotPressable: true,
         },
     ];
 
