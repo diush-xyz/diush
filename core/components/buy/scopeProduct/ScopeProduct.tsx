@@ -199,7 +199,11 @@ const ScopeProduct = () => {
                                     ? "$" + highestOffer?.amount
                                     : "N/A"
                             }
-                            posted={timeAgo} //TODO: Backend integration
+                            posted={
+                                timeAgo == "a few seconds"
+                                    ? "just now"
+                                    : timeAgo
+                            }
                         />
                         <WrittenInfoSection />
                         <View style={{ marginBottom: 60 }} />

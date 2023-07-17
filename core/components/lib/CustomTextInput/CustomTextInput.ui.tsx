@@ -70,7 +70,7 @@ const CustomTextInput = (props: ICustomTextInput) => {
                     justifyContent: "center",
                     flexDirection: "row",
                     backgroundColor: "rgba(255,255,255,0.05)",
-                    height: props.isLarge ? 136 : 45,
+                    height: props.isLarge ? 120 : 45,
                     width: "100%",
                     maxWidth: props.customWidth ?? MAX_WIDTH,
                     marginBottom: props.isErr ? 7 : props.marginBottom || 0,
