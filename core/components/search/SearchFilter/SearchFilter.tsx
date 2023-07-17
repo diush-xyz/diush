@@ -16,6 +16,7 @@ import {
     startAfter,
 } from "firebase/firestore";
 import { db } from "../../../../config/firebase";
+import { useTheme } from "../../../utils/useTheme.util";
 
 interface ISearchFilter {
     searchText: string;
@@ -23,6 +24,7 @@ interface ISearchFilter {
 }
 
 const SearchFilter = (props: ISearchFilter) => {
+    const theme = useTheme();
     const buyProductStore = useBuyProductStore();
     const utilStore = useUtilStore();
     const [sellers, setSellers] = React.useState<any[]>([]);
@@ -117,6 +119,9 @@ const SearchFilter = (props: ISearchFilter) => {
                                 flexDirection: "row",
                                 width: "100%",
                                 marginBottom: 20,
+                                borderBottomWidth: 1,
+                                borderBottomColor: theme.secondary,
+                                paddingBottom: 20,
                             }}
                         >
                             <View
@@ -143,7 +148,7 @@ const SearchFilter = (props: ISearchFilter) => {
                                 >
                                     <View>
                                         <CustomText font="Bold">
-                                            {elem.title}
+                                            {truncate(elem.title, 25)}
                                         </CustomText>
                                         <CustomText fontSize={14} secondary>
                                             {truncate(elem.blurb, 25)}
