@@ -87,12 +87,15 @@ const SearchScreen = () => {
                     width: "100%",
                 }}
             >
-                <CustomText style={{ fontSize: 12, textAlign: "justify" }}>
-                    hey there! this feature is sort of a temporary, short-term
-                    {`\n`}way of being able to test out the bulk of diush's
-                    functionality without having to delay it any further due to
-                    having to implement deeplinks. They will come soon! For now,
-                    to{"\n"}make an offer for a product, search for it here.
+                <CustomText fontSize={12} style={{ textAlign: "justify" }}>
+                    <CustomText fontSize={12} font="Heavy">
+                        NOTE:
+                    </CustomText>{" "}
+                    hey there! this feature is sort of a temporary way of being
+                    able to test out the bulk of diush's functionality without
+                    having to delay it any further due to having to implement
+                    deeplinks. They will come soon! For now, to make an offer
+                    for a product, search for it here. ❤️
                 </CustomText>
             </View>
             <CustomTextInput
