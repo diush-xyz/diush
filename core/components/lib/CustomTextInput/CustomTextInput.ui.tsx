@@ -9,6 +9,7 @@ import {
     TouchableOpacity,
     StyleProp,
     ViewStyle,
+    Keyboard,
 } from "react-native";
 import React, { useRef } from "react";
 import { observer } from "mobx-react";
@@ -54,6 +55,13 @@ const CustomTextInput = (props: ICustomTextInput) => {
         }
     }, []);
 
+    const handleKeyPress = ({ nativeEvent }) => {
+        // Check if the enter key (newline) is pressed (keyCode 13) and prevent it
+        if (nativeEvent.key === "Enter" || nativeEvent.keyCode === 13) {
+            Keyboard.dismiss();
+        }
+    };
+
     return (
         <View
             style={{
@@ -94,7 +102,7 @@ const CustomTextInput = (props: ICustomTextInput) => {
                         color: theme.primaryText,
                         //TODO: remove this in extraction
                     }}
-                    multiline={props.isLarge}
+                    multiline={false}
                     numberOfLines={props.isLarge && 10}
                     selectionColor={theme.accent}
                     placeholderTextColor={theme.secondary}
@@ -105,8 +113,9 @@ const CustomTextInput = (props: ICustomTextInput) => {
                     returnKeyType={props.returnKeyType}
                     secureTextEntry={secure}
                     autoCorrect={props.autoCorrect}
-                    onSubmitEditing={props.onSubmitEditing}
+                    onSubmitEditing={!props.isLarge && props.onSubmitEditing}
                     keyboardAppearance="dark"
+                    onKeyPress={e => handleKeyPress(e)}
                 />
                 {props.isValid && <SuccessIcon />}
                 {props.isErr && <WarningIcon />}

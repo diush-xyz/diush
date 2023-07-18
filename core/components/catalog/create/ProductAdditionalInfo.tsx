@@ -53,7 +53,7 @@ const ProductAdditionalInfo = () => {
                 currentStep={6}
                 totalSteps={7}
             />
-            <ScrollWrapper isTextArea>
+            <ScrollWrapper isTextArea isCreateListing>
                 <FlowTemplate
                     circleEmoji="🌵"
                     title="anything else?"

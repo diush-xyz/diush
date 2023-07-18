@@ -7,6 +7,7 @@ interface IScrollWrapper {
     isTextArea?: boolean;
     height?: number;
     opacity?: string;
+    isCreateListing?: boolean;
 }
 
 const ScrollWrapper = (props: IScrollWrapper) => {
@@ -23,6 +24,7 @@ const ScrollWrapper = (props: IScrollWrapper) => {
             <ScrollView
                 style={{
                     height: props.height ?? (props.isTextArea ? 450 : 400),
+                    marginTop: props.isCreateListing && -60,
                 }}
                 showsVerticalScrollIndicator={false}
                 //hide the keyboard when the user taps outside

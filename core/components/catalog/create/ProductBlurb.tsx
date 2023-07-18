@@ -72,7 +72,7 @@ const ProductBlurb = () => {
                 currentStep={3}
                 totalSteps={7}
             />
-            <ScrollWrapper isTextArea>
+            <ScrollWrapper isTextArea isCreateListing>
                 <FlowTemplate
                     circleEmoji="📦"
                     title="let's create a blurb."
