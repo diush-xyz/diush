@@ -83,7 +83,7 @@ const EmailSignup = () => {
     });
 
     return (
-        <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
+        <View style={GLOBAL_STYLES.bottomSheetViewStyle}>
             <PopupHeader
                 backArrow
                 backArrowOnPress={() =>
@@ -93,7 +93,8 @@ const EmailSignup = () => {
                 subtitle="signup"
                 progressIndicator
                 currentStep={2}
-                totalSteps={6}
+                totalSteps={5}
+                marginTop={60}
             />
             {loading ? (
                 <CustomLoader />
@@ -129,7 +130,7 @@ const EmailSignup = () => {
                     </FlowTemplate>
                 </ScrollWrapper>
             )}
-        </BottomSheetView>
+        </View>
     );
 };
 

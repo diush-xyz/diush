@@ -173,6 +173,7 @@ const CatalogHome = () => {
                 placeholder="search my products"
                 onChangeText={() => null}
                 isSearch
+                isComingSoon
             />
             {catalogStore.activeProductsDashboard ? (
                 <View

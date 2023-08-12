@@ -6,19 +6,27 @@ import PopupHeader from "../../lib/PopupHeader";
 import SignupOptionButton from "../SignupOptionbutton/SignupOptionButton";
 import { observer } from "mobx-react";
 import { useSignupStore } from "../../../state/auth/Signup.store";
-import { SignupMethod } from "../../../@types/GlobalTypes";
+import { AuthStatus, SignupMethod } from "../../../@types/GlobalTypes";
 import { View } from "react-native";
+import { useAuthStore } from "../../../state/auth/Auth.store";
 
 const SignupWelcome = () => {
+    const authStore = useAuthStore();
     const signupStore = useSignupStore();
     return (
-        <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
+        <View style={GLOBAL_STYLES.bottomSheetViewStyle}>
             <PopupHeader
                 title="method"
                 subtitle="signup"
                 progressIndicator
                 currentStep={1}
-                totalSteps={6}
+                totalSteps={5}
+                backArrow
+                backArrowOnPress={() => {
+                    authStore.setAuthStatus(AuthStatus.SQUARE_ONE);
+                    signupStore.cancel();
+                }}
+                marginTop={60}
             />
             <FlowTemplate
                 circleEmoji="🪴"
@@ -46,7 +54,7 @@ const SignupWelcome = () => {
                     />
                 </View>
             </FlowTemplate>
-        </BottomSheetView>
+        </View>
     );
 };
 

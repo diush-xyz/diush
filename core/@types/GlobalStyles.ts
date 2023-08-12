@@ -51,6 +51,7 @@ export const GLOBAL_STYLES = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: theme.popupBackground,
+        width: "100%",
     },
     viewProductSheetViewStyle: {
         flex: 1,

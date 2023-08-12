@@ -12,6 +12,7 @@ import SignupFlow from "./signup";
 import LoginFlow from "./login";
 import { BOTTOM_SHEET_SNAP_POINTS } from "../../utils/constants";
 import { useTheme } from "../../utils/useTheme.util";
+import SquareOne from "./squareOne/SquareOne";
 
 const AuthScreen = () => {
     const authStore = useAuthStore();
@@ -55,77 +56,20 @@ const AuthScreen = () => {
         extrapolate: "clamp",
     });
 
-    return (
-        <>
-            <View style={GLOBAL_STYLES.page}>
-                <Animated.View
-                    style={{
-                        transform: [{ translateY }, { scale }],
-                        marginBottom: 15,
-                    }}
-                >
-                    <NoBackgroundLogo fill="#ffffff" />
-                </Animated.View>
-                <CustomText
-                    primary
-                    font="Bold"
-                    fontSize={24}
-                    style={{ marginTop: 24, marginBottom: 12 }}
-                >
-                    hey there!
-                </CustomText>
-                <CustomText
-                    secondary
-                    font="Semibold"
-                    fontSize={16}
-                    textAlign="center"
-                    style={{ marginBottom: 80 }}
-                >
-                    welcome to the easy way for teenagers {"\n"} to sell items
-                    to their friends and network.
-                </CustomText>
-                <LargeButton
-                    title="get started"
-                    onPress={() => {
-                        authStore.setAuthStatus(AuthStatus.SIGNUP);
-                        handleSnapPress(0);
-                    }}
-                    footer
-                    footerButtonPrimary
-                    footerButtonTitle="i already have an account"
-                    footerButtonOnPress={() => {
-                        authStore.setAuthStatus(AuthStatus.LOGIN);
-                        handleSnapPress(0);
-                    }}
-                />
-            </View>
-            <View style={{ position: "absolute", bottom: 70 }}>
-                <CustomText secondary font="Bold" textAlign="center">
-                    made with ❤️ by Filippo Fonseca{"\n"} and the diush
-                    contributors.
-                </CustomText>
-            </View>
-            {authStore.isSheetOpen ? (
-                <BottomSheet
-                    handleIndicatorStyle={GLOBAL_STYLES.handleIndicatorStyle}
-                    handleStyle={GLOBAL_STYLES.handleStyle}
-                    ref={sheetRef}
-                    snapPoints={BOTTOM_SHEET_SNAP_POINTS}
-                    enablePanDownToClose={true}
-                    onClose={() => authStore.setIsSheetOpen(false)}
-                >
-                    {() => {
-                        switch (authStore.authStatus) {
-                            case AuthStatus.SIGNUP:
-                                return <SignupFlow />;
-                            case AuthStatus.LOGIN:
-                                return <LoginFlow />;
-                        }
-                    }}
-                </BottomSheet>
-            ) : null}
-        </>
-    );
+    const populateContent = () => {
+        switch (authStore.authStatus) {
+            case AuthStatus.SQUARE_ONE:
+                return <SquareOne />;
+            case AuthStatus.LOGIN:
+                return <LoginFlow />;
+            case AuthStatus.SIGNUP:
+                return <SignupFlow />;
+            default:
+                return <SquareOne />;
+        }
+    };
+
+    return <>{populateContent()}</>;
 };
 
 export default observer(AuthScreen);

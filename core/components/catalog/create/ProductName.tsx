@@ -58,14 +58,14 @@ const ProductName = () => {
                 currentStep={1}
                 totalSteps={7}
             />
-            <ScrollWrapper>
+            <ScrollWrapper isCreateListing>
                 <FlowTemplate
                     circleEmoji="📦"
                     title="magic begins here."
                     desc={
                         "give your new product a name. make it\n descriptive, yet simple."
                     }
-                    marginBottom={utilStore.isKeyboardOpen ? "200px" : null}
+                    marginBottom={utilStore.isKeyboardOpen ? "500px" : null}
                 >
                     <CustomTextInput
                         placeholder="PlayStation 5"

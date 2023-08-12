@@ -17,6 +17,7 @@ export interface IPopupHeader {
     progressIndicator?: boolean;
     currentStep?: number;
     totalSteps?: number;
+    marginTop?: number;
 }
 
 /**
@@ -24,7 +25,7 @@ export interface IPopupHeader {
  */
 const PopupHeader = (props: IPopupHeader) => {
     return (
-        <HeaderWrapper>
+        <HeaderWrapper style={{ marginTop: props.marginTop ?? 0 }}>
             <View
                 style={{
                     flex: 1,

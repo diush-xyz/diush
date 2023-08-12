@@ -24,13 +24,13 @@ const SignupFlow = () => {
             //     return <VerifyEmailSignup />;
             case 2:
                 return <PasswordSignup />;
+            // case 3:
+            //     return <PermissionsSignup />;
             case 3:
-                return <PermissionsSignup />;
-            case 4:
                 return <DisplayNameSignup />;
-            case 5:
+            case 4:
                 return <LocationSignup />;
-            case 6:
+            case 5:
                 return <FinalWelcomeSignup />;
         }
     };

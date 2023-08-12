@@ -7,6 +7,9 @@ import {
     TextInputSubmitEditingEventData,
     NativeSyntheticEvent,
     TouchableOpacity,
+    StyleProp,
+    ViewStyle,
+    Keyboard,
 } from "react-native";
 import React, { useRef } from "react";
 import { observer } from "mobx-react";
@@ -34,9 +37,11 @@ interface ICustomTextInput {
     isLarge?: boolean;
     autoCorrect?: boolean;
     customWidth?: number;
+    marginTop?: number;
     onSubmitEditing?: (
         e: NativeSyntheticEvent<TextInputSubmitEditingEventData>
     ) => void;
+    isComingSoon?: boolean;
 }
 
 const CustomTextInput = (props: ICustomTextInput) => {
@@ -49,6 +54,13 @@ const CustomTextInput = (props: ICustomTextInput) => {
             setSecure(true);
         }
     }, []);
+
+    const handleKeyPress = ({ nativeEvent }) => {
+        // Check if the enter key (newline) is pressed (keyCode 13) and prevent it
+        if (nativeEvent.key === "Enter" || nativeEvent.keyCode === 13) {
+            Keyboard.dismiss();
+        }
+    };
 
     return (
         <View
@@ -67,13 +79,14 @@ const CustomTextInput = (props: ICustomTextInput) => {
                     justifyContent: "center",
                     flexDirection: "row",
                     backgroundColor: "rgba(255,255,255,0.05)",
-                    height: props.isLarge ? 136 : 45,
+                    height: props.isLarge ? 120 : 45,
                     width: "100%",
                     maxWidth: props.customWidth ?? MAX_WIDTH,
                     marginBottom: props.isErr ? 7 : props.marginBottom || 0,
                     borderRadius: 12,
                     paddingHorizontal: 20,
                     paddingTop: props.isLarge && 14,
+                    marginTop: props.marginTop,
                 }}
                 activeOpacity={1}
             >
@@ -89,7 +102,7 @@ const CustomTextInput = (props: ICustomTextInput) => {
                         color: theme.primaryText,
                         //TODO: remove this in extraction
                     }}
-                    multiline={props.isLarge}
+                    multiline={false}
                     numberOfLines={props.isLarge && 10}
                     selectionColor={theme.accent}
                     placeholderTextColor={theme.secondary}
@@ -100,10 +113,24 @@ const CustomTextInput = (props: ICustomTextInput) => {
                     returnKeyType={props.returnKeyType}
                     secureTextEntry={secure}
                     autoCorrect={props.autoCorrect}
-                    onSubmitEditing={props.onSubmitEditing}
+                    onSubmitEditing={!props.isLarge && props.onSubmitEditing}
+                    keyboardAppearance="dark"
+                    onKeyPress={e => handleKeyPress(e)}
                 />
                 {props.isValid && <SuccessIcon />}
                 {props.isErr && <WarningIcon />}
+                {props.isComingSoon && (
+                    <View
+                        style={{
+                            backgroundColor: "#ffffff0d",
+                            padding: 5,
+                            borderRadius: 6,
+                            opacity: 0.5,
+                        }}
+                    >
+                        <CustomText fontSize={14}>SOON</CustomText>
+                    </View>
+                )}
             </TouchableOpacity>
             {props.isErr && (
                 <View

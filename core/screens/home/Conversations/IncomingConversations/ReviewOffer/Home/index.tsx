@@ -335,7 +335,14 @@ const ReviewOfferHome = () => {
                             alignItems: "center",
                         }}
                     >
-                        <ProfileImage specificUser={user} size={20} />
+                        <ProfileImage
+                            specificUser={
+                                isProductMine
+                                    ? user
+                                    : conversationStore.activeConvoOtherUser
+                            }
+                            size={20}
+                        />
                         <CustomText
                             fontSize={16}
                             style={{ marginLeft: 6 }}
@@ -371,7 +378,9 @@ const ReviewOfferHome = () => {
                         >
                             {offerStore.offerBeingReviewed.status ==
                             OfferStatus.ACCEPTED
-                                ? `when you accepted this offer, you agreed to ${buyOrSellText}`
+                                ? `when you ${
+                                      isProductMine ? "accepted" : "sent"
+                                  } this offer, you agreed to ${buyOrSellText}`
                                 : isOfferMine
                                 ? `if this offer you sent is accepted, you agree to ${buyOrSellText}`
                                 : `by accepting this offer, you agree to ${buyOrSellText}`}{" "}

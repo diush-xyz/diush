@@ -1,5 +1,6 @@
 {
     "expo": {
+        "scheme": "diush-xyz",
         "name": "diush",
         "slug": "diush",
         "version": "1.0.0",
@@ -32,13 +33,16 @@
         },
         "assetBundlePatterns": ["**/*"],
         "ios": {
-            "supportsTablet": true
+            "supportsTablet": true,
+            "bundleIdentifier": "com.filippofonseca.diush"
         },
         "android": {
             "adaptiveIcon": {
                 "foregroundImage": "./assets/adaptive-icon.png",
                 "backgroundColor": "#FFFFFF"
-            }
+            },
+            "permissions": ["android.permission.RECORD_AUDIO"],
+            "package": "com.filippofonseca.diush"
         },
         "web": {
             "favicon": "./assets/favicon.png"

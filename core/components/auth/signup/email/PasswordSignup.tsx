@@ -37,7 +37,7 @@ const PasswordSignup = () => {
         }
     });
     return (
-        <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
+        <View style={GLOBAL_STYLES.bottomSheetViewStyle}>
             <PopupHeader
                 backArrow
                 backArrowOnPress={() =>
@@ -47,7 +47,8 @@ const PasswordSignup = () => {
                 subtitle="signup"
                 progressIndicator
                 currentStep={3}
-                totalSteps={6}
+                totalSteps={5}
+                marginTop={60}
             />
             <ScrollWrapper>
                 <FlowTemplate
@@ -78,7 +79,7 @@ const PasswordSignup = () => {
                     />
                 </FlowTemplate>
             </ScrollWrapper>
-        </BottomSheetView>
+        </View>
     );
 };
 

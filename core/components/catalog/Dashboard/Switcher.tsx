@@ -1,8 +1,7 @@
-import { View, Text, Animated } from "react-native";
+import { View, Text, Animated, TouchableOpacity } from "react-native";
 import React from "react";
 import { useTheme } from "../../../utils/useTheme.util";
 import CustomText from "../../lib/CustomText";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface ISwitcher {
     text1: string;

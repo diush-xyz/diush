@@ -62,7 +62,7 @@ const AccountDetailsHome = () => {
                         MyAccountSettingsStatus.HOME
                     )
                 }
-                title="account details"
+                title="details"
                 subtitle="my account"
             />
             <View

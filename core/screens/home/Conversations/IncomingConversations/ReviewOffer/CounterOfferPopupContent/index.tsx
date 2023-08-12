@@ -157,7 +157,15 @@ const CounterOfferPopupContent = () => {
                             alignItems: "center",
                         }}
                     >
-                        <ProfileImage specificUser={user} size={20} />
+                        <ProfileImage
+                            specificUser={
+                                conversationStore.activeConversation
+                                    .sellerUID == user.id
+                                    ? user
+                                    : conversationStore.activeConvoOtherUser
+                            }
+                            size={20}
+                        />
                         <CustomText
                             fontSize={16}
                             style={{ marginLeft: 6 }}

@@ -185,7 +185,7 @@ const OfferCard = (props: IOfferCard) => {
                                                 : theme.primaryText,
                                     }}
                                 >
-                                    {truncate(props.product?.title, 19)}
+                                    {truncate(props.product?.title, 17)}
                                 </CustomText>
                             </CustomText>
                             <View

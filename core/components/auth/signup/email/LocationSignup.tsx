@@ -20,7 +20,7 @@ const LocationSignup = () => {
     const [firstTime, setFirstTime] = React.useState<boolean>(true);
 
     return (
-        <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
+        <View style={GLOBAL_STYLES.bottomSheetViewStyle}>
             <PopupHeader
                 backArrow
                 backArrowOnPress={() =>
@@ -29,8 +29,9 @@ const LocationSignup = () => {
                 title="name"
                 subtitle="signup"
                 progressIndicator
-                currentStep={6}
-                totalSteps={6}
+                currentStep={5}
+                totalSteps={5}
+                marginTop={60}
             />
             <ScrollWrapper>
                 <FlowTemplate
@@ -76,7 +77,7 @@ const LocationSignup = () => {
                     />
                 </FlowTemplate>
             </ScrollWrapper>
-        </BottomSheetView>
+        </View>
     );
 };
 

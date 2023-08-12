@@ -101,7 +101,11 @@ const ViewProduct = () => {
                                 sellerViewProductStore.highestOfferAmount ??
                                 null
                             } //TODO: Backend integration
-                            posted={timeAgo} //TODO: Backend integration
+                            posted={
+                                timeAgo == "a few seconds"
+                                    ? "just now"
+                                    : timeAgo
+                            }
                         />
                         <WrittenInfoSection />
                         <View style={{ marginBottom: 60 }} />

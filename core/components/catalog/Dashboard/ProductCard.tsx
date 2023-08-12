@@ -3,12 +3,19 @@ import React from "react";
 import { truncate } from "../../../utils/truncate.util";
 import CustomText from "../../lib/CustomText";
 import { LinearGradient } from "expo-linear-gradient";
-import { CatalogStatus, IOffer, IProduct } from "../../../@types/GlobalTypes";
+import {
+    CatalogStatus,
+    IOffer,
+    IProduct,
+    LoggedInScreen,
+} from "../../../@types/GlobalTypes";
 import { useCatalogStore } from "../../../state/auth/Catalog.store";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db, auth } from "../../../../config/firebase";
 import { getHighestOffer } from "../../../utils/getHighestOffer.util";
 import { useSellerViewProductStore } from "../../../state/auth/SellerViewProductStore";
+import { useBuyProductStore } from "../../../state/buy/BuyProduct.store";
+import { useUtilStore } from "../../../state/Util.store";
 
 export interface IProductCard {
     productData: IProduct;
@@ -19,6 +26,8 @@ export interface IProductCard {
 }
 
 const ProductCard = (props: IProductCard) => {
+    const utilStore = useUtilStore();
+    const buyProductStore = useBuyProductStore();
     const catalogStore = useCatalogStore();
     const sellerViewProductStore = useSellerViewProductStore();
     const [offers, setOffers] = React.useState([]);
@@ -113,17 +122,22 @@ const ProductCard = (props: IProductCard) => {
                 >
                     <View>
                         <CustomText primary fontSize={10} font="Heavy">
-                            asking price
+                            asking
                         </CustomText>
                         <CustomText accent font="Black" fontSize={18}>
                             ${props.productData?.askingPrice}
                         </CustomText>
                     </View>
-                    <View>
+                    <View style={{ marginRight: 5 }}>
                         {allProductOffers.length > 0 && !offerLoading && (
                             <>
-                                <CustomText primary fontSize={10} font="Heavy">
-                                    highest offer
+                                <CustomText
+                                    primary
+                                    fontSize={10}
+                                    font="Heavy"
+                                    textAlign="right"
+                                >
+                                    highest
                                 </CustomText>
                                 <CustomText
                                     accent

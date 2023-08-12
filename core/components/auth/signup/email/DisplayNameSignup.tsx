@@ -47,7 +47,7 @@ const DisplayNameSignup = () => {
     });
 
     return (
-        <BottomSheetView style={GLOBAL_STYLES.bottomSheetViewStyle}>
+        <View style={GLOBAL_STYLES.bottomSheetViewStyle}>
             <PopupHeader
                 backArrow
                 backArrowOnPress={() =>
@@ -56,8 +56,9 @@ const DisplayNameSignup = () => {
                 title="name"
                 subtitle="signup"
                 progressIndicator
-                currentStep={5}
-                totalSteps={6}
+                currentStep={4}
+                totalSteps={5}
+                marginTop={60}
             />
             <ScrollWrapper>
                 <FlowTemplate
@@ -90,7 +91,7 @@ const DisplayNameSignup = () => {
                     />
                 </FlowTemplate>
             </ScrollWrapper>
-        </BottomSheetView>
+        </View>
     );
 };
 

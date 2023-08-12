@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import React from "react";
+import { hapticFeedback } from "../../utils/haptics.util";
 
 /**
  * A store to handle anything signup-related.
@@ -12,6 +13,7 @@ export default class LoginStore {
     currentStep: number = 0;
 
     setCurrentStep(newCurrentStep: number) {
+        hapticFeedback();
         this.currentStep = newCurrentStep;
     }
 

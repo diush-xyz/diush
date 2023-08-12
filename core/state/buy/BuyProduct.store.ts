@@ -27,6 +27,12 @@ export default class BuyProductStore {
     setLoadingSeller(newLoadingSeller: boolean) {
         this.loadingSeller = newLoadingSeller;
     }
+
+    idFromSearch: string = "";
+
+    setIdFromSearch(newId: string) {
+        this.idFromSearch = newId;
+    }
 }
 
 const StoreContext = React.createContext<BuyProductStore>(

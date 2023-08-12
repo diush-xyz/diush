@@ -1,4 +1,4 @@
-import { View, Image, ScrollView } from "react-native";
+import { View, Image, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
 import { observer } from "mobx-react";
 import AuthStore, { useAuthStore } from "../../../state/auth/Auth.store";
@@ -258,6 +258,7 @@ const HomeBaseScreen = () => {
                 onChangeText={() => null}
                 customWidth={350}
                 isSearch
+                isComingSoon
             />
             <ScrollView
                 showsVerticalScrollIndicator={false}
@@ -315,14 +316,14 @@ const HomeBaseScreen = () => {
                     )}
             </ScrollView>
             {/* </GestureRecognizer> */}
-            <View style={{ marginTop: 40, marginBottom: 50, width: "100%" }}>
+            {/* <View style={{ marginTop: 40, marginBottom: 50, width: "100%" }}>
                 <LargeButton
                     title="make a test offer"
                     onPress={() => {
                         utilStore.setCurrentLoggedInScreen(LoggedInScreen.BUY);
                     }}
                 />
-            </View>
+            </View> */}
         </View>
     );
 };

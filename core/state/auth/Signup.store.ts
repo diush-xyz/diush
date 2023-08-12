@@ -1,6 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import React from "react";
 import { SignupMethod } from "../../@types/GlobalTypes";
+import { hapticFeedback } from "../../utils/haptics.util";
 
 /**
  * A store to handle anything signup-related.
@@ -23,7 +24,7 @@ export default class SignupStore {
     }
 
     prevEmail: string = "";
-    
+
     setPrevEmail(newPrevEmail: string) {
         this.prevEmail = newPrevEmail;
     }
@@ -49,6 +50,7 @@ export default class SignupStore {
     currentStep: number = 0;
 
     setCurrentStep(newCurrentStep: number) {
+        hapticFeedback();
         this.currentStep = newCurrentStep;
     }
 

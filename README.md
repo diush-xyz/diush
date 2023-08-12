@@ -1,4 +1,4 @@
-\*putting on the finishing touches.
+\*reach out to me for a testflight link! Currently in a private testing phase.
 
 <p align="center">
   <a href="#">

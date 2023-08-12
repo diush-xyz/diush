@@ -25,19 +25,27 @@ import { db, auth } from "../../../../config/firebase";
 import CustomText from "../../lib/CustomText";
 import CustomLoader from "../../lib/CustomLoader";
 import { useBuyProductStore } from "../../../state/buy/BuyProduct.store";
+import { useUtilStore } from "../../../state/Util.store";
+import { IOffer, LoggedInScreen } from "../../../@types/GlobalTypes";
+import { getHighestOffer } from "../../../utils/getHighestOffer.util";
 
 const ScopeProduct = () => {
+    const utilStore = useUtilStore();
     const catalogStore = useCatalogStore();
     const scopeProductStore = useScopeProductStore();
     const [loading, setLoading] = React.useState<boolean>(true);
     const [sellerUserLoading, setSellerUserLoading] =
         React.useState<boolean>(true);
     const buyProductStore = useBuyProductStore();
+    const [allProductOffers, setAllProductOffers] = React.useState<any[]>([]);
+    const [highestOffer, setHighestOffer] = React.useState<IOffer>(null);
 
     React.useEffect(() => {
+        // if (buyProductStore.idFromLink !== "") {
+        const id = buyProductStore.idFromSearch;
         const q = query(
             collection(db, "products"),
-            where("id", "==", "81d4331d-2749-4234-85e6-e80239f94568") //TODO: Add dynamic link fetched one here later
+            where("id", "==", id)
             // where("id", "==", "34fa7fe8-d798-430e-81f6-67c0e7dc574a")
         );
         onSnapshot(q, querySnapshot => {
@@ -53,7 +61,8 @@ const ScopeProduct = () => {
             scopeProductStore.setFetchedActiveProduct(fetched[0]);
             setLoading(false);
         });
-    }, []);
+        // }
+    }, [buyProductStore.idFromSearch]);
 
     const fetchSellerUser = async () => {
         try {
@@ -78,20 +87,50 @@ const ScopeProduct = () => {
         setSellerUserLoading(false);
     };
 
+    const fetchOffers = () => {
+        const q = query(
+            collection(db, "offers"),
+            where(
+                "linkedProductID",
+                "==",
+                scopeProductStore.fetchedActiveProduct.id
+            )
+        );
+        onSnapshot(q, querySnapshot => {
+            const fetched = [];
+
+            querySnapshot.forEach(documentSnapshot => {
+                fetched.push({
+                    ...documentSnapshot.data(),
+                    key: documentSnapshot.id,
+                });
+            });
+
+            setAllProductOffers(fetched);
+        });
+    };
+
+    React.useEffect(() => {
+        if (allProductOffers.length > 0) {
+            const highest = getHighestOffer(allProductOffers);
+            setHighestOffer(highest);
+        }
+    }, [allProductOffers]);
+
     React.useEffect(() => {
         if (!loading) {
             fetchSellerUser();
+            fetchOffers();
         }
     }, [loading]);
 
     const [timeAgo, setTimeAgo] = React.useState<string>("");
 
     React.useEffect(() => {
-        // @ts-ignore
-
         if (!loading) {
             const parsed = dayjs.unix(
-                scopeProductStore.fetchedActiveProduct.createdAt.seconds
+                //@ts-ignore
+                scopeProductStore.fetchedActiveProduct.createdAt?.seconds
             );
             //@ts-ignore
             const offerTimestamp = dayjs(parsed).fromNow(true);
@@ -155,8 +194,16 @@ const ScopeProduct = () => {
                                 scopeProductStore.fetchedActiveProduct
                                     .askingPrice
                             }
-                            highestOffer={89} //TODO: Backend integration
-                            posted={timeAgo} //TODO: Backend integration
+                            highestOffer={
+                                highestOffer?.amount
+                                    ? "$" + highestOffer?.amount
+                                    : "N/A"
+                            }
+                            posted={
+                                timeAgo == "a few seconds"
+                                    ? "just now"
+                                    : timeAgo
+                            }
                         />
                         <WrittenInfoSection />
                         <View style={{ marginBottom: 60 }} />

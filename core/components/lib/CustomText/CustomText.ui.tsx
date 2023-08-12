@@ -51,13 +51,40 @@ const CustomText = (props: ICustomText) => {
         return theme.primaryText;
     };
 
+    //make a function that takes in the text version of font weight and returns the number value
+    const temporary = (): number => {
+        switch (props.font) {
+            case "Ultralight":
+                return 100;
+            case "Light":
+                return 200;
+            case "Thin":
+                return 300;
+            case "Regular":
+                return 400;
+            case "Medium":
+                return 500;
+            case "Semibold":
+                return 600;
+            case "Bold":
+                return 700;
+            case "Heavy":
+                return 800;
+            case "Black":
+                return 900;
+        }
+    };
+
     return (
         <Text
+            //@ts-ignore
             style={{
                 color: populateColorStyle(),
                 fontSize: props.fontSize ?? 16,
                 ...props.style,
-                fontFamily: props.font ?? "Semibold",
+                // fontFamily: props.font ?? "Semibold",
+                // fontFamily: "Semibold",
+                fontWeight: props.font ? temporary() : 600,
                 textAlign: props.textAlign,
             }}
             onPress={props.onPress}
