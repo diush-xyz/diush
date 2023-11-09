@@ -26,7 +26,7 @@ a secure funnel for teenagers to sell items to their friends and network.
 
 ## inspiration
 
-> "this platform was born out of the dream that selling items to my friends shouldn't be so difficult - whether it's a spare pair or socks or a PS5 you no longer use, it's pretty much impossible to seamlessly organize everything. From the myriad of potential friends and people in your network that might want your item to the several prices and conditions they randomly throw out to the lack of a way to coordinate payment and getting them the item, it can all become difficult to keep track of. privacy, security, and ease of use are the core principles behind diush - let's build the future of peer-to-peer micro-commerce. :)"
+> "this platform was born out of the dream that selling items to my friends shouldn't be so difficult - whether it's a spare pair of socks or a PS5 you no longer use, it's pretty much impossible to seamlessly organize everything. From the myriad of potential friends and people in your network that might want your item to the several prices and conditions they randomly throw out to the lack of a way to coordinate payment and getting them the item, it can all become difficult to keep track of. privacy, security, and ease of use are the core principles behind diush - let's build the future of peer-to-peer micro-commerce. :)"
 
 > **-[Filippo Fonseca](https://twitter.com/FilippoFonseca) (creator and lead maintainer)**
 
